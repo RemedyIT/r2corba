@@ -1,0 +1,33 @@
+/*--------------------------------------------------------------------
+ * Author: Martin Corino
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the R2CORBA LICENSE which is
+ * included with this program.
+ *
+ * Copyright (c) Remedy IT Expertise BV
+ * Chamber of commerce Rotterdam nr.276339, The Netherlands
+ *--------------------------------------------------------------------*/
+
+valuetype Balance
+{
+    public double amount;
+    public double total_deposited;
+    public double total_withdrawn;
+};
+
+interface Account
+{
+    void deposit (in double amount);
+    void withdraw (in double amount);
+
+    Balance get_balance();
+
+    oneway void shutdown();
+
+    void print_it();
+};
+
+valuetype BalancedAccount : Balance supports Account
+{
+};

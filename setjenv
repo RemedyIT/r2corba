@@ -1,0 +1,43 @@
+#!/bin/sh
+
+function check_path ()
+{
+  _path_=`pwd`
+  #echo "pwd = $_path_"
+  if [ ! -d ${_path_}/lib/corba ]; then
+    _path_=`dirname $0`
+    #echo "dirname \$0 = $_path_"
+    if [ ! -d ${_path_}/lib/corba ]; then
+      _path_=`dirname $BASH_ARGV`
+      #echo "dirname \$BASH_ARGV = $_path_"
+      if [ $BASH_ARGC -ne 1 ] || [ ! -d ${_path_}/lib/corba ]; then
+        echo 'Cannot determin R2CORBA_ROOT'
+        return 1
+      fi
+    fi
+    cd ${_path_}
+  fi
+
+  if [ ! -f ./Rakefile ]; then
+    echo 'Cannot determin R2CORBA_ROOT'
+    return 1
+  fi
+  return 0
+}
+
+_cwd_=`pwd`
+
+check_path
+if [ $? -eq 0 ]; then
+  echo "R2CORBA_ROOT = `pwd`"
+  R2CORBA_ROOT=`pwd`; export R2CORBA_ROOT
+  if [ "$1" == "-j" ] && [ -n $2 ]; then
+    export JACORB_HOME=$2
+  else
+    export JACORB_HOME=${R2CORBA_ROOT}/jacorb
+  fi
+  export PATH=$PATH:${R2CORBA_ROOT}/bin:${JACORB_HOME}/bin
+  export RUBYLIB=.:${R2CORBA_ROOT}/lib:${R2CORBA_ROOT}/ridl/lib:${R2CORBA_ROOT}/ext:${R2CORBA_ROOT}/test:${JACORB_HOME}/lib
+fi
+
+cd $_cwd_

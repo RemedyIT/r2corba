@@ -1,0 +1,79 @@
+
+Requirements
+============
+
+Windows XP/7/8 (not tested on Vista), Linux (kernel version 2.4+; tested on
+openSuSE 11.3-13.2 and Fedora 13-21).
+
+JRuby 1.5.0+ (probably also works with previous 1.4 versions but not tested)
+  Download from http://www.jruby.org
+
+JacORB 2.3.1+ (Abstract Interface support requires the latest, >= 3.0, version)
+  Download from http://www.jacorb.org
+
+Java JRE or JDK 1.5+ (OpenJDK 1.6+ is also supported)
+  Download from www.java.com
+
+Building R2CORBA Ruby extension
+===============================
+
+Preparation
+-----------
+
+- verify installation of JRuby (with required gem if necessary) and Java runtime
+
+Simple configuration
+--------------------
+
+- download a JacORB binary package
+- create a 'jacorb' subdirectory under the 'r2corba' directory created by unpacking
+  the Ruby2CORBA distribution package 
+- unpack the JacORB package under the 'jacorb' subdirectory creating 'bin', 'lib',
+  'etc' and other subdirectories
+- configure the build by executing the command:
+
+  rake configure
+
+- build the extension by executing the command:
+
+  rake build
+
+- verify the extension by executing the command:
+
+  rake test
+
+- install the extension by executing the command:
+
+  rake install
+
+By default the install task will install R2CORBA in the site specific section of
+the JRuby installation.
+On Linux default installation may require root access depending on where your
+JRuby package is installed.
+
+Customized configuration
+-----------------------
+
+Running the command 'rake -- configure --help' will output information showing all
+the available options to customize configuration
+
+The optional configure parameter '--jacorb_home=<path>' can be used to specify a
+different location of the JacORB tree than under the default 
+./<r2corba dir>/jacorb directory.
+
+Alternatively the environment variable JACORB_HOME can be set to the JacORB
+path. If the configure task cannot find JacORB at ./<r2corba dir>/jacorb and no
+'--jacorb_home' parameter is specified it will use the value of this environment 
+variable if set.
+
+The optional configure parameter '--without-jacorb' will exclude the install steps for the
+JacORB libraries (JAR files) from the extension installation process.
+This can be used on a system which already has a compatible JacORB version installed
+(needs JACORB_HOME to be set to the JacORB install location for R2CORBA to find the 
+ JAR files).
+
+NOTE: Please be aware the rake tasks still need an accessible JacORB installation.
+
+Running the command 'rake help' will show information on all common rake tasks.
+
+===***===

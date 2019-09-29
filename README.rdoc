@@ -1,0 +1,50 @@
+{<img src="https://badge.fury.io/rb/r2corba.svg" alt="Gem Version" />}[https://badge.fury.io/rb/r2corba]
+
+= R2CORBA
+
+== Description
+
+R2CORBA (Ruby2CORBA) is an {OMG CORBA}[https://www.omg.org/spec/CORBA] language mapping implementation for the {Ruby programming language}[https://www.ruby-lang.org].
+
+== Synopsis
+
+R2CORBA provides a complete implementation of the standard OMG Ruby CORBA Language Mapping ({RCLM}[https://www.omg.org/spec/RCLM]) compliant with the latest version of the CORBA standard.
+
+R2CORBA includes:
+
+* an RCLM compliant RIDL code generator backend
+* an RCLM compliant API
+* multiple ORB implementations through an extension framework
+
+Instead of going for a complete native Ruby mapping implementing a native Ruby ORB, R2CORBA aims at providing CORBA functionality through a Ruby extension using the DII and DSI interfaces of an existing CORBA ORB implementation. There are currently two flavors of this extension available:
+
+* an MRI Ruby extension written in Ruby and C/C++ using {TAO}[https://www.remedy.nl/opensource/tao.html]
+* a JRuby extension written in Ruby and Java using {JacORB}[https://www.remedy.nl/opensource/jacorb.html]
+
+The RIDL based, native Ruby implementation of an OMG \IDL compiler supplements this extension and provides powerful features like direct inclusion of \IDL language modules into your Ruby programs without the need of explicit, separate stub generation.
+
+== How to get R2CORBA
+
+Execute
+
+ gem install r2corba
+
+to install R2CORBA as a gem.
+
+== Bugs
+
+If you find a bug, please report it at the R2CORBA project's {issues tracker}[https://github.com/RemedyIT/r2corba/issues].
+
+== License
+
+R2CORBA is Copyright (c) 2007-2019 Remedy IT Expertise BV, The Netherlands.
+
+It is free software, and may be redistributed under the terms specified in the link:LICENSE file.
+
+== Acknowledgments
+
+See the file link:THANKS
+
+== Warranty
+
+This software is provided "as is" and without any express or implied warranties, including, without limitation, the implied warranties of merchantibility and fitness for a particular purpose.

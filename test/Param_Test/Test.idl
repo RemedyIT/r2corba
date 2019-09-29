@@ -1,0 +1,182 @@
+
+#include "orb.idl"
+
+#pragma prefix "Remedy"
+
+module Types
+{
+
+  typedef string TString;
+
+};
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  interface Hello;
+
+  const long long max_longlong = 0x7fffffffffffffff;
+  const long long min_longlong = -0x8000000000000000;
+
+  const unsigned long long max_ulonglong = 0xffffffffffffffff;
+  const unsigned long long min_ulonglong = 0;
+
+  const long max_long = 0x7fffffff;
+  const long min_long = -0x80000000;
+
+  const unsigned long max_ulong = 0xffffffff;
+  const unsigned long min_ulong = 0;
+
+  const short max_short = 0x7fff;
+  const short min_short = -0x8000;
+
+  const unsigned short max_ushort = 0xffff;
+  const unsigned short min_ushort = 0;
+
+  const octet max_octet = 0xff;
+  const octet min_octet = 0;
+
+  typedef short TShort;
+  typedef unsigned long TULong;
+  typedef string TString;
+  typedef Test::TString TString2;
+  typedef Types::TString TString3;
+  typedef string<128> TString128;
+  typedef any TMyAny;
+  typedef ::CORBA::StringSeq TStringSeq;
+
+  const long myConst = 32;
+  const octet myOctet = 243;
+  const char myChar = 'A';
+  const wchar myWChar = L'a';
+  const string myString = "ABC";
+  const wstring myWString = L"abc\u1234";
+
+  const short DIM1 = 3;
+  typedef long TLongCube[DIM1][3][4];
+
+  enum test_enum
+  {
+    TE_ZEROTH,
+    TE_FIRST,
+    TE_SECOND,
+    TE_THIRD,
+    TE_FOURTH
+  };
+
+  struct S1
+  {
+    long m_one;
+    double m_two;
+    string m_three;
+    struct S2 {
+      boolean m_b;
+    }      m_four;
+    test_enum m_five;
+  };
+
+  struct S3;
+
+  typedef sequence<S3> TS3Seq;
+  typedef sequence<TS3Seq> TS3SeqSeq;
+
+  struct S3
+  {
+    TS3Seq m_seq;
+    boolean m_has_more;
+  };
+
+  typedef sequence<S1> S1Seq;
+
+  typedef sequence<double> TDoubleSeq;
+
+  typedef sequence<TShort, 10> TShortSeq;
+
+  typedef test_enum TSWitch;
+
+  union U1 switch(TSWitch)
+  {
+    case TE_ZEROTH:   long m_l;
+    case TE_FIRST:
+    case TE_SECOND:   string m_str;
+    default:          boolean m_bool;
+  };
+
+  union U2 switch( enum SWITCH_T { ONE, TWO, THREE })
+  {
+    case ONE: long l_;
+    case TWO: boolean b_;
+    case THREE: string s_;
+  };
+
+  union U3 switch(boolean)
+  {
+    case TRUE: long lval;
+  };
+
+  union U4 switch(TSWitch)
+  {
+    case TE_ZEROTH:   long m_l;
+    case TE_FIRST:
+    case TE_SECOND:   string m_str;
+  };
+
+  /// A very simple interface
+  interface Hello
+  {
+    readonly attribute long long max_LongLong;
+    readonly attribute long long min_LongLong;
+
+    readonly attribute unsigned long long max_ULongLong;
+    readonly attribute unsigned long long min_ULongLong;
+
+    readonly attribute long max_Long;
+    readonly attribute long min_Long;
+
+    readonly attribute unsigned long max_ULong;
+    readonly attribute unsigned long min_ULong;
+
+    readonly attribute short max_Short;
+    readonly attribute short min_Short;
+
+    readonly attribute unsigned short max_UShort;
+    readonly attribute unsigned short min_UShort;
+
+    readonly attribute octet max_Octet;
+    readonly attribute octet min_Octet;
+
+    TString2 get_string();
+
+    attribute TString3 _Message;
+
+    attribute TShortSeq Numbers;
+
+    readonly attribute TDoubleSeq list_of_doubles;
+
+    attribute S1Seq StructSeq;
+
+    attribute TLongCube theCube;
+
+    attribute any AnyValue;
+
+    readonly attribute Hello selfref;
+
+    attribute any S3Value;
+
+    attribute U1 UnionValue;
+
+    attribute U2 UnionValue2;
+
+    attribute U3 UnionValue3;
+
+    attribute U4 UnionValue4;
+
+    long run_test(in TString instr, inout string inoutstr, out string outstr);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

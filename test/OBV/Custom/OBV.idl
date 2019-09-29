@@ -1,0 +1,18 @@
+
+custom valuetype Event
+{
+  void do_print (in string loc);
+  public long value_;
+  private string msg_;
+  
+  factory init(in string msg, in long val);
+};
+
+interface Checkpoint
+{
+  void  put_event (in Event e);
+  // This operation will shutdown the server.
+  oneway void shutdown ();
+};
+
+

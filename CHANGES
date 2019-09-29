@@ -1,0 +1,173 @@
+
+Current version: 1.5.1
+
+Changes since version 1.4.1:
+
+o   Added support for MRI Ruby 2.1.x & 2.2.x (32 & 64 bits)
+
+o   Added support for TAO <= 2.3.1
+
+o   Added support for JRuby <= 1.7.19
+
+o   Added support for JacORB <= 3.5
+
+o   Upgraded RIDL frontend to 2.5.5
+
+o   Officially drop MRI Ruby < 1.9 support
+
+Changes since version 1.3.1:
+
+o   Replaced setup.rb based build system by Rake based build system.
+
+o   Implemented rubygems distribution support.
+
+o   Added new 'r2corba' tool script. Currently only allows execution
+    of tests after gem installation.
+
+o   Fixed nasty bug concerning nil object reference
+    value passing.
+
+Changes since version 1.2.1:
+
+o   Added support for MRI Ruby 2.0.0
+
+o   Added support for Windows 64bit (Ruby 2.0.0)
+
+o   Added support for TAO 2.1.8
+
+o   Added support for JacORB 3.2
+
+o   Added support for JRuby 1.7.3
+
+o   Fixed issues reported on OSPortal.
+    (see https://osportal.remedy.nl/projects/r2corba/issues)
+    
+o   Dropped testing and packaging for MacOSX    
+
+Changes since version 1.1.1:
+
+o   Added support for MRI Ruby 1.9.3
+
+o   Added support for TAO 2.1.6
+
+o   Added support for JacORB 3.1
+
+o   Added support for JRuby 1.7.0
+
+o   Fixed various issues reported on OSPortal.
+    (see https://osportal.remedy.nl/projects/r2corba/issues)
+
+o   Improved and perfected multithreading support
+
+o   Upgraded to latest version of (now separately maintained) RIDL
+    compiler frontend (which includes full support for IDL3(+) features).
+
+Changes since version 1.1.0:
+
+o   Fixed incorrect IDL compiler handling of 'sequence of incomplete struct' types.
+
+o   Fixed missing PortableServer::ServantLocator IDL definition
+
+o   Reverted incorrect removal of '--prefix' switch of setup.rb install command.
+
+o   Added some patches for compile problems with older MRI 1.8 distros.
+
+o   Fixed OBS RPM buildproblems. 
+
+Changes since version 1.0.0:
+
+o   Added support for MRI Ruby 1.9.2+
+
+o   Validated against JRuby 1.6.1
+
+o   Added multithreading support 
+    (native threads for JRuby & MRI 1.9 series, green threads for MRI 1.8 series)
+    
+o   Added Interoperable Naming Service (INS). Fully compliant with OMG Naming Service spec v1.3.
+	  Implemented in 100% Ruby code.
+    
+o   Updated IDL compiler with missing OMG IDL features
+    (typeprefix&typeid, raises,getraises&setraises on attributes)
+    
+o   Improved IDL compiler error reporting.
+
+o   Added support for IDL 'eventtype' type.
+    NOTE: As JaCORB currently does not support tk_event typecodes&values jR2CORBA
+          maps eventtype to plain valuetype. This makes jR2CORBA and R2CORBA
+          interoperable wrt eventtype.
+
+o   Validated interoperability with omniORBpy thanks to David MacMahon.
+
+o   Added custom IORMap extension for mapping simple object keys to IORs
+    with support for both the MRI and JRuby versions.
+
+o   More regression tests added.
+
+o   Bugfixes.
+
+Changes since version 0.9.4:
+
+o   Restructured codebase for more flexibility and clarity.
+
+o   Added jR2CORBA based on JRuby/JacORB support.
+
+o   Added full Value type support (values, valueboxes, interface support).
+
+o   Added Abstract Interface support.
+
+o   Added regression tests for Value type and Abstract Interface support.
+
+o   Added latest Ruby 1.8 series on Windows/MingW32 support.
+
+o   Added MacOSX support.
+
+o   Improved resource management C++ extensions.
+
+o   Improved test framework.
+
+o   Fixed problems with prebuilt distribution packages.
+
+Changes since version 0.9.3:
+
+o   Improved test framework. Failing tests now correctly detected and reported.
+
+o   Fixed 'long' value conversion bug thanks to Ragnar Dahlen
+
+o   Added export macros to support GCC with visibility enabled
+
+Changes since version 0.9.2:
+
+o   added prebuilt packaging
+
+o   use $TAO_ROOT instead of $ACE_ROOT/TAO; TAO_ROOT must now be set when
+    building R2CORBA with a custom ACE/TAO location
+
+o   added rpm packaging support script
+
+Changes since version 0.9.1:
+
+o  fixed several install issues
+
+o  fixed Windows build problem (spaces in path)
+
+Changes since version 0.8.2:
+
+o   added support for the IORTable pseudo object;
+    (see new regression test under test/IORTable)
+
+o   integrated Ruby signal handling/trapping with TAO so that
+    when running the ORB's reactor signals will be caught and
+    Ruby defined handlers called;
+    (see new NamingService example under example/ins)
+
+o   various IDL compiler improvements with, among others, much better
+    processing of preprocessor directives thanks to Renato Lucindo and
+    Eider Oliveira;
+    (see extended test/IDL_Test)
+
+o   added new Collocation regression test to verify bugfixes for this
+    functionality in TAO >= 1.6.3;
+
+o   several bugfixes and smaller enhancements thanks to (among others)
+    Leo Seib and Harald Lange.
+

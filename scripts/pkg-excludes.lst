@@ -1,0 +1,12 @@
+*.so
+*.so.*
+*.ior
+*.mpc
+*GNUmakefile*
+*.shobj*
+*shobj
+*.depend*
+*ridlc.rb
+*jridlc.rb
+*/ridl/scripts*
+*.pidlc

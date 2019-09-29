@@ -1,0 +1,19 @@
+/*--------------------------------------------------------------------
+ * Author: Martin Corino
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the R2CORBA LICENSE which is
+ * included with this program.
+ *
+ * Copyright (c) Remedy IT Expertise BV
+ * Chamber of commerce Rotterdam nr.276339, The Netherlands
+ *--------------------------------------------------------------------*/
+
+interface Simple_Server {
+
+  /// Returns <x>, but sleep for <msecs> milliseconds before returning
+  long echo (in long x, in long msecs);
+
+  /// Shutdown the ORB
+  oneway void shutdown ();
+};

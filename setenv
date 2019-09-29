@@ -1,0 +1,64 @@
+#!/bin/sh
+
+function check_path ()
+{
+  _path_=`pwd`
+  #echo "pwd = $_path_"
+  if [ ! -d ${_path_}/lib/corba ]; then
+    _path_=`dirname $0`
+    #echo "dirname \$0 = $_path_"
+    if [ ! -d ${_path_}/lib/corba ]; then
+      _path_=`dirname $BASH_ARGV`
+      #echo "dirname \$BASH_ARGV = $_path_"
+      if [ $BASH_ARGC -ne 1 ] || [ ! -d ${_path_}/lib/corba ]; then
+        echo 'Cannot determine R2CORBA_ROOT'
+        return 1
+      fi
+    fi
+    cd ${_path_}
+  fi
+
+  if [ ! -f ./Rakefile ]; then
+    echo 'Cannot determine R2CORBA_ROOT'
+    return 1
+  fi
+  return 0
+}
+
+_cwd_=`pwd`
+
+check_path
+if [ $? -eq 0 ]; then
+  echo "R2CORBA_ROOT = `pwd`"
+  R2CORBA_ROOT=`pwd`; export R2CORBA_ROOT
+  if [ "$1" == "-a" ] && [ -n $2 ]; then
+    export ACE_ROOT=$2
+    if [ -d ${ACE_ROOT}/TAO ]; then
+      # ACE_wrappers layout
+      ATCD_ROOT=${ACE_ROOT}
+    else
+      # flat layout
+      ATCD_ROOT=${ACE_ROOT}/..
+    fi
+  else
+    if [ -d ${R2CORBA_ROOT}/ACE/ACE ]; then
+      # flat layout
+      export ACE_ROOT=${R2CORBA_ROOT}/ACE/ACE
+      ATCD_ROOT=${R2CORBA_ROOT}/ACE
+      export TAO_ROOT=${R2CORBA_ROOT}/ACE/TAO
+    else
+      # old style ACE_wrappers layout
+      export ACE_ROOT=${R2CORBA_ROOT}/ACE/ACE_wrappers
+      ATCD_ROOT=${ACE_ROOT}
+    fi
+  fi
+  export TAO_ROOT=${ATCD_ROOT}/TAO
+  export MPC_ROOT=${ATCD_ROOT}/MPC
+  export LD_LIBRARY_PATH=${ACE_ROOT}/lib:${LD_LIBRARY_PATH}
+  export DYLD_LIBRARY_PATH=${ACE_ROOT}/lib:${DYLD_LIBRARY_PATH}
+  export DYLD_FALLBACK_LIBRARY_PATH=${ACE_ROOT}/lib:${R2CORBA_ROOT}/ext:${DYLD_FALLBACK_LIBRARY_PATH}
+  export PATH=${R2CORBA_ROOT}/bin:${ACE_ROOT}/bin:${PATH}
+  export RUBYLIB=.:${R2CORBA_ROOT}/lib:${R2CORBA_ROOT}/ridl/lib:${R2CORBA_ROOT}/ext:${R2CORBA_ROOT}/test
+fi
+
+cd $_cwd_

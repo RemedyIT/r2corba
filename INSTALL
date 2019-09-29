@@ -1,0 +1,208 @@
+Requirements
+============
+
+Windows 7/8 (not tested on Vista), Linux (kernel version 2.4+; tested on
+openSuSE 11.3 - 13.2 and Fedora 13-21).
+
+Ruby MRI 1.9.3+-2.2.0 (1.9.2 versions will probably also work but are not tested)
+  Download from http://www.ruby-lang.org (source packages) or
+  http://rubyinstaller.org/downloads (Windows binaries) if not available as
+  a standard package on your platform.
+
+ACE+TAO 2.0.1+ (required minimum version for Value type support and Windows
+  MingW32 support)
+  Download latest minor release from http://download.dre.vanderbilt.edu/
+  (select a source only package containing at least ACE + TAO)
+  For Windows 64bit + Ruby 2.0.0 support ACE+TAO > 2.1.8 is required (currently
+  this means the SVN trunk version).
+
+An installed (recent) version of PERL is required to generate the ACE+TAO and
+R2CORBA makefiles with the MPC toolset included with ACE+TAO (R2CORBA does not
+use MKMF because it was easier to create an extension makefile based on the
+ACE+TAO buildsystem than viceversa;-).
+For Windows we advice ActiveState Perl from www.activestate.com.
+
+On Windows 32bit: MingW-W64 32bit GCC 4.7 or higher (DW2 exception model)
+On Windows 64bit (Windows7/8): MingW-W64 64bit GCC 4.7 or higher (SEH exception model)
+On Windows (all): MingW32/MSYS 1.0 tools (no compiler; no perl)
+On Linux: GCC >= 3.2 (tested with GCC 4.7.x)
+
+The Windows MinGW build of R2CORBA requires the following runtime libraries to
+be installed:
+o LIBGCC_S_DW2-1.DLL (32bit) OR LIBGCC_S_SEH_1.DLL (64bit)
+o LIBSTDC++-6.DLL
+The install script will install these files in the same location as the ACE+TAO
+libraries (see below).
+If you want to create a distribution package for (an) R2CORBA (base application)
+you may need to distribute these files with it (like f.i. the R2CORBA MinGW prebuilt
+package). If so, be aware that these files are part of the GNU GCC package and are
+licensed under GPL.
+
+NOTE: R2CORBA builds and installs only a subset of the ACE+TAO libraries (only that
+      what it needs itself as a direct or dynamically loaded dependency; see below).
+      TAO is however highly configurable with dynamically loaded libraries/plugins
+      by the use of commandline or service configuration directives.
+      Anyone extending dependencies in such ways must make sure themselves that their
+      ACE+TAO installation contains all the necessary modules.
+
+Building R2CORBA Ruby extension
+===============================
+
+Preparation
+-----------
+
+- verify installation of Ruby (with required gem if necessary), PERL and C++
+  compiler
+- make sure the compiler and the make utility can be executed from the commandline
+
+Simple configuration
+--------------------
+
+- download an ACE+TAO source package
+- create an ACE subdirectory under the 'r2corba' directory created by unpacking
+  the Ruby2CORBA distribution package
+- unpack the ACE+TAO package under the ACE subdirectory creating an ACE_wrappers
+  directory and sourcetree
+- configure the build by executing the command:
+
+  rake configure
+
+- build the extension by executing the command:
+
+  rake build
+
+- verify the extension by executing the command:
+
+  rake test
+
+- install the extension by executing the command:
+
+  rake install
+
+By default the install task will install R2CORBA in the site specific section of
+the Ruby installation.
+On Linux and Mac OSX default installation will/may require root access as the
+ACE+TAO SOs will/may be installed in root-only writable locations (like /usr/lib).
+
+Customized configuration
+-----------------------
+
+Running the command 'rake -- configure --help' will output information showing all
+the available options to customize configuration
+
+The optional configure parameter '--aceroot=<path>' can be used to specify a different
+location of the ACE_wrappers sourcetree than under the default ./<r2corba dir>/ACE
+directory. Parameter '--taoroot=<path>' can be used to specify a non-standard location
+of the TAO subtree (defaults to $aceroot/TAO) and '--mpcroot=...' has a similar purpose
+for the MPC subtree.
+
+Alternatively the environment variable ACE_ROOT can be set to the ACE_wrappers
+path. If the configure task cannot find ACE+TAO at ./<r2corba dir>/ACE and no '--aceroot'
+parameter is specified it will use the value of this environment variable if set.
+The same applies for the environment variable TAO_ROOT and the '--taoroot' parameter as
+well as MPC_ROOT and the 'mpc_root' parameter.
+Please read the ACE/TAO documentation for more information on these settings.
+
+The optional config parameter '--aceinstdir=<path>' can be set to specify a
+different install location for the ACE+TAO shared libraries (especially useful on
+Linux if you cannot/don't want to have root access).
+Please be aware that for the R2CORBA extension to work the ACE+TAO shared libraries
+need to be in the OS specific search path for the dynamic library loader.
+
+The optional config parameter '--without-tao' will exclude the build (and install) steps
+for the ACE+TAO libraries from the extension build process.
+This can be used on a system which already has a compatible ACE+TAO version installed
+(needs to find the ACE+TAO dlls in the dynamic library search path for the platform
+ as well as the include files in the regular includes location).
+
+NOTE: Please be aware the rake tasks still need an accessible ACE/TAO installation.
+
+Running the command 'rake help' will show information on all common rake tasks.
+
+ACE/TAO libraries
+=================
+
+Building and Installing
+-----------------------
+
+NOTE: THIS SECTION ONLY APPLIES TO INSTALLATIONS WHERE ACE+TAO ARE BUILT THROUGH THE
+      R2CORBA BUILD TASK.
+
+Currently when building ACE+TAO through the R2CORBA build task the following parts of
+ACE and TAO are built:
+
+o	the ACE library
+o	the gperf tool (used by the tao_idl compiler)
+o	the tao_idl compiler (needed to compile the TAO core IDL files)
+o all TAO core libraries (those found under ACE_wrappers/TAO/tao)
+	these include:
+	TAO
+	TAO_AnyTypeCode
+	TAO_BiDirGIOP
+	TAO_CodecFactory
+	TAO_Codeset
+	TAO_Compression
+	TAO_CSD_Framework
+	TAO_CSD_ThreadPool
+	TAO_DiffServPolicy
+	TAO_DynamicAny
+	TAO_DynamicInterface
+	TAO_EndpointPolicy
+	TAO_ETCL
+	TAO_IFR_Client
+	TAO_ImR_Client
+	TAO_IORInterceptor
+	TAO_IORManip
+	TAO_IORTable
+	TAO_Messaging
+	TAO_Monitor
+	TAO_ObjRefTemplate
+	TAO_PI_Server
+	TAO_PI
+	TAO_PortableServer
+	TAO_RTCORBA
+	TAO_RTPortableServer
+	TAO_RTScheduler
+	TAO_SmartProxies
+	TAO_Strategies
+	TAO_TC_IIOP
+	TAO_TC
+	TAO_TypeCodeFactory
+	TAO_Utils
+	TAO_Valuetype
+	TAO_ZIOP
+
+The R2CORBA install task installs a subset of these artifacts as described above.
+This subset currently includes the following libraries:
+	ACE,
+	TAO,
+	TAO_TypeCodeFactory,
+	TAO_IFR_Client,
+	TAO_DynamicInterface,
+	TAO_Messaging,
+	TAO_PI,
+	TAO_CodecFactory,
+	TAO_Codeset,
+	TAO_DynamicAny,
+	TAO_Valuetype,
+	TAO_PortableServer,
+	TAO_AnyTypeCode,
+	TAO_BiDirGIOP,
+	TAO_IORTable,
+	TAO_ImR_Client
+
+Customization
+-------------
+
+In case you need additional libraries to support some special functionality like
+f.i. the ZIOP protocol implementation of TAO, any additionally required artifacts
+need to be installed by hand to the same directory where R2CORBA installed the other
+artifacts (or where they were installed in a separate setup step if you did not build
+ACE+TAO through the R2CORBA build task).
+Additionally you may need to configure the ORB (either using commandline options or
+by using service configuration files) to make use of the added artifacts.
+Make sure you know what you are doing (consult the TAO documentation).
+NOTE that the R2CORBA project does no testing of this kind of customization and
+cannot promise to deliver support in case of any problems.
+
+===***===

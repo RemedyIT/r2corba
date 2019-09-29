@@ -1,0 +1,14 @@
+
+    ./corba == generic CORBA stuff and interfaces, not ORB specific
+
+        defines ::CORBA namespace
+            ::CORBA::ORB
+            ::CORBA::Object
+            etc.
+
+    ./r2tao == interface to TAO for Ruby2CORBA
+ 
+        defines ::TAO namespace
+            ::TAO::ORB (implements ::CORBA::ORB)
+            ::TAO::Object (implements ::CORBA::Object)
+

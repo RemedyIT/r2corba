@@ -1,0 +1,117 @@
+/*--------------------------------------------------------------------
+ * Author: Martin Corino
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the R2CORBA LICENSE which is
+ * included with this program.
+ *
+ * Copyright (c) Remedy IT Expertise BV
+ * Chamber of commerce Rotterdam nr.276339, The Netherlands
+ *--------------------------------------------------------------------*/
+
+#ifndef TEST_IDL_DEFINED
+#define TEST_IDL_DEFINED
+
+#include "orb.idl"
+
+#pragma prefix "Remedy"
+
+#include "Test_inc.idl"
+
+// these unknown pragmas should just be ignore without causing problems
+#pragma whatever "bla bla bla"
+#pragma itsaninteger 10001
+
+module Test
+{
+};
+
+// superfluous second include
+#include "Test_inc.idl"
+
+# define ZERO 0
+# define FIRST ZERO
+# define SECOND 1
+
+#define VOID void
+
+#define NUMBER 12345
+
+#define STRING "hello"
+
+typedef Object SelfRef;
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+#if FIRST < SECOND
+  struct S1
+  {
+    long m_one;
+    double m_two;
+    string m_three;
+    struct S2 {
+      boolean m_b;
+    }      m_four;
+  };
+#endif
+
+  struct R1;
+
+  typedef sequence<R1> R1Seq;
+
+  struct R1
+  {
+    R1Seq m_recurseq;
+  };
+
+  const long MyNum = NUMBER;
+  const string MyString = STRING;
+
+  /// A very simple interface
+  interface Hello : ::Types::Noop
+  {
+    void super (); /// Ruby keyword
+
+    void self (out SelfRef ref);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway VOID shutdown ();
+  };
+};
+
+#endif // TEST_IDL_DEFINED
+
+module i1
+{
+  interface if1
+  {
+    string getStr();
+  };
+};
+
+module i2
+{
+  typeprefix ::i2 "MyPrefix";
+
+  interface if2 : ::i1::if1
+  {
+    typeid if2 "IDL:MyIF2:0.1";
+
+    string getstr2();
+  };
+
+  interface if3 : ::i2::if2
+  {
+    string getstr3();
+  };
+};
+
+
+
+#pragma ID Test::S1 "IDL:Test_S1:1.1"
+#pragma version Test::S1::S2 1.0
+

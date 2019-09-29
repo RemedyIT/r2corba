@@ -1,0 +1,54 @@
+
+Our thanks go to:
+
+* Yukihiro Matsumoto, aka “Matz”, for creating the wonderfully
+  powerful and elegant programming language named Ruby.
+  With him we also thank all those who have contributed to the
+  Ruby programming tool and have made Ruby what it is today.
+
+* Charles Oliver Nutter, aka "headius", and the other people of
+  the JRuby core development team for bringing that wonderful
+  programming language that Matz created to Java.
+
+* Prof. Douglas Schmidt for (and all his collaborators) for creating
+  a high-quality OpenSource CORBA compliant ORB. The high level of
+  OS abstraction and multiplatform compatibility of this software
+  make it an ideal ingredient for a Ruby CORBA implementation.
+
+* The people of the JacORB development team (a.o. Gerald Brose and
+  Andre Spiegel) and all their collaborators for creating a high-
+  performance, multi threaded and spec compliant ORB for the
+  Java environment.
+
+* Minero Aoki for creating the original 'setup.rb' install script.
+
+* Daisuke Kanda for his initial work on CORBA bindings for Ruby from
+  2001 (incl. RINN and Ruby-Orbit) which has helped us in many ways
+  to create R2CORBA.
+
+* Paul Brannan of Automated Trading Desk, LLC for his insightful
+  comments on the first release of the Ruby CORBA language mapping.
+
+* Renato Lucindo and Eider Oliveira for their remarks and fixes for
+  the IDL compiler.
+
+* Ragnar Dahlen for his tests and comments.
+
+* William Otte for his patches for the Mac OSX port.
+
+* David MacMahon for his comments and tests, especially with regard to
+  omniORBpy interoperability.
+
+* David MacMahon for his Multi_Threading/Threads test.
+
+* Joel Hahn for reporting the union implicit default bug and
+  providing partial patches.
+
+* Karsten Richter for reporting a bug in union implicit default
+  handling and providing a partial patch and regression test.
+
+* Grant Birchmeier for reporting the RIDL logger bug (triggered
+  by an unknown pragma)
+
+* Andrey Mramornov for reporting and testing the R2CORBA build
+  problems on Ubuntu.

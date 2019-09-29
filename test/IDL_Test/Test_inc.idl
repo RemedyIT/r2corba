@@ -1,0 +1,17 @@
+
+#ifndef R2C_TEST_INC_IDL
+#define R2C_TEST_INC_IDL
+
+module Types
+{
+
+  typedef string TString;
+
+  interface Noop
+  {
+    /// Return a simple string
+    string get_string ();
+  };
+};
+
+#endif

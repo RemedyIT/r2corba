@@ -1,0 +1,59 @@
+R2CORBA LICENSE
+
+R2CORBA (Licensed Product) is protected by copyright, and is distributed
+under the following terms.
+
+R2CORBA (Ruby to CORBA) is an open source tool, developed by Remedy IT and
+written in Ruby, C++ and Java. It is designed to provide a CORBA mapping for
+the Ruby programming language.
+Instead of going for a complete native Ruby mapping implementing a native
+Ruby ORB, R2CORBA aims at providing CORBA functionality through a Ruby
+extension using the DII and DSI interfaces of an existing CORBA ORB
+implementation.
+There are currently two flavors of this extension available:
+  o an MRI Ruby extension written in Ruby and C/C++ using TAO
+    (The ACE ORB; see http://www.dre.vanderbilt.edu/~schmidt/TAO.html).
+  o a JRuby extension written in Ruby and Java using JacORB
+    (http://www.jacorb.org/index.html).
+A native Ruby implementation of an OMG IDL compiler supplements this
+extension and provides powerful features like direct inclusion of IDL
+language modules into your Ruby programs without the need of precompiling.
+
+Since R2CORBA is open source and free of licensing fees, you are free to use,
+modify, and distribute the source code, as long as you include this
+copyright statement.
+
+In particular, you can use R2CORBA to build proprietary software and are
+under no obligation to redistribute any of your source code that is built
+using R2CORBA. Note, however, that you may not do anything to the R2CORBA
+code, such as copyrighting it yourself or claiming authorship of the R2CORBA
+code, that will prevent R2CORBA from being distributed freely using an open
+source development model.
+
+Warranty
+
+LICENSED PRODUCT IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING
+THE WARRANTIES OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE, NON-INFRINGEMENT, OR ARISING FROM A COURSE OF DEALING, USAGE OR
+TRADE PRACTICE.
+
+Support
+
+LICENSED PRODUCT IS PROVIDED WITH NO SUPPORT AND WITHOUT ANY OBLIGATION ON
+THE PART OF REMEDY IT OR ANY OF ITS SUBSIDIARIES OR AFFILIATES TO ASSIST IN
+ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
+
+Remedy IT provides support to users who have agreed on the terms of a support
+contract.
+
+Liability
+
+REMEDY IT OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY
+WITH RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS
+BY LICENSED PRODUCT OR ANY PART THEREOF.
+
+IN NO EVENT WILL REMEDY IT OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE
+FOR ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
+DAMAGES, EVEN IF REMEDY IT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+R2CORBA is Copyright Remedy IT. Duiven, The Netherlands, 2006-2019.

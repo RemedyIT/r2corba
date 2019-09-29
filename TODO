@@ -1,0 +1,14 @@
+
+* AMI
+
+* correctly handle abstract interfaces    DONE
+
+* valuetypes & valueboxes                 DONE
+
+* Homes, Components, Events
+
+* Ruby MRI 1.9.2+ support
+
+* Multithreading support
+
+etc.

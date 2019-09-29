@@ -1,0 +1,48 @@
+/*--------------------------------------------------------------------
+ * Author: Martin Corino
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the R2CORBA LICENSE which is
+ * included with this program.
+ *
+ * Copyright (c) Remedy IT Expertise BV
+ * Chamber of commerce Rotterdam nr.276339, The Netherlands
+ *--------------------------------------------------------------------*/
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  exception ExOne
+  {
+    string why;
+    long code;
+  };
+
+  exception ExBoo
+  {
+    enum TBoo
+    {
+        LOUD,
+        SOFT
+    } type;
+  };
+
+  /// A very simple interface
+  interface Hello
+  {
+    /// Raises exceptions
+    void test_exception () raises (ExOne);
+
+    attribute string myString getraises (ExOne);
+
+    attribute long myCount setraises (ExOne);
+
+    readonly attribute long myResult raises (ExOne);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

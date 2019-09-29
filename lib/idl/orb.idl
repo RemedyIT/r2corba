@@ -1,0 +1,198 @@
+/*--------------------------------------------------------------------
+ * orb.idl - R2CORBA orb.idl
+ *
+ * Author: Martin Corino
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the R2CORBA LICENSE which is
+ * included with this program.
+ *
+ * Copyright (c) Remedy IT Expertise BV
+ * Chamber of commerce Rotterdam nr.276339, The Netherlands
+ *--------------------------------------------------------------------*/
+
+#ifndef R2CORBA_ORB_IDL
+#define R2CORBA_ORB_IDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  /* Basic Sequence types
+   */
+  typedef sequence<any> AnySeq;
+  typedef sequence<boolean> BooleanSeq;
+  typedef sequence<char> CharSeq;
+  typedef sequence<double> DoubleSeq;
+  typedef sequence<float> FloatSeq;
+  typedef sequence<long> LongSeq;
+  typedef sequence<long long> LongLongSeq;
+  typedef sequence<short> ShortSeq;
+  typedef sequence<unsigned long> ULongSeq;
+  typedef sequence<unsigned long long> ULongLongSeq;
+  typedef sequence<unsigned short> UShortSeq;
+  typedef sequence<wchar> WCharSeq;
+  typedef sequence<string> StringSeq;
+  typedef sequence<wstring> WStringSeq;
+  typedef sequence<octet> OctetSeq;
+
+  /* Policy types and interfaces
+   */
+  typedef unsigned long PolicyType;
+
+  interface Policy
+  {
+    readonly attribute PolicyType policy_type;
+    Policy copy();
+    void destroy();
+  };
+
+  typedef sequence <Policy> PolicyList;
+  typedef sequence <PolicyType> PolicyTypeSeq;
+  exception InvalidPolicies { UShortSeq indices; };
+
+  local interface DomainManager
+  {
+    Policy get_domain_policy(in PolicyType policy_type);
+  };
+
+  interface InterfaceDef; /* forward */
+
+  interface ConstructionPolicy: Policy
+  {
+    void make_domain_manager(in InterfaceDef object_type,
+                in boolean constr_policy);
+  };
+
+  typedef sequence <DomainManager> DomainManagersList;
+
+  typedef short PolicyErrorCode;
+  const PolicyErrorCode BAD_POLICY = 0;
+  const PolicyErrorCode UNSUPPORTED_POLICY = 1;
+  const PolicyErrorCode BAD_POLICY_TYPE = 2;
+  const PolicyErrorCode BAD_POLICY_VALUE = 3;
+  const PolicyErrorCode UNSUPPORTED_POLICY_VALUE = 4;
+
+  exception PolicyError
+  {
+    PolicyErrorCode reason;
+  };
+
+  enum SetOverrideType {SET_OVERRIDE, ADD_OVERRIDE};
+
+  local interface PolicyManager
+  {
+    PolicyList get_policy_overrides(in PolicyTypeSeq ts);
+
+    void set_policy_overrides(in PolicyList policies,
+                              in SetOverrideType set_add
+                              ) raises (InvalidPolicies);
+  };
+
+  local interface Current {}; // dummy
+
+  local interface PolicyCurrent : PolicyManager, Current
+  {
+  };
+
+  /* Service types and interfaces
+   */
+  typedef unsigned short ServiceType;
+  typedef unsigned long ServiceOption;
+  typedef unsigned long ServiceDetailType;
+  typedef OctetSeq ServiceDetailData;
+  typedef sequence<ServiceOption> ServiceOptionSeq;
+
+  const ServiceType Security = 1;
+
+  struct ServiceDetail
+  {
+    ServiceDetailType service_detail_type;
+    ServiceDetailData service_detail;
+  };
+
+  typedef sequence<ServiceDetail> ServiceDetailSeq;
+
+  struct ServiceInformation
+  {
+    ServiceOptionSeq service_options;
+    ServiceDetailSeq service_details;
+  };
+
+  /* ORB types
+   */
+  typedef string ORBid;
+  typedef unsigned long Flags;
+  typedef string Identifier;
+  typedef string RepositoryId;
+
+  /* TypeCode types
+   */
+  interface TypeCode;
+
+  enum TCKind
+  {
+    tk_null,
+    tk_void,
+    tk_short,
+    tk_long,
+    tk_ushort,
+    tk_ulong,
+    tk_float,
+    tk_double,
+    tk_boolean,
+    tk_char,
+    tk_octet,
+    tk_any,
+    tk_TypeCode,
+    tk_Principal,
+    tk_objref,
+    tk_struct,
+    tk_union,
+    tk_enum,
+    tk_string,
+    tk_sequence,
+    tk_array,
+    tk_alias,
+    tk_except,
+    tk_longlong,
+    tk_ulonglong,
+    tk_longdouble,
+    tk_wchar,
+    tk_wstring,
+    tk_fixed,
+    tk_value,
+    tk_value_box,
+    tk_native,
+    tk_abstract_interface,
+    tk_local_interface,
+    tk_component,
+    tk_home,
+    tk_event
+  };
+
+  /* misc
+   */
+  exception WrongTransaction {};
+
+  module ORB
+  {
+    exception InvalidName {};
+  };
+
+  native ExceptionList;
+  native NamedValue;
+
+  enum exception_type
+  {
+    NO_EXCEPTION,
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION
+  };
+
+  native ValueFactory;
+};
+
+#pragma prefix ""
+
+#endif /* R2CORBA_ORB_IDL */
