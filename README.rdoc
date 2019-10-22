@@ -4,7 +4,7 @@
 
 == Description
 
-R2CORBA (Ruby2CORBA) is an {OMG CORBA}[https://www.omg.org/spec/CORBA] language mapping implementation for the {Ruby programming language}[https://www.ruby-lang.org].
+R2CORBA (Ruby2CORBA) is a {CORBA}[https://www.omg.org/spec/CORBA] language mapping implementation for the {Ruby programming language}[https://www.ruby-lang.org].
 
 == Synopsis
 
