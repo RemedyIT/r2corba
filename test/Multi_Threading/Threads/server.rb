@@ -2,14 +2,11 @@
 #
 # Author: Martin Corino
 #
-# $Id: server.rb 279 2011-02-08 09:53:28Z martin $
-#
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the R2CORBA LICENSE which is
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 require 'optparse'

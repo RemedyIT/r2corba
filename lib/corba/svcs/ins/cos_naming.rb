@@ -1,17 +1,14 @@
 #--------------------------------------------------------------------
 # cos_naming.rb - Implementation of CosNaming servants
-#                 for full featured naming service 
+#                 for full featured naming service
 #
 # Author: Martin Corino
-#
-# $Id: $
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the R2CORBA LICENSE which is
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 require 'corba/naming_service'
@@ -34,7 +31,7 @@ module CosNaming
       s << self.kind.gsub(/([\/\.\\])/,'\\\1') unless self.kind.to_s.empty?
       s
     end
-    # convert stringified name back to NameComponent 
+    # convert stringified name back to NameComponent
     def self.from_string(snc)
       raise CosNaming::NamingContext::InvalidName.new if snc.empty?
       esc_ = false
@@ -63,7 +60,7 @@ end
 
 module R2CORBA
   module INS
-    
+
     ##
     # Binding iterator servant class
     #
@@ -72,14 +69,14 @@ module R2CORBA
         @rl = reglist
         @id = iterator_id
       end
-    
+
       attr_accessor :oid
-    
+
       def next_one
         reg = @rl.shift
         [!reg.nil?, reg ? CosNaming::Binding.new(reg[:name], reg[:type]) : nil]
       end
-    
+
       def next_n(how_many)
         raise CORBA::BAD_PARAM.new if how_many < 1
         bindings = []
@@ -90,7 +87,7 @@ module R2CORBA
         end
         [!bindings.empty?, bindings]
       end
-    
+
       def destroy
         poa = self._default_POA
         poa.deactivate_object(self.oid)
@@ -103,7 +100,7 @@ module R2CORBA
     # Naming context servant class
     #
     class NamingContext < POA::CosNaming::NamingContextExt
-      
+
       # Map type to store bindings.
       # Use synchronized version for multithreading capable implementations.
       #
@@ -167,18 +164,18 @@ module R2CORBA
           end
         end
       end
-            
+
       @@iterators = MAP_TYPE.new
       @@iterator_max = 100
-      
+
       def self.set_iterator_max(max)
         @@iterator_max = max.to_i
       end
-      
+
       def self.clear_iterator(id)
-        @@iterators.delete(id) 
+        @@iterators.delete(id)
       end
-      
+
       def self.alloc_iterator(reglist)
         @@iterators.synchronize do
           unless @@iterators.size < @@iterator_max
@@ -189,14 +186,14 @@ module R2CORBA
           return (@@iterators[itid] = INS::BindingIterator.new(reglist, itid))
         end
       end
-      
+
       def initialize(orb)
-        @orb = orb        
+        @orb = orb
         @map = MAP_TYPE.new
       end
-    
+
       attr_accessor :oid
-    
+
       # CosNaming::NamingContext methods
       #
       def bind(n, obj)
@@ -208,7 +205,7 @@ module R2CORBA
           register_object(n.first, n, CosNaming::Nobject, obj)
         end
       end
-    
+
       def rebind(n, obj)
         raise CosNaming::NamingContext::InvalidName.new if n.size<1
         if n.size>1
@@ -218,7 +215,7 @@ module R2CORBA
           reregister_object(n.first, n, CosNaming::Nobject, obj)
         end
       end
-    
+
       def bind_context(n, nc_new)
         raise CosNaming::NamingContext::InvalidName.new if n.size<1
         if n.size>1
@@ -228,7 +225,7 @@ module R2CORBA
           register_object(n.first, n, CosNaming::Ncontext, nc_new)
         end
       end
-    
+
       def rebind_context(n, nc_new)
         raise CosNaming::NamingContext::InvalidName.new if n.size<1
         if n.size>1
@@ -238,12 +235,12 @@ module R2CORBA
           reregister_object(n.first, n, CosNaming::Ncontext, nc_new)
         end
       end
-    
+
       def resolve(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size<1
         find_object(n)
       end
-    
+
       def unbind(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size<1
         if n.size>1
@@ -257,21 +254,21 @@ module R2CORBA
           end
         end
       end
-    
+
       def new_context()
         poa = self._default_POA
         naming_srv = NamingContext.new(@orb)
         naming_srv.oid = poa.activate_object(naming_srv)
         ::CosNaming::NamingContextExt::_narrow(poa.id_to_reference(naming_srv.oid))
       end
-    
+
       def bind_new_context(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size<1
         nc = self.new_context()
         self.bind_context(n, nc)
         nc
       end
-    
+
       def destroy()
         raise CosNaming::NamingContext::NotEmpty.new if @map.size>0
         return if self.oid.nil? ## no oid for root context
@@ -279,7 +276,7 @@ module R2CORBA
         poa.deactivate_object(self.oid)
         @orb = nil
       end
-    
+
       def list(how_many)
         reglist = @map.values
         bindings = []
@@ -297,14 +294,14 @@ module R2CORBA
         end
         [bindings, CosNaming::BindingIterator._narrow(bi_obj)]
       end
-    
+
       # CosNaming::NamingContextExt methods
       #
       def to_string(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size<1
         n.collect { |nc| nc.to_string }.join('/')
       end
-    
+
       def to_name(sn)
         raise CosNaming::NamingContext::InvalidName.new if sn.to_s.empty?
         snc_arr = []
@@ -313,7 +310,7 @@ module R2CORBA
         sn.size.times do |i|
           case sn[i,1]
           when '\\'
-            esc_ = !esc_ 
+            esc_ = !esc_
           when '/'
             unless esc_
               snc_arr << sn[off_, i-off_]
@@ -327,7 +324,7 @@ module R2CORBA
         snc_arr << sn[off_, sn.size]
         [snc_arr.collect { |snc| CosNaming::NameComponent.from_string(snc) }]
       end
-    
+
       def to_url(addr, sn)
         raise CosNaming::NamingContext::InvalidName.new if addr.to_s.empty? or sn.to_s.empty?
         url = 'corbaname:'+addr+'#'
@@ -340,7 +337,7 @@ module R2CORBA
         end
         url
       end
-    
+
       def resolve_str(sn)
         self.resolve(self.to_name(sn).first)
       end
@@ -348,7 +345,7 @@ module R2CORBA
       # Helper methods
       #
       protected
-    
+
       # register the object reference for a certain NameComponent id
       # no reregistering or duplicates allowed
       #
@@ -363,7 +360,7 @@ module R2CORBA
           }
         end
       end
-    
+
       # reregister the object reference for a certain NameComponent id
       #
       def reregister_object(name, full_name, type, obj)
@@ -380,7 +377,7 @@ module R2CORBA
           }
         end
       end
-    
+
       # walk all segments of the given CosNaming::Name to find the object
       # bound by this full name
       # NOTE that #find_context is used when the Name contains > 1 level
@@ -400,7 +397,7 @@ module R2CORBA
           end
         end
       end
-    
+
       # check if there exists a naming context in the current context
       # with the id from the first segment of the given CosNaming::Name
       # return the object reference to the naming context if found
@@ -419,8 +416,8 @@ module R2CORBA
           @map[key_][:object]
         end
       end
-    
+
     end #of NamingContext servant
-    
+
   end
 end

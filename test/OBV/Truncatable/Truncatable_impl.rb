@@ -7,7 +7,6 @@
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 class Test_impl < POA::OBV_TruncatableTest::Test

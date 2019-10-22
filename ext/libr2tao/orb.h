@@ -8,7 +8,6 @@
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #------------------------------------------------------------------*/
 #ifndef __R2TAO_ORB_H
 #define __R2TAO_ORB_H
