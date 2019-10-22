@@ -39,7 +39,7 @@ task :define_gemspec do
     gem.summary = %Q{TAO sourcecode for building R2CORBA}
     gem.description = %Q{TAO sourcecode for building R2CORBA}
     gem.email = 'mcorino@remedy.nl'
-    gem.homepage = "https://www.remedy.nl/products/r2corba.html"
+    gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
     gem.authors = ['Martin Corino']
     gem.files = Dir['lib/**/*']
     gem.files.concat(Dir["src/ACE+TAO-src-#{TAOGem::VERSION}.tar.gz"])

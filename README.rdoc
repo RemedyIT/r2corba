@@ -21,7 +21,7 @@ Instead of going for a complete native Ruby mapping implementing a native Ruby O
 * an MRI Ruby extension written in Ruby and C/C++ using {TAO}[https://www.remedy.nl/opensource/tao.html]
 * a JRuby extension written in Ruby and Java using {JacORB}[https://www.remedy.nl/opensource/jacorb.html]
 
-The {RIDL}[https://www.remedy.nl/products/ridl.html] based, native Ruby implementation of an OMG \IDL compiler supplements this extension and provides powerful features like direct inclusion of \IDL language modules into your Ruby programs without the need of explicit, separate stub generation.
+The {RIDL}[https://www.remedy.nl/opensource/ridl.html] based, native Ruby implementation of an OMG \IDL compiler supplements this extension and provides powerful features like direct inclusion of \IDL language modules into your Ruby programs without the need of explicit, separate stub generation.
 
 == How to get R2CORBA
 

@@ -7,7 +7,7 @@ task :define_gemspec do
     gem.summary = %Q{CORBA language mapping implementation for Ruby}
     gem.description = %Q{OMG CORBA v. 3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
     gem.email = 'mcorino@remedy.nl'
-    gem.homepage = "https://www.remedy.nl/products/r2corba.html"
+    gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
     gem.authors = ['Martin Corino']
     gem.files = R2CORBA.manifest
     gem.extensions = ['Rakefile']
