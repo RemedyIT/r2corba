@@ -8,7 +8,6 @@
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #------------------------------------------------------------------*/
 
 #if ((TAO_MAJOR_VERSION < 2) || (TAO_MAJOR_VERSION == 2 && TAO_MINOR_VERSION == 0 && TAO_BETA_VERSION <= 1))

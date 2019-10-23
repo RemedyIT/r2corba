@@ -8,7 +8,6 @@
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 require File.join(File.dirname(__FILE__), 'gem.rb')
@@ -68,7 +67,7 @@ namespace :r2corba do
           gem.summary = %Q{TAO sourcecode for building R2CORBA}
           gem.description = %Q{TAO sourcecode for building R2CORBA.}
           gem.email = 'mcorino@remedy.nl'
-          gem.homepage = "https://www.remedy.nl/products/r2corba.html"
+          gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
           gem.authors = ['Martin Corino']
           gem.files = Dir['lib/taosource/**/*']
           gem.files.concat(Dir["src/ACE+TAO-src-#{_ace_ver}.tar.gz"])
@@ -91,7 +90,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.summary = %Q{CORBA language mapping implementation for Ruby}
     gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
     gem.email = 'mcorino@remedy.nl'
-    gem.homepage = "https://www.remedy.nl/products/r2corba.html"
+    gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
     gem.authors = ['Martin Corino']
     gem.files = R2CORBA::Gem.manifest
     gem.extensions = ['mkrf_conf_srcgem.rb']
@@ -126,7 +125,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.summary = %Q{CORBA language mapping implementation for Ruby (extension binaries)}
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. (extension binaries)}
       gem.email = 'mcorino@remedy.nl'
-      gem.homepage = "https://www.remedy.nl/products/r2corba.html"
+      gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
       gem.authors = ['Martin Corino']
       gem.files = R2CORBA::Gem.manifest(:extbin)
       gem.extensions = []
@@ -169,7 +168,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.summary = %Q{CORBA language mapping implementation for Ruby}
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
       gem.email = 'mcorino@remedy.nl'
-      gem.homepage = "https://www.remedy.nl/products/r2corba.html"
+      gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
       gem.authors = ['Martin Corino']
       gem.files = R2CORBA::Gem.manifest(:bin)
       gem.require_paths = %w{lib}
@@ -208,7 +207,7 @@ unless defined?(JRUBY_VERSION) || !R2CORBA::Config.is_win32
       gem.summary = %Q{R2CORBA Devkit faker for RubyInstaller Rubies}
       gem.description = %Q{Fake Devkit loader to satisfy stupid RubyInstaller pre-install hook. }
       gem.email = 'mcorino@remedy.nl'
-      gem.homepage = "https://www.remedy.nl/products/r2corba.html"
+      gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
       gem.authors = ['Martin Corino']
       gem.files = 'lib/rubygems_plugin.rb'
       gem.require_paths = %w{lib}

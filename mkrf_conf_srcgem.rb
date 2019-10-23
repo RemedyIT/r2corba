@@ -8,7 +8,6 @@
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 # generate Rakefile with appropriate default task (all actual task in rakelib)
@@ -24,7 +23,6 @@ File.open('Rakefile', 'w') do |f|
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 task :default => 'r2corba:gem:srcbuild'
@@ -40,7 +38,7 @@ Make sure you have provided a JACORB_HOME definition pointing at a valid JacORB 
 with all required .jar files located at JACORB_HOME\lib. You can do this either by setting
 the JACORB_HOME environment variable or by providing the --jacorb-home buildflag to the
 'gem install' command.
-Checkout the documentation at http://osportal.remedy.nl/projects/r2corba
+Checkout the documentation at https://github.com/RemedyIT/r2corba
 for more information.
 __EOT
 
@@ -100,7 +98,7 @@ the 'gem install' command.
 Alternatively you can have the r2corba gem install the taosource gem for you and use that for
 the ACE/TAO build environment by *not* providing the --without-taogem build flag to the 'gem install'
 command.
-Checkout the documentation at http://osportal.remedy.nl/projects/r2corba for more information.
+Checkout the documentation at https://github.com/RemedyIT/r2corba for more information.
 __EOT
 
   install_taosource_gem = true

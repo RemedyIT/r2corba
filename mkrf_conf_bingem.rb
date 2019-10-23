@@ -8,7 +8,6 @@
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 # generate Rakefile with appropriate default task (all actual task in rakelib)
@@ -24,7 +23,6 @@ File.open('Rakefile', 'w') do |f|
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 if defined?(JRUBY_VERSION)

@@ -2,14 +2,11 @@
 #
 # Author: Martin Corino
 #
-# $Id: client.rb 279 2011-02-08 09:53:28Z martin $
-#
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the R2CORBA LICENSE which is
 # included with this program.
 #
 # Copyright (c) Remedy IT Expertise BV
-# Chamber of commerce Rotterdam nr.276339, The Netherlands
 #--------------------------------------------------------------------
 
 require 'optparse'
@@ -56,25 +53,25 @@ end
 orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
-    
+
   obj = orb.string_to_object(OPTIONS[:iorfile])
-  
+
   hello_obj = Test::Hello._narrow(obj)
-  
+
   hello_strings = (1..10000).map {hello_obj.get_string}
 
   puts "Client - got #{hello_strings.length} strings."
 
   hello_obj.shutdown()
-  
+
   assert_not "ERROR: Object is reported nil!", CORBA::is_nil(hello_obj)
-  
+
   hello_obj._free_ref()
-  
+
   assert "ERROR: Object is reported non-nil!", CORBA::is_nil(hello_obj)
 
 ensure
-    
+
   orb.destroy()
 
 end
