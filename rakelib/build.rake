@@ -32,17 +32,18 @@ task :build => 'r2corba:build'
 ## compile base IDL
 
 r2c_idlc_root = File.join('lib','corba','idl')
+stdidl_root = File.join('lib', 'idl')
 
 orb_pidlc = File.join('lib', 'ridlbe','ruby','orb.pidlc')
 file orb_pidlc => [R2CORBA::BUILD_CFG] do |t|
-  sh("#{R2CORBA::Config.ridlc} --preprocess --output #{t.name} --stdidl orb.idl")
+  sh("#{R2CORBA::Config.ridlc} --preprocess --output #{t.name} --include=#{stdidl_root} orb.idl")
 end
 Rake::Task['r2corba:build_idl'].enhance [orb_pidlc]
 CLOBBER.include orb_pidlc
 
 file File.join(r2c_idlc_root,'r2c_orb.rb') => [R2CORBA::BUILD_CFG, orb_pidlc] do |t|
   cmd = R2CORBA::Config.ridlc
-  cmd << " --ignore-pidl --output #{t.name} --namespace=R2CORBA --stdidl" <<
+  cmd << " --ignore-pidl --output #{t.name} --namespace=R2CORBA --include=#{stdidl_root}" <<
          " --stubs-only --expand-includes --search-includepath --no-libinit --interface-as-class=TypeCode orb.idl"
   sh(cmd)
 end
@@ -55,7 +56,7 @@ CLOBBER.include File.join(r2c_idlc_root,'r2c_orb.rb')
 ].each do |stub, pidl|
   file File.join(r2c_idlc_root,stub+'C.rb') => [R2CORBA::BUILD_CFG, orb_pidlc] do |t|
     cmd = R2CORBA::Config.ridlc
-    cmd << " --output #{t.name} --namespace=R2CORBA --stdidl --stubs-only --expand-includes --search-includepath --no-libinit #{pidl}"
+    cmd << " --output #{t.name} --namespace=R2CORBA --include=#{stdidl_root} --stubs-only --expand-includes --search-includepath --no-libinit #{pidl}"
     sh(cmd)
   end
   Rake::Task['r2corba:build_idl'].enhance [File.join(r2c_idlc_root,stub+'C.rb')]
@@ -68,7 +69,7 @@ unless defined?(JRUBY_VERSION)
   [ 'TAO_Ext', 'IORTable' ].each do |stub|
     file File.join(r2c_idlc_root,stub+'C.rb') => [R2CORBA::BUILD_CFG, orb_pidlc] do |t|
       cmd = R2CORBA::Config.ridlc
-      cmd << " --output #{t.name} --namespace=R2CORBA --stdidl --stubs-only --expand-includes -I#{tao_root}" <<
+      cmd << " --output #{t.name} --namespace=R2CORBA --include=#{stdidl_root} --stubs-only --expand-includes -I#{tao_root}" <<
           " --search-includepath --no-libinit #{File.join(r2c_idlc_root, stub+'.pidl')}"
       sh(cmd)
     end
@@ -79,7 +80,7 @@ end
 
 file File.join(r2c_idlc_root, 'CosNamingC.rb') => [R2CORBA::BUILD_CFG, orb_pidlc] do |t|
   cmd = R2CORBA::Config.ridlc
-  cmd << " -o #{r2c_idlc_root} --stdidl --expand-includes --search-includepath CosNaming.idl"
+  cmd << " -o #{r2c_idlc_root} --include=#{stdidl_root} --expand-includes --search-includepath CosNaming.idl"
   sh(cmd)
 end
 Rake::Task['r2corba:build_idl'].enhance [File.join(r2c_idlc_root,'CosNamingC.rb')]
