@@ -1,0 +1,59 @@
+variables:
+   DOC_ROOT: $(Build.SourcesDirectory)/ACE
+   ACE_ROOT: $(Build.SourcesDirectory)/ACE/ACE
+   MPC_ROOT: $(Build.SourcesDirectory)/ACE/MPC
+   TAO_ROOT: $(Build.SourcesDirectory)/ACE/TAO
+   RIDL_ROOT: $(Build.SourcesDirectory)/ridl
+   system.prefergit: true
+
+schedules:
+- cron: "0 7 * * SUN"
+  displayName: Weekly Sunday
+  branches:
+    include:
+    - master
+  always: true
+
+resources:
+- repo: self
+  fetchDepth: 1
+
+jobs:
+- job: Linux
+  pool:
+    vmImage: ubuntu-18.04
+  strategy:
+    matrix:
+      GCC8:
+        CC: gcc-8
+        CXX: g++-8
+        PackageDeps: g++-8
+  steps:
+  - task: UseRubyVersion@0
+    inputs:
+      versionSpec: '>= 2.4'
+      addToPath: true
+    displayName: Install ruby
+  - script: |
+      wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+      sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ $(Repo) main"
+    displayName: Add repository ($(Repo))
+    condition: and(succeeded(), ne(variables['Repo'], ''))
+  - script: |
+      sudo apt-get --yes update
+      sudo apt-get --yes install $(PackageDeps)
+    displayName: install system package dependencies
+  - powershell: |
+      git clone --depth 1 --branch=ACE+TAO-6_5_6 git://github.com/DOCGroup/ACE_TAO.git $(DOC_ROOT)
+      git clone --depth 1 --branch=ACE+TAO-6_5_6 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+      git clone --depth 1 git://github.com/RemedyIT/ridl.git $(RIDL_ROOT)
+    displayName: git clone dependent repositories
+  - powershell: |
+      rake configure
+    displayName: Run rake configure
+  - powershell: |
+      rake build
+    displayName: Run rake build
+  - powershell: |
+      rake test
+    displayName: Run rake test
