@@ -1,4 +1,5 @@
 {<img src="https://badge.fury.io/rb/r2corba.svg" alt="Gem Version" />}[https://badge.fury.io/rb/r2corba]
+image:https://dev.azure.com/remedyit/r2corba/_apis/build/status/r2corba?branchName=master[Azure pipeline, link=https://dev.azure.com/remedyit/r2corba/_build?definitionId=3&_a=summary]
 
 = R2CORBA
 
