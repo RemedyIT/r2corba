@@ -15,7 +15,7 @@ module R2CORBA
   module CORBA
     class TypeCode
       def initialize
-        raise RuntimeError, 'not allowed'
+        raise 'not allowed'
       end
 
       @@wrapper_klass = Class.new(CORBA::TypeCode) do
@@ -390,7 +390,7 @@ module R2CORBA
       class Recursive < CORBA::TypeCode
 
         def initialize(id)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def recursed_tc
@@ -418,7 +418,7 @@ module R2CORBA
       class String < CORBA::TypeCode
 
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -443,7 +443,7 @@ module R2CORBA
       class WString < CORBA::TypeCode
 
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -489,7 +489,7 @@ module R2CORBA
       class Fixed < CORBA::TypeCode
 
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -511,7 +511,7 @@ module R2CORBA
       class Sequence < CORBA::TypeCode
 
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -568,7 +568,7 @@ module R2CORBA
       class Array < CORBA::TypeCode
 
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -601,7 +601,7 @@ module R2CORBA
 
       class Alias < IdentifiedTypeCode
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -623,7 +623,7 @@ module R2CORBA
       class Valuetype < IdentifiedTypeCode
         attr_reader :members
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
         def add_member(name, tc, access)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
@@ -704,7 +704,7 @@ module R2CORBA
 
       class Valuebox < IdentifiedTypeCode
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def Valuebox.define_type(tc)
@@ -750,7 +750,7 @@ module R2CORBA
 
       class ObjectRef < IdentifiedTypeCode
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -760,7 +760,7 @@ module R2CORBA
 
       class AbstractInterface < IdentifiedTypeCode
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
 
         def get_type
@@ -771,7 +771,7 @@ module R2CORBA
       class Struct < IdentifiedTypeCode
         attr_reader :members
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
         def add_member(name, tc)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
@@ -881,11 +881,11 @@ module R2CORBA
         attr_reader :switchtype
         attr_reader :implicit_default
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
         # because creating the native tc involves creating Any's we postpone until actually needed
         def tc_
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
         def id
           @id
@@ -1000,7 +1000,7 @@ module R2CORBA
       class Enum < IdentifiedTypeCode
         attr_reader :members
         def initialize(*args)
-          raise RuntimeError, 'overload required'
+          raise 'overload required'
         end
         def get_type
           ::Integer
@@ -1040,7 +1040,7 @@ module R2CORBA
       end
 
       def TypeCode.get_primitive_tc(kind)
-        raise RuntimeError, 'overload required'
+        raise 'overload required'
       end
 
       private

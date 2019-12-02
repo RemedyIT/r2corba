@@ -27,7 +27,7 @@ module R2CORBA
 
       def initialize(options = {})
         @options = OPTIONS.merge(options)
-        raise RuntimeError, 'nr. of threads must >= 1' if @options[:threads] < 1
+        raise 'nr. of threads must >= 1' if @options[:threads] < 1
       end
 
       def setup
