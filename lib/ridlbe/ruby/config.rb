@@ -297,8 +297,7 @@ module IDL
             ret = ret[0,1].downcase + ret[1,ret.size].to_s
             ret = 'r_'+ret if IDL::Ruby::LeafMixin::RESERVED_RUBY_MEMBER.include?(ret)
           else
-            raise RuntimeError,
-              "invalid nametype for #{self.class}: #{self::NAMETYPE}"
+            raise "invalid nametype for #{self.class}: #{self::NAMETYPE}"
           end
           ret
         end

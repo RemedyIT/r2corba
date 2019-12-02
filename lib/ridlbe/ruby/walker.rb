@@ -738,7 +738,7 @@ module IDL
         end
 
       else
-        raise RuntimeError, "invalid type for (un)marshalling: #{_type.typename}"
+        raise "invalid type for (un)marshalling: #{_type.typename}"
       end
     end
 
@@ -762,7 +762,7 @@ module IDL
       when Expression::ScopedName, Expression::Enumerator
         exp.node.scoped_rubyname
       else
-        raise RuntimeError, "unknown expression type: #{exp.class.name}"
+        raise "unknown expression type: #{exp.class.name}"
       end
     end
 
@@ -819,7 +819,7 @@ module IDL
       when Type::ScopedName
         s = value_to_s(Expression::Value.new(exp.idltype.node.idltype, v))
       else
-        raise RuntimeError, "#{exp.typename}'s not been supported yet."
+        raise "#{exp.typename}'s not been supported yet."
       end
       s
     end
@@ -853,7 +853,7 @@ module IDL
       when Expression::Operation::Mod
         s = expression_to_s(op[0]) + " % " + expression_to_s(op[1])
       else
-        raise RuntimeError, "unknown operation: #{exp.type.name}"
+        raise "unknown operation: #{exp.type.name}"
       end
       "(" + s + ")"
     end
@@ -1098,7 +1098,7 @@ module IDL
         printiln(format("%s = CORBA::Object # typedef %s\n", node.rubyname, node.rubyname))
 
       else
-        raise RuntimeError, "unsupported typedef for #{t.class.name}."
+        raise "unsupported typedef for #{t.class.name}."
       end
     end
   end ## RubyStubWriter
@@ -1457,7 +1457,7 @@ module IDL
         end
 
       else
-        raise RuntimeError, "invalid type for (un)marshalling: #{_type.typename}"
+        raise "invalid type for (un)marshalling: #{_type.typename}"
       end
     end
 
@@ -1481,7 +1481,7 @@ module IDL
       when Expression::ScopedName
         @stub_root + exp.node.scoped_rubyname
       else
-        raise RuntimeError, "unknown expression type: #{exp.class.name}"
+        raise "unknown expression type: #{exp.class.name}"
       end
     end
 
@@ -1511,7 +1511,7 @@ module IDL
       when Type::ScopedName
         s = value_to_s(Expression::Value.new(exp.idltype.node.idltype, v))
       else
-        raise RuntimeError, "#{exp.typename}'s not been supported yet."
+        raise "#{exp.typename}'s not been supported yet."
       end
       s
     end
@@ -1545,7 +1545,7 @@ module IDL
       when Expression::Mod
         s = expression_to_s(op[0]) + " % " + expression_to_s(op[1])
       else
-        raise RuntimeError, "unknown operation: #{exp.type.name}"
+        raise "unknown operation: #{exp.type.name}"
       end
       "(" + s + ")"
     end
