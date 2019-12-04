@@ -191,7 +191,7 @@ module R2CORBA
             when TK_LONGDOUBLE
               raise CORBA::NO_IMPLEMENT.new('LongDouble not supported',0,CORBA::COMPLETED_NO)
             when TK_FIXED
-              rval = BigDecimal.new(jany.extract_fixed().toString())
+              rval = BigDecimal(jany.extract_fixed().toString())
             when TK_CHAR
               rval = jany.extract_char().chr
             when TK_STRING

@@ -499,7 +499,7 @@ module R2CORBA
         def validate(val)
           return val if val.nil?
           super(val) unless ::BigDecimal === val || val.respond_to?(:to_str)
-          val = ::BigDecimal === val ? val : BigDecimal.new(val.to_str)
+          val = ::BigDecimal === val ? val : BigDecimal(val.to_str)
           val
         end
 
@@ -1109,7 +1109,7 @@ module R2CORBA
 
     class LongDouble
       def to_d(precision)
-        BigDecimal.new(self.to_s(precision))
+        BigDecimal(self.to_s(precision))
       end
       def LongDouble._tc
         CORBA._tc_longdouble
