@@ -192,14 +192,31 @@ THE_END__
       _version
     end
 
+    # Downloading from github results in some http redirects which we first have to follow
+    def self.follow_url(uri_str, limit = 10)
+      raise ArgumentError, 'HTTP redirect too deep' if limit == 0
+      url = URI(uri_str)
+      req = Net::HTTP::Get.new(url)
+      response = Net::HTTP.start(url.host, url.port, use_ssl: true) { |http| http.request(req) }
+      case response
+      when Net::HTTPSuccess     then uri_str
+      when Net::HTTPRedirection then follow_url(response['location'], limit - 1)
+      else
+        response.error!
+      end
+    end
+
     def self.download_tao_source(version, targetdir)
-      print(_msg = "Downloading ACE+TAO-src-#{version}.tar.gz ")
-      _url = "http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO-src-#{version}.tar.gz"
+      version_dir = version.gsub('.','_')
+      _url = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE%2BTAO-#{version_dir}/ACE+TAO-src-#{version}.tar.gz"
+      print(_msg = "Downloading ACE+TAO-src-#{version}.tar.gz from #{_url}")
       _fnm = File.join(targetdir, "ACE+TAO-src-#{version}.tar.gz")
-      Net::HTTP.start("download.dre.vanderbilt.edu") do |http|
-        _fout = File.open(_fnm, "wb")
+      # First follow all http redirects
+      url = URI(follow_url(_url))
+      Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
+       _fout = File.open(_fnm, "wb")
         begin
-          http.request_get("/previous_versions/ACE+TAO-src-#{version}.tar.gz") do |resp|
+          http.request_get(url) do |resp|
             _sndlen =  resp.content_length
             _reclen = 0
             resp.read_body do |segment|
