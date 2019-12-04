@@ -42,7 +42,7 @@ namespace :r2corba do
 
     task :check do
       R2CORBA::Bin.binaries.each do |bin|
-        if File.exists?(File.join('bin', bin))
+        if File.exist?(File.join('bin', bin))
           content = IO.read(File.join('bin', bin))
           rm_f(File.join('bin', bin)) unless content == R2CORBA::Bin.__send__(bin.gsub('.','_').to_sym)
         end

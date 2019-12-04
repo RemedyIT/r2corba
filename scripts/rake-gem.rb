@@ -40,7 +40,7 @@ namespace :r2corba do
       # copy required dlls to gem install folder
       ext_inst_dir = File.join(R2CORBA.pkg_root, 'ext')
       R2CORBA.ext_dlls.each do |dll_path|
-        cp(dll_path, ext_inst_dir) unless File.exists?(File.join(ext_inst_dir, File.basename(dll_path)))
+        cp(dll_path, ext_inst_dir) unless File.exist?(File.join(ext_inst_dir, File.basename(dll_path)))
       end
     elsif !defined?(JRUBY_VERSION)
       # make sure rins executable exists

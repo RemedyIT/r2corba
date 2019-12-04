@@ -57,7 +57,7 @@ module R2CORBA
         sysdlls = []
         except_dll = R2CORBA::Config.is_win64 ? 'libgcc_s_seh-1.dll' : 'libgcc_s_dw2-1.dll'
         ENV['PATH'].split(';').each do |p|
-          if File.exists?(File.join(p, except_dll)) && File.exists?(File.join(p, 'libstdc++-6.dll'))
+          if File.exist?(File.join(p, except_dll)) && File.exist?(File.join(p, 'libstdc++-6.dll'))
             sysdlls << File.join(p, except_dll)
             sysdlls << File.join(p, 'libstdc++-6.dll')
             break
@@ -265,7 +265,7 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
           # create unversioned ACE+TAO lib symlinks
 
           ACE_FILES.collect {|dep| File.join(get_config('aceroot'),'lib', 'lib'+dep+'.so')}.each do |lib|
-            Dir.glob(lib+'.*').each {|verlib| File.symlink(verlib, lib) unless File.exists?(lib)}
+            Dir.glob(lib+'.*').each {|verlib| File.symlink(verlib, lib) unless File.exist?(lib)}
           end
         end
       end

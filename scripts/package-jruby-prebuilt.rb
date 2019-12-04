@@ -48,7 +48,7 @@ require ver_file
 
 pkg = File.join(pkg_dir, "Ruby2CORBA-#{R2CORBA::R2CORBA_VERSION}_prebuilt_java")
 
-Dir.glob(pkg+'.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exists?(f) }
+Dir.glob(pkg+'.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
 
 mkdir_p(pkg_dir) unless File.directory?(pkg_dir)
 

@@ -109,7 +109,7 @@ module TestFinder
              (OPTIONS[:debug] ? '-d' : '')
     end
     if File.directory?(path)
-      if File.exists?(File.join(path, 'run_test.rb'))
+      if File.exist?(File.join(path, 'run_test.rb'))
         dir = path.gsub(/^#{ROOT.gsub('/', '\/')}\//, '')
         return if (OPTIONS[:exclude] || []).any? {|match| /^#{match.gsub('/', '\/')}/ =~ dir }
         unless OPTIONS[:listonly]

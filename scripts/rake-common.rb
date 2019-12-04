@@ -40,7 +40,7 @@ module R2CORBA
     SYS_DLL = []
     except_dll = (RUBY_PLATFORM =~ /x64/) ? 'libgcc_s_sjlj-1.dll' : 'libgcc_s_dw2-1.dll'
     ENV['PATH'].split(';').each do |p|
-      if File.exists?(File.join(p, except_dll)) && File.exists?(File.join(p, 'libstdc++-6.dll'))
+      if File.exist?(File.join(p, except_dll)) && File.exist?(File.join(p, 'libstdc++-6.dll'))
         SYS_DLL << File.join(p, except_dll)
         SYS_DLL << File.join(p, 'libstdc++-6.dll')
         break

@@ -232,9 +232,9 @@ module R2CORBA
         end
       elsif File.readable?('/etc/redhat-release')
         name = File.read('/etc/redhat-release').strip.downcase
-      elsif File.exists?('/etc/SuSE-release')
+      elsif File.exist?('/etc/SuSE-release')
         name = 'suse'
-      elsif File.exists?('/etc/debian_version')
+      elsif File.exist?('/etc/debian_version')
         name = 'debian'
       end
       @@linux_distro = case name
@@ -348,7 +348,7 @@ module R2CORBA
       @@ridlc = File.join('bin', 'ridlc')
 
       # check availability of RIDL; either as gem or in subdir
-      if (@@ridl_local = File.exists?(File.join('ridl', 'lib', 'ridl', 'ridl.rb')))
+      if (@@ridl_local = File.exist?(File.join('ridl', 'lib', 'ridl', 'ridl.rb')))
         incdirs = [
             File.expand_path(File.join('ridl', 'lib')),
             File.expand_path('lib'),
@@ -515,7 +515,7 @@ module R2CORBA
       end
 
       # check availability of RIDL; either as gem or in subdir
-      unless File.exists?(File.join('ridl', 'lib', 'ridl', 'ridl.rb')) || (`gem search -i -q ridl`.strip) == 'true'
+      unless File.exist?(File.join('ridl', 'lib', 'ridl', 'ridl.rb')) || (`gem search -i -q ridl`.strip) == 'true'
         raise "Missing RIDL installation. R2CORBA requires RIDL installed either as gem or in subdirectory ridl."
       end
     end

@@ -14,7 +14,7 @@ require 'java'
 
 module R2CORBA
   if ENV['JACORB_HOME'] &&
-      (File.exists?(File.join(ENV['JACORB_HOME'], 'lib', 'jacorb.jar')) ||
+      (File.exist?(File.join(ENV['JACORB_HOME'], 'lib', 'jacorb.jar')) ||
        Dir[File.join(ENV['JACORB_HOME'], 'lib', 'jacorb-*.jar')].any? {|p| p =~ /\/jacorb\-\d\.\d\.jar\Z/})
     JACORB_HOME = ENV['JACORB_HOME']
   else

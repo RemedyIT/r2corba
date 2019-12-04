@@ -112,7 +112,7 @@ module R2CORBA
       unless get_config('without-tao') || defined?(JRUBY_VERSION) || !R2CORBA::Config.is_linux
         R2CORBA::Ext::ace_shlibs('.so', get_config('aceinstdir')).each do |acelib|
           acelib = File.join(get_config(:prefix), acelib) if get_config(:prefix)
-          FileUtils.rm_f(acelib, :noop => nowrite, :verbose => verbose) if nowrite || File.exists?(acelib)
+          FileUtils.rm_f(acelib, :noop => nowrite, :verbose => verbose) if nowrite || File.exist?(acelib)
         end
       end
       R2CORBA::Install.specs.each do |dest, srclist, mode, match|

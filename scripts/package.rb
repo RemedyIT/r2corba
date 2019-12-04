@@ -44,9 +44,9 @@ FILES.each {|f|
   cmd << " #{File.join(pkg_base, f)}"
 }
 
-File.delete(pkg) if File.exists?(pkg)
-File.delete("#{pkg}.gz") if File.exists?("#{pkg}.gz")
-File.delete("#{pkg}.bz2") if File.exists?("#{pkg}.bz2")
+File.delete(pkg) if File.exist?(pkg)
+File.delete("#{pkg}.gz") if File.exist?("#{pkg}.gz")
+File.delete("#{pkg}.bz2") if File.exist?("#{pkg}.bz2")
 cur_dir = Dir.getwd
 Dir.chdir(File.expand_path('..', pkg_root))
 begin
@@ -72,7 +72,7 @@ SUBDIRS.each {|d|
 }
 cmd << " -x@#{File.join(script_root, 'pkg-excludes.lst')}"
 
-File.delete(pkg) if File.exists?(pkg)
+File.delete(pkg) if File.exist?(pkg)
 cur_dir = Dir.getwd
 Dir.chdir(File.expand_path('..', pkg_root))
 begin

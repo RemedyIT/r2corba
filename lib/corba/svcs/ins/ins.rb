@@ -135,7 +135,7 @@ module R2CORBA
         end
 
         def pidfile_exists?
-          File.exists?(self.pidfile)
+          File.exist?(self.pidfile)
         end
 
         def check_pidfile
@@ -326,7 +326,7 @@ module R2CORBA
         end
 
         def pidfile_exists?
-          File.exists?(self.pidfile)
+          File.exist?(self.pidfile)
         end
 
         def check_pidfile
