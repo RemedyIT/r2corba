@@ -75,7 +75,7 @@ else # !JRUBY_VERSION
         cur_dir = Dir.getwd
         Dir.chdir 'ext'
         begin
-          sh("#{get_config('makeprog')} realclean") if File.exists?('GNUmakefile')
+          sh("#{get_config('makeprog')} realclean") if File.exist?('GNUmakefile')
         ensure
           Dir.chdir cur_dir
         end
@@ -129,7 +129,7 @@ else # !JRUBY_VERSION
           cur_dir = Dir.getwd
           Dir.chdir File.join('ext', 'extload')
           begin
-            sh("#{get_config('makeprog')} realclean") if File.exists?('GNUmakefile')
+            sh("#{get_config('makeprog')} realclean") if File.exist?('GNUmakefile')
           ensure
             Dir.chdir cur_dir
           end
@@ -224,10 +224,10 @@ else # !JRUBY_VERSION
           # clean ACE+TAO
           cur_dir = Dir.getwd
           ace_root = File.expand_path(get_config('aceroot'))
-          if File.exists?(ace_root)
+          if File.exist?(ace_root)
             Dir.chdir ace_root
             begin
-              sh("#{get_config('makeprog')} realclean") if File.exists?('GNUmakefile')
+              sh("#{get_config('makeprog')} realclean") if File.exist?('GNUmakefile')
             ensure
               Dir.chdir cur_dir
             end

@@ -98,13 +98,13 @@ if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
 end
 cmd = cmd.gsub('{pkgfile}', pkg).gsub('{xcl_path}',File.join(pkg_root, 'scripts'))
 
-Dir.glob(pkg+'.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exists?(f) }
+Dir.glob(pkg+'.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
 
 mkdir_p(pkg_dir) unless File.directory?(pkg_dir)
 
 if RUBY_PLATFORM =~ /mingw32/
   ENV['PATH'].split(';').each do |p|
-    if File.exists?(File.join(p, except_dll)) && File.exists?(File.join(p, 'libstdc++-6.dll'))
+    if File.exist?(File.join(p, except_dll)) && File.exist?(File.join(p, 'libstdc++-6.dll'))
       cp(File.join(p, except_dll), ext_dir)
       cp(File.join(p, 'libstdc++-6.dll'), ext_dir)
       break
@@ -129,6 +129,6 @@ begin
 ensure
   cd(cur_dir)
 
-  rm_f(File.join(ext_dir, 'libstdc++-6.dll')) if File.exists?(File.join(ext_dir, 'libstdc++-6.dll'))
-  rm_f(File.join(ext_dir, except_dll)) if File.exists?(File.join(ext_dir, except_dll))
+  rm_f(File.join(ext_dir, 'libstdc++-6.dll')) if File.exist?(File.join(ext_dir, 'libstdc++-6.dll'))
+  rm_f(File.join(ext_dir, except_dll)) if File.exist?(File.join(ext_dir, except_dll))
 end

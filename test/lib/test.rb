@@ -534,7 +534,7 @@ end
   end
 
   def TestUtil.remove_file(filename)
-    File.delete(filename) if File.exists?(filename)
+    File.delete(filename) if File.exist?(filename)
   end
 
 end
