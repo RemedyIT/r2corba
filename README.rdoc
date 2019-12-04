@@ -1,5 +1,6 @@
 {<img src="https://badge.fury.io/rb/r2corba.svg" alt="Gem Version" />}[https://badge.fury.io/rb/r2corba]
 {<img src="https://dev.azure.com/remedyit/r2corba/_apis/build/status/r2corba?branchName=master" alt="Azure pipeline" />}[https://dev.azure.com/remedyit/r2corba/_build?definitionId=3&_a=summary]
+{<img src="https://www.codefactor.io/repository/github/remedyit/r2corba/badge" alt="CodeFactor" />}[https://www.codefactor.io/repository/github/remedyit/r2corba]
 
 = R2CORBA
 
