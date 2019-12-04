@@ -49,3 +49,8 @@ See the file link:THANKS
 == Warranty
 
 This software is provided "as is" and without any express or implied warranties, including, without limitation, the implied warranties of merchantibility and fitness for a particular purpose.
+
+== Releasing new r2corba gems
+
+A new R2CORBA taosource gem can be created by executing
+rake r2corba:gem:taogem
