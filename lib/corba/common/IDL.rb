@@ -28,8 +28,8 @@ module R2CORBA
   module CORBA
 
     module IDL
-      CLIENT_STUB = 1.freeze
-      SERVANT_INTF = 2.freeze
+      CLIENT_STUB = 1
+      SERVANT_INTF = 2
 
       @@loaded_idls = {}
 
