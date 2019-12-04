@@ -75,7 +75,7 @@ namespace :r2corba do
           gem.extensions = ['mkrf_conf_taogem.rb']
           gem.require_paths = %w{lib}
           gem.executables = []
-          gem.required_ruby_version = '>= 1.9.3'
+          gem.required_ruby_version = '>= 2.0'
           gem.licenses = ['ACE']
         end
         R2CORBA::Gem.build_gem(gemspec)
@@ -96,12 +96,16 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.extensions = ['mkrf_conf_srcgem.rb']
     gem.require_paths = %w{lib}
     gem.executables = %w{ridlc rins r2corba}
-    gem.required_ruby_version = '>= 1.9.3'
+    gem.required_ruby_version = '>= 2.0'
     gem.licenses = ['R2CORBA', 'ACE', 'GPL']
     gem.require_paths << 'ext'
     gem.add_dependency 'ridl', '~> 2.5'
     gem.add_dependency 'rake', '~> 10.0'
     gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
+    gem.metadata = {
+      "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
+      "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+    }
   end
   R2CORBA::Gem.build_gem(gemspec)
 end
@@ -131,11 +135,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.extensions = []
       gem.require_paths = %w{ext}
       gem.executables = []
-      if R2CORBA::Config.rb_ver_major < 2
-        gem.required_ruby_version = '>= 1.9.3'
-      else
-        gem.required_ruby_version = '>= 2.0.0'
-      end
+      gem.required_ruby_version = '>= 2.0.0'
       gem.licenses = ['R2CORBA', 'ACE']
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so'
     end
@@ -213,7 +213,7 @@ unless defined?(JRUBY_VERSION) || !R2CORBA::Config.is_win32
       gem.require_paths = %w{lib}
       gem.executables = []
       gem.extensions = []
-      gem.required_ruby_version = '>= 1.9.3'
+      gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['R2CORBA']
     end
     R2CORBA::Gem.build_gem(gemspec)
