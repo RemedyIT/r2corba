@@ -48,7 +48,7 @@ task :define_gemspec do
     gem.require_paths = %w{lib}
     gem.executables = []
     #gem.platform = Gem::Platform::CURRENT
-    gem.required_ruby_version = '>= 1.8.6'
+    gem.required_ruby_version = '>= 2.0'
     gem.licenses = ['ACE']
   end
 end
