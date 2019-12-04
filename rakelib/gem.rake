@@ -76,7 +76,7 @@ namespace :r2corba do
           gem.require_paths = %w{lib}
           gem.executables = []
           gem.required_ruby_version = '>= 2.0'
-          gem.licenses = ['ACE']
+          gem.licenses = ['DOC']
         end
         R2CORBA::Gem.build_gem(gemspec)
       end
@@ -97,7 +97,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.require_paths = %w{lib}
     gem.executables = %w{ridlc rins r2corba}
     gem.required_ruby_version = '>= 2.0'
-    gem.licenses = ['R2CORBA', 'ACE', 'GPL']
+    gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
     gem.require_paths << 'ext'
     gem.add_dependency 'ridl', '~> 2.5'
     gem.add_dependency 'rake', '~> 10.0'
@@ -136,7 +136,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.require_paths = %w{ext}
       gem.executables = []
       gem.required_ruby_version = '>= 2.0.0'
-      gem.licenses = ['R2CORBA', 'ACE']
+      gem.licenses = ['Nonstandard', 'DOC']
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so'
     end
     R2CORBA::Gem.build_gem(gemspec)
@@ -177,11 +177,11 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       if defined?(JRUBY_VERSION)
         gem.require_paths << 'jacorb/lib'
         gem.required_ruby_version = '>= 1.7.0'
-        gem.licenses = ['R2CORBA', 'JacORB']
+        gem.licenses = ['Nonstandard', 'GPL-2.0']
       else
         gem.files << File.join('ext', '.keep') unless ENV['FULL_BINGEM'] # to force installation of ext folder if libs are left out
         gem.required_ruby_version = '>= 1.9.3'
-        gem.licenses = ['R2CORBA', 'ACE', 'GPL']
+        gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
         gem.require_paths << 'ext'
       end
       gem.add_dependency 'ridl', '~> 2.5'
@@ -214,7 +214,7 @@ unless defined?(JRUBY_VERSION) || !R2CORBA::Config.is_win32
       gem.executables = []
       gem.extensions = []
       gem.required_ruby_version = '>= 2.0'
-      gem.licenses = ['R2CORBA']
+      gem.licenses = ['Nonstandard']
     end
     R2CORBA::Gem.build_gem(gemspec)
   end

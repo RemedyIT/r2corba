@@ -19,11 +19,11 @@ task :define_gemspec do
       gem.executables << 'jrins'
       gem.require_paths << 'jacorb/lib'
       gem.required_ruby_version = '>= 1.5.0'
-      gem.licenses = ['R2CORBA', 'JacORB']
+      gem.licenses = ['Nonstandard', 'GPL-2.0']
     else
       gem.platform = Gem::Platform::CURRENT if RUBY_PLATFORM =~ /mingw32/
       gem.required_ruby_version = '>= 1.8.6'
-      gem.licenses = ['R2CORBA', 'ACE', 'GPL']
+      gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
       gem.require_paths << 'ext'
     end
     gem.add_dependency 'ridl', '>= 2.2.2'
