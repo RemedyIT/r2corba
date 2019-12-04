@@ -53,6 +53,8 @@ This software is provided "as is" and without any express or implied warranties,
 
 == Releasing new r2corba gems
 
+A new r2corba ruby gem release can be made by incrementing the R2CORBA version in link:lib/corba/common/version.rb and create a new release on {github}[https://github.com/RemedyIT/r2corba/releases] matching the new version (for example v1.6.0). The github {Ruby Gem Release}[https://github.com/RemedyIT/r2corba/actions?query=workflow%3A%22Ruby+Gem+Release%22] action will automatically create a new {r2corba}[https://www.rubygems.org/gems/r2corba] and {taosource}[https://www.rubygems.org/gems/taosource] gem and push these to Rubygems.org.
+
 A new R2CORBA taosource gem can be created by executing
 
   rake r2corba:gem:taogem
