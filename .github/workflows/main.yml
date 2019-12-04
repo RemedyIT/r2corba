@@ -23,7 +23,7 @@ jobs:
         printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
         rake gem
         rake r2corba:gem:taogem
-        gem push pkg/taosource*.gem
         gem push pkg/r2corba*.gem
+        gem push pkg/taosource*.gem
       env:
         GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
