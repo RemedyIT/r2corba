@@ -18,7 +18,7 @@ module R2CORBA
     INS_VERSION_MAJOR = 0
     INS_VERSION_MINOR = 1
     INS_VERSION_RELEASE = 1
-    INS_COPYRIGHT = 'Copyright (c) 2011-2013 Remedy IT Expertise BV, The Netherlands'.freeze
+    INS_COPYRIGHT = "Copyright (c) 2011-#{Time.now.year} Remedy IT Expertise BV, The Netherlands".freeze
 
     IS_WIN32 = (RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/ || ENV['OS'] =~ /windows/i) ? true : false
     IS_JRUBY = defined?(JRUBY_VERSION)
