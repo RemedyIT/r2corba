@@ -17,19 +17,19 @@ module R2CORBA
     end
 
     def map_ior(object_key, ior)
-      begin
+      
         @orb.orb_.addObjectKey(object_key, ior)
       rescue ::NativeException
         CORBA::Exception.native2r($!)
-      end
+      
     end
 
     def unmap_ior(object_key)
-      begin
+      
         @orb.orb_.addObjectKey(object_key, nil)
       rescue ::NativeException
         CORBA::Exception.native2r($!)
-      end
+      
     end
   end
 end

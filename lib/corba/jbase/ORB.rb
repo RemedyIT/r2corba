@@ -18,13 +18,13 @@ module R2CORBA
       class << self
         protected
         def _singleton_orb_init
-          begin
+          
             CORBA::Native::ORB.init
           rescue ArgumentError
             # this will happen if java.endorsed.dirs is used with JacORB
             # in that case just directly init on the singleton class itself
             CORBA::Native::ORBSingleton.init
-          end
+          
         end
       end
 
@@ -61,7 +61,7 @@ module R2CORBA
       #str ::String
       #ret ::CORBA::Object
       def string_to_object(str)
-        begin
+        
           begin
             Object._wrap_native(self.orb_.string_to_object(str))
           rescue ::NativeException
@@ -69,7 +69,7 @@ module R2CORBA
           end
         rescue CORBA::BAD_PARAM ## JacORB throws MARSHAL exception on invalid IORs which is not spec compliant
           return nil
-        end
+        
       end
 
       # boolean wait_for_completion

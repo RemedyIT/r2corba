@@ -29,11 +29,11 @@ module R2CORBA
       end
 
       def operation
-        begin
+        
           self.req_.operation()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def add_in_arg(tc, val, nm='')
@@ -64,7 +64,7 @@ module R2CORBA
       end
 
       def arguments
-        begin
+        
           nvl = self.req_.arguments
           (0..nvl.count).to_a.collect do |i|
             nv = nvl.item(i)
@@ -75,7 +75,7 @@ module R2CORBA
           end
         rescue
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def arguments=(*args)
@@ -106,18 +106,18 @@ module R2CORBA
       end
 
       def exceptions
-        begin
+        
           exl = self.req_.exceptions
           (0..exl.count).to_a.collect do |i|
             CORBA::TypeCode.from_java(exl.item(i))
           end
         rescue
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def exceptions=(exl)
-        begin
+        
           # clear current exceptions
           jexl = self.req_.exceptions
           jexl.remove(0) while jexl.count>0
@@ -127,7 +127,7 @@ module R2CORBA
           end
         rescue
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def set_return_type(tc)
@@ -140,11 +140,11 @@ module R2CORBA
       end
 
       def return_value
-        begin
+        
           Any.from_java(self.req_.return_value, self.req_.target._orb, @return_type)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def invoke
@@ -168,35 +168,35 @@ module R2CORBA
       end
 
       def send_oneway
-        begin
+        
           self.req_.send_oneway
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def send_deferred
-        begin
+        
           self.req_.send_deferred
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def poll_response
-        begin
+        
           self.req_.poll_response
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def get_response
-        begin
+        
           self.req_.get_response
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       protected

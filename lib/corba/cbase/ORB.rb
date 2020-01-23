@@ -70,20 +70,20 @@ module R2CORBA
 
       # ret [boolean, <time left>] if !timeout.nil? else boolean
       def work_pending(timeout = nil)
-        begin
+        
           self.orb_.work_pending(timeout)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       # ret <time left> if !timeout.nil? else void
       def perform_work(timeout = nil)
-        begin
+        
           self.orb_.perform_work(timeout)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       # safe to run in thread; even in pre-1.9 MRI Ruby
@@ -116,11 +116,11 @@ module R2CORBA
         # starts blocking ORB event loop in MRI Ruby 1.8, i.e. no thread support
         # ret <time left> if !timeout.nil? else void
         def run_blocked(timeout = nil)
-          begin
+          
             self.orb_.run(timeout)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          end
+          
         end
       end
 

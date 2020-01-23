@@ -202,43 +202,43 @@ module R2CORBA
       end
 
       def id
-        begin
+        
           self.tc_.id()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def name
-        begin
+        
           self.tc_.name()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def member_count
-        begin
+        
           self.tc_.member_count()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def member_name(index)
-        begin
+        
           self.tc_.member_name(index.to_i)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def member_type(index)
-        begin
+        
           CORBA::TypeCode.from_native(self.tc_.member_type(index.to_i))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def member_label(index)
@@ -250,19 +250,19 @@ module R2CORBA
       end
 
       def default_index
-        begin
+        
           self.tc_.default_index()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def length
-        begin
+        
           self.tc_.length()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def content_type
@@ -270,35 +270,35 @@ module R2CORBA
       end
 
       def fixed_digits
-        begin
+        
           self.tc_.fixed_digits()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def fixed_scale
-        begin
+        
           self.tc_.fixed_scale()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def member_visibility(index)
-        begin
+        
           self.tc_.member_visibility(index.to_i)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def type_modifier
-        begin
+        
           self.tc_.type_modifier()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def concrete_base_type
