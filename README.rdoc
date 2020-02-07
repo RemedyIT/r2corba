@@ -39,7 +39,7 @@ If you find a bug, please report it at the R2CORBA project's {issues tracker}[ht
 
 == License
 
-R2CORBA is Copyright (c) 2007-2019 Remedy IT Expertise BV, The Netherlands.
+R2CORBA is Copyright (c) 2007-2020 Remedy IT Expertise BV, The Netherlands.
 
 It is free software, and may be redistributed under the terms specified in the link:LICENSE file.
 
