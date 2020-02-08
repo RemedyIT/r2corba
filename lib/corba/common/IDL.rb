@@ -10,17 +10,14 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 
-# hardwire RIDL to embedded state for Ruby language mapping
-module IDL
-  @@embedded = true
-  @@be_name = :ruby
-end
-
 begin
   require 'rubygems'
 rescue LoadError
   # ignore error, RIDL may be installed locally not as gem
 end
+# hardwire R2CORBA :ruby RIDL backend
+ENV['RIDL_BE_SELECT'] = 'ruby'
+# load RIDL
 require 'ridl/ridl'
 
 module R2CORBA
