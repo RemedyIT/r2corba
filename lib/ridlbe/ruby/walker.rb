@@ -977,7 +977,7 @@ module IDL
     end
 
     def visit_enum(node)
-      printiln(format("class %s < ::Fixnum", node.rubyname))
+      printiln(format("class %s < ::R2CORBA::FIXNUM_KLASS", node.rubyname))
       nest {
         printiln(format("def %s._tc", node.rubyname))
         nest {

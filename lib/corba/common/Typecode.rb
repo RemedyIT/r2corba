@@ -309,9 +309,9 @@ module R2CORBA
       def get_type
         @type ||= case self.kind
           when TK_SHORT, TK_LONG, TK_USHORT, TK_ULONG
-            ::Fixnum
+            FIXNUM_KLASS
           when TK_LONGLONG, TK_ULONGLONG
-            ::Bignum
+            BIGNUM_KLASS
           when TK_FLOAT, TK_DOUBLE
             ::Float
           when TK_LONGDOUBLE
@@ -321,7 +321,7 @@ module R2CORBA
           when TK_CHAR, TK_STRING
             ::String
           when TK_WCHAR, TK_OCTET
-            ::Fixnum
+            FIXNUM_KLASS
           when TK_VOID, TK_NULL
             ::NilClass
           when TK_ANY
