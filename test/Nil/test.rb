@@ -16,7 +16,7 @@ include TestUtil::Assertions
 OPTIONS = {
   :use_implement => false,
   :orb_debuglevel => 0,
-  :ior => 'corbaname::foo'
+  :ior => 'foo'
 }
 
 ARGV.options do |opts|
@@ -53,11 +53,15 @@ end
 orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
-  tmp = orb.string_to_object(OPTIONS[:ior])
+  begin
+    tmp = orb.string_to_object(OPTIONS[:ior])
 
-  assert 'No Nil object reference returned on invalid IOR', CORBA.is_nil(tmp)
+    assert 'No Nil object reference returned on invalid IOR', CORBA.is_nil(tmp)
 
-  assert 'No Nil object returned on invalid IOR', tmp.nil?
+    assert 'No Nil object returned on invalid IOR', tmp.nil?
+  rescue CORBA::INV_OBJREF
+    tmp = nil
+  end
 
   assert 'No Nil object reference returned on #_narrow of nil', CORBA.is_nil(Test::Hello._narrow(tmp))
 
