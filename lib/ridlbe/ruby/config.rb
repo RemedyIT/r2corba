@@ -254,28 +254,45 @@ module IDL
 
     module LeafMixin
 
-      RESERVED_RUBY_CONST = [
-        'Array', 'Bignum', 'Binding', 'Class', 'Continuation', 'Dir', 'Exception',
-        'FalseClass', 'File', 'Fixnum', 'Float', 'Hash', 'Integer', 'IO', 'MatchData',
-        'Method', 'Module', 'NilClass', 'Numeric', 'Object', 'Proc', 'Process', 'Range',
-        'Regexp', 'String', 'Struct', 'Symbol', 'Thread', 'ThreadGroup', 'Time', 'TrueClass',
-        'UnboundMethod', 'Comparable', 'Enumerable', 'Errno', 'FileTest', 'GC', 'Kernel',
-        'Marshal', 'Math', 'ObjectSpace', 'Signal'
-      ]
+      RESERVED_RUBY_CONST = %w(Array Bignum Binding Class Continuation Dir Exception FalseClass File
+          Fixnum Float Hash Integer IO MatchData Method Module NilClass Numeric Object Proc Process
+          Range Regexp String Struct Symbol Thread ThreadGroup Time TrueClass UnboundMethod Comparable
+          Enumerable Errno FileTest GC Kernel Marshal Math ObjectSpace Signal)
 
-      RESERVED_RUBY_MEMBER = [
-        "untaint", "id", "instance_variable_get", "inspect", "taint", "public_methods", "__send__", "to_a", "display", "instance_eval",
-        "extend", "clone", "protected_methods", "hash", "freeze", "type", "instance_variable_set", "methods", "instance_variables", "to_s", "method", "dup",
-        "private_methods", "object_id", "send", "__id__", "singleton_methods",
-        "proc", "readline", "global_variables", "singleton_method_removed", "callcc", "syscall", "fail", "untrace_var", "load", "srand", "puts", "catch", "chomp",
-        "initialize_copy", "format", "scan", "print", "abort", "fork", "gsub", "trap", "test", "select", "initialize", "method_missing", "lambda", "readlines",
-        "local_variables", "singleton_method_undefined", "system", "open", "caller", "eval", "set_trace_func", "require", "rand", "singleton_method_added",
-        "throw", "gets", "binding", "raise", "warn", "getc", "exec", "trace_var", "irb_binding", "at_exit", "split", "putc", "loop", "chop", "sprintf", "p",
-        "remove_instance_variable", "exit", "printf", "sleep", "sub", "autoload"
-      ]
+      RESERVED_RUBY_MEMBER = %w(untaint id instance_variable_get inspect taint public_methods
+          __send__ to_a display instance_eval extend clone protected_methods hash freeze type
+          instance_variable_set methods instance_variables to_s method dup private_methods object_id
+          send __id__ singleton_methods proc readline global_variables singleton_method_removed callcc
+          syscall fail untrace_var load srand puts catch chomp initialize_copy format scan print abort
+          fork gsub trap test select initialize method_missing lambda readlines local_variables
+          singleton_method_undefined system open caller eval set_trace_func require rand
+          singleton_method_added throw gets binding raise warn getc exec trace_var irb_binding at_exit
+          split putc loop chop sprintf p remove_instance_variable exit printf sleep sub autoload)
 
-      def self.included(klass)
-        klass.extend ClassMethods
+      def ruby_lm_name
+        unless @lm_name
+          ret = @name.checked_name.dup
+          case self
+          when IDL::AST::Port,
+              IDL::AST::StateMember,
+              IDL::AST::Initializer,
+              IDL::AST::Parameter,
+              IDL::AST::Operation,
+              IDL::AST::Attribute,
+              IDL::AST::Member,
+              IDL::AST::UnionMember
+            # member names
+            ret = ret[0,1].downcase + ret[1,ret.size].to_s
+            ret = 'r_'+ret if IDL::Ruby::LeafMixin::RESERVED_RUBY_MEMBER.include?(ret)
+          else
+            # class/module names
+            ret = ret[0,1].upcase + ret[1,ret.size].to_s
+            is_scoped = @enclosure && !@enclosure.scopes.empty?
+            ret = 'R_'+ret if !is_scoped && IDL::Ruby::LeafMixin::RESERVED_RUBY_CONST.include?(ret)
+          end
+          @lm_name = ret
+        end
+        @lm_name
       end
 
       def rubyname
@@ -285,38 +302,20 @@ module IDL
       def scoped_rubyname
         scoped_lm_name
       end
-
-      module ClassMethods
-        def mk_name(nm, is_scoped)
-          ret = nm.dup
-          case self::NAMETYPE
-          when :class
-            ret = ret[0,1].upcase + ret[1,ret.size].to_s
-            ret = 'R_'+ret if !is_scoped && IDL::Ruby::LeafMixin::RESERVED_RUBY_CONST.include?(ret)
-          when :member
-            ret = ret[0,1].downcase + ret[1,ret.size].to_s
-            ret = 'r_'+ret if IDL::Ruby::LeafMixin::RESERVED_RUBY_MEMBER.include?(ret)
-          else
-            raise "invalid nametype for #{self.class}: #{self::NAMETYPE}"
-          end
-          ret
-        end
-      end
     end # module LeafMixin
 
     IDL::AST::Leaf.class_eval do
       include LeafMixin
+
+      alias :base_lm_name :lm_name
+      alias :lm_name :ruby_lm_name
     end
 
     module ScannerMixin
 
-      RUBYKW = [
-        '__FILE__', 'and',    'def',      'end',    'in',     'or',     'self',   'unless',
-        '__LINE__', 'begin',  'defined?', 'ensure', 'module', 'redo',   'super',  'until',
-        'BEGIN',    'break',  'do',       'false',  'next',   'rescue', 'then',   'when',
-        'END',      'case',   'else',     'for',    'nil',    'retry',  'true',   'while',
-        'alias',    'class',  'elsif',    'if',     'not',    'return', 'undef',  'yield',
-      ].collect! { |w| w.to_sym }
+      RUBYKW = %w(__FILE__ and def end in or self unless __LINE__ begin defined? ensure module redo
+          super until BEGIN break do false next rescue then when END case else for nil retry true while
+          alias class elsif if not return undef yield).collect! { |w| w.to_sym }
 
       def chk_identifier(ident)
         # prefix Ruby keywords with 'r_'
