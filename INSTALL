@@ -4,9 +4,9 @@ Requirements
 Windows 7/8 (not tested on Vista), Linux (kernel version 2.4+; tested on
 openSuSE 11.3 - 13.2 and Fedora 13-21).
 
-Ruby MRI 1.9.3+-2.2.0 (1.9.2 versions will probably also work but are not tested)
+Ruby MRI 2.0 or newer
   Download from http://www.ruby-lang.org (source packages) or
-  http://rubyinstaller.org/downloads (Windows binaries) if not available as
+  https://rubyinstaller.org/downloads (Windows binaries) if not available as
   a standard package on your platform.
 
 ACE+TAO 2.0.1+ (required minimum version for Value type support and Windows
