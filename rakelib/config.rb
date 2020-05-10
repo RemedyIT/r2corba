@@ -273,7 +273,7 @@ module R2CORBA
       @@is_osx
     end
 
-    @@cpu_cores = (@@is_linux ? `cat /proc/cpuinfo | grep processor | wc -l`.to_i : 1)
+    @@cpu_cores = (@@is_linux ? `cat /proc/cpuinfo | grep processor | wc -l`.to_i : (ENV['NUMBER_OF_PROCESSORS'] || 1).to_i)
 
     def self.cpu_cores
       @@cpu_cores
