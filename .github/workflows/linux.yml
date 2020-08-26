@@ -42,7 +42,7 @@ jobs:
             os: ubuntu-18.04
             ruby: 2.7
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.ruby }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }} ruby-${{ matrix.ruby }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE_TAO/ACE
       TAO_ROOT: ${{ github.workspace }}/ACE_TAO/TAO
