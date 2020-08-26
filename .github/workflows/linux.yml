@@ -65,7 +65,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
-        path: MPC
+        path: ACE_TAO/MPC
         ref: Latest_ACETAO_Micro
     - name: checkout ridl
       uses: actions/checkout@v2
