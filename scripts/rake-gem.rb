@@ -27,6 +27,10 @@ task :define_gemspec do
       gem.require_paths << 'ext'
     end
     gem.add_dependency 'ridl', '>= 2.8'
+    gem.metadata = {
+      "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
+      "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+    }
   end
 end
 
