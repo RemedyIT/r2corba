@@ -77,6 +77,10 @@ namespace :r2corba do
           gem.executables = []
           gem.required_ruby_version = '>= 2.0'
           gem.licenses = ['DOC']
+          gem.metadata = {
+            "bug_tracker_uri"   => "https://github.com/DOCGroup/ACE_TAO/issues",
+            "source_code_uri"   => "https://github.com/DOCGroup/ACE_TAO"
+          }
         end
         R2CORBA::Gem.build_gem(gemspec)
       end
@@ -138,6 +142,10 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'DOC']
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so'
+      gem.metadata = {
+        "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
+        "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+      }
     end
     R2CORBA::Gem.build_gem(gemspec)
   ensure
@@ -187,6 +195,10 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.add_dependency 'ridl', '~> 2.8'
       gem.add_dependency 'rake', '~> 12.3.3'
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
+      gem.metadata = {
+        "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
+        "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+      }
     end
     R2CORBA::Gem.build_gem(gemspec)
   ensure
@@ -215,6 +227,10 @@ unless defined?(JRUBY_VERSION) || !R2CORBA::Config.is_win32
       gem.extensions = []
       gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard']
+      gem.metadata = {
+        "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
+        "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+      }
     end
     R2CORBA::Gem.build_gem(gemspec)
   end
