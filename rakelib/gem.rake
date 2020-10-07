@@ -68,7 +68,7 @@ namespace :r2corba do
           gem.description = %Q{TAO sourcecode for building R2CORBA.}
           gem.email = 'mcorino@remedy.nl'
           gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-          gem.authors = ['Martin Corino']
+          gem.authors = ['Martin Corino', 'Johnny Willemsen']
           gem.files = Dir['lib/taosource/**/*']
           gem.files.concat(Dir["src/ACE+TAO-src-#{_ace_ver}.tar.gz"])
           gem.files << 'mkrf_conf_taogem.rb'
@@ -91,7 +91,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
     gem.email = 'mcorino@remedy.nl'
     gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-    gem.authors = ['Martin Corino']
+    gem.authors = ['Martin Corino', 'Johnny Willemsen']
     gem.files = R2CORBA::Gem.manifest
     gem.extensions = ['mkrf_conf_srcgem.rb']
     gem.require_paths = %w{lib}
@@ -130,12 +130,12 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. (extension binaries)}
       gem.email = 'mcorino@remedy.nl'
       gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-      gem.authors = ['Martin Corino']
+      gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = R2CORBA::Gem.manifest(:extbin)
       gem.extensions = []
       gem.require_paths = %w{ext}
       gem.executables = []
-      gem.required_ruby_version = '>= 2.0.0'
+      gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'DOC']
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so'
     end
@@ -169,18 +169,18 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
       gem.email = 'mcorino@remedy.nl'
       gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-      gem.authors = ['Martin Corino']
+      gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = R2CORBA::Gem.manifest(:bin)
       gem.require_paths = %w{lib}
       gem.executables = %w{ridlc rins r2corba}
       gem.extensions = ['mkrf_conf_bingem.rb']
       if defined?(JRUBY_VERSION)
         gem.require_paths << 'jacorb/lib'
-        gem.required_ruby_version = '>= 1.7.0'
+        gem.required_ruby_version = '>= 2.0'
         gem.licenses = ['Nonstandard', 'GPL-2.0']
       else
         gem.files << File.join('ext', '.keep') unless ENV['FULL_BINGEM'] # to force installation of ext folder if libs are left out
-        gem.required_ruby_version = '>= 1.9.3'
+        gem.required_ruby_version = '>= 2.0'
         gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
         gem.require_paths << 'ext'
       end
@@ -208,7 +208,7 @@ unless defined?(JRUBY_VERSION) || !R2CORBA::Config.is_win32
       gem.description = %Q{Fake Devkit loader to satisfy stupid RubyInstaller pre-install hook. }
       gem.email = 'mcorino@remedy.nl'
       gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-      gem.authors = ['Martin Corino']
+      gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = 'lib/rubygems_plugin.rb'
       gem.require_paths = %w{lib}
       gem.executables = []
