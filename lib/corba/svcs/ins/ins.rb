@@ -417,7 +417,7 @@ module R2CORBA
         puts "          provides help for the specified command\n\n"
         exit
       when :version
-        puts "R2CORBA Interoprable Naming Service (INS) #{INS_VERSION_MAJOR}.#{INS_VERSION_MINOR}.#{INS_VERSION_RELEASE}"
+        puts "R2CORBA Interoperable Naming Service (INS) #{INS_VERSION_MAJOR}.#{INS_VERSION_MINOR}.#{INS_VERSION_RELEASE}"
         puts INS_COPYRIGHT
         puts ''
         exit

@@ -8,7 +8,7 @@ task :define_gemspec do
     gem.description = %Q{OMG CORBA v. 3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
     gem.email = 'mcorino@remedy.nl'
     gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-    gem.authors = ['Martin Corino']
+    gem.authors = ['Martin Corino', 'Johnny Willemsen']
     gem.files = R2CORBA.manifest
     gem.extensions = ['Rakefile']
     gem.extra_rdoc_files = %w{LICENSE README.rdoc}
@@ -18,15 +18,19 @@ task :define_gemspec do
       gem.platform = Gem::Platform::JAVA
       gem.executables << 'jrins'
       gem.require_paths << 'jacorb/lib'
-      gem.required_ruby_version = '>= 1.5.0'
+      gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'GPL-2.0']
     else
       gem.platform = Gem::Platform::CURRENT if RUBY_PLATFORM =~ /mingw32/
-      gem.required_ruby_version = '>= 1.8.6'
+      gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
       gem.require_paths << 'ext'
     end
-    gem.add_dependency 'ridl', '>= 2.2.2'
+    gem.add_dependency 'ridl', '>= 2.8'
+    gem.metadata = {
+      "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
+      "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+    }
   end
 end
 

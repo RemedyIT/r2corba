@@ -40,7 +40,7 @@ task :define_gemspec do
     gem.description = %Q{TAO sourcecode for building R2CORBA}
     gem.email = 'mcorino@remedy.nl'
     gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-    gem.authors = ['Martin Corino']
+    gem.authors = ['Martin Corino', 'Johnny Willemsen']
     gem.files = Dir['lib/**/*']
     gem.files.concat(Dir["src/ACE+TAO-src-#{TAOGem::VERSION}.tar.gz"])
     gem.files << 'Rakefile'
@@ -50,6 +50,10 @@ task :define_gemspec do
     #gem.platform = Gem::Platform::CURRENT
     gem.required_ruby_version = '>= 2.0'
     gem.licenses = ['DOC']
+    gem.metadata = {
+      "bug_tracker_uri"   => "https://github.com/DOCGroup/ACE_TAO/issues",
+      "source_code_uri"   => "https://github.com/DOCGroup/ACE_TAO"
+    }
   end
 end
 
