@@ -36,8 +36,10 @@
 #if defined (gid_t)
 #undef gid_t
 #endif
-#if (RUBY_VER_MAJOR>1 || RUBY_VER_MINOR>8)
+#if defined (snprintf)
 # undef snprintf
+#endif
+#if defined (vsnprintf)
 # undef vsnprintf
 #endif
 
@@ -77,18 +79,9 @@ extern "C" {
 #include "r2tao_export.h"
 #include <tao/Version.h>
 
-#if ((RUBY_VER_MAJOR>1) || (RUBY_VER_MINOR>8)) && defined (HAVE_NATIVETHREAD)
+#if defined (HAVE_NATIVETHREAD)
 # define R2TAO_THREAD_SAFE
-
-# if RUBY_VER_MAJOR < 2
-// acquires GVL before calling func
-extern "C" void *
-rb_thread_call_with_gvl(void *(*func)(void *), void *data1);
-
-#   define rb_thread_call_without_gvl rb_thread_blocking_region
-# else
-#   include <ruby/thread.h>
-# endif
+# include <ruby/thread.h>
 #endif
 
 extern R2TAO_EXPORT VALUE r2tao_nsCORBA;

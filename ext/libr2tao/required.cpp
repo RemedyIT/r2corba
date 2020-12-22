@@ -204,7 +204,6 @@ R2TAO_EXPORT void r2tao_unregister_object(VALUE rbobj)
 }
 
 #if defined (R2TAO_THREAD_SAFE)
-
 class R2TAO_GVLGuard
 {
 public:
