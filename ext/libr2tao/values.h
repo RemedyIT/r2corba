@@ -20,8 +20,6 @@
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/VarOut_T.h"
-//#include "ace/Auto_Ptr.h"
-//#include "ace/Array_Base.h"
 
 extern VALUE r2tao_cBoxedValueBase;
 
@@ -52,7 +50,7 @@ public:
 
 private:
   void* value_;
-  CORBA::ULong length_;
+  CORBA::ULong const length_;
 };
 
 
