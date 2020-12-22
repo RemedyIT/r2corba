@@ -279,21 +279,12 @@ void* r2tao_call_with_gvl (void *data)
   return (*arg.func_) (arg.data_);
 }
 
-# if RUBY_VER_MAJOR < 2
-VALUE r2tao_call_without_gvl (void *data)
-{
-  R2TAO_GVLGuard gvl_guard_ (false);
-  r2tao_gvl_call_arg<VALUE(*)(void*)>& arg = *reinterpret_cast<r2tao_gvl_call_arg<VALUE(*)(void*)>*> (data);
-  return (*arg.func_) (arg.data_);
-}
-# else
 void* r2tao_call_without_gvl (void *data)
 {
   R2TAO_GVLGuard gvl_guard_ (false);
   r2tao_gvl_call_arg<void*(*)(void*)>& arg = *reinterpret_cast<r2tao_gvl_call_arg<void*(*)(void*)>*> (data);
   return (*arg.func_) (arg.data_);
 }
-# endif
 #endif
 
 R2TAO_EXPORT void* r2tao_call_thread_safe (void *(*func)(void *), void *data)
@@ -314,12 +305,8 @@ R2TAO_EXPORT VALUE r2tao_blocking_call (VALUE (*func)(void*), void*data)
   if (R2TAO_GVLGuard::gvl_locked (true))
   {
     r2tao_gvl_call_arg<VALUE(*)(void*)> arg(func, data);
-# if RUBY_VER_MAJOR < 2
-    return rb_thread_call_without_gvl(r2tao_call_without_gvl, &arg, RUBY_UBF_IO, 0);
-# else
     void *rc = rb_thread_call_without_gvl(r2tao_call_without_gvl, &arg, RUBY_UBF_IO, 0);
     return reinterpret_cast<VALUE> (rc);
-# endif
   }
 #endif
   return (*func) (data);
@@ -332,14 +319,9 @@ R2TAO_EXPORT VALUE r2tao_blocking_call_ex (VALUE (*func)(void*), void*data,
   if (R2TAO_GVLGuard::gvl_locked (true))
   {
     r2tao_gvl_call_arg<VALUE(*)(void*)> arg(func, data);
-# if RUBY_VER_MAJOR < 2
-    return rb_thread_call_without_gvl(r2tao_call_without_gvl, &arg,
-                                      unblock_func, unblock_data);
-# else
     void *rc = rb_thread_call_without_gvl(r2tao_call_without_gvl, &arg,
                                           unblock_func, unblock_data);
     return reinterpret_cast<VALUE> (rc);
-# endif
   }
 #else
   ACE_UNUSED_ARG(unblock_func);
