@@ -1,6 +1,6 @@
 // -*- C++ -*-
 /*--------------------------------------------------------------------
-# r2tao_ext.h - R2TAO CORBA basic support
+# r2tao_export.h - R2TAO CORBA basic support
 #
 # Author: Martin Corino
 #
