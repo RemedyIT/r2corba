@@ -1243,7 +1243,7 @@ VALUE r2tao_Servant_default_POA(VALUE self)
 {
   R2TAO_TRY
   {
-    DSI_Servant* _servant;
+    DSI_Servant* _servant = 0;
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object
@@ -1269,7 +1269,7 @@ VALUE r2tao_Servant_this(VALUE self)
   R2TAO_TRY
   {
     bool _new_srv = false;
-    DSI_Servant* _servant;
+    DSI_Servant* _servant = 0;
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object
