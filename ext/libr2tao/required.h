@@ -51,31 +51,6 @@ extern "C" {
 #define RUBY_METHOD_FUNC(func) ((TfnRuby)func)
 #define RUBY_ALLOC_FUNC(func) ((TfnRbAlloc)func)
 
-// includes for Ruby <= 1.8.4 miss this macro
-#if !defined (NUM2ULL)
-# define NUM2ULL(x) rb_num2ull (x)
-#endif
-
-// handle macros missing from older Ruby 1.8.6/7 releases
-#if !defined (RFLOAT_VALUE)
-#   define RFLOAT_VALUE(v)  NUM2DBL(v)
-#endif
-#if !defined (RSTRING_PTR)
-# define RSTRING_PTR(s) (RSTRING(s)->ptr)
-#endif
-#if !defined (RSTRING_LEN)
-# define RSTRING_LEN(s) (RSTRING(s)->len)
-#endif
-#if !defined (RSTRING_END)
-# define RSTRING_END(s) (RSTRING_PTR(s)+RSTRING_LEN(s))
-#endif
-#if !defined (RARRAY_PTR)
-# define RARRAY_PTR(s) (RARRAY(s)->ptr)
-#endif
-#if !defined (RARRAY_LEN)
-# define RARRAY_LEN(s) (RARRAY(s)->len)
-#endif
-
 #include "r2tao_export.h"
 #include <tao/Version.h>
 
