@@ -26,15 +26,6 @@
   #endif
 #endif
 
-#if defined (__MINGW32__)
-# if RUBY_VER_MAJOR<2
-#   define HAVE_STRUCT_TIMEZONE
-# endif
-# if (RUBY_VER_MAJOR<2 && RUBY_VER_MINOR>8)
-#   define HAVE_STRUCT_TIMESPEC
-# endif
-#endif
-
 #define RUBY_EXTCONF_H "r2tao_ext.h"
 #include <ruby.h>
 // remove conflicting macro(s) defined by Ruby
