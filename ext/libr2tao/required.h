@@ -36,8 +36,10 @@
 #if defined (gid_t)
 #undef gid_t
 #endif
-#if (RUBY_VER_MAJOR>1 || RUBY_VER_MINOR>8)
+#if defined (snprintf)
 # undef snprintf
+#endif
+#if defined (vsnprintf)
 # undef vsnprintf
 #endif
 
@@ -49,46 +51,12 @@ extern "C" {
 #define RUBY_METHOD_FUNC(func) ((TfnRuby)func)
 #define RUBY_ALLOC_FUNC(func) ((TfnRbAlloc)func)
 
-// includes for Ruby <= 1.8.4 miss this macro
-#if !defined (NUM2ULL)
-# define NUM2ULL(x) rb_num2ull (x)
-#endif
-
-// handle macros missing from older Ruby 1.8.6/7 releases
-#if !defined (RFLOAT_VALUE)
-#   define RFLOAT_VALUE(v)  NUM2DBL(v)
-#endif
-#if !defined (RSTRING_PTR)
-# define RSTRING_PTR(s) (RSTRING(s)->ptr)
-#endif
-#if !defined (RSTRING_LEN)
-# define RSTRING_LEN(s) (RSTRING(s)->len)
-#endif
-#if !defined (RSTRING_END)
-# define RSTRING_END(s) (RSTRING_PTR(s)+RSTRING_LEN(s))
-#endif
-#if !defined (RARRAY_PTR)
-# define RARRAY_PTR(s) (RARRAY(s)->ptr)
-#endif
-#if !defined (RARRAY_LEN)
-# define RARRAY_LEN(s) (RARRAY(s)->len)
-#endif
-
 #include "r2tao_export.h"
 #include <tao/Version.h>
 
-#if ((RUBY_VER_MAJOR>1) || (RUBY_VER_MINOR>8)) && defined (HAVE_NATIVETHREAD)
+#if defined (HAVE_NATIVETHREAD)
 # define R2TAO_THREAD_SAFE
-
-# if RUBY_VER_MAJOR < 2
-// acquires GVL before calling func
-extern "C" void *
-rb_thread_call_with_gvl(void *(*func)(void *), void *data1);
-
-#   define rb_thread_call_without_gvl rb_thread_blocking_region
-# else
-#   include <ruby/thread.h>
-# endif
+# include <ruby/thread.h>
 #endif
 
 extern R2TAO_EXPORT VALUE r2tao_nsCORBA;
