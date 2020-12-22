@@ -22,7 +22,6 @@
  * see 19.16 "Mapping for Exception Types" and 19.22 "Handling Exceptions".
  *
  */
-
 #define R2TAO_TRY   try
 #define R2TAO_CATCH \
   catch (const CORBA::SystemException& sex) \
