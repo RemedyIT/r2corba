@@ -212,11 +212,10 @@ module R2CORBA
 
     if @@is_linux
       # determin distro
-      io_args = [$/, {:encoding => 'utf-8'}] if rb_ver_major > 1 || (rb_ver_minor > 8 && rb_ver_major == 1)
       name = 'linux'
       if File.readable?('/etc/os-release')
         # find 'NAME=...'
-        File.foreach('/etc/os-release', *io_args) do |ln|
+        File.foreach('/etc/os-release', :encoding => 'utf-8') do |ln|
           if /^NAME=(.*)$/ =~ ln.strip
             name = $1.downcase
             break
@@ -224,7 +223,7 @@ module R2CORBA
         end
       elsif File.readable?('/etc/lsb-release')
         # find 'DISTRIB_ID='
-        File.foreach('/etc/lsb-release', *io_args) do |ln|
+        File.foreach('/etc/lsb-release', :encoding => 'utf-8') do |ln|
           if /^DISTRIB_ID=(.*)$/ =~ ln.strip
             name = $1.downcase
             break
