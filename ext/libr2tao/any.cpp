@@ -714,8 +714,8 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
         // autowrap valuebox values
         rval = r2tao_wrap_Valuebox (rval, _tc);
       }
-      // fall through
     }
+    // fall through
     case CORBA::tk_value:
     case CORBA::tk_event:
     {
