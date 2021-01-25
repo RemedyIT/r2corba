@@ -83,7 +83,7 @@ begin
   if !defined?(TAO) || TAO::MAJOR_VERSION>1 ||
     (TAO::MAJOR_VERSION == 1 &&
         (TAO::MINOR_VERSION > 5 ||
-          (TAO::MINOR_VERSION == 5 && TAO::BETA_VERSION>9)))
+          (TAO::MINOR_VERSION == 5 && TAO::MICRO_VERSION>9)))
     puts "***** Deferred twoway DII (using poll_response())"
     req = obj._request("echo")
     req.arguments = [
