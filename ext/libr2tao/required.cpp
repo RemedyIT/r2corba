@@ -145,7 +145,7 @@ extern "C" R2TAO_EXPORT void Init_libr2tao()
   VALUE klass = rb_define_module_under (rb_eval_string ("::R2CORBA"), "TAO");
   rb_define_const (klass, "MAJOR_VERSION", INT2NUM (TAO_MAJOR_VERSION));
   rb_define_const (klass, "MINOR_VERSION", INT2NUM (TAO_MINOR_VERSION));
-  rb_define_const (klass, "BETA_VERSION", INT2NUM (TAO_BETA_VERSION));
+  rb_define_const (klass, "MICRO_VERSION", INT2NUM (TAO_MICRO_VERSION));
   rb_define_const (klass, "VERSION", rb_str_new2 (TAO_VERSION));
   rb_define_const (klass, "RUBY_THREAD_SUPPORT",
 #ifdef R2TAO_THREAD_SAFE
