@@ -274,4 +274,3 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
   end # Ext
 
 end # R2CORBA
-

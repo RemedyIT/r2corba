@@ -165,4 +165,3 @@ end
 puts 'event loop finished'
 
 root_poa.destroy(true, true)
-

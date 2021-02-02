@@ -189,4 +189,3 @@ ENV['RUBYLIB'] = ((ENV['RUBYLIB'] || '').split(File::PATH_SEPARATOR)+[TestFinder
 if $0 == __FILE__
   TestFinder.run(ARGV)
 end
-

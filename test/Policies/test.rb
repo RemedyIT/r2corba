@@ -140,4 +140,3 @@ begin
 ensure
   orb.destroy()
 end
-
