@@ -90,7 +90,7 @@ hello_srv = MyHello.new(orb)
 hello_obj = hello_srv._this()
 
 # register object reference with Naming service
-name = [CosNaming::NameComponent.new('Hello','ior')]
+name = [CosNaming::NameComponent.new('Hello', 'ior')]
 
 nc.bind(name, hello_obj)
 

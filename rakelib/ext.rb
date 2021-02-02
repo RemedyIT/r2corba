@@ -207,23 +207,23 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
     end
 
     def self.ace_config_path
-      File.join(get_config('aceroot'),'ace','config.h')
+      File.join(get_config('aceroot'), 'ace', 'config.h')
     end
 
     def self.platform_macros_path
-      File.join(get_config('aceroot'),'include','makeinclude','platform_macros.GNU')
+      File.join(get_config('aceroot'), 'include', 'makeinclude', 'platform_macros.GNU')
     end
 
     def self.default_features_path
-      File.join(get_config('aceroot'),'bin','MakeProjectCreator','config','default.features')
+      File.join(get_config('aceroot'), 'bin', 'MakeProjectCreator', 'config', 'default.features')
     end
 
     def self.tao_mwc_path
-      File.join(get_config('aceroot'),'TAO4Ruby.mwc')
+      File.join(get_config('aceroot'), 'TAO4Ruby.mwc')
     end
 
     def self.tao_makefile
-      File.join(get_config('aceroot'),'GNUmakefile')
+      File.join(get_config('aceroot'), 'GNUmakefile')
     end
 
     def self.ext_makefile
@@ -238,7 +238,7 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
           so_ext = '.dylib'
 
           inst_extlibs = Dir.glob(File.join('ext', '*.bundle'))
-          inst_dylibs = inst_extlibs + ACE_FILES.collect {|dep| File.join(get_config('aceroot'),'lib', 'lib' + dep + so_ext)}
+          inst_dylibs = inst_extlibs + ACE_FILES.collect {|dep| File.join(get_config('aceroot'), 'lib', 'lib' + dep + so_ext)}
           # cross dependencies of ext dynamic libs on each other
           # make sure they refer to *.bundle NOT *.dylib
           inst_extlibs.each do |extlib|
@@ -264,7 +264,7 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
         elsif !is_win32
           # create unversioned ACE+TAO lib symlinks
 
-          ACE_FILES.collect {|dep| File.join(get_config('aceroot'),'lib', 'lib' + dep + '.so')}.each do |lib|
+          ACE_FILES.collect {|dep| File.join(get_config('aceroot'), 'lib', 'lib' + dep + '.so')}.each do |lib|
             Dir.glob(lib + '.*').each {|verlib| File.symlink(verlib, lib) unless File.exist?(lib)}
           end
         end

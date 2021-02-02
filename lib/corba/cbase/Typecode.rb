@@ -196,7 +196,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name,modifier,base,members)
+        def _create_tc(id, name, modifier, base, members)
           begin
             CORBA::Native::TypeCode.create_tc(TK_VALUE, id.to_s, name.to_s,
                                               CORBA::VT_MODIFIERS[modifier],
@@ -213,7 +213,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name,modifier,base,members)
+        def _create_tc(id, name, modifier, base, members)
           begin
             CORBA::Native::TypeCode.create_tc(TK_EVENT, id.to_s, name.to_s,
                                               CORBA::VT_MODIFIERS[modifier],
@@ -321,7 +321,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name,members)
+        def _create_tc(id, name, members)
           begin
             CORBA::Native::TypeCode.create_tc(TK_STRUCT, id.to_s, name.to_s, members)
           rescue ::NativeException
@@ -335,7 +335,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name,members)
+        def _create_tc(id, name, members)
           begin
             CORBA::Native::TypeCode.create_tc(TK_EXCEPT, id.to_s, name.to_s, members)
           rescue ::NativeException

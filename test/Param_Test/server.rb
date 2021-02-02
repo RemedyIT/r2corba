@@ -195,7 +195,7 @@ class MyHello < POA::Test::Hello
     when 2
       @s1seq
     when 3
-      CORBA::Any.to_any([1,2,3,4,5], CORBA::TypeCode::Sequence.new(CORBA._tc_long))
+      CORBA::Any.to_any([1, 2, 3, 4, 5], CORBA::TypeCode::Sequence.new(CORBA._tc_long))
     else
       @anysel
     end

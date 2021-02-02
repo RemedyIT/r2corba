@@ -82,7 +82,7 @@ module R2CORBA
           self.set_backtrace(args.first.backtrace) if NativeException === args.first
         else
           super(args.shift.to_s)
-          @minor, @completed = (args + [0,0][args.size..2])
+          @minor, @completed = (args + [0, 0][args.size..2])
         end
       end
     end

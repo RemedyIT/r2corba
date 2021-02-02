@@ -120,7 +120,7 @@ class Collocation_Test
   end
 
   def shutdown
-    @root_poa.destroy(1,1)
+    @root_poa.destroy(1, 1)
     @orb.destroy
   end
 

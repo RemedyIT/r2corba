@@ -55,7 +55,7 @@ class Test_impl < POA::Test
   end
 
   def ros(s)
-    s.slice(s.size - 1,1) << s.slice(0,s.size - 1)
+    s.slice(s.size - 1, 1) << s.slice(0, s.size - 1)
   end
 
   def basic_op1(p1, p2)

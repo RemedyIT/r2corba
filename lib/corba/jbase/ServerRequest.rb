@@ -52,12 +52,12 @@ module R2CORBA
       end
 
       def describe(opsig)
-        raise CORBA::BAD_INV_ORDER.new('',0,CORBA::COMPLETED_NO) if @nvlist_
-        raise CORBA::NO_IMPLEMENT.new('',0,CORBA::COMPLETED_NO) unless opsig && (Hash === opsig)
+        raise CORBA::BAD_INV_ORDER.new('', 0, CORBA::COMPLETED_NO) if @nvlist_
+        raise CORBA::NO_IMPLEMENT.new('', 0, CORBA::COMPLETED_NO) unless opsig && (Hash === opsig)
         @arg_list_ = opsig[:arg_list]
         @result_type_ = opsig[:result_type]
         @exc_list_ = opsig[:exc_list]
-        raise CORBA::BAD_PARAM.new('',0,CORBA::COMPLETED_NO) unless (@arg_list_.nil? || @arg_list_.is_a?(Array)) &&
+        raise CORBA::BAD_PARAM.new('', 0, CORBA::COMPLETED_NO) unless (@arg_list_.nil? || @arg_list_.is_a?(Array)) &&
                                                                     (@result_type_.nil? || @result_type_.is_a?(CORBA::TypeCode)) &&
                                                                     (@exc_list_.nil? || @exc_list_.is_a?(Array))
         @nvlist_ = extract_arguments_(@arg_list_)
@@ -65,7 +65,7 @@ module R2CORBA
       end
 
       def arguments
-        raise CORBA::BAD_INV_ORDER.new('',0,CORBA::COMPLETED_NO) unless @nvlist_
+        raise CORBA::BAD_INV_ORDER.new('', 0, CORBA::COMPLETED_NO) unless @nvlist_
         unless @arg_
           @arg_ = []
           @nvlist_.count().times do |i|
@@ -113,7 +113,7 @@ module R2CORBA
         unless arg_list.nil?
           arg_list.each do |argnm, argf, argtc|
             raise CORBA::BAD_PARAM.new('', 0, CORBA::COMPLETED_NO) if argf.nil? || argtc.nil? || !argtc.is_a?(CORBA::TypeCode)
-            jnvlist.add_value(argnm.to_s, Any.to_any(nil,argtc).to_java(@orb_), argf.to_i)
+            jnvlist.add_value(argnm.to_s, Any.to_any(nil, argtc).to_java(@orb_), argf.to_i)
           end
           self.srvreq_.arguments(jnvlist)
         end

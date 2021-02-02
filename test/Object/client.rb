@@ -57,7 +57,7 @@ begin
   obj = orb.string_to_object(OPTIONS[:iorfile])
 
   unless defined?(JRUBY_VERSION) && CORBA::Native::Jacorb::MAJOR_VERSION == 3 &&
-      ([4,5].include? CORBA::Native::Jacorb::MINOR_VERSION)
+      ([4, 5].include? CORBA::Native::Jacorb::MINOR_VERSION)
     ## JacORB 3.4 introduced an optimization which *requires* use of the Java endorsed dirs
     ## mechanism to replace standard JDK CORBA stubs with the JacORB version in order to
     ## have JacORB process these base methods correctly with DSI servants

@@ -79,7 +79,7 @@ module IDL
     end
 
     def visit_include(node)
-      printiln(format("require '%s'", node.filename.sub(/\.[^\.]*$/,@params[:stub_pfx])))
+      printiln(format("require '%s'", node.filename.sub(/\.[^\.]*$/, @params[:stub_pfx])))
       println()
     end
 
@@ -689,7 +689,7 @@ module IDL
         s = _type.class.name.split("::") # IDL::Type::Octet -> [IDL, Type, Octet]
         s = s[s.length - 1]
         s.downcase!
-        format("CORBA._tc_%s",s)
+        format("CORBA._tc_%s", s)
 
       when Type::Object
         "CORBA._tc_Object"
@@ -1123,7 +1123,7 @@ module IDL
       idleval = @params[:idl_eval] || false
       println("require 'corba/poa.rb'") if @params[:libinit]
       if !@params[:expand_includes]
-        println("require '" + @params[:idlfile].sub(/\.[^\.]*$/,@params[:stub_pfx]) + "'")
+        println("require '" + @params[:idlfile].sub(/\.[^\.]*$/, @params[:stub_pfx]) + "'")
       end
       println()
       printiln("module POA")
@@ -1147,7 +1147,7 @@ module IDL
     end
 
     def visit_include(node)
-      printiln(format("require '%s'", node.filename.sub(/\.[^\.]*$/,@params[:srv_pfx])))
+      printiln(format("require '%s'", node.filename.sub(/\.[^\.]*$/, @params[:srv_pfx])))
       println()
     end
 
@@ -1414,7 +1414,7 @@ module IDL
         s = _type.class.name.split("::") # IDL::Type::Octet -> [IDL, Type, Octet]
         s = s[s.length - 1]
         s.downcase!
-        format("CORBA._tc_%s",s)
+        format("CORBA._tc_%s", s)
 
       when Type::Object
         "CORBA._tc_Object"

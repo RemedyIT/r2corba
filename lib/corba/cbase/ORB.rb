@@ -54,7 +54,7 @@ module R2CORBA
           end
           raise ArgumentError, "Invalid argument #{prop.class}; expected Hash" unless prop.nil? || Hash === prop
           unless prop.nil?()
-            prop.inject(argv) {|a,(k,v)| a << k; a << v; a}
+            prop.inject(argv) {|a, (k, v)| a << k; a << v; a}
           end
           @@cached_orb = CORBA::Native::ORB.init(argv.collect {|a| a.to_s }.concat(@@_default_args), orb_id.nil?() ? nil : orb_id.to_s)
         end
@@ -210,7 +210,7 @@ module R2CORBA
          sigcmd = Signal.trap(signum, 'DEFAULT')
          Signal.trap(signum, sigcmd)
          @@sigreg[signum] = sigcmd
-         if sigcmd.respond_to?(:call) or ['IGNORE','SIG_IGN','EXIT'].include?(sigcmd.to_s)
+         if sigcmd.respond_to?(:call) or ['IGNORE', 'SIG_IGN', 'EXIT'].include?(sigcmd.to_s)
            signum
          else
            nil

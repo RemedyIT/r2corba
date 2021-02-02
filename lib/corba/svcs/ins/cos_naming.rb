@@ -26,9 +26,9 @@ module CosNaming
     # convert NameComponent to stringified format according to spec
     def to_string
       s = ''
-      s = self.r_id.gsub(/([\/\.\\])/,'\\\1') unless self.r_id.to_s.empty?
+      s = self.r_id.gsub(/([\/\.\\])/, '\\\1') unless self.r_id.to_s.empty?
       s << '.' if s.empty? or !self.kind.to_s.empty?
-      s << self.kind.gsub(/([\/\.\\])/,'\\\1') unless self.kind.to_s.empty?
+      s << self.kind.gsub(/([\/\.\\])/, '\\\1') unless self.kind.to_s.empty?
       s
     end
     # convert stringified name back to NameComponent
@@ -308,7 +308,7 @@ module R2CORBA
         off_ = 0
         esc_ = false
         sn.size.times do |i|
-          case sn[i,1]
+          case sn[i, 1]
           when '\\'
             esc_ = !esc_
           when '/'

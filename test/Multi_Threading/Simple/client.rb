@@ -59,7 +59,7 @@ begin
   hello_obj = Test::Hello._narrow(obj)
 
   unless defined?(JRUBY_VERSION) && CORBA::Native::Jacorb::MAJOR_VERSION == 3 &&
-      ([4,5].include? CORBA::Native::Jacorb::MINOR_VERSION)
+      ([4, 5].include? CORBA::Native::Jacorb::MINOR_VERSION)
     ## JacORB 3.4 introduced a bug which prevents this test from succeeding
     ## JacORB 3.6 will be released with a fix for this
     clt_trds = (0..1).collect do |i|

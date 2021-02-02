@@ -309,13 +309,13 @@ module R2CORBA
           ENV['MPC_ROOT'] = get_config('mpcroot')
 
           if is_win32
-            ENV['PATH'] = "#{File.join(ENV['ACE_ROOT'],'lib')}#{';'}#{ENV['PATH']}"
+            ENV['PATH'] = "#{File.join(ENV['ACE_ROOT'], 'lib')}#{';'}#{ENV['PATH']}"
             ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl')
           elsif RUBY_PLATFORM =~ /darwin/
-            ENV['DYLD_LIBRARY_PATH'] = "#{File.join(ENV['ACE_ROOT'],'lib')}#{File::PATH_SEPARATOR}#{ENV['DYLD_LIBRARY_PATH'] || ""}"
+            ENV['DYLD_LIBRARY_PATH'] = "#{File.join(ENV['ACE_ROOT'], 'lib')}#{File::PATH_SEPARATOR}#{ENV['DYLD_LIBRARY_PATH'] || ""}"
             ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl') && get_config('sslroot') != '/usr'
           else
-            ENV['LD_LIBRARY_PATH'] = "#{File.join(ENV['ACE_ROOT'],'lib')}#{File::PATH_SEPARATOR}#{ENV['LD_LIBRARY_PATH'] || ""}"
+            ENV['LD_LIBRARY_PATH'] = "#{File.join(ENV['ACE_ROOT'], 'lib')}#{File::PATH_SEPARATOR}#{ENV['LD_LIBRARY_PATH'] || ""}"
             ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl') && get_config('sslroot') != '/usr'
           end
 
@@ -445,7 +445,7 @@ module R2CORBA
       else
         if Dir[File.join('ext', 'libACE.*')].empty? # Don't check for ACE/TAO installation when executed for binary gem install
 
-          if get_config('without-tao') && !(File.directory?(File.join('ACE','ACE_wrappers')) || File.directory?(File.join('ACE','ACE')))
+          if get_config('without-tao') && !(File.directory?(File.join('ACE', 'ACE_wrappers')) || File.directory?(File.join('ACE', 'ACE')))
 
             # check if a user defined ACE/TAO location is specified or we're using a system standard install
             if get_config('aceroot').empty?
@@ -460,14 +460,14 @@ module R2CORBA
 
           else
             # check availability of ACE/TAO
-            if get_config('aceroot').empty? && (File.directory?(File.join('ACE','ACE_wrappers')) || File.directory?(File.join('ACE','ACE')))
-              set_config('aceroot', File.directory?(File.join('ACE','ACE_wrappers')) ? File.expand_path(File.join('ACE','ACE_wrappers')) : File.expand_path(File.join('ACE','ACE')))
+            if get_config('aceroot').empty? && (File.directory?(File.join('ACE', 'ACE_wrappers')) || File.directory?(File.join('ACE', 'ACE')))
+              set_config('aceroot', File.directory?(File.join('ACE', 'ACE_wrappers')) ? File.expand_path(File.join('ACE', 'ACE_wrappers')) : File.expand_path(File.join('ACE', 'ACE')))
             end
-            if get_config('taoroot').empty? && (File.directory?(File.join(get_config('aceroot'),'TAO')) || File.directory?(File.join('ACE','TAO')))
-              set_config('taoroot', File.directory?(File.join(get_config('aceroot'),'TAO')) ? File.expand_path(File.join(get_config('aceroot'),'TAO')) : File.expand_path(File.join('ACE','TAO')))
+            if get_config('taoroot').empty? && (File.directory?(File.join(get_config('aceroot'), 'TAO')) || File.directory?(File.join('ACE', 'TAO')))
+              set_config('taoroot', File.directory?(File.join(get_config('aceroot'), 'TAO')) ? File.expand_path(File.join(get_config('aceroot'), 'TAO')) : File.expand_path(File.join('ACE', 'TAO')))
             end
-            if get_config('mpcroot').empty? && (File.directory?(File.join(get_config('aceroot'),'MPC')) || File.directory?(File.join('ACE','MPC')))
-              set_config('mpcroot', File.directory?(File.join(get_config('aceroot'),'MPC')) ? File.expand_path(File.join(get_config('aceroot'),'MPC')) : File.expand_path(File.join('ACE','MPC')))
+            if get_config('mpcroot').empty? && (File.directory?(File.join(get_config('aceroot'), 'MPC')) || File.directory?(File.join('ACE', 'MPC')))
+              set_config('mpcroot', File.directory?(File.join(get_config('aceroot'), 'MPC')) ? File.expand_path(File.join(get_config('aceroot'), 'MPC')) : File.expand_path(File.join('ACE', 'MPC')))
             end
 
             set_config('aceinstdir', get_config('sodir')) if get_config('aceinstdir').empty?

@@ -92,10 +92,10 @@ module R2CORBA
       end
 
       def TypeCode.from_native(ntc)
-        if [TK_NULL,TK_VOID,TK_ANY,TK_BOOLEAN,TK_SHORT,TK_LONG,TK_USHORT,
-            TK_WCHAR,TK_ULONG,TK_LONGLONG,TK_ULONGLONG,TK_OCTET,
-            TK_FLOAT,TK_DOUBLE,TK_LONGDOUBLE,TK_CHAR,
-            TK_TYPECODE,TK_PRINCIPAL].include?(native_kind(ntc))
+        if [TK_NULL, TK_VOID, TK_ANY, TK_BOOLEAN, TK_SHORT, TK_LONG, TK_USHORT,
+            TK_WCHAR, TK_ULONG, TK_LONGLONG, TK_ULONGLONG, TK_OCTET,
+            TK_FLOAT, TK_DOUBLE, TK_LONGDOUBLE, TK_CHAR,
+            TK_TYPECODE, TK_PRINCIPAL].include?(native_kind(ntc))
           ## primitive typecode; wrap it
           return TypeCode._wrap_native(ntc)
         else
@@ -157,9 +157,9 @@ module R2CORBA
               rtc = TypeCode::Valuetype.new(ntc)
             end
           when TK_NATIVE
-            raise CORBA::NO_IMPLEMENT.new('typecode #{native_kind(ntc)} not supported',0,CORBA::COMPLETED_NO)
+            raise CORBA::NO_IMPLEMENT.new('typecode #{native_kind(ntc)} not supported', 0, CORBA::COMPLETED_NO)
           else
-            raise CORBA::MARSHAL.new("unknown kind [#{native_kind(ntc)}]",0,CORBA::COMPLETED_NO)
+            raise CORBA::MARSHAL.new("unknown kind [#{native_kind(ntc)}]", 0, CORBA::COMPLETED_NO)
           end
           return rtc
         end
@@ -677,7 +677,7 @@ module R2CORBA
 
         def needs_conversion(val)
           return false if val.nil?
-          @members.any? { |name,tc| tc.needs_conversion(val.__send__(name.intern)) }
+          @members.any? { |name, tc| tc.needs_conversion(val.__send__(name.intern)) }
         end
 
         def member_count
@@ -785,7 +785,7 @@ module R2CORBA
                 @@tc_#{tc.name} ||= TypeCode.typecode_for_id('#{tc.id}')
               end
               def initialize(*param_)
-                #{tc.members.collect {|n,t| "@#{n}"}.join(', ')} = param_
+                #{tc.members.collect {|n, t| "@#{n}"}.join(', ')} = param_
               end
             end
             #{tc.name}
@@ -815,7 +815,7 @@ module R2CORBA
         end
 
         def needs_conversion(val)
-          @members.any? { |name,tc| tc.needs_conversion(val.__send__(name.intern)) }
+          @members.any? { |name, tc| tc.needs_conversion(val.__send__(name.intern)) }
         end
 
         def member_count
@@ -860,7 +860,7 @@ module R2CORBA
                 @@tc_#{tc.name} ||= TypeCode.typecode_for_id('#{tc.id}')
               end
               def initialize(*param_)
-                #{tc.members.collect {|n,t| "@#{n}"}.join(',')} = param_
+                #{tc.members.collect {|n, t| "@#{n}"}.join(',')} = param_
               end
             end
             #{tc.name}

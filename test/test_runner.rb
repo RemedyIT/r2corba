@@ -49,23 +49,23 @@ else
   ENV['RUBYLIB'] = incdirs.join(File::PATH_SEPARATOR)
   if is_win32
     ENV['PATH'] = [
-      File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'],'lib') : nil,
+      File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'], 'lib') : nil,
       File.expand_path(File.join(root_path, 'ext')),
       ENV['PATH']
       ].compact.join(File::PATH_SEPARATOR)
   elsif RUBY_PLATFORM =~ /darwin/
       ENV['DYLD_LIBRARY_PATH'] = [
-          File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'],'lib') : nil,
+          File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'], 'lib') : nil,
           ENV['DYLD_LIBRARY_PATH']
         ].compact.join(File::PATH_SEPARATOR)
       ENV['DYLD_FALLBACK_LIBRARY_PATH'] = [
-          File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'],'lib') : nil,
+          File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'], 'lib') : nil,
           File.expand_path(File.join(root_path, 'ext')),
           ENV['DYLD_FALLBACK_LIBRARY_PATH']
         ].compact.join(File::PATH_SEPARATOR)
   else
     ENV['LD_LIBRARY_PATH'] = [
-        File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'],'lib') : nil,
+        File.directory?(ace_root) ? File.join(ENV['ACE_ROOT'], 'lib') : nil,
         ENV['LD_LIBRARY_PATH']
       ].compact.join(File::PATH_SEPARATOR)
   end

@@ -52,7 +52,7 @@ module R2CORBA
           raise ArgumentError, "Invalid argument #{prop.class}; expected Hash" unless prop.nil? || Hash === prop
           jprop = Java::JavaUtil::Properties.new
           jprop.setProperty('ORBid', orb_id) if orb_id
-          prop.each { |k,v| jprop.setProperty(k.to_s, v.to_s) } if prop
+          prop.each { |k, v| jprop.setProperty(k.to_s, v.to_s) } if prop
           @@cached_orb = CORBA::Native::ORB.init(argv.collect {|a| a.to_s }.to_java(:string), jprop)
         end
         @@wrapper_klass.new(n_orb)

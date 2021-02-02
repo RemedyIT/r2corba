@@ -19,7 +19,7 @@ module R2CORBA
     if RUBY_PLATFORM =~ /mingw32/
 
       mpc_os_block = <<OS_DEP__
-  libs += #{File.basename(RB_CONFIG['LIBRUBY'],'.a').sub(/^lib/,'')}
+  libs += #{File.basename(RB_CONFIG['LIBRUBY'], '.a').sub(/^lib/, '')}
   libout = .
   dllout = .
   verbatim(gnuace, macros, 1) {
@@ -91,7 +91,7 @@ project : taolib, portableserver, anytypecode, dynamicany, dynamicinterface, typ
     iortable.cpp
   }
   dynamicflags = R2TAO_POA_BUILD_DLL
-  libpaths += #{File.join('..','libr2tao')}
+  libpaths += #{File.join('..', 'libr2tao')}
   includes += "#{RB_CONFIG['rubyhdrdir'] || RB_CONFIG['archdir']}" \\
                #{RB_CONFIG['rubyhdrdir'] ? '"' + File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch']) + '"' : ''} \\
                #{File.join('..', 'libr2tao')} \\
@@ -153,7 +153,7 @@ project {
   macros += RUBY_VER_MAJOR=#{Config.rb_ver_major} RUBY_VER_MINOR=#{Config.rb_ver_minor} RUBY_VER_RELEASE=#{Config.rb_ver_release}
   sharedname = extload
   libpaths += "#{RB_CONFIG['libdir']}"
-  libs += #{File.basename(RB_CONFIG['LIBRUBY'],'.a').sub(/^lib/,'')}
+  libs += #{File.basename(RB_CONFIG['LIBRUBY'], '.a').sub(/^lib/, '')}
   libout = .
   dllout = .
   verbatim(gnuace, macros, 1) {
@@ -207,7 +207,7 @@ THE_END__
     end
 
     def self.download_tao_source(version, targetdir)
-      version_dir = version.gsub('.','_')
+      version_dir = version.gsub('.', '_')
       _url = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE%2BTAO-#{version_dir}/ACE+TAO-src-#{version}.tar.gz"
       print(_msg = "Downloading ACE+TAO-src-#{version}.tar.gz from #{_url}")
       _fnm = File.join(targetdir, "ACE+TAO-src-#{version}.tar.gz")

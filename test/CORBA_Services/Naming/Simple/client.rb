@@ -63,7 +63,7 @@ begin
   assert_not "ERROR: INS IOR resolved to nil object!", CORBA::is_nil(nc)
 
   # retrieve object reference for servant from Naming service
-  name = [CosNaming::NameComponent.new('Hello','ior')]
+  name = [CosNaming::NameComponent.new('Hello', 'ior')]
 
   obj = nc.resolve(name)
 

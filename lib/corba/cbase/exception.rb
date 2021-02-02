@@ -42,7 +42,7 @@ module R2CORBA
                 "Unknown SystemException raised: " +
                 id.to_s + ' [' + reason.to_s + ']'
         else
-          Kernel.raise exklass.new(reason,minor,completed)
+          Kernel.raise exklass.new(reason, minor, completed)
         end
       end
       def initialize(reason="", minor=0, completed=nil)

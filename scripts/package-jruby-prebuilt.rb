@@ -41,7 +41,7 @@ script_root = File.expand_path(File.dirname(__FILE__))
 pkg_root = File.dirname(script_root)
 pkg_base = File.basename(pkg_root)
 manifest = File.join(pkg_root, 'MANIFEST')
-ver_file = File.join(pkg_root,'lib','corba','common','version.rb')
+ver_file = File.join(pkg_root, 'lib', 'corba', 'common', 'version.rb')
 pkg_dir = File.join(pkg_root, 'pkg')
 
 require ver_file
@@ -55,7 +55,7 @@ mkdir_p(pkg_dir) unless File.directory?(pkg_dir)
 cur_dir = Dir.getwd
 cd(File.expand_path('..', pkg_root))
 begin
-  cmd = pkg_cmd.gsub('{xcl_path}',File.join(pkg_base, 'scripts')).gsub('{pkgfile}', pkg)
+  cmd = pkg_cmd.gsub('{xcl_path}', File.join(pkg_base, 'scripts')).gsub('{pkgfile}', pkg)
   SUBDIRS.each {|d|
     cmd << " #{File.join(pkg_base, d)}"
   }

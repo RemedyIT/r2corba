@@ -57,9 +57,9 @@ script_root = File.expand_path(File.dirname(__FILE__))
 pkg_root = File.dirname(script_root)
 pkg_base = File.basename(pkg_root)
 manifest = File.join(pkg_root, 'MANIFEST')
-ver_file = File.join(pkg_root,'lib','corba','common','version.rb')
+ver_file = File.join(pkg_root, 'lib', 'corba', 'common', 'version.rb')
 pkg_dir = File.join(pkg_root, 'pkg')
-ace_files = File.join(pkg_root,'acefiles.rb')
+ace_files = File.join(pkg_root, 'acefiles.rb')
 ext_dir = File.join(pkg_root, 'ext')
 
 CONFIG = {}
@@ -67,7 +67,7 @@ CONFIG = {}
 def get_config(k)
   CONFIG[k]
 end
-cfg_file = File.join(pkg_root,'.config')
+cfg_file = File.join(pkg_root, '.config')
 File.foreach(cfg_file) do |l|
   la = l.split('=')
   CONFIG[la.first] = la.last.strip
@@ -96,7 +96,7 @@ ACE_FILES.each {|f|
 if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
   cmd << exl_arg
 end
-cmd = cmd.gsub('{pkgfile}', pkg).gsub('{xcl_path}',File.join(pkg_root, 'scripts'))
+cmd = cmd.gsub('{pkgfile}', pkg).gsub('{xcl_path}', File.join(pkg_root, 'scripts'))
 
 Dir.glob(pkg + '.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
 

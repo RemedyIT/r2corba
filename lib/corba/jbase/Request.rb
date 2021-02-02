@@ -161,7 +161,7 @@ module R2CORBA
           elsif jex.is_a?(CORBA::Native::UnknownUserException)
             CORBA::UserException._raise(jex)
           else
-            raise CORBA::UNKNOWN.new(jex.getMessage(),0,CORBA::COMPLETED_MAYBE)
+            raise CORBA::UNKNOWN.new(jex.getMessage(), 0, CORBA::COMPLETED_MAYBE)
           end
         end
         self.result
@@ -207,7 +207,7 @@ module R2CORBA
           nvl = self.req_.arguments
           nvl.count.times do |i|
             nv = nvl.item(i)
-            rc << Any.from_java(nv.value,self.req_.target._orb) unless nv.flags == CORBA::ARG_IN
+            rc << Any.from_java(nv.value, self.req_.target._orb) unless nv.flags == CORBA::ARG_IN
           end
         rescue
           CORBA::Exception.native2r($!)

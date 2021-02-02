@@ -83,12 +83,12 @@ obj = orb.string_to_object('corbaloc:' + ins_url)
 nc = CosNaming::NamingContextExt._narrow(obj)
 
 # create context tree for registration
-full_name = [CosNaming::NameComponent.new('','root'),
-             CosNaming::NameComponent.new('base','dir'),
-             CosNaming::NameComponent.new('Hello','ior')]
+full_name = [CosNaming::NameComponent.new('', 'root'),
+             CosNaming::NameComponent.new('base', 'dir'),
+             CosNaming::NameComponent.new('Hello', 'ior')]
 
-nc_new = nc.bind_new_context(full_name[0,1])
-nc_new = nc_new.bind_new_context(full_name[1,1])
+nc_new = nc.bind_new_context(full_name[0, 1])
+nc_new = nc_new.bind_new_context(full_name[1, 1])
 
 assert_not "ERROR: INS IOR resolved to nil object!", CORBA::is_nil(nc)
 

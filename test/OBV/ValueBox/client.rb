@@ -216,7 +216,7 @@ module Test
     # basic test
     p1 = VBfixed_struct1.new(
                 Fixed_Struct1.new(29,
-                        Fixed_Struct1::Bstruct.new(117,21)))
+                        Fixed_Struct1::Bstruct.new(117, 21)))
 
     assert "boxed_struct_invocations:0 failed", (p1.value.is_a?(Fixed_Struct1))
     assert "boxed_struct_invocations:0 failed", (p1.value.l == 29)
@@ -225,7 +225,7 @@ module Test
     # test invocation with valueboxes
     p2 = VBfixed_struct1.new(
                 Fixed_Struct1.new(92,
-                        Fixed_Struct1::Bstruct.new(171,12)))
+                        Fixed_Struct1::Bstruct.new(171, 12)))
     p2_out = nil
     p3_out = nil
     retval = nil

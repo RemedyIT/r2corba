@@ -231,7 +231,7 @@ module R2CORBA
             @members = []
             members_.each { |n, tc, access| add_member(n, tc, access) }
             jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::ValueMember.java_class, @members.size)
-            @members.each_with_index do |(mn, mtc, access),i|
+            @members.each_with_index do |(mn, mtc, access), i|
               m_id = mtc.is_a?(IdentifiedTypeCode) ? mtc.id : 'IDL:*primitive*:1.0'
               jmembers[i] = CORBA::Native::ValueMember.new(mn.to_s, m_id,
                                                            name, id.split(':').last,
@@ -247,7 +247,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name,modifier,base,jmembers)
+        def _create_tc(id, name, modifier, base, jmembers)
           begin
             CORBA::ORB._orb.create_value_tc(id.to_s,
                                             name.to_s,
@@ -265,7 +265,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name,modifier,base,jmembers)
+        def _create_tc(id, name, modifier, base, jmembers)
           # JaCORB 2.3.1' does not support tk_event typecodes yet;
           # so just let it be a regular valuetype
           # NOTE: this will not be interoperable between jR2CORBA and R2CORBA
@@ -368,7 +368,7 @@ module R2CORBA
             @members = []
             members_.each { |n, tc| add_member(n, tc) }
             jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::StructMember.java_class, @members.size)
-            @members.each_with_index {|(mn, mtc),i| jmembers[i] = CORBA::Native::StructMember.new(mn.to_s, mtc.tc_, nil) }
+            @members.each_with_index {|(mn, mtc), i| jmembers[i] = CORBA::Native::StructMember.new(mn.to_s, mtc.tc_, nil) }
             @tc_ = _create_tc(id, name, jmembers)
             super(id)
           end
@@ -376,7 +376,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name,jmembers)
+        def _create_tc(id, name, jmembers)
           begin
             CORBA::ORB._orb.create_struct_tc(id.to_s, name.to_s, jmembers)
           rescue ::NativeException
@@ -389,20 +389,20 @@ module R2CORBA
       class Except < Struct
 
         def from_java(jex)
-          raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected',0,CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
+          raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected', 0, CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
           ex = get_type.new
-          members.each {|mname,mtc| ex.__send__("#{mname}=".to_sym, jex.__send__(mname.to_sym)) }
+          members.each {|mname, mtc| ex.__send__("#{mname}=".to_sym, jex.__send__(mname.to_sym)) }
           ex
         end
 
         def is_compatible?(jex)
-          raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected',0,CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
-          members.all? {|mname,mtc| jex.respond_to?(mname.to_sym) }
+          raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected', 0, CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
+          members.all? {|mname, mtc| jex.respond_to?(mname.to_sym) }
         end
 
         protected
 
-        def _create_tc(id,name,jmembers)
+        def _create_tc(id, name, jmembers)
           begin
             CORBA::ORB._orb.create_exception_tc(id.to_s, name.to_s, jmembers)
           rescue ::NativeException
@@ -467,7 +467,7 @@ module R2CORBA
 
         protected
 
-        def _create_tc(id,name, disctc,jmembers)
+        def _create_tc(id, name, disctc, jmembers)
           begin
             CORBA::ORB._orb.create_union_tc(id.to_s, name.to_s, disctc.tc_, jmembers)
           rescue ::NativeException

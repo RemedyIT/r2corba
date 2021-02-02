@@ -91,7 +91,7 @@ hello_obj = hello_srv._this()
 
 # register 5 object references with Naming service
 5.times do |i|
-  nc.bind([CosNaming::NameComponent.new("Hello#{i}",'ior')], hello_obj)
+  nc.bind([CosNaming::NameComponent.new("Hello#{i}", 'ior')], hello_obj)
 end
 
 # initialize signal handling

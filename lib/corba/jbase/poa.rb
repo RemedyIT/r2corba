@@ -166,7 +166,7 @@ module R2CORBA
         raise CORBA::BAD_PARAM.new('expected POAManager', 0, CORBA::COMPLETED_NO) unless a_POAManager.is_a?(PortableServer::POAManager)
         CORBA::PolicyList._tc.validate(policies) unless policies.nil? || policies.empty?
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.nil? ? 0 : policies.size)
-        policies.each_with_index {|p,i| jpolicies[i] = p.objref_ } unless policies.nil?
+        policies.each_with_index {|p, i| jpolicies[i] = p.objref_ } unless policies.nil?
         begin
           PortableServer::POA._narrow(CORBA::Object._wrap_native(self.objref_.create_POA(adapter_name, a_POAManager.objref_, jpolicies)))
         rescue ::NativeException
