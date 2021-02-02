@@ -447,7 +447,7 @@ module R2CORBA
             opts.on("-l PORTNUM", "--listen=PORTNUM", Integer,
                     "Specifies port number for service endpoint.",
                     "Default: none") { |v| OPTIONS[:port]=v }
-            if (IS_JRUBY or R2CORBA::TAO::RUBY_THREAD_SUPPORT)
+            if IS_JRUBY or R2CORBA::TAO::RUBY_THREAD_SUPPORT
               opts.on("-t THREADNUM", "--threads=THREADNUM", Integer,
                       "Specifies (minimum) number of threads for service.",
                       "Default: 5") { |v| OPTIONS[:threads]=v }

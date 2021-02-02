@@ -342,7 +342,7 @@ module R2CORBA
         when TK_ANY
           return CORBA::Any === val ? val : Any.to_any(val)
         when TK_BOOLEAN
-          return val if ((val.is_a? TrueClass) || (val.is_a? FalseClass))
+          return val if (val.is_a? TrueClass) || (val.is_a? FalseClass)
         when TK_SHORT
           return val.to_int if val.respond_to?(:to_int) && ShortRange === val.to_int
         when TK_LONG
@@ -367,7 +367,7 @@ module R2CORBA
             return val.respond_to?(:to_str) ? val.to_str : val.to_int.chr
           end
         else
-          return val if (val.nil? || val.is_a?(self.get_type))
+          return val if val.nil? || val.is_a?(self.get_type)
         end
         raise CORBA::MARSHAL.new(
           "value does not match type: value = #{val}, value type == #{val.class.name}, type == #{get_type.name}",
@@ -431,7 +431,7 @@ module R2CORBA
           val = ::String === val ? val : val.to_str
           raise ::CORBA::MARSHAL.new(
             "string size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless (self.length==0 || val.size<=self.length)
+            1, ::CORBA::COMPLETED_NO) unless self.length==0 || val.size<=self.length
           val
         end
 
@@ -464,7 +464,7 @@ module R2CORBA
           end
           raise ::CORBA::MARSHAL.new(
             "widestring size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless (self.length==0 || val.size<=self.length)
+            1, ::CORBA::COMPLETED_NO) unless self.length==0 || val.size<=self.length
           raise ::CORBA::MARSHAL.new(
             "invalid widestring element(s)",
             1, ::CORBA::COMPLETED_NO) if val.any? { |el| !(UShortRange === (el.respond_to?(:to_int) ? el.to_int : el)) }
@@ -538,7 +538,7 @@ module R2CORBA
           end
           raise ::CORBA::MARSHAL.new(
             "sequence size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless (self.length==0 || val.size<=self.length)
+            1, ::CORBA::COMPLETED_NO) unless self.length==0 || val.size<=self.length
           if ::Array === val
             if val.any? { |e| self.content_type.needs_conversion(e) }
               val.collect { |e| self.content_type.validate(e) }

@@ -93,7 +93,7 @@ module R2CORBA
 
       def run
         STDERR.puts "INS - starting service run" if @options[:verbose]
-        if (defined?(JRUBY_VERSION) or !R2CORBA::TAO::RUBY_THREAD_SUPPORT)
+        if defined?(JRUBY_VERSION) or !R2CORBA::TAO::RUBY_THREAD_SUPPORT
           STDERR.puts "INS - running ORB" if @options[:verbose]
           @orb.run
         else

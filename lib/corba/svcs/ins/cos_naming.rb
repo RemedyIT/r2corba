@@ -12,7 +12,7 @@
 #--------------------------------------------------------------------
 
 require 'corba/naming_service'
-if (defined?(JRUBY_VERSION) or R2CORBA::TAO::RUBY_THREAD_SUPPORT)
+if defined?(JRUBY_VERSION) or R2CORBA::TAO::RUBY_THREAD_SUPPORT
   require 'monitor'
 end
 
@@ -104,7 +104,7 @@ module R2CORBA
       # Map type to store bindings.
       # Use synchronized version for multithreading capable implementations.
       #
-      if (defined?(JRUBY_VERSION) or R2CORBA::TAO::RUBY_THREAD_SUPPORT)
+      if defined?(JRUBY_VERSION) or R2CORBA::TAO::RUBY_THREAD_SUPPORT
         MAP_TYPE = Class.new(Monitor) do
           def initialize
             super
