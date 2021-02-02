@@ -133,7 +133,7 @@ module IDL
         println()
         @nest += 1
 
-        if node.bases.size>0
+        if node.bases.size > 0
           node.bases.each do |n|
             printiln("include #{n.scoped_rubyname}")
           end
@@ -146,7 +146,7 @@ module IDL
           println(",")
           printi("        'IDL:omg.org/CORBA/AbstractBase:1.0'")
         end
-        if node.bases.size>0
+        if node.bases.size > 0
           node.bases.each do |n|
             println(",")
             printi("        #{n.scoped_rubyname}::Id")
@@ -519,7 +519,7 @@ module IDL
 
           ##  validate data for IN/INOUT args
           ##
-          if _parm.size>0
+          if _parm.size > 0
             _parm.each do |p|
               if p.attribute != IDL::AST::Parameter::OUT
                 printiln("#{p.rubyname} = #{get_typecode(p.idltype)}.validate(#{p.rubyname})")
@@ -536,7 +536,7 @@ module IDL
           end
 
           newln = ""
-          if _parm.size>0
+          if _parm.size > 0
             println(newln)
             nest do
               printi(":arg_list => [")
@@ -565,7 +565,7 @@ module IDL
             newln = ","
           end
 
-          if node.raises.size>0
+          if node.raises.size > 0
             println(newln)
             nest {
               printi(":exc_list => [")
@@ -612,7 +612,7 @@ module IDL
 
           printiln("_ret = self._invoke('_get_#{node.name}', {")
           nest { printi(":result_type => #{get_typecode(node.idltype)}") }
-          if node.get_raises.size>0
+          if node.get_raises.size > 0
             println(',')
             nest {
               printi(":exc_list => [")
@@ -656,7 +656,7 @@ module IDL
                 printiln("['val', CORBA::ARG_IN, #{get_typecode(node.idltype)}, val]],");
               }
               printi(":result_type => CORBA._tc_void")
-              if node.set_raises.size>0
+              if node.set_raises.size > 0
                 println(',')
                 printi(":exc_list => [")
                 pfx = ""
@@ -712,7 +712,7 @@ module IDL
         scoped_type = _type.node.idltype
         if scoped_type.is_a?(IDL::Type::Interface) && scoped_type.node.is_forward?()
           node = scoped_type.node
-          "(CORBA::TypeCode.typecode_for_id('#{node.repository_id}') || "+
+          "(CORBA::TypeCode.typecode_for_id('#{node.repository_id}') || " +
             "CORBA::TypeCode::ObjectRef.new('#{node.repository_id}', '#{node.rubyname}', #{node.scoped_rubyname}))"
         else
           _type.node.scoped_rubyname + '._tc'
@@ -893,7 +893,7 @@ module IDL
         printiln(format("attr_accessor :%s", m.rubyname))
       end
 
-      if struct_members_.size>0
+      if struct_members_.size > 0
         printiln('def initialize(*param_)')
         nest {
           struct_members_.each do |m|
@@ -934,7 +934,7 @@ module IDL
         printiln(format("@@tc_%s ||= CORBA::TypeCode::Union.new('%s'.freeze, '%s',",
                       node.rubyname, node.repository_id, node.rubyname))
         printi("    #{get_typecode(node.switchtype)}")
-        if node.members.size>0
+        if node.members.size > 0
           pfx = "   ["
           node.members.each do |m|
             m.labels.each do |lbl|
@@ -958,7 +958,7 @@ module IDL
       printiln("end")
       printiln("self._tc  # register typecode");
       ix = 0
-      if node.members.size>0
+      if node.members.size > 0
         node.members.each do |m|
           printiln(format("def %s; @value; end", m.rubyname))
           printiln(format("def %s=(val); _set_value(%d, val); end", m.rubyname, ix))
@@ -1123,7 +1123,7 @@ module IDL
       idleval = @params[:idl_eval] || false
       println("require 'corba/poa.rb'") if @params[:libinit]
       if !@params[:expand_includes]
-        println("require '"+@params[:idlfile].sub(/\.[^\.]*$/,@params[:stub_pfx])+"'")
+        println("require '" + @params[:idlfile].sub(/\.[^\.]*$/,@params[:stub_pfx]) + "'")
       end
       println()
       printiln("module POA")
@@ -1207,7 +1207,7 @@ module IDL
         printiln("Id = Intf::Id")
         println()
 
-        if node.bases.size>0
+        if node.bases.size > 0
           node.bases.each do |n|
             printiln("include_interface(#{n.scoped_rubyname}::Intf)")
           end
@@ -1264,7 +1264,7 @@ module IDL
 
       printi("Operations.store(:#{node.name}, {")
       newln = ""
-      if _parm.size>0
+      if _parm.size > 0
         println(newln)
         nest do
           printi(":arg_list => [")
@@ -1289,7 +1289,7 @@ module IDL
         newln = ","
       end
 
-      if node.raises.size>0
+      if node.raises.size > 0
         println(newln)
         nest {
           printi(":exc_list => [")
@@ -1339,7 +1339,7 @@ module IDL
       nest {
         nest {
           printiln(":result_type => #{get_typecode(node.idltype)},")
-          if node.get_raises.size>0
+          if node.get_raises.size > 0
             printi(":exc_list => [")
             pfx = ""
             nest {
@@ -1374,7 +1374,7 @@ module IDL
               printiln("['val', CORBA::ARG_IN, #{get_typecode(node.idltype)}]],");
             }
             printiln(":result_type => CORBA._tc_void,")
-            if node.set_raises.size>0
+            if node.set_raises.size > 0
               printi(":exc_list => [")
               pfx = ""
               nest {

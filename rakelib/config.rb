@@ -313,10 +313,10 @@ module R2CORBA
             ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl')
           elsif RUBY_PLATFORM =~ /darwin/
             ENV['DYLD_LIBRARY_PATH'] = "#{File.join(ENV['ACE_ROOT'],'lib')}#{File::PATH_SEPARATOR}#{ENV['DYLD_LIBRARY_PATH'] || ""}"
-            ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl') && get_config('sslroot')!='/usr'
+            ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl') && get_config('sslroot') != '/usr'
           else
             ENV['LD_LIBRARY_PATH'] = "#{File.join(ENV['ACE_ROOT'],'lib')}#{File::PATH_SEPARATOR}#{ENV['LD_LIBRARY_PATH'] || ""}"
-            ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl') && get_config('sslroot')!='/usr'
+            ENV['SSL_ROOT'] = get_config('sslroot') if get_config('with-ssl') && get_config('sslroot') != '/usr'
           end
 
         else
@@ -438,7 +438,7 @@ module R2CORBA
     def self.check
       if defined?(JRUBY_VERSION)
         # check availability of JacORB
-        if get_config('jacorb_home')=='' && File.directory?('jacorb')
+        if get_config('jacorb_home') == '' && File.directory?('jacorb')
           set_config('jacorb_home', File.expand_path('jacorb'))
         end
         raise "Cannot find JacORB. Missing JACORB_HOME configuration!" if get_config('jacorb_home').empty?

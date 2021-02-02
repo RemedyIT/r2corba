@@ -58,7 +58,7 @@ task :define_gemspec do
 end
 
 task :gemspec => :define_gemspec do
-  File.open(TAOGem.gemspec.name+'.gemspec', 'w') {|f| f.puts TAOGem.gemspec.to_ruby}
+  File.open(TAOGem.gemspec.name + '.gemspec', 'w') {|f| f.puts TAOGem.gemspec.to_ruby}
 end
 
 task :build => :define_gemspec do

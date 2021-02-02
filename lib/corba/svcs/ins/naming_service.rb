@@ -35,7 +35,7 @@ module R2CORBA
         #
         if defined?(JRUBY_VERSION)
           @options[:orbprop]['jacorb.poa.thread_pool_min'] = @options[:threads]
-          @options[:orbprop]['jacorb.poa.thread_pool_max'] = @options[:threads]*4
+          @options[:orbprop]['jacorb.poa.thread_pool_max'] = @options[:threads] * 4
           if @options[:debug] > 0
             @options[:orbprop]['jacorb.log.default.verbosity'] = case
             when @options[:debug] < 2

@@ -431,7 +431,7 @@ module R2CORBA
           val = ::String === val ? val : val.to_str
           raise ::CORBA::MARSHAL.new(
             "string size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless self.length==0 || val.size<=self.length
+            1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           val
         end
 
@@ -464,7 +464,7 @@ module R2CORBA
           end
           raise ::CORBA::MARSHAL.new(
             "widestring size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless self.length==0 || val.size<=self.length
+            1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           raise ::CORBA::MARSHAL.new(
             "invalid widestring element(s)",
             1, ::CORBA::COMPLETED_NO) if val.any? { |el| !(UShortRange === (el.respond_to?(:to_int) ? el.to_int : el)) }
@@ -538,7 +538,7 @@ module R2CORBA
           end
           raise ::CORBA::MARSHAL.new(
             "sequence size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless self.length==0 || val.size<=self.length
+            1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           if ::Array === val
             if val.any? { |e| self.content_type.needs_conversion(e) }
               val.collect { |e| self.content_type.validate(e) }
@@ -559,8 +559,8 @@ module R2CORBA
         end
 
         def inspect
-          "#{self.class.name}: "+
-              "length=#{if self.length.nil? then ""; else  self.length.to_s; end}; "+
+          "#{self.class.name}: " +
+              "length=#{if self.length.nil? then ""; else  self.length.to_s; end}; " +
               "content=#{self.content_type.inspect}"
         end
       end
@@ -580,10 +580,10 @@ module R2CORBA
           super(val)
           raise ::CORBA::MARSHAL.new(
             "array size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless val.nil? || val.size<=self.length
+            1, ::CORBA::COMPLETED_NO) unless val.nil? || val.size <= self.length
           raise ::CORBA::MARSHAL.new(
             "array size too small: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless val.nil? || val.size>=self.length
+            1, ::CORBA::COMPLETED_NO) unless val.nil? || val.size >= self.length
           val.any? { |e| self.content_type.needs_conversion(e) } ? val.collect { |e| self.content_type.validate(e) } : val.each { |e| self.content_type.validate(e) }
         end
 
@@ -653,7 +653,7 @@ module R2CORBA
           tc.members.each do |nm_, tc_, access_|
             value_type::Intf.module_eval(%Q{attr_accessor :#{nm_}})
             value_type::Intf.__send__(:private, nm_.intern)
-            value_type::Intf.__send__(:private, (nm_+'=').intern)
+            value_type::Intf.__send__(:private, (nm_ + '=').intern)
           end
           value_type
         end
@@ -668,7 +668,7 @@ module R2CORBA
           if needs_conversion(val)
             vorg = val
             val = vorg.class.new
-            @members.each { |name, tc| val.__send__((name+'=').intern, tc.validate(vorg.__send__(name.intern))) }
+            @members.each { |name, tc| val.__send__((name + '=').intern, tc.validate(vorg.__send__(name.intern))) }
           else
             @members.each { |name, tc| tc.validate(val.__send__(name.intern)) }
           end
@@ -684,17 +684,17 @@ module R2CORBA
           @members.size
         end
         def member_name(index)
-          raise ::CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][0]
         end
         def member_type(index)
-          raise ::CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][1]
         end
 
         def inspect
           s = "#{self.class.name}: #{name} - #{id}\n"
-          @members.each { |n, t| s += "  #{n} = "+t.inspect+"\n" }
+          @members.each { |n, t| s += "  #{n} = " + t.inspect + "\n" }
           s
         end
       end # Valuetype
@@ -807,7 +807,7 @@ module R2CORBA
           if needs_conversion(val)
             vorg = val
             val = vorg.class.new
-            @members.each { |name, tc| val.__send__((name+'=').intern, tc.validate(vorg.__send__(name.intern))) }
+            @members.each { |name, tc| val.__send__((name + '=').intern, tc.validate(vorg.__send__(name.intern))) }
           else
             @members.each { |name, tc| tc.validate(val.__send__(name.intern)) }
           end
@@ -822,17 +822,17 @@ module R2CORBA
           @members.size
         end
         def member_name(index)
-          raise ::CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][0]
         end
         def member_type(index)
-          raise ::CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][1]
         end
 
         def inspect
           s = "#{self.class.name}: #{name} - #{id}\n"
-          @members.each { |n, t| s += "  #{n} = "+t.inspect+"\n" }
+          @members.each { |n, t| s += "  #{n} = " + t.inspect + "\n" }
           s
         end
       end # Struct
@@ -942,7 +942,7 @@ module R2CORBA
             if needs_conversion(val)
               vorg = val
               val = vorg.class.new
-              val.__send__((@members[@labels[vorg._disc]][1]+'=').intern,
+              val.__send__((@members[@labels[vorg._disc]][1] + '=').intern,
                             @members[@labels[vorg._disc]][2].validate(vorg._value))
             else
               @members[@labels[val._disc]][2].validate(val._value)
@@ -959,15 +959,15 @@ module R2CORBA
           @members.size
         end
         def member_name(index)
-          raise CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][1]
         end
         def member_type(index)
-          raise CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][2]
         end
         def member_label(index)
-          raise CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][0]
         end
         def discriminator_type
@@ -992,7 +992,7 @@ module R2CORBA
 
         def inspect
           s = "#{self.class.name}: #{name} - #{id}\n"
-          @members.each { |l, n, t| s += "  case #{l.to_s}: #{n} = "+t.inspect+"\n" }
+          @members.each { |l, n, t| s += "  case #{l.to_s}: #{n} = " + t.inspect + "\n" }
           s
         end
       end # Union
@@ -1022,7 +1022,7 @@ module R2CORBA
           @members.size
         end
         def member_name(index)
-          raise CORBA::TypeCode::Bounds.new if (index<0) || (index>=@members.size)
+          raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index]
         end
       end # Enum

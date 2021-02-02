@@ -91,14 +91,14 @@ if /^#{pkg_root}/ =~ ace_root
   ace_root.gsub!(/^#{pkg_root}/, pkg_base)
 end
 ACE_FILES.each {|f|
-  cmd << " #{File.join(ace_root, 'lib', so_pfx+f+so_ext)}"
+  cmd << " #{File.join(ace_root, 'lib', so_pfx + f + so_ext)}"
 }
 if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
   cmd << exl_arg
 end
 cmd = cmd.gsub('{pkgfile}', pkg).gsub('{xcl_path}',File.join(pkg_root, 'scripts'))
 
-Dir.glob(pkg+'.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
+Dir.glob(pkg + '.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
 
 mkdir_p(pkg_dir) unless File.directory?(pkg_dir)
 
@@ -116,7 +116,7 @@ cur_dir = Dir.getwd
 cd(File.expand_path('..', pkg_root))
 begin
   puts(cmd)
-  system(cmd+"| tee #{File.join(pkg_root, 'MANIFEST')}")
+  system(cmd + "| tee #{File.join(pkg_root, 'MANIFEST')}")
 
   cmd = pkg_cmd2.gsub('{pkgfile}', pkg)
   system(cmd + " #{File.join(pkg_base, 'MANIFEST')} #{nul_redir}")

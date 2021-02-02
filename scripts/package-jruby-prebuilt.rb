@@ -48,7 +48,7 @@ require ver_file
 
 pkg = File.join(pkg_dir, "Ruby2CORBA-#{R2CORBA::R2CORBA_VERSION}_prebuilt_java")
 
-Dir.glob(pkg+'.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
+Dir.glob(pkg + '.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
 
 mkdir_p(pkg_dir) unless File.directory?(pkg_dir)
 
@@ -63,7 +63,7 @@ begin
     cmd << " #{File.join(pkg_base, f)}"
   }
   puts(cmd)
-  system(cmd+"| tee #{manifest}")
+  system(cmd + "| tee #{manifest}")
 
   cmd = pkg_cmd2.gsub('{pkgfile}', pkg)
   system(cmd + " #{File.join(pkg_base, 'MANIFEST')} #{nul_redir}")
@@ -78,7 +78,7 @@ begin
   cmd = zip_cmd.gsub('{pkgfile}', pkg)
   cmd << " #{pkg_base} -i #{File.join(pkg_base, 'MANIFEST')} -i@#{manifest}"
   puts(cmd)
-  system(cmd+" #{nul_redir}")
+  system(cmd + " #{nul_redir}")
 
 ensure
   cd(cur_dir)

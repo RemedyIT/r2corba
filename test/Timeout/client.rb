@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0", Integer) { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0", Integer) { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -113,8 +113,8 @@ begin
   mid_value = 10000 * (Min_timeout + Max_timeout) / 2   # convert from msec to "TimeT" (0.1 usec units)
 
   any_orb = CORBA::Any.to_any(mid_value, TimeBase::TimeT._tc)
-  any_thread = CORBA::Any.to_any(mid_value+10000, TimeBase::TimeT._tc) # midvalue + 1 msec
-  any_object = CORBA::Any.to_any(mid_value+20000, TimeBase::TimeT._tc) # midvalue + 2 msec
+  any_thread = CORBA::Any.to_any(mid_value + 10000, TimeBase::TimeT._tc) # midvalue + 1 msec
+  any_object = CORBA::Any.to_any(mid_value + 20000, TimeBase::TimeT._tc) # midvalue + 2 msec
 
   policies = []
   policies << orb.create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, any_object)
@@ -187,7 +187,7 @@ begin
   for i in 0..3
     timeout_count_total += Timeout_count[i]
     in_time_count_total += In_time_count[i]
-    puts "client (#{Process.pid}) in_time_count[#{To_type_names[i]}]= #{In_time_count[i]} "+
+    puts "client (#{Process.pid}) in_time_count[#{To_type_names[i]}]= #{In_time_count[i]} " +
                                 "timeout_count[#{To_type_names[i]}]= #{Timeout_count[i]}"
   end
 

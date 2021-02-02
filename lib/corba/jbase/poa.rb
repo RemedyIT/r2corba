@@ -36,7 +36,7 @@ module R2CORBA
     module POA
       def destroy(etherealize_objects, wait_for_completion)
         begin
-          self.objref_.destroy(etherealize_objects!=false, wait_for_completion!=false)
+          self.objref_.destroy(etherealize_objects != false, wait_for_completion != false)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end

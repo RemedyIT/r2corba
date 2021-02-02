@@ -41,7 +41,7 @@ ARGV.options do |opts|
 
     opts.on("-o IORFILE",
             "Set IOR filename.",
-            "Default: 'ins.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'ins.ior'") { |v| OPTIONS[:iorfile] = v }
 
     opts.separator ""
 
@@ -74,7 +74,7 @@ class RBBindingIterator < POA::CosNaming::BindingIterator
 
   def next_n(how_many)
     bindings = []
-    while how_many>0 and !@rl.empty?
+    while how_many > 0 and !@rl.empty?
       reg = @rl.shift
       bindings << CosNaming::Binding.new(reg[:name], reg[:type])
       how_many -= 1
@@ -103,8 +103,8 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   # CosNaming::NamingContext methods
   #
   def bind(n, obj)
-    raise CosNaming::NamingContext::InvalidName.new if n.size<1
-    if n.size>1
+    raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+    if n.size > 1
       nc = find_context(n)
       nc.bind(n, obj)
     else
@@ -113,8 +113,8 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   end
 
   def rebind(n, obj)
-    raise CosNaming::NamingContext::InvalidName.new if n.size<1
-    if n.size>1
+    raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+    if n.size > 1
       nc = find_context(n)
       nc.rebind(n, obj)
     else
@@ -123,8 +123,8 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   end
 
   def bind_context(n, nc_new)
-    raise CosNaming::NamingContext::InvalidName.new if n.size<1
-    if n.size>1
+    raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+    if n.size > 1
       nc = find_context(n)
       nc.bind_context(n, nc_new)
     else
@@ -133,8 +133,8 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   end
 
   def rebind_context(n, nc_new)
-    raise CosNaming::NamingContext::InvalidName.new if n.size<1
-    if n.size>1
+    raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+    if n.size > 1
       nc = find_context(n)
       nc.rebind_context(n, nc_new)
     else
@@ -143,13 +143,13 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   end
 
   def resolve(n)
-    raise CosNaming::NamingContext::InvalidName.new if n.size<1
+    raise CosNaming::NamingContext::InvalidName.new if n.size < 1
     find_object(n)
   end
 
   def unbind(n)
-    raise CosNaming::NamingContext::InvalidName.new if n.size<1
-    if n.size>1
+    raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+    if n.size > 1
       nc = find_context(n)
       nc.unbind(n)
     else
@@ -167,14 +167,14 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   end
 
   def bind_new_context(n)
-    raise CosNaming::NamingContext::InvalidName.new if n.size<1
+    raise CosNaming::NamingContext::InvalidName.new if n.size < 1
     nc = self.new_context()
     self.bind_context(n, nc)
     nc
   end
 
   def destroy()
-    raise CosNaming::NamingContext::NotEmpty.new if @map.size>0
+    raise CosNaming::NamingContext::NotEmpty.new if @map.size > 0
     return if self.oid.nil? ## no oid for root context
     poa = self._default_POA
     poa.deactivate_object(self.oid)
@@ -184,7 +184,7 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   def list(how_many)
     reglist = @map.values
     bindings = []
-    while how_many>0 and !reglist.empty?
+    while how_many > 0 and !reglist.empty?
       reg = reglist.shift
       bindings << CosNaming::Binding.new(reg[:name], reg[:type])
       how_many -= 1
@@ -242,7 +242,7 @@ class RBNamingContext < POA::CosNaming::NamingContextExt
   end
 
   def find_object(n)
-    if n.size>1
+    if n.size > 1
       nc = find_context(n)
       nc.resolve(n)
     else

@@ -65,7 +65,7 @@ module R2CORBA
           end
 
           begin
-            File.open(self.pidfile, File::CREAT|File::EXCL|File::WRONLY) do |f|
+            File.open(self.pidfile, File::CREAT | File::EXCL | File::WRONLY) do |f|
               f.write Process.pid
             end
             report "INS - PID \##{Process.pid} written to '#{self.pidfile}'"
@@ -217,7 +217,7 @@ module R2CORBA
             end
 
             begin
-              File.open(self.pidfile, File::CREAT|File::EXCL|File::WRONLY) do |f|
+              File.open(self.pidfile, File::CREAT | File::EXCL | File::WRONLY) do |f|
                 f.write Process.pid
               end
               report "INS - PID \##{Process.pid} written to '#{self.pidfile}'"
@@ -385,12 +385,12 @@ module R2CORBA
     def INS.parse_arg
       script_name = File.basename($0, '.bat')
       if not script_name =~ /rins/
-        script_name = "ruby "+$0
+        script_name = "ruby " + $0
       end
 
       @@command = ARGV.shift.to_sym unless ARGV.empty?
       unless COMMANDS.include?(@@command)
-        STDERR.puts "ERROR: Invalid command [#{command}]!\n"+
+        STDERR.puts "ERROR: Invalid command [#{command}]!\n" +
                     "Usage: #{script_name} #{COMMANDS.join('|')} [options]\n"
         exit 1
       end
@@ -429,42 +429,42 @@ module R2CORBA
 
             opts.on("-i FILE", "--ior=FILE", String,
                     "Specifies filename (incl. path) to write IOR to.",
-                    "Default: ./ins.ior") { |v| OPTIONS[:iorfile]=v }
+                    "Default: ./ins.ior") { |v| OPTIONS[:iorfile] = v }
             unless IS_WIN32
               opts.on("-p DIR", "--pid=DIR", String,
                       "Specifies path to write pidfile to.",
-                      "Default: ./") { |v| OPTIONS[:piddir]=v }
+                      "Default: ./") { |v| OPTIONS[:piddir] = v }
               unless IS_JRUBY
                 opts.on("-o DIR", "--output=DIR", String,
                         "Specifies filename to write logfile to.",
-                        "Default: <piddir>") { |v| OPTIONS[:logdir]=v }
+                        "Default: <piddir>") { |v| OPTIONS[:logdir] = v }
               end
             else
               opts.on("-o DIR", "--output=DIR", String,
                       "Specifies path to write logfile to.",
-                      "Default: ./") { |v| OPTIONS[:logdir]=v }
+                      "Default: ./") { |v| OPTIONS[:logdir] = v }
             end
             opts.on("-l PORTNUM", "--listen=PORTNUM", Integer,
                     "Specifies port number for service endpoint.",
-                    "Default: none") { |v| OPTIONS[:port]=v }
+                    "Default: none") { |v| OPTIONS[:port] = v }
             if IS_JRUBY or R2CORBA::TAO::RUBY_THREAD_SUPPORT
               opts.on("-t THREADNUM", "--threads=THREADNUM", Integer,
                       "Specifies (minimum) number of threads for service.",
-                      "Default: 5") { |v| OPTIONS[:threads]=v }
+                      "Default: 5") { |v| OPTIONS[:threads] = v }
             end
 
             unless IS_JRUBY || !INS.daemons_installed
               opts.on("-d", "--daemon",
                       "Run as daemon.",
-                      "Default: off") { |v| OPTIONS[:daemon]=v }
+                      "Default: off") { |v| OPTIONS[:daemon] = v }
             end
             opts.on("-v", "--verbose",
                     "Run verbose.",
-                    "Default: off") { |v| OPTIONS[:verbose]=v }
+                    "Default: off") { |v| OPTIONS[:verbose] = v }
 
             opts.on("--debug=LVL", Integer,
                     "Specifies debug level.",
-                    "Default: 0") { |v| OPTIONS[:debug]=v }
+                    "Default: 0") { |v| OPTIONS[:debug] = v }
 
             opts.separator ""
 
@@ -483,18 +483,18 @@ module R2CORBA
             unless IS_WIN32
               opts.on("-p DIR", "--pid=DIR", String,
                       "Specifies path where pidfile is stored.",
-                      "Default: ./") { |v| OPTIONS[:piddir]=v }
+                      "Default: ./") { |v| OPTIONS[:piddir] = v }
             end
 
             unless @@command == 'status'
               OPTIONS[:daemon] = true unless IS_JRUBY || !INS.daemons_installed
               opts.on("--[no-]daemon",
                       "Do not run in daemon mode.",
-                      "Default: #{OPTIONS[:daemon] ? 'on' : 'off'}") { |v| OPTIONS[:daemon]=v }
+                      "Default: #{OPTIONS[:daemon] ? 'on' : 'off'}") { |v| OPTIONS[:daemon] = v }
             end
             opts.on("-v", "--verbose",
                     "Run verbose.",
-                    "Default: off") { |v| OPTIONS[:verbose]=v }
+                    "Default: off") { |v| OPTIONS[:verbose] = v }
 
             opts.separator ""
 

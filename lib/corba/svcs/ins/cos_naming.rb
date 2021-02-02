@@ -43,9 +43,9 @@ module CosNaming
           esc_ = !esc_
         when '.'
           unless esc_
-            raise CosNaming::NamingContext::InvalidName.new if off_>0
+            raise CosNaming::NamingContext::InvalidName.new if off_ > 0
             id_ = snc[0, i].gsub(/\\(\.|\\)/, '\1')
-            off_ = i+1
+            off_ = i + 1
           end
           esc_ = false
         else
@@ -80,7 +80,7 @@ module R2CORBA
       def next_n(how_many)
         raise CORBA::BAD_PARAM.new if how_many < 1
         bindings = []
-        while how_many>0 and !@rl.empty?
+        while how_many > 0 and !@rl.empty?
           reg = @rl.shift
           bindings << CosNaming::Binding.new(reg[:name], reg[:type])
           how_many -= 1
@@ -197,8 +197,8 @@ module R2CORBA
       # CosNaming::NamingContext methods
       #
       def bind(n, obj)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
-        if n.size>1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        if n.size > 1
           nc = find_context(n)
           nc.bind(n, obj)
         else
@@ -207,8 +207,8 @@ module R2CORBA
       end
 
       def rebind(n, obj)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
-        if n.size>1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        if n.size > 1
           nc = find_context(n)
           nc.rebind(n, obj)
         else
@@ -217,8 +217,8 @@ module R2CORBA
       end
 
       def bind_context(n, nc_new)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
-        if n.size>1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        if n.size > 1
           nc = find_context(n)
           nc.bind_context(n, nc_new)
         else
@@ -227,8 +227,8 @@ module R2CORBA
       end
 
       def rebind_context(n, nc_new)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
-        if n.size>1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        if n.size > 1
           nc = find_context(n)
           nc.rebind_context(n, nc_new)
         else
@@ -237,13 +237,13 @@ module R2CORBA
       end
 
       def resolve(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
         find_object(n)
       end
 
       def unbind(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
-        if n.size>1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        if n.size > 1
           nc = find_context(n)
           nc.unbind(n)
         else
@@ -263,14 +263,14 @@ module R2CORBA
       end
 
       def bind_new_context(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
         nc = self.new_context()
         self.bind_context(n, nc)
         nc
       end
 
       def destroy()
-        raise CosNaming::NamingContext::NotEmpty.new if @map.size>0
+        raise CosNaming::NamingContext::NotEmpty.new if @map.size > 0
         return if self.oid.nil? ## no oid for root context
         poa = self._default_POA
         poa.deactivate_object(self.oid)
@@ -280,7 +280,7 @@ module R2CORBA
       def list(how_many)
         reglist = @map.values
         bindings = []
-        while how_many>0 and !reglist.empty?
+        while how_many > 0 and !reglist.empty?
           reg = reglist.shift
           bindings << CosNaming::Binding.new(reg[:name], reg[:type])
           how_many -= 1
@@ -298,7 +298,7 @@ module R2CORBA
       # CosNaming::NamingContextExt methods
       #
       def to_string(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size<1
+        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
         n.collect { |nc| nc.to_string }.join('/')
       end
 
@@ -313,8 +313,8 @@ module R2CORBA
             esc_ = !esc_
           when '/'
             unless esc_
-              snc_arr << sn[off_, i-off_]
-              off_ = i+1
+              snc_arr << sn[off_, i - off_]
+              off_ = i + 1
             end
             esc_ = false
           else
@@ -327,7 +327,7 @@ module R2CORBA
 
       def to_url(addr, sn)
         raise CosNaming::NamingContext::InvalidName.new if addr.to_s.empty? or sn.to_s.empty?
-        url = 'corbaname:'+addr+'#'
+        url = 'corbaname:' + addr + '#'
         sn.scan(/./) do |ch|
           if /[a-zA-Z0-9;\/:\?@=+\$,\-_\.!~*\'\(\)]/ =~ ch
             url << ch
@@ -385,7 +385,7 @@ module R2CORBA
       # resolving the context levels
       #
       def find_object(n)
-        if n.size>1
+        if n.size > 1
           nc = find_context(n)
           nc.resolve(n)
         else

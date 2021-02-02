@@ -70,7 +70,7 @@ module R2CORBA
           s = ""
           s << self.class.name.to_s << "\n" <<
                "type_id: \n" <<
-               "  " <<  @ids.join("\n  ") << "\n"
+               "  " << @ids.join("\n  ") << "\n"
         end
       end # Stub
     end # Portable

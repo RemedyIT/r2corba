@@ -92,8 +92,8 @@ module R2CORBA
     end
 
     def self.define_spec(name, version, gemtype = :src, &block)
-      name += '_ext' if gemtype == :extbin &&  !defined?(JRUBY_VERSION)
-      name = "#{name}#{R2CORBA::Config.rb_ver_major}#{R2CORBA::Config.rb_ver_minor}" if (gemtype == :extbin || (gemtype == :bin && ENV['FULL_BINGEM'])) &&  !defined?(JRUBY_VERSION)
+      name += '_ext' if gemtype == :extbin && !defined?(JRUBY_VERSION)
+      name = "#{name}#{R2CORBA::Config.rb_ver_major}#{R2CORBA::Config.rb_ver_minor}" if (gemtype == :extbin || (gemtype == :bin && ENV['FULL_BINGEM'])) && !defined?(JRUBY_VERSION)
       gemspec = ::Gem::Specification.new(name,version.dup)
       if gemtype == :bin || gemtype == :extbin
         gemspec.platform = defined?(JRUBY_VERSION) ? ::Gem::Platform.new('universal-java') : ::Gem::Platform::CURRENT
@@ -105,7 +105,7 @@ module R2CORBA
 
     def self.gem_name(name, version, gemtype = :src)
       name += '_ext' if gemtype == :extbin &&  !defined?(JRUBY_VERSION)
-      name = "#{name}#{R2CORBA::Config.rb_ver_major}#{R2CORBA::Config.rb_ver_minor}" if (gemtype == :extbin || (gemtype == :bin && ENV['FULL_BINGEM'])) &&  !defined?(JRUBY_VERSION)
+      name = "#{name}#{R2CORBA::Config.rb_ver_major}#{R2CORBA::Config.rb_ver_minor}" if (gemtype == :extbin || (gemtype == :bin && ENV['FULL_BINGEM'])) && !defined?(JRUBY_VERSION)
       gemspec = ::Gem::Specification.new(name,version.dup)
       if gemtype == :bin || gemtype == :extbin
         gemspec.platform = defined?(JRUBY_VERSION) ? ::Gem::Platform.new('universal-java') : ::Gem::Platform::CURRENT

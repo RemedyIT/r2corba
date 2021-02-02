@@ -51,7 +51,7 @@ cur_dir = Dir.getwd
 Dir.chdir(File.expand_path('..', pkg_root))
 begin
   puts(cmd)
-  system(cmd+' > '+ manifest)
+  system(cmd + ' > ' + manifest)
   puts("tar --append -vf #{pkg} #{File.join(pkg_base, 'MANIFEST')}")
   system("tar --append -vf #{pkg} #{File.join(pkg_base, 'MANIFEST')} > /dev/null")
   puts("gzip #{pkg}")
@@ -77,7 +77,7 @@ cur_dir = Dir.getwd
 Dir.chdir(File.expand_path('..', pkg_root))
 begin
   puts(cmd)
-  system(cmd+'> /dev/null')
+  system(cmd + '> /dev/null')
 ensure
   Dir.chdir(cur_dir)
 end

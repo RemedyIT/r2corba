@@ -88,7 +88,7 @@ module R2CORBA
         # clear current arguments
         begin
           nvl = self.req_.arguments
-          nvl.remove(0) while nvl.count>0
+          nvl.remove(0) while nvl.count > 0
         rescue
           CORBA::Exception.native2r($!)
         end
@@ -120,7 +120,7 @@ module R2CORBA
         begin
           # clear current exceptions
           jexl = self.req_.exceptions
-          jexl.remove(0) while jexl.count>0
+          jexl.remove(0) while jexl.count > 0
           # add new exceptions
           exl.each do |extc|
             jexl.add(extc.tc_)
@@ -212,7 +212,7 @@ module R2CORBA
         rescue
           CORBA::Exception.native2r($!)
         end
-        if rc.size<2
+        if rc.size < 2
           return rc.shift
         else
           return *rc

@@ -12,7 +12,7 @@
 module R2CORBA
   module CORBA
     BIG_ENDIAN, LTL_ENDIAN = 0,1
-    ENDIAN = ("Ruby".unpack("i")[0] == 2036495698)? LTL_ENDIAN: BIG_ENDIAN
+    ENDIAN = ("Ruby".unpack("i")[0] == 2036495698) ? LTL_ENDIAN : BIG_ENDIAN
 
     ARG_IN = 1
     ARG_OUT = 2

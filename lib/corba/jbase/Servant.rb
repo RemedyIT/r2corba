@@ -172,8 +172,8 @@ module R2CORBA
           opsym = alt_opsym if alt_opsym && alt_opsym.is_a?(Symbol)
           results = @rsrv.__send__(opsym, *rsrvreq.arguments)
           unless rsrvreq.result_type_.nil?
-            result_value = (rsrvreq.arg_out_>0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
-            if rsrvreq.arg_out_>0
+            result_value = (rsrvreq.arg_out_ > 0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
+            if rsrvreq.arg_out_ > 0
               rsrvreq.nvlist_.count().times do |i|
                 jnv = rsrvreq.nvlist_.item(i)
                 if [CORBA::ARG_OUT, CORBA::ARG_INOUT].include?(jnv.flags)
@@ -192,8 +192,8 @@ module R2CORBA
         def invoke_DSI(rsrvreq)
           results = @rsrv.invoke(rsrvreq)
           unless rsrvreq.result_type_.nil?
-            result_value = (rsrvreq.arg_out_>0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
-            if rsrvreq.arg_out_>0
+            result_value = (rsrvreq.arg_out_ > 0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
+            if rsrvreq.arg_out_ > 0
               rsrvreq.nvlist_.count().times do |i|
                 jnv = rsrvreq.nvlist_.item(i)
                 if [CORBA::ARG_OUT, CORBA::ARG_INOUT].include?(jnv.flags)

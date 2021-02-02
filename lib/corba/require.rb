@@ -11,6 +11,6 @@
 #--------------------------------------------------------------------
 
 require 'corba/common/require'
-require "corba/#{defined?(JRUBY_VERSION)?'jbase':'cbase'}/require"
+require "corba/#{defined?(JRUBY_VERSION) ? 'jbase' : 'cbase'}/require"
 require 'corba/idl/require'
-require "corba/#{defined?(JRUBY_VERSION)?'jbase':'cbase'}/post_require"
+require "corba/#{defined?(JRUBY_VERSION) ? 'jbase' : 'cbase'}/post_require"

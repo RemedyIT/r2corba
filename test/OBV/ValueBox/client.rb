@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -64,9 +64,9 @@ module Test
     STDERR.puts '*** basic_op1 (1)'
     retval, p2_out, p3_out = test.basic_op1(p1, p2)
 
-    assert "basic_invocations:1 failed", (p2_out == (53*3))
-    assert "basic_invocations:1 failed", (p3_out == (53*5))
-    assert "basic_invocations:1 failed", (retval == (p1.value*3))
+    assert "basic_invocations:1 failed", (p2_out == (53 * 3))
+    assert "basic_invocations:1 failed", (p3_out == (53 * 5))
+    assert "basic_invocations:1 failed", (retval == (p1.value * 3))
 
     # test boxed value using implicit conversion of Ruby types
     p1 = 25
@@ -78,9 +78,9 @@ module Test
     STDERR.puts '*** basic_op1 (2)'
     retval, p2_out, p3_out = test.basic_op1(p1, p2)
 
-    assert "basic_invocations:2 failed", (p2_out == (53*3))
-    assert "basic_invocations:2 failed", (p3_out == (53*5))
-    assert "basic_invocations:2 failed", (retval == (p1*3))
+    assert "basic_invocations:2 failed", (p2_out == (53 * 3))
+    assert "basic_invocations:2 failed", (p3_out == (53 * 5))
+    assert "basic_invocations:2 failed", (retval == (p1 * 3))
 
     # test boxed value using nil
     p1 = nil
@@ -92,8 +92,8 @@ module Test
     STDERR.puts '*** basic_op1 (3)'
     retval, p2_out, p3_out = test.basic_op1(p1, p2)
 
-    assert "basic_invocations:2 failed", (p2_out == (53*3))
-    assert "basic_invocations:2 failed", (p3_out == (53*5))
+    assert "basic_invocations:2 failed", (p2_out == (53 * 3))
+    assert "basic_invocations:2 failed", (p3_out == (53 * 5))
     assert "basic_invocations:2 failed", (retval.nil?)
 
     # test boxed value from nested module
@@ -105,9 +105,9 @@ module Test
 
     retval, p2_out, p3_out = test.basic_op2(p1, p2)
 
-    assert "basic_invocations:3 failed", (p2_out == (53*3))
-    assert "basic_invocations:3 failed", (p3_out == (53*5))
-    assert "basic_invocations:3 failed", (retval == (p1.value*3))
+    assert "basic_invocations:3 failed", (p2_out == (53 * 3))
+    assert "basic_invocations:3 failed", (p3_out == (53 * 5))
+    assert "basic_invocations:3 failed", (retval == (p1.value * 3))
 
     # test regular Ruby types using values from valueboxes
     p1 = VBlong.new(25)
@@ -118,9 +118,9 @@ module Test
 
     retval, p2_out, p3_out = test.basic_op3(p1.value, p2.value)
 
-    assert "basic_invocations:4 failed", (p2_out == (53*3))
-    assert "basic_invocations:4 failed", (p3_out == (53*5))
-    assert "basic_invocations:4 failed", (retval == (p1.value*3))
+    assert "basic_invocations:4 failed", (p2_out == (53 * 3))
+    assert "basic_invocations:4 failed", (p3_out == (53 * 5))
+    assert "basic_invocations:4 failed", (retval == (p1.value * 3))
   end
 
   def Test.boxed_string_invocations(test)
@@ -176,7 +176,7 @@ module Test
   def Test.boxed_sequence_invocations(test)
     # basic test
     p1 = VBseqlong.new([101, 202, 303])
-    assert "boxed_sequence_invocations:0 failed", (p1.value[0]==101 && p1.value[2]==303)
+    assert "boxed_sequence_invocations:0 failed", (p1.value[0] == 101 && p1.value[2] == 303)
 
     # test invocation with value boxes
     p1 = VBseqlong.new([10, 9, 8, 7])
@@ -190,10 +190,10 @@ module Test
     retval, p2_out, p3_out = test.seq_op1(p1, p2)
 
     p2.value().each_with_index do |e, i|
-      assert "boxed_sequence_invocations:2 failed", (p2_out[i] == e*3)
+      assert "boxed_sequence_invocations:2 failed", (p2_out[i] == e * 3)
     end
     p2.value().each_with_index do |e, i|
-      assert "boxed_sequence_invocations:2 failed", (p3_out[i] == e*5)
+      assert "boxed_sequence_invocations:2 failed", (p3_out[i] == e * 5)
     end
     p1.value().each_with_index do |e, i|
       assert "boxed_sequence_invocations:2 failed", (retval[i] == e)
@@ -205,10 +205,10 @@ module Test
     p2_out, p3_out = test.seq_op2(p1.value, p2.value)
 
     p2.value().each_with_index do |e, i|
-      assert "boxed_sequence_invocations:3 failed", (p2_out[i] == e*3)
+      assert "boxed_sequence_invocations:3 failed", (p2_out[i] == e * 3)
     end
     p2.value().each_with_index do |e, i|
-      assert "boxed_sequence_invocations:3 failed", (p3_out[i] == e*5)
+      assert "boxed_sequence_invocations:3 failed", (p3_out[i] == e * 5)
     end
   end
 
@@ -232,14 +232,14 @@ module Test
     retval, p2_out, p3_out = test.struct_op1(p1, p2)
 
     assert "boxed_struct_invocations:1 failed", (p2_out.is_a?(Fixed_Struct1))
-    assert "boxed_struct_invocations:1 failed", (p2_out.l == (92*3))
-    assert "boxed_struct_invocations:1 failed", (p2_out.abstruct.s1 == (171*3) &&
-                                                 p2_out.abstruct.s2 == (12*3))
+    assert "boxed_struct_invocations:1 failed", (p2_out.l == (92 * 3))
+    assert "boxed_struct_invocations:1 failed", (p2_out.abstruct.s1 == (171 * 3) &&
+                                                 p2_out.abstruct.s2 == (12 * 3))
 
     assert "boxed_struct_invocations:1 failed", (p3_out.is_a?(Fixed_Struct1))
-    assert "boxed_struct_invocations:1 failed", (p3_out.l == (92*5))
-    assert "boxed_struct_invocations:1 failed", (p3_out.abstruct.s1 == (171*5) &&
-                                                 p3_out.abstruct.s2 == (12*5))
+    assert "boxed_struct_invocations:1 failed", (p3_out.l == (92 * 5))
+    assert "boxed_struct_invocations:1 failed", (p3_out.abstruct.s1 == (171 * 5) &&
+                                                 p3_out.abstruct.s2 == (12 * 5))
 
     assert "boxed_struct_invocations:1 failed", (retval.is_a?(Fixed_Struct1))
     assert "boxed_struct_invocations:1 failed", (retval.l == p1.value.l)
@@ -250,9 +250,9 @@ module Test
     p2_out, p3_out = test.struct_op2(p1.value, p2_out)
 
     assert "boxed_struct_invocations:2 failed", (p2_out.is_a?(Fixed_Struct1))
-    assert "boxed_struct_invocations:2 failed", (p2_out.l == (92*3*3))
-    assert "boxed_struct_invocations:2 failed", (p2_out.abstruct.s1 == (171*3*3) &&
-                                                 p2_out.abstruct.s2 == (12*3*3))
+    assert "boxed_struct_invocations:2 failed", (p2_out.l == (92 * 3 * 3))
+    assert "boxed_struct_invocations:2 failed", (p2_out.abstruct.s1 == (171 * 3 * 3) &&
+                                                 p2_out.abstruct.s2 == (12 * 3 * 3))
 
     assert "boxed_struct_invocations:2 failed", (p3_out.is_a?(Fixed_Struct1))
     assert "boxed_struct_invocations:2 failed", (p3_out.l == p1.value.l)
@@ -273,11 +273,11 @@ module Test
     retval, p2_out, p3_out = test.struct_op3(p1, p2)
 
     assert "boxed_struct_invocations:4 failed", (p2_out.is_a?(Variable_Struct1))
-    assert "boxed_struct_invocations:4 failed", (p2_out.l == (37*3))
+    assert "boxed_struct_invocations:4 failed", (p2_out.l == (37 * 3))
     assert "boxed_struct_invocations:4 failed", (p2_out.str == '2variable')
 
     assert "boxed_struct_invocations:4 failed", (p3_out.is_a?(Variable_Struct1))
-    assert "boxed_struct_invocations:4 failed", (p3_out.l == (37*3))
+    assert "boxed_struct_invocations:4 failed", (p3_out.l == (37 * 3))
     assert "boxed_struct_invocations:4 failed", (p3_out.str == '2variable')
 
     assert "boxed_struct_invocations:1 failed", (retval.is_a?(Variable_Struct1))
@@ -288,7 +288,7 @@ module Test
     p2_out, p3_out = test.struct_op4(p1.value, p2_out)
 
     assert "boxed_struct_invocations:4 failed", (p2_out.is_a?(Variable_Struct1))
-    assert "boxed_struct_invocations:4 failed", (p2_out.l == (37*3*3))
+    assert "boxed_struct_invocations:4 failed", (p2_out.l == (37 * 3 * 3))
     assert "boxed_struct_invocations:4 failed", (p2_out.str == 'e2variabl')
 
     assert "boxed_struct_invocations:1 failed", (p3_out.is_a?(Variable_Struct1))
@@ -299,7 +299,7 @@ module Test
   def Test.boxed_array_invocations(test)
     # basic test
     p1 = VBlongarray.new([101, 202, 303])
-    assert "boxed_array_invocations:0 failed", (p1.value[0]==101 && p1.value[2]==303)
+    assert "boxed_array_invocations:0 failed", (p1.value[0] == 101 && p1.value[2] == 303)
 
     # test invocation with value boxes
     p1 = VBlongarray.new([10, 9, 8])
@@ -313,10 +313,10 @@ module Test
     retval, p2_out, p3_out = test.array_op1(p1, p2)
 
     p2.value().each_with_index do |e, i|
-      assert "boxed_array_invocations:2 failed", (p2_out[i] == e*3)
+      assert "boxed_array_invocations:2 failed", (p2_out[i] == e * 3)
     end
     p2.value().each_with_index do |e, i|
-      assert "boxed_array_invocations:2 failed", (p3_out[i] == e*3)
+      assert "boxed_array_invocations:2 failed", (p3_out[i] == e * 3)
     end
     p1.value().each_with_index do |e, i|
       assert "boxed_array_invocations:2 failed", (retval[i] == e)
@@ -328,7 +328,7 @@ module Test
     p2_out, p3_out = test.array_op2(p1.value, p2.value)
 
     p2.value().each_with_index do |e, i|
-      assert "boxed_array_invocations:3 failed", (p2_out[i] == e*3)
+      assert "boxed_array_invocations:3 failed", (p2_out[i] == e * 3)
     end
     p1.value().each_with_index do |e, i|
       assert "boxed_array_invocations:3 failed", (p3_out[i] == e)
@@ -390,15 +390,15 @@ module Test
 
     assert "boxed_union_invocations:1 failed", (p2_out.is_a?(Fixed_Union1))
     assert "boxed_union_invocations:1 failed", (p2_out._disc == 2)
-    assert "boxed_union_invocations:1 failed", (p2_out.m2 == 789*3)
+    assert "boxed_union_invocations:1 failed", (p2_out.m2 == 789 * 3)
 
     assert "boxed_union_invocations:1 failed", (p3_out.is_a?(Fixed_Union1))
     assert "boxed_union_invocations:1 failed", (p3_out._disc == 1)
-    assert "boxed_union_invocations:1 failed", (p3_out.m1 == 321*3)
+    assert "boxed_union_invocations:1 failed", (p3_out.m1 == 321 * 3)
 
     assert "boxed_union_invocations:1 failed", (retval.is_a?(Fixed_Union1))
     assert "boxed_union_invocations:1 failed", (retval._disc == 1)
-    assert "boxed_union_invocations:1 failed", (retval.m1 == 321*3)
+    assert "boxed_union_invocations:1 failed", (retval.m1 == 321 * 3)
 
     # test invocation with Ruby types using valuebox values
     p2_out = nil
@@ -407,7 +407,7 @@ module Test
 
     assert "boxed_union_invocations:1 failed", (p2_out.is_a?(Fixed_Union1))
     assert "boxed_union_invocations:1 failed", (p2_out._disc == 2)
-    assert "boxed_union_invocations:1 failed", (p2_out.m2 == 789*3)
+    assert "boxed_union_invocations:1 failed", (p2_out.m2 == 789 * 3)
 
     assert "boxed_union_invocations:1 failed", (p3_out.is_a?(Fixed_Union1))
     assert "boxed_union_invocations:1 failed", (p3_out._disc == 1)

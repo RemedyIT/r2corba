@@ -105,7 +105,7 @@ if defined?(JRUBY_VERSION)
         def self.wait(pid)
           stat_ptr = FFI::MemoryPointer.new(:int, 1)
           tmp_pid = _wait(stat_ptr, pid, 0)
-          if tmp_pid==pid
+          if tmp_pid == pid
             return [pid, stat_ptr.get_int()]
           else
             return [pid, 0]
@@ -159,7 +159,7 @@ if defined?(JRUBY_VERSION)
         def self.wait(pid)
           begin
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
-            if tmp==pid and status.success? != nil
+            if tmp == pid and status.success? != nil
               return [pid, status.success?() ? 0 : status.exitstatus ]
             end
             return [nil, 0]
@@ -197,7 +197,7 @@ if defined?(JRUBY_VERSION)
             sleep 0.01
 
             tmp_pid, tmp_status = Exec.wait(@pid)
-            if tmp_pid==@pid
+            if tmp_pid == @pid
               exit_status = tmp_status
               is_running = false
             end
@@ -237,7 +237,7 @@ if defined?(JRUBY_VERSION)
     end
 
     def is_running?; @exitstatus.nil?; end
-    def has_error? ; @trd.status.nil? or (!self.is_running? and self.exitstatus!=0) ;end
+    def has_error? ; @trd.status.nil? or (!self.is_running? and self.exitstatus != 0) ;end
 
     def stop
       Exec.stop(@pid)
@@ -441,7 +441,7 @@ else # !win32
     def check_status
       begin
         tmp, @status = ::Process.waitpid2(@pid, ::Process::WNOHANG)
-        if tmp==@pid and @status.success? == false
+        if tmp == @pid and @status.success? == false
           @exitstatus = @status.exitstatus
           return false
         end

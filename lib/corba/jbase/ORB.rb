@@ -38,12 +38,12 @@ module R2CORBA
           prop = nil
           a1, a2, a3 = args
           if Array === a1
-            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size>3
+            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 3
             argv = a1
             orb_id = (Hash === a2 ? nil : a2)
             prop = (Hash === a2 ? a2 : a3)
           elsif args.size == 1 || Hash === a2
-            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size>2
+            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 2
             orb_id = a1
             prop = a2
           else

@@ -184,7 +184,7 @@ module TestFinder
 end
 
 # add Ruby library path for test library
-ENV['RUBYLIB'] = ((ENV['RUBYLIB'] || '').split(File::PATH_SEPARATOR)+[TestFinder::ROOT]).join(File::PATH_SEPARATOR)
+ENV['RUBYLIB'] = ((ENV['RUBYLIB'] || '').split(File::PATH_SEPARATOR) + [TestFinder::ROOT]).join(File::PATH_SEPARATOR)
 
 if $0 == __FILE__
   TestFinder.run(ARGV)

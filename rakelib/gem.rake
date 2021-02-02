@@ -25,7 +25,7 @@ namespace :r2corba do
       unless defined?(JRUBY_VERSION) || get_config('without-tao')
         # install ACE+TAO dlls
         R2CORBA::Ext.ace_shlibs.each do |acelib|
-          libmask = R2CORBA::Config.is_linux ? acelib+'.*' : acelib
+          libmask = R2CORBA::Config.is_linux ? acelib + '.*' : acelib
           path = Dir.glob(libmask).first
           raise "Cannot find ACE+TAO library #{File.basename(acelib)}." unless path
           FileUtils.install(path, ext_dir, :mode => 0555, :verbose => Rake.verbose)
@@ -43,7 +43,7 @@ namespace :r2corba do
         if R2CORBA::Config.is_linux
           # create unversioned ACE/TAO lib symlinks
           R2CORBA::Ext.ace_shlibs('.so', 'ext').each do |acelib|
-            acelib_ver = File.expand_path(Dir[acelib+'.*'].first)
+            acelib_ver = File.expand_path(Dir[acelib + '.*'].first)
             ln_s(acelib_ver, acelib)
           end
         end

@@ -118,7 +118,7 @@ module R2CORBA
             content_tc = args.shift
             length = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless content_tc.is_a?(CORBA::TypeCode)
-            if length.size>1
+            if length.size > 1
               this_len = length.shift
               content_tc = self.class.new(content_tc, *length)
             else
@@ -356,7 +356,7 @@ module R2CORBA
             @members = []
             def_inx = @tc_.default_index
             @tc_.member_count.times do |i|
-              if def_inx < 0  || def_inx != i
+              if def_inx < 0 || def_inx != i
                 ml_ = @tc_.member_label(i)
               else
                 ml_ = :default

@@ -81,7 +81,7 @@ module R2CORBA
         self.arguments # make sure the @arg_ member has been initialized
         key = arg_index_from_name(key) if String === key
         key = key.to_i if key
-        raise CORBA::BAD_PARAM.new('', 0, CORBA::COMPLETD_NO) unless key && (key>=0) && (key<@arg_.size)
+        raise CORBA::BAD_PARAM.new('', 0, CORBA::COMPLETD_NO) unless key && (key >= 0) && (key < @arg_.size)
         @arg_[key]
       end
 
@@ -89,7 +89,7 @@ module R2CORBA
         self.arguments # make sure the @arg_ member has been initialized
         key = arg_index_from_name(key) if String === key
         key = key.to_i if key
-        raise CORBA::BAD_PARAM.new('', 0, CORBA::COMPLETD_NO) unless key && (key>=0) && (key<@arg_.size)
+        raise CORBA::BAD_PARAM.new('', 0, CORBA::COMPLETD_NO) unless key && (key >= 0) && (key < @arg_.size)
         jnv = @nvlist_.item(key)
         rtc = @arg_list_[key][2]
         CORBA::Any.to_any(val, rtc).to_java(self.orb_, jnv.value())

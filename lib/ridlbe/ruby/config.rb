@@ -205,7 +205,7 @@ module IDL
 
       # determine output file path for client stub code
       unless fixed_output || options[:idlfile].nil?
-        options[:output] = options[:outputdir]+'/'+File.basename(options[:idlfile], '.idl')+options[:stub_pfx]+'.rb'
+        options[:output] = options[:outputdir] + '/' + File.basename(options[:idlfile], '.idl') + options[:stub_pfx] + '.rb'
       end
       # generate client stubs if requested
       if options[:client_stubs]
@@ -231,7 +231,7 @@ module IDL
             options[:srv_output] = if fixed_output
                 options[:output]
               else
-                options[:outputdir]+'/'+File.basename(options[:idlfile], '.idl')+options[:srv_pfx]+'.rb'
+                options[:outputdir] + '/' + File.basename(options[:idlfile], '.idl') + options[:srv_pfx] + '.rb'
               end
             if fixed_output && options[:client_stubs]
               co
@@ -283,12 +283,12 @@ module IDL
               IDL::AST::UnionMember
             # member names
             ret = ret[0,1].downcase + ret[1,ret.size].to_s
-            ret = 'r_'+ret if IDL::Ruby::LeafMixin::RESERVED_RUBY_MEMBER.include?(ret)
+            ret = 'r_' + ret if IDL::Ruby::LeafMixin::RESERVED_RUBY_MEMBER.include?(ret)
           else
             # class/module names
             ret = ret[0,1].upcase + ret[1,ret.size].to_s
             is_scoped = @enclosure && !@enclosure.scopes.empty?
-            ret = 'R_'+ret if !is_scoped && IDL::Ruby::LeafMixin::RESERVED_RUBY_CONST.include?(ret)
+            ret = 'R_' + ret if !is_scoped && IDL::Ruby::LeafMixin::RESERVED_RUBY_CONST.include?(ret)
           end
           @lm_name = ret
         end
@@ -319,7 +319,7 @@ module IDL
 
       def chk_identifier(ident)
         # prefix Ruby keywords with 'r_'
-        RUBYKW.include?(ident.to_sym) ? 'r_'+ident : ident
+        RUBYKW.include?(ident.to_sym) ? 'r_' + ident : ident
       end
 
     end # module ScannerMixin
