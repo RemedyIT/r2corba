@@ -102,7 +102,7 @@ module R2CORBA
       unless get_config('without-tao') || defined?(JRUBY_VERSION) || !R2CORBA::Config.is_linux
         R2CORBA::Ext::ace_shlibs('.so', get_config('aceinstdir')).each do |acelib|
           acelib = File.join(get_config(:prefix), acelib) if get_config(:prefix)
-          libver = File.expand_path(Dir.glob(acelib+'.*').first || (nowrite ? acelib+'.x.x.x' : nil))
+          libver = File.expand_path(Dir.glob(acelib + '.*').first || (nowrite ? acelib + '.x.x.x' : nil))
           FileUtils.ln_s(libver, acelib, :force => true, :noop => nowrite, :verbose => verbose)
         end
       end

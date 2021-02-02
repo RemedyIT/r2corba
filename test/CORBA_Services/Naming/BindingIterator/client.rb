@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://ins.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://ins.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -65,7 +65,7 @@ begin
   # list registered items in context
   binding_list, binding_iterator = nc.list(1)
 
-  assert 'ERROR: INS list() does not function', (!CORBA::is_nil(binding_iterator) && binding_list.size==1) &&
+  assert 'ERROR: INS list() does not function', (!CORBA::is_nil(binding_iterator) && binding_list.size == 1) &&
                                                 binding_list.first.binding_type == CosNaming::Nobject
 
   n = binding_list.first.binding_name.first
@@ -83,7 +83,7 @@ begin
   has_list, binding_list = binding_iterator.next_n(3)
 
   assert 'ERROR: INS BindingIterator#next_n() does not function',
-         (has_list && binding_list.size==3) &&
+         (has_list && binding_list.size == 3) &&
          binding_list.first.binding_type == CosNaming::Nobject &&
          binding_list.last.binding_type == CosNaming::Nobject
 

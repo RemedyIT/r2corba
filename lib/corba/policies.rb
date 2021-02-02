@@ -14,4 +14,4 @@ require 'corba.rb'
 require 'corba/poa.rb'
 require 'corba/idl/BiDirPolicyC'
 require 'corba/idl/MessagingC'
-require "corba/#{defined?(JRUBY_VERSION)?'jbase':'cbase'}/policies.rb"
+require "corba/#{defined?(JRUBY_VERSION) ? 'jbase' : 'cbase'}/policies.rb"

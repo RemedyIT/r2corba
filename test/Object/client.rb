@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -57,7 +57,7 @@ begin
   obj = orb.string_to_object(OPTIONS[:iorfile])
 
   unless defined?(JRUBY_VERSION) && CORBA::Native::Jacorb::MAJOR_VERSION == 3 &&
-      ([4,5].include? CORBA::Native::Jacorb::MINOR_VERSION)
+      ([4, 5].include? CORBA::Native::Jacorb::MINOR_VERSION)
     ## JacORB 3.4 introduced an optimization which *requires* use of the Java endorsed dirs
     ## mechanism to replace standard JDK CORBA stubs with the JacORB version in order to
     ## have JacORB process these base methods correctly with DSI servants

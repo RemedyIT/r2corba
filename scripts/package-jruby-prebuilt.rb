@@ -41,21 +41,21 @@ script_root = File.expand_path(File.dirname(__FILE__))
 pkg_root = File.dirname(script_root)
 pkg_base = File.basename(pkg_root)
 manifest = File.join(pkg_root, 'MANIFEST')
-ver_file = File.join(pkg_root,'lib','corba','common','version.rb')
+ver_file = File.join(pkg_root, 'lib', 'corba', 'common', 'version.rb')
 pkg_dir = File.join(pkg_root, 'pkg')
 
 require ver_file
 
 pkg = File.join(pkg_dir, "Ruby2CORBA-#{R2CORBA::R2CORBA_VERSION}_prebuilt_java")
 
-Dir.glob(pkg+'.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
+Dir.glob(pkg + '.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
 
 mkdir_p(pkg_dir) unless File.directory?(pkg_dir)
 
 cur_dir = Dir.getwd
 cd(File.expand_path('..', pkg_root))
 begin
-  cmd = pkg_cmd.gsub('{xcl_path}',File.join(pkg_base, 'scripts')).gsub('{pkgfile}', pkg)
+  cmd = pkg_cmd.gsub('{xcl_path}', File.join(pkg_base, 'scripts')).gsub('{pkgfile}', pkg)
   SUBDIRS.each {|d|
     cmd << " #{File.join(pkg_base, d)}"
   }
@@ -63,7 +63,7 @@ begin
     cmd << " #{File.join(pkg_base, f)}"
   }
   puts(cmd)
-  system(cmd+"| tee #{manifest}")
+  system(cmd + "| tee #{manifest}")
 
   cmd = pkg_cmd2.gsub('{pkgfile}', pkg)
   system(cmd + " #{File.join(pkg_base, 'MANIFEST')} #{nul_redir}")
@@ -78,7 +78,7 @@ begin
   cmd = zip_cmd.gsub('{pkgfile}', pkg)
   cmd << " #{pkg_base} -i #{File.join(pkg_base, 'MANIFEST')} -i@#{manifest}"
   puts(cmd)
-  system(cmd+" #{nul_redir}")
+  system(cmd + " #{nul_redir}")
 
 ensure
   cd(cur_dir)

@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -210,7 +210,7 @@ begin
   v3.nv4 = nv
   v3.data4 = 66
 
-  desc = "multiple IN truncatable valuetype parameters"+
+  desc = "multiple IN truncatable valuetype parameters" +
          " and return truncatable valuetype"
   STDERR.print "Case 7: #{desc}: "
   ov, odesc = tester.op4("case7", v1, 5, v2, v3, v4, desc)

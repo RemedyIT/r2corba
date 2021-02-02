@@ -11,7 +11,7 @@ module TAOGem
   @@gemspec = nil
 
   def self.define_spec(name, version, &block)
-    @@gemspec = Gem::Specification.new(name,version)
+    @@gemspec = Gem::Specification.new(name, version)
     @@gemspec.required_rubygems_version = Gem::Requirement.new(">= 0") if @@gemspec.respond_to? :required_rubygems_version=
     block.call(@@gemspec)
     @@gemspec
@@ -58,7 +58,7 @@ task :define_gemspec do
 end
 
 task :gemspec => :define_gemspec do
-  File.open(TAOGem.gemspec.name+'.gemspec', 'w') {|f| f.puts TAOGem.gemspec.to_ruby}
+  File.open(TAOGem.gemspec.name + '.gemspec', 'w') {|f| f.puts TAOGem.gemspec.to_ruby}
 end
 
 task :build => :define_gemspec do

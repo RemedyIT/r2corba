@@ -33,7 +33,7 @@ require 'optparse'
 
 if defined?(JRUBY_VERSION)
 
-  usage_text =<<-__EOT
+  usage_text = <<-__EOT
 Make sure you have provided a JACORB_HOME definition pointing at a valid JacORB installation
 with all required .jar files located at JACORB_HOME\lib. You can do this either by setting
 the JACORB_HOME environment variable or by providing the --jacorb-home buildflag to the
@@ -51,13 +51,13 @@ __EOT
 
   # check for proper JacORB installation
   if jacorb_home
-    jar_files = Dir.glob(File.join(jacorb_home, 'lib', 'jacorb.jar'))+
+    jar_files = Dir.glob(File.join(jacorb_home, 'lib', 'jacorb.jar')) +
                 Dir.glob(File.join(jacorb_home, 'lib', 'jacorb-services.jar')) +
                 Dir.glob(File.join(jacorb_home, 'lib', 'slf4j*.jar')) +
                 Dir.glob(File.join(jacorb_home, 'lib', 'antlr*.jar'))
     if jar_files.size == 5
       # run configure with appropriate settings
-      puts "Valid JacORB installation found.\n"+
+      puts "Valid JacORB installation found.\n" +
            "Running 'ruby -S rake -- configure --without-jacorb --jacorb-home=#{jacorb_home}'"
       unless system("ruby -S rake -- configure --without-jacorb --jacorb-home=#{jacorb_home}")
         puts 'Failed to configure R2CORBA'
@@ -90,7 +90,7 @@ else
     COMMON_HEADERS.slice!(/./)
   end
 
-  usage_txt =<<-__EOT
+  usage_txt = <<-__EOT
 Please define a valid ACE/TAO build environment either by defining the ACE_ROOT and (optionally)
 the TAO_ROOT (defaults to ACE_ROOT/TAO) and MPC_ROOT (defaults to ACE_ROOT/MPC) environment
 variable OR by providing the --aceroot and (optionally) --taoroot and --mpcroot build flags to

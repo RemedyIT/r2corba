@@ -20,16 +20,16 @@ module R2CORBA
       end
     end
     class Any
-      def to_java(jorb=nil,jany=nil)
+      def to_java(jorb=nil, jany=nil)
         rtc = self._tc
         rval = self._value.nil? ? self._value : rtc.validate(self._value)
         restc = rtc.resolved_tc
         begin
           if [TK_VALUE, TK_VALUE_BOX, TK_ABSTRACT_INTERFACE].include?(restc.kind) ||
-             (!rval.nil? && [TK_NULL,TK_ANY,TK_BOOLEAN,TK_SHORT,TK_LONG,TK_USHORT,
-                            TK_WCHAR,TK_ULONG,TK_LONGLONG,TK_ULONGLONG,TK_OCTET,
-                            TK_FLOAT,TK_DOUBLE,TK_LONGDOUBLE,TK_CHAR,TK_STRING,TK_WSTRING,
-                            TK_VALUE, TK_VALUE_BOX,TK_TYPECODE,TK_OBJREF,TK_PRINCIPAL].include?(restc.kind))
+             (!rval.nil? && [TK_NULL, TK_ANY, TK_BOOLEAN, TK_SHORT, TK_LONG, TK_USHORT,
+                            TK_WCHAR, TK_ULONG, TK_LONGLONG, TK_ULONGLONG, TK_OCTET,
+                            TK_FLOAT, TK_DOUBLE, TK_LONGDOUBLE, TK_CHAR, TK_STRING, TK_WSTRING,
+                            TK_VALUE, TK_VALUE_BOX, TK_TYPECODE, TK_OBJREF, TK_PRINCIPAL].include?(restc.kind))
             jorb ||= CORBA::ORB._orb
             jany ||= jorb.create_any()
             case restc.kind
@@ -60,7 +60,7 @@ module R2CORBA
             when TK_DOUBLE
               jany.insert_double(rval)
             when TK_LONGDOUBLE
-              raise CORBA::NO_IMPLEMENT.new('LongDouble not supported',0,CORBA::COMPLETED_NO)
+              raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
             when TK_FIXED
               jany.insert_fixed(java.math.BigDecimal.new(rval.to_s))
             when TK_CHAR
@@ -68,7 +68,7 @@ module R2CORBA
             when TK_STRING
               jany.insert_string(rval)
             when TK_WSTRING
-              jany.insert_wstring(rval.inject('') {|s,b| s << b.chr})
+              jany.insert_wstring(rval.inject('') {|s, b| s << b.chr})
             when TK_VALUE
               jany.insert_Value(rval, rtc.tc_)
             when TK_VALUE_BOX
@@ -94,10 +94,10 @@ module R2CORBA
                 jany.insert_Value(rval, rtc.tc_)
               end
             when TK_PRINCIPAL
-              raise CORBA::NO_IMPLEMENT.new('Principal not supported',0,CORBA::COMPLETED_NO)
+              raise CORBA::NO_IMPLEMENT.new('Principal not supported', 0, CORBA::COMPLETED_NO)
             ## TODO: TK_NATIVE
             else
-              raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]",0,CORBA::COMPLETED_NO)
+              raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]", 0, CORBA::COMPLETED_NO)
             end
             return jany
           else
@@ -112,15 +112,15 @@ module R2CORBA
                   jdynany.set_as_ulong(rval)
                 when TK_ARRAY
                   jelems = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Any.java_class, rval.size)
-                  rval.each_with_index {|e,i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
+                  rval.each_with_index {|e, i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
                   jdynany.set_elements(jelems)
                 when TK_SEQUENCE
                   jelems = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Any.java_class, rval.size)
-                  rval.each_with_index {|e,i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
+                  rval.each_with_index {|e, i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
                   jdynany.set_elements(jelems)
                 when TK_STRUCT, TK_EXCEPT
                   jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Dynamic::NameValuePair.java_class, restc.members.size)
-                  rtc.members.each_with_index {|(mn, mt),i| jmembers[i] = CORBA::Native::Dynamic::NameValuePair.new(mn, Any.to_any(rval.__send__(mn.intern), mt).to_java(jorb)) }
+                  rtc.members.each_with_index {|(mn, mt), i| jmembers[i] = CORBA::Native::Dynamic::NameValuePair.new(mn, Any.to_any(rval.__send__(mn.intern), mt).to_java(jorb)) }
                   jdynany.set_members(jmembers)
                 when TK_UNION
                   if rval._is_at_default?
@@ -134,7 +134,7 @@ module R2CORBA
                     jdynany.member.from_any(Any.to_any(rval._value, rval._value_tc).to_java(jorb))
                   end
                 else
-                  raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]",0,CORBA::COMPLETED_NO)
+                  raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]", 0, CORBA::COMPLETED_NO)
                 end
               end
               if jany.nil?
@@ -156,11 +156,11 @@ module R2CORBA
         rtc ||= CORBA::TypeCode.from_native(jany.type)
         rval = nil
         begin
-          if [TK_NULL,TK_VOID,TK_ANY,TK_BOOLEAN,TK_SHORT,TK_LONG,TK_USHORT,
-              TK_WCHAR,TK_ULONG,TK_LONGLONG,TK_ULONGLONG,TK_OCTET,
-              TK_FLOAT,TK_DOUBLE,TK_LONGDOUBLE,TK_CHAR,TK_STRING,TK_WSTRING,
-              TK_VALUE, TK_VALUE_BOX,TK_TYPECODE,TK_OBJREF,
-              TK_ABSTRACT_INTERFACE,TK_PRINCIPAL].include?(rtc.resolved_tc.kind)
+          if [TK_NULL, TK_VOID, TK_ANY, TK_BOOLEAN, TK_SHORT, TK_LONG, TK_USHORT,
+              TK_WCHAR, TK_ULONG, TK_LONGLONG, TK_ULONGLONG, TK_OCTET,
+              TK_FLOAT, TK_DOUBLE, TK_LONGDOUBLE, TK_CHAR, TK_STRING, TK_WSTRING,
+              TK_VALUE, TK_VALUE_BOX, TK_TYPECODE, TK_OBJREF,
+              TK_ABSTRACT_INTERFACE, TK_PRINCIPAL].include?(rtc.resolved_tc.kind)
             case rtc.resolved_tc.kind
             when TK_NULL, TK_VOID
               # leave as is
@@ -189,7 +189,7 @@ module R2CORBA
             when TK_DOUBLE
               rval = jany.extract_double()
             when TK_LONGDOUBLE
-              raise CORBA::NO_IMPLEMENT.new('LongDouble not supported',0,CORBA::COMPLETED_NO)
+              raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
             when TK_FIXED
               rval = BigDecimal(jany.extract_fixed().toString())
             when TK_CHAR
@@ -217,10 +217,10 @@ module R2CORBA
                 jobj
               end
             when TK_PRINCIPAL
-              raise CORBA::NO_IMPLEMENT.new('Principal not supported',0,CORBA::COMPLETED_NO)
+              raise CORBA::NO_IMPLEMENT.new('Principal not supported', 0, CORBA::COMPLETED_NO)
             ## TODO: TK_NATIVE
             else
-              raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]",0,CORBA::COMPLETED_NO)
+              raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]", 0, CORBA::COMPLETED_NO)
             end
           else
             dynFactory = CORBA::Native::Dynamic::DynAnyFactoryHelper.narrow(
@@ -239,7 +239,7 @@ module R2CORBA
                 jdynany.get_elements().each {|e| rval << Any.from_java(e, jorb, restc.content_type) }
               when TK_STRUCT, TK_EXCEPT
                 rval = rtc.get_type.new
-                jdynany.get_members().each_with_index {|nvp,i| rval.__send__("#{nvp.id}=".intern, Any.from_java(nvp.value, jorb, restc.member_type(i))) }
+                jdynany.get_members().each_with_index {|nvp, i| rval.__send__("#{nvp.id}=".intern, Any.from_java(nvp.value, jorb, restc.member_type(i))) }
               when TK_UNION
                 rval = rtc.get_type.new
                 if jdynany.get_discriminator().type().kind().value() == CORBA::TK_OCTET
@@ -255,7 +255,7 @@ module R2CORBA
                   rval.instance_variable_set('@value', Any.from_java(jdynany.member.to_any, jorb, restc.member_type(minx)))
                 end
               else
-                raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]",0,CORBA::COMPLETED_NO)
+                raise CORBA::MARSHAL.new("unknown kind [#{rtc.kind}]", 0, CORBA::COMPLETED_NO)
               end
             ensure
               jdynany.destroy

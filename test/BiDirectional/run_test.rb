@@ -58,7 +58,7 @@ end
 
 exrc = clt.wait(400)
 
-if exrc ==0
+if exrc == 0
   srv.wait(400)
 else
   srv.wait_term(400)

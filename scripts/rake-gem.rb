@@ -35,7 +35,7 @@ task :define_gemspec do
 end
 
 task :gemspec => :define_gemspec do
-  File.open(R2CORBA.gemspec.name+'.gemspec', 'w') {|f| f.puts R2CORBA.gemspec.to_ruby}
+  File.open(R2CORBA.gemspec.name + '.gemspec', 'w') {|f| f.puts R2CORBA.gemspec.to_ruby}
 end
 
 namespace :r2corba do
