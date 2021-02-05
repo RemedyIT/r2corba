@@ -211,7 +211,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
 end
 t_.enhance ['mkrf_conf_bingem.rb']
 
-unless defined?(JRUBY_VERSION) || !R2CORBA::Config.is_win32
+unless defined?(JRUBY_VERSION)
   # Devkit faker Gem for binary Windows gems
   t_devkit = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba_devkit', '1.0.0', :devkit)}.gem") => 'lib/rubygems_plugin.rb' do
     # create gemspec
