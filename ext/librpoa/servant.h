@@ -30,13 +30,13 @@ public:
 
   virtual CORBA::Boolean _is_a (const char *logical_type_id);
 
-  virtual CORBA::Boolean _non_existent (void);
+  virtual CORBA::Boolean _non_existent ();
 
-  //virtual CORBA::InterfaceDef_ptr _get_interface (void);
+  //virtual CORBA::InterfaceDef_ptr _get_interface ();
 
-  virtual CORBA::Object_ptr _get_component (void);
+  virtual CORBA::Object_ptr _get_component ();
 
-  virtual char * _repository_id (void);
+  virtual char * _repository_id ();
 
   enum METHOD {
     NONE,
@@ -56,7 +56,7 @@ public:
   void activate_servant ();
 
 protected:
-  virtual const char *_interface_repository_id (void) const;
+  virtual const char *_interface_repository_id () const;
 
   void register_with_servant ();
 

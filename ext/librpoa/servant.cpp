@@ -1056,7 +1056,7 @@ CORBA::Object_ptr DSI_Servant::_get_component (void)
   }
 }
 
-const char *DSI_Servant::_interface_repository_id (void) const
+const char *DSI_Servant::_interface_repository_id () const
 {
   static R2TAO_RBFuncall FN_repository_id ("_repository_id");
 

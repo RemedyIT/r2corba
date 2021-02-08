@@ -23,7 +23,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
   return TRUE;
 }
 
-typedef void (WINAPI *TExtInit)(void);
+typedef void (WINAPI *TExtInit)();
 
 #define DEF_EXTENSION_INIT(LIBNAME) \
 __declspec (dllexport) void Init_ ## LIBNAME ## w() \
