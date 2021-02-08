@@ -65,7 +65,7 @@ protected:
 
   METHOD  method_id (const char* method);
 
-  virtual void inner_invoke (CORBA_ServerRequest_ptr request);
+  void inner_invoke (CORBA_ServerRequest_ptr request);
 
   void invoke_SI (CORBA_ServerRequest_ptr request);
   void invoke_DSI (CORBA_ServerRequest_ptr request);
