@@ -104,7 +104,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
     gem.require_paths << 'ext'
     gem.add_dependency 'ridl', '~> 2.8'
-    gem.add_dependency 'rake', '~> 13.0.3'
+    gem.add_dependency 'rake', '>= 12.3.3'
     gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
     gem.metadata = {
       "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
@@ -193,7 +193,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
         gem.require_paths << 'ext'
       end
       gem.add_dependency 'ridl', '~> 2.8'
-      gem.add_dependency 'rake', '~> 13.0.3'
+      gem.add_dependency 'rake', '>= 12.3.3'
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
       gem.metadata = {
         "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
