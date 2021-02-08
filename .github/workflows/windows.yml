@@ -11,8 +11,7 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        compiler: [gcc]
-        msystem: [MINGW64]
+        msystem: [MINGW64, MINGW32]
         ruby: ['2.7']
         include:
           - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
