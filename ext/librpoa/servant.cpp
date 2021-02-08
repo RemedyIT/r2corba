@@ -559,7 +559,7 @@ void DSI_Servant::inner_invoke (CORBA_ServerRequest_ptr request)
       f = this->_is_a (tmp);
 
       if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _is_a (%s) -> %d\n", tmp, f));
+        ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _is_a (%C) -> %d\n", tmp, f));
     }
     else
     {
@@ -588,7 +588,7 @@ void DSI_Servant::inner_invoke (CORBA_ServerRequest_ptr request)
     CORBA::String_var repo_id = this->_repository_id ();
 
     if (TAO_debug_level > 5)
-      ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _repository_id () -> %s\n", repo_id.in ()));
+      ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _repository_id () -> %C\n", repo_id.in ()));
 
     CORBA::Any _any;
     _any <<= repo_id.in ();
