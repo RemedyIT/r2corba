@@ -17,13 +17,12 @@
 class DSI_Servant : public PortableServer::DynamicImplementation
 {
 public:
+  /// ctor
   DSI_Servant (VALUE rbServant);
-  // ctor
+  /// dtor
   virtual ~DSI_Servant ();
-  // dtor
 
   virtual void invoke (CORBA::ServerRequest_ptr request);
-      //ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
@@ -74,8 +73,8 @@ protected:
   static VALUE _invoke_implementation(VALUE args);
 
 private:
+  /// The Ruby Servant
   VALUE rbServant_;
-  // The Ruby Servant
 
   CORBA::String_var repo_id_;
 
