@@ -57,7 +57,7 @@ jobs:
         export ACE_ROOT=`cygpath -u $ACE_ROOT`
         export TAO_ROOT=`cygpath -u $TAO_ROOT`
         export MPC_ROOT=`cygpath -u $MPC_ROOT`
-        rake -t configure
+        rake configure
       shell: msys2 {0}
     - name: Run rake build
       run: |
