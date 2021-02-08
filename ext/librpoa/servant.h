@@ -65,10 +65,10 @@ protected:
 
   METHOD  method_id (const char* method);
 
-  void inner_invoke (CORBA_ServerRequest_ptr request);
+  void inner_invoke (CORBA::ServerRequest_ptr request);
 
-  void invoke_SI (CORBA_ServerRequest_ptr request);
-  void invoke_DSI (CORBA_ServerRequest_ptr request);
+  void invoke_SI (CORBA::ServerRequest_ptr request);
+  void invoke_DSI (CORBA::ServerRequest_ptr request);
 
   static VALUE _invoke_implementation(VALUE args);
 
@@ -81,10 +81,10 @@ private:
   struct ThreadSafeArg
   {
     ThreadSafeArg (DSI_Servant* srv,
-                   CORBA_ServerRequest_ptr req)
+                   CORBA::ServerRequest_ptr req)
       : servant_(srv), request_(req) {}
     DSI_Servant* servant_;
-    CORBA_ServerRequest_ptr request_;
+    CORBA::ServerRequest_ptr request_;
   };
 
   static void* thread_safe_invoke (void * arg);

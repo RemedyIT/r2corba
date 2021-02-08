@@ -109,12 +109,12 @@ void r2tao_init_Servant()
 //===================================================================
 
 struct DSI_Data {
-  CORBA_ServerRequest_ptr  _request;
+  CORBA::ServerRequest_ptr  _request;
   CORBA::NVList_ptr _nvlist;
   CORBA::TypeCode_var _result_type;
   VALUE _rData;
 
-  DSI_Data(CORBA_ServerRequest_ptr _req)
+  DSI_Data(CORBA::ServerRequest_ptr _req)
     : _request(_req), _nvlist(0), _rData(Qnil) {}
   ~DSI_Data() {
     if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = 0; }
@@ -130,7 +130,7 @@ VALUE r2tao_ServerRequest_operation(VALUE self)
 {
   if (DATA_PTR (self) != 0)
   {
-    CORBA_ServerRequest_ptr request = static_cast<DSI_Data*> (DATA_PTR (self))->_request;
+    CORBA::ServerRequest_ptr request = static_cast<DSI_Data*> (DATA_PTR (self))->_request;
     return rb_str_new2 (request->operation ());
   }
   return Qnil;
@@ -148,7 +148,7 @@ VALUE r2tao_ServerRequest_describe(VALUE self, VALUE desc)
       X_CORBA (BAD_INV_ORDER);
     }
 
-    CORBA_ServerRequest_ptr request = dsi_data->_request;
+    CORBA::ServerRequest_ptr request = dsi_data->_request;
 
     if (desc != Qnil && rb_type (desc) == T_HASH)
     {
@@ -523,7 +523,7 @@ void DSI_Servant::invoke (CORBA::ServerRequest_ptr request)
   }
 }
 
-void DSI_Servant::inner_invoke (CORBA_ServerRequest_ptr request)
+void DSI_Servant::inner_invoke (CORBA::ServerRequest_ptr request)
 {
   if (TAO_debug_level > 7)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Servant::invoke(%C)\n", request->operation ()));
@@ -625,7 +625,7 @@ void DSI_Servant::inner_invoke (CORBA_ServerRequest_ptr request)
   }
 }
 
-void DSI_Servant::invoke_DSI (CORBA_ServerRequest_ptr request)
+void DSI_Servant::invoke_DSI (CORBA::ServerRequest_ptr request)
 {
   if (TAO_debug_level > 5)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Servant::invoke_DSI(%C) entry\n", request->operation ()));
@@ -750,7 +750,7 @@ void DSI_Servant::invoke_DSI (CORBA_ServerRequest_ptr request)
   }
 }
 
-void DSI_Servant::invoke_SI (CORBA_ServerRequest_ptr request)
+void DSI_Servant::invoke_SI (CORBA::ServerRequest_ptr request)
 {
   if (TAO_debug_level > 5)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Servant::invoke_SI(%C) entry\n", request->operation ()));
