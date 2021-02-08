@@ -54,7 +54,7 @@ jobs:
       with:
         msystem: ${{ matrix.msystem }}
         install: make
-    - run: pacman --noconfirm -S mingw-w64-${{ matrix.arch }}-gcc
+    - run: pacman --noconfirm -S mingw-w64-${{ matrix.arch }}-gcc ruby
       shell: msys2 {0}
     - name: Run rake configure
       run: |
