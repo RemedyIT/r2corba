@@ -25,13 +25,13 @@ ARGV.options do |opts|
 
     opts.on("--o IORFILE",
             "Set IOR filename.",
-            "Default: 'server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -53,7 +53,7 @@ class MyHello < POA::Test::Hello
   def initialize(orb)
     @orb = orb
     @msg = 'message'
-    @nums = Test::TShortSeq.new((0...10).collect { |i| i*2 })
+    @nums = Test::TShortSeq.new((0...10).collect { |i| i * 2 })
     s1 = Test::S1.new
     s1.m_one = 123
     s1.m_two = 2.54
@@ -64,7 +64,7 @@ class MyHello < POA::Test::Hello
     @s1seq = Test::S1Seq.new << s1
     @cube = Test::TLongCube.new((0...3).collect {|x|
       (0...3).collect {|y|
-        (0...4).collect {|z| x+(y*10)+(z*100) }
+        (0...4).collect {|z| x + (y * 10) + (z * 100) }
       }
     })
     @anysel = 0
@@ -195,7 +195,7 @@ class MyHello < POA::Test::Hello
     when 2
       @s1seq
     when 3
-      CORBA::Any.to_any([1,2,3,4,5], CORBA::TypeCode::Sequence.new(CORBA._tc_long))
+      CORBA::Any.to_any([1, 2, 3, 4, 5], CORBA::TypeCode::Sequence.new(CORBA._tc_long))
     else
       @anysel
     end

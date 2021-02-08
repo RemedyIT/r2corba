@@ -10,7 +10,7 @@
 # Copyright (c) Remedy IT Expertise BV
 #------------------------------------------------------------------*/
 
-#if ((TAO_MAJOR_VERSION < 2) || (TAO_MAJOR_VERSION == 2 && TAO_MINOR_VERSION == 0 && TAO_BETA_VERSION <= 1))
+#if ((TAO_MAJOR_VERSION < 2) || (TAO_MAJOR_VERSION == 2 && TAO_MINOR_VERSION == 0 && TAO_MICRO_VERSION <= 1))
 # define RPOA_NEED_DSI_FIX  1
 
 # include "srvreq_fix.h"

@@ -48,7 +48,7 @@ module R2CORBA
     def self.parse_args(args)
       opts = OptionParser.new
       opts.banner = "Usage: r2corba [global options] command [command options]\n\n" +
-          "    command\t\tSpecifies R2CORBA command to execute.\n"+
+          "    command\t\tSpecifies R2CORBA command to execute.\n" +
           "           \t\tDefault = list :== list commands\n"
       opts.separator ''
       opts.on('-v', '--verbose',

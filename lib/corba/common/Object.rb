@@ -208,4 +208,3 @@ module R2CORBA
     end # Object
   end # CORBA
 end # R2CORBA
-

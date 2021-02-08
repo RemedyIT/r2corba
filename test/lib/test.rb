@@ -65,7 +65,7 @@ if defined?(JRUBY_VERSION)
         #                    const char *const *argv,
         #                    const char *const *envp);
 
-        attach_function :_spawnvpe,:_spawnvpe, [:int, :string, :pointer, :pointer], :pointer
+        attach_function :_spawnvpe, :_spawnvpe, [:int, :string, :pointer, :pointer], :pointer
 
         P_NOWAIT = 1
 
@@ -105,7 +105,7 @@ if defined?(JRUBY_VERSION)
         def self.wait(pid)
           stat_ptr = FFI::MemoryPointer.new(:int, 1)
           tmp_pid = _wait(stat_ptr, pid, 0)
-          if tmp_pid==pid
+          if tmp_pid == pid
             return [pid, stat_ptr.get_int()]
           else
             return [pid, 0]
@@ -120,7 +120,7 @@ if defined?(JRUBY_VERSION)
           args_ary.put_array_of_pointer(0, str_ptrs)
 
           env_ary = FFI::MemoryPointer.new(:pointer, ENV.length + 1)
-          env_ptrs = ENV.map {|key,value| FFI::MemoryPointer.from_string("#{key}=#{value}")}
+          env_ptrs = ENV.map {|key, value| FFI::MemoryPointer.from_string("#{key}=#{value}")}
           env_ary.put_array_of_pointer(0, env_ptrs)
 
           [P_NOWAIT, args[0], args_ary, env_ary]
@@ -159,7 +159,7 @@ if defined?(JRUBY_VERSION)
         def self.wait(pid)
           begin
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
-            if tmp==pid and status.success? != nil
+            if tmp == pid and status.success? != nil
               return [pid, status.success?() ? 0 : status.exitstatus ]
             end
             return [nil, 0]
@@ -178,7 +178,7 @@ if defined?(JRUBY_VERSION)
           args_ary.put_array_of_pointer(0, str_ptrs)
 
           env_ary = FFI::MemoryPointer.new(:pointer, ENV.length + 1)
-          env_ptrs = ENV.map {|key,value| FFI::MemoryPointer.from_string("#{key}=#{value}")}
+          env_ptrs = ENV.map {|key, value| FFI::MemoryPointer.from_string("#{key}=#{value}")}
           env_ary.put_array_of_pointer(0, env_ptrs)
 
           [pid_ptr, args[0], nil, nil, args_ary, env_ary]
@@ -197,7 +197,7 @@ if defined?(JRUBY_VERSION)
             sleep 0.01
 
             tmp_pid, tmp_status = Exec.wait(@pid)
-            if tmp_pid==@pid
+            if tmp_pid == @pid
               exit_status = tmp_status
               is_running = false
             end
@@ -237,7 +237,7 @@ if defined?(JRUBY_VERSION)
     end
 
     def is_running?; @exitstatus.nil?; end
-    def has_error? ; @trd.status.nil? or (!self.is_running? and self.exitstatus!=0) ;end
+    def has_error? ; @trd.status.nil? or (!self.is_running? and self.exitstatus != 0) ;end
 
     def stop
       Exec.stop(@pid)
@@ -287,9 +287,9 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
       extend WinAPI
 
       def Process.create(cmd_)
-        startinfo = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        startinfo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         startinfo = startinfo.pack('LLLLLLLLLLLLSSLLLL')
-        procinfo  = [0,0,0,0].pack('LLLL')
+        procinfo  = [0, 0, 0, 0].pack('LLLL')
 
         bool = CreateProcess(
            0,                 # App name
@@ -309,10 +309,10 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
         end
 
         ProcessInfo.new(
-           procinfo[0,4].unpack('L').first, # hProcess
-           procinfo[4,4].unpack('L').first, # hThread
-           procinfo[8,4].unpack('L').first, # hProcessId
-           procinfo[12,4].unpack('L').first # hThreadId
+           procinfo[0, 4].unpack('L').first, # hProcess
+           procinfo[4, 4].unpack('L').first, # hThread
+           procinfo[8, 4].unpack('L').first, # hProcessId
+           procinfo[12, 4].unpack('L').first # hThreadId
         )
       end
 
@@ -441,7 +441,7 @@ else # !win32
     def check_status
       begin
         tmp, @status = ::Process.waitpid2(@pid, ::Process::WNOHANG)
-        if tmp==@pid and @status.success? == false
+        if tmp == @pid and @status.success? == false
           @exitstatus = @status.exitstatus
           return false
         end
@@ -538,4 +538,3 @@ end
   end
 
 end
-

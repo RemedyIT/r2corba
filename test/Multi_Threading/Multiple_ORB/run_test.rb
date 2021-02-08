@@ -42,7 +42,7 @@ include TestUtil
 
 ior_file = 'server'
 
-Dir.glob(ior_file+'*.ior').each { |fn| TestUtil.remove_file(fn) }
+Dir.glob(ior_file + '*.ior').each { |fn| TestUtil.remove_file(fn) }
 
 srv = Test.new
 
@@ -61,7 +61,7 @@ end
 
 exrc = clt.wait(400)
 
-if exrc ==0
+if exrc == 0
   srv.wait(400)
 else
   srv.wait_term(400)

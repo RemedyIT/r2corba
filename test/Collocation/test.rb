@@ -43,7 +43,7 @@ ARGV.options do |opts|
             "Default: 0") { |dlvl| ORB_ARG << "-ORBDebugLevel" << dlvl }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -120,7 +120,7 @@ class Collocation_Test
   end
 
   def shutdown
-    @root_poa.destroy(1,1)
+    @root_poa.destroy(1, 1)
     @orb.destroy
   end
 

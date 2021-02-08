@@ -35,7 +35,7 @@ module R2CORBA
         #
         if defined?(JRUBY_VERSION)
           @options[:orbprop]['jacorb.poa.thread_pool_min'] = @options[:threads]
-          @options[:orbprop]['jacorb.poa.thread_pool_max'] = @options[:threads]*4
+          @options[:orbprop]['jacorb.poa.thread_pool_max'] = @options[:threads] * 4
           if @options[:debug] > 0
             @options[:orbprop]['jacorb.log.default.verbosity'] = case
             when @options[:debug] < 2
@@ -93,7 +93,7 @@ module R2CORBA
 
       def run
         STDERR.puts "INS - starting service run" if @options[:verbose]
-        if (defined?(JRUBY_VERSION) or !R2CORBA::TAO::RUBY_THREAD_SUPPORT)
+        if defined?(JRUBY_VERSION) or !R2CORBA::TAO::RUBY_THREAD_SUPPORT
           STDERR.puts "INS - running ORB" if @options[:verbose]
           @orb.run
         else

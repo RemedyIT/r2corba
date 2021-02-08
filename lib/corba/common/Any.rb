@@ -64,7 +64,7 @@ module R2CORBA
           if tc.is_a?(CORBA::TypeCode)
             return new(o, tc)
           end
-          raise CORBA::MARSHAL.new('missing TypeCode',0,CORBA::COMPLETED_NO)
+          raise CORBA::MARSHAL.new('missing TypeCode', 0, CORBA::COMPLETED_NO)
         end
         return new(o, tc)
       end

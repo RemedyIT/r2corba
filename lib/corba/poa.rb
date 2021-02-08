@@ -11,4 +11,4 @@
 #--------------------------------------------------------------------
 
 require 'corba.rb'
-require "corba/#{defined?(JRUBY_VERSION)?'jbase':'cbase'}/poa.rb"
+require "corba/#{defined?(JRUBY_VERSION) ? 'jbase' : 'cbase'}/poa.rb"

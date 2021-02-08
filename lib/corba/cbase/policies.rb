@@ -24,7 +24,7 @@ module R2CORBA
 
     module ORB
       def create_policy(type, val)
-        raise CORBA::BAD_PARAM.new('Any expected',0,CORBA::COMPLETED_NO) unless CORBA::Any === val
+        raise CORBA::BAD_PARAM.new('Any expected', 0, CORBA::COMPLETED_NO) unless CORBA::Any === val
         begin
           self.orb_.create_policy(type.to_i, val)
         rescue ::NativeException

@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IOR",
             "Set IOR.",
-            "Default: 'corbaloc:iiop:192.3.47/10007/RandomObject'") { |v| OPTIONS[:ior]=v }
+            "Default: 'corbaloc:iiop:192.3.47/10007/RandomObject'") { |v| OPTIONS[:ior] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -107,4 +107,3 @@ begin
 ensure
   orb.destroy()
 end
-

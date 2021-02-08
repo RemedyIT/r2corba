@@ -39,7 +39,7 @@ module R2CORBA
 
         def invoke(jsrvreq)
           begin
-            raise CORBA::NO_IMPLEMENT.new('',0,CORBA::COMPLETED_NO) unless @rsrv
+            raise CORBA::NO_IMPLEMENT.new('', 0, CORBA::COMPLETED_NO) unless @rsrv
             rsrvreq = CORBA::ServerRequest._wrap_native(jsrvreq, self._orb())
             begin
               case rsrvreq.srvreq_.operation()
@@ -80,9 +80,9 @@ module R2CORBA
             else
               STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}" unless $VERBOSE
               if jsrvreq.respond_to?(:setSystemException) # JacORB special
-                jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}",0,CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
+                jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}", 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
               else
-                jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}",0,CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
+                jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
               end
             end
           rescue CORBA::SystemException => ex_
@@ -96,9 +96,9 @@ module R2CORBA
           rescue Exception => ex_
             STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}"
             if jsrvreq.respond_to?(:setSystemException) # JacORB special
-              jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}",0,CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
+              jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}", 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
             else
-              jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}",0,CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
+              jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
             end
           end
         end
@@ -172,8 +172,8 @@ module R2CORBA
           opsym = alt_opsym if alt_opsym && alt_opsym.is_a?(Symbol)
           results = @rsrv.__send__(opsym, *rsrvreq.arguments)
           unless rsrvreq.result_type_.nil?
-            result_value = (rsrvreq.arg_out_>0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
-            if rsrvreq.arg_out_>0
+            result_value = (rsrvreq.arg_out_ > 0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
+            if rsrvreq.arg_out_ > 0
               rsrvreq.nvlist_.count().times do |i|
                 jnv = rsrvreq.nvlist_.item(i)
                 if [CORBA::ARG_OUT, CORBA::ARG_INOUT].include?(jnv.flags)
@@ -192,8 +192,8 @@ module R2CORBA
         def invoke_DSI(rsrvreq)
           results = @rsrv.invoke(rsrvreq)
           unless rsrvreq.result_type_.nil?
-            result_value = (rsrvreq.arg_out_>0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
-            if rsrvreq.arg_out_>0
+            result_value = (rsrvreq.arg_out_ > 0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
+            if rsrvreq.arg_out_ > 0
               rsrvreq.nvlist_.count().times do |i|
                 jnv = rsrvreq.nvlist_.item(i)
                 if [CORBA::ARG_OUT, CORBA::ARG_INOUT].include?(jnv.flags)
@@ -233,7 +233,7 @@ module R2CORBA
             # not in call context or not associated with ORB yet
           end
         end
-        raise CORBA::BAD_INV_ORDER.new('no ORB initialized',0,CORBA::COMPLETED_NO) if CORBA::ORB._orb.nil?
+        raise CORBA::BAD_INV_ORDER.new('no ORB initialized', 0, CORBA::COMPLETED_NO) if CORBA::ORB._orb.nil?
         begin
           return CORBA::Object._wrap_native(self.srvref_._this_object(CORBA::ORB._orb))
         rescue ::NativeException

@@ -57,7 +57,7 @@ module R2CORBA
           when TK_DOUBLE
             read_double()
           when TK_LONGDOUBLE
-            raise CORBA::NO_IMPLEMENT.new('LongDouble not supported',0,CORBA::COMPLETED_NO)
+            raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
             read_fixed()
           when TK_CHAR
@@ -402,7 +402,7 @@ module R2CORBA
           when TK_DOUBLE
             write_double(value)
           when TK_LONGDOUBLE
-            raise CORBA::NO_IMPLEMENT.new('LongDouble not supported',0,CORBA::COMPLETED_NO)
+            raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
             write_fixed(value)
           when TK_CHAR
@@ -609,7 +609,7 @@ module R2CORBA
         end
         def write_wstring(value)
           begin
-            self.stream_.write_wstring(value.inject('') {|s,b| s << b.chr})
+            self.stream_.write_wstring(value.inject('') {|s, b| s << b.chr})
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
