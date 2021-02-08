@@ -66,5 +66,8 @@ jobs:
     - name: Run rake test
       run: |
         export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
+        export MPC_ROOT=`cygpath -u $MPC_ROOT`
+        rake show
         rake test
       shell: msys2 {0}
