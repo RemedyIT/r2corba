@@ -46,6 +46,12 @@ jobs:
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        install: make
+    - run: pacman --noconfirm -S mingw-w64-x86_64-${{ matrix.compiler }}
+      shell: msys2 {0}
     - name: Run rake configure
       run: |
         export ACE_ROOT=`cygpath -u $ACE_ROOT`
