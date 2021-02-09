@@ -42,7 +42,7 @@ __declspec (dllexport) void Init_ ## LIBNAME ## w() \
     if (NULL == (hlib = LoadLibraryEx(szModulePath, NULL, LOAD_WITH_ALTERED_SEARCH_PATH))) \
     { \
       DWORD dwError = GetLastError(); \
-      printf("ERROR: extload failed to load %s, error code %lu\n", szModulePath, dwError); \
+      printf("ERROR: extload failed to load %s.so and %s, error code %lu\n", #LIBNAME, szModulePath, dwError); \
       return; \
     } \
   } \
