@@ -56,8 +56,10 @@ jobs:
         install: make
     - run: pacman --noconfirm -S mingw-w64-${{ matrix.arch }}-gcc
       shell: msys2 {0}
-    - name: Run rake configure
+    - name: Run rake gem
       run: |
         rake gem
         ls -al pkg
       shell: msys2 {0}
+      env:
+        GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
