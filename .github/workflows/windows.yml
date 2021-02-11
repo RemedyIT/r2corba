@@ -15,7 +15,23 @@ jobs:
           - msystem: MINGW64
             arch: x86_64
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+            ruby: '2.0'
+          - msystem: MINGW64
+            arch: x86_64
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
             ruby: '2.1'
+          - msystem: MINGW64
+            arch: x86_64
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+            ruby: '2.2'
+          - msystem: MINGW64
+            arch: x86_64
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+            ruby: '2.3'
+          - msystem: MINGW64
+            arch: x86_64
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+            ruby: '2.4'
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE_TAO
