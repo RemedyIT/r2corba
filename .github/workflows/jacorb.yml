@@ -25,7 +25,7 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
     - uses: actions/setup-java@v1
       with:
-        java-version: '6'
+        java-version: '7'
         java-package: 'jdk'
         architecture: 'x64'
     - name: checkout r2corba
@@ -35,15 +35,6 @@ jobs:
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
-    - name: Add Repo
-      run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
-      if: matrix.Repo != ''
-    - name: Add packages
-      run: |
-        sudo apt-get --yes update
-        sudo apt-get --yes install ${{ matrix.PackageDeps }}
     - name: Download a file
       uses: carlosperate/download-file-action@v1.0.3
       id: download-jacorb
