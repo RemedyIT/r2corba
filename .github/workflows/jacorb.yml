@@ -13,7 +13,7 @@ jobs:
         include:
           - os: ubuntu-20.04
             ruby: 'jruby'
-            jacorb_version: '3.9'
+            jacorb_version: '3.1'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} jruby-jacorb-${{ matrix.jacorb_version }}
     env:
@@ -41,7 +41,7 @@ jobs:
       with:
         file-url: 'https://www.jacorb.org/releases/${{ matrix.jacorb_version }}/jacorb-${{ matrix.jacorb_version }}-binary.zip'
         file-name: 'jacorb-${{ matrix.jacorb_version }}.zip'
-        location: '${{ github.workspace }}'
+        location: '${{ github.workspace }}/jacorb'
     - uses: montudor/action-zip@v0.1.1
       with:
         args: unzip -qq jacorb-${{ matrix.jacorb_version }}.zip -d jacorb
@@ -51,6 +51,7 @@ jobs:
       shell: pwsh
     - name: Run rake build
       run: |
+        ls -al jacorb
         rake build
       shell: pwsh
     - name: Run rake test
