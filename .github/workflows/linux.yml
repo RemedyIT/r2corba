@@ -143,12 +143,9 @@ jobs:
     - name: Run rake configure
       run: |
         rake configure
-      shell: pwsh
     - name: Run rake build
       run: |
         rake build
-      shell: pwsh
     - name: Run rake test
       run: |
         rake test
-      shell: pwsh
