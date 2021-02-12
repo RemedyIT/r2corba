@@ -11,20 +11,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - CC: gcc-10
-            CXX: g++-10
-            PackageDeps: g++-10
-            os: ubuntu-20.04
+          - os: ubuntu-20.04
             ruby: 'jruby'
             jacorb_version: '3.9'
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} ${{ matrix.CXX }} ruby-${{ matrix.ruby }}
+    name: ${{ matrix.os }} jruby-jacorb-${{ matrix.jacorb_version }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE_TAO
       JACORB_HOME: ${{ github.workspace }}/jacorb
       RIDL_ROOT: ${{ github.workspace }}/ridl
-      CC: ${{ matrix.CC }}
-      CXX: ${{ matrix.CXX }}
     steps:
     - uses: ruby/setup-ruby@v1
       with:
@@ -69,6 +64,7 @@ jobs:
         args: unzip -qq jacorb-${{ matrix.jacorb_version }}.zip -d jacorb
     - name: Run rake configure
       run: |
+        ls -al
         rake configure
       shell: pwsh
     - name: Run rake build
