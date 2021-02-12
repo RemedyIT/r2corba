@@ -7,7 +7,7 @@ on:
     - cron: '0 7 * * SUN'
 
 jobs:
-  build:
+  tao:
     strategy:
       matrix:
         include:
@@ -83,6 +83,58 @@ jobs:
       run: |
         sudo apt-get --yes update
         sudo apt-get --yes install ${{ matrix.PackageDeps }}
+    - name: Run rake configure
+      run: |
+        rake configure
+      shell: pwsh
+    - name: Run rake build
+      run: |
+        rake build
+      shell: pwsh
+    - name: Run rake test
+      run: |
+        rake test
+      shell: pwsh
+  jacorb:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            ruby: 'jruby'
+            jacorb_version: '3.1'
+            java-version: '8'
+            java-package: 'jdk'
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }}-${{ matrix.ruby }}-jacorb-${{ matrix.jacorb_version }}-${{ matrix.java-package }}-${{ matrix.java-version }}
+    env:
+      JACORB_HOME: ${{ github.workspace }}/jacorb/jacorb-${{ matrix.jacorb_version }}
+      RIDL_ROOT: ${{ github.workspace }}/ridl
+    steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java-version }}
+        java-package: ${{ matrix.java-package }}
+        architecture: 'x64'
+    - name: checkout r2corba
+      uses: actions/checkout@v2
+    - name: checkout ridl
+      uses: actions/checkout@v2
+      with:
+        repository: RemedyIT/ridl
+        path: ${{ env.RIDL_ROOT }}
+    - name: Download a file
+      uses: carlosperate/download-file-action@v1.0.3
+      id: download-jacorb
+      with:
+        file-url: 'https://www.jacorb.org/releases/${{ matrix.jacorb_version }}/jacorb-${{ matrix.jacorb_version }}-binary.zip'
+        file-name: 'jacorb-${{ matrix.jacorb_version }}.zip'
+        location: '${{ github.workspace }}'
+    - uses: montudor/action-zip@v0.1.1
+      with:
+        args: unzip -qq jacorb-${{ matrix.jacorb_version }}.zip -d jacorb
     - name: Run rake configure
       run: |
         rake configure
