@@ -41,7 +41,7 @@ jobs:
       with:
         file-url: 'https://www.jacorb.org/releases/${{ matrix.jacorb_version }}/jacorb-${{ matrix.jacorb_version }}-binary.zip'
         file-name: 'jacorb-${{ matrix.jacorb_version }}.zip'
-        location: '${{ github.workspace }}/jacorb'
+        location: '${{ github.workspace }}'
     - uses: montudor/action-zip@v0.1.1
       with:
         args: unzip -qq jacorb-${{ matrix.jacorb_version }}.zip -d jacorb
