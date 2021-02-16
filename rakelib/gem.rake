@@ -104,7 +104,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
     gem.require_paths << 'ext'
     gem.add_dependency 'ridl', '~> 2.8'
-    gem.add_dependency 'rake', '~> 12.3.3'
+    gem.add_dependency 'rake', '>= 12.3.3'
     gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
     gem.metadata = {
       "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
@@ -193,7 +193,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
         gem.require_paths << 'ext'
       end
       gem.add_dependency 'ridl', '~> 2.8'
-      gem.add_dependency 'rake', '~> 12.3.3'
+      gem.add_dependency 'rake', '>= 12.3.3'
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
       gem.metadata = {
         "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
@@ -211,7 +211,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
 end
 t_.enhance ['mkrf_conf_bingem.rb']
 
-unless defined?(JRUBY_VERSION) || !R2CORBA::Config.is_win32
+unless defined?(JRUBY_VERSION)
   # Devkit faker Gem for binary Windows gems
   t_devkit = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba_devkit', '1.0.0', :devkit)}.gem") => 'lib/rubygems_plugin.rb' do
     # create gemspec
