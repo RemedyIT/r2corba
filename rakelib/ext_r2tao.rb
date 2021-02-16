@@ -147,7 +147,6 @@ project {
     extload.c
   }
   dynamicflags = EXTLOAD_BUILD_DLL
-              .
   sharedname = extload
   libout = .
   dllout = .
