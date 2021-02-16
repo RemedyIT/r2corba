@@ -562,7 +562,7 @@ public:
     : req_ (req),
       exception_ (false),
       corba_ex_ (0) {}
-  virtual ~R2TAO_Request_BlockedRegionCaller () R2CORBA_NO_EXCEPT_FALSE;
+  virtual ~R2TAO_Request_BlockedRegionCaller () noexcept(false);
 
   VALUE call ();
 
@@ -578,7 +578,7 @@ protected:
   CORBA::Exception* corba_ex_;
 };
 
-R2TAO_Request_BlockedRegionCaller::~R2TAO_Request_BlockedRegionCaller() R2CORBA_NO_EXCEPT_FALSE
+R2TAO_Request_BlockedRegionCaller::~R2TAO_Request_BlockedRegionCaller() noexcept(false)
 {
   if (this->exception_)
   {

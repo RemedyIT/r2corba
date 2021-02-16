@@ -142,11 +142,4 @@ private:
   bool    ex_caught_;
 };
 
-#if defined (ACE_HAS_CPP11)
-# define R2CORBA_NO_EXCEPT_FALSE noexcept(false)
-#else
-# define R2CORBA_NO_EXCEPT_FALSE
-#endif /* ACE_HAS_CPP11 */
-
-
 #endif

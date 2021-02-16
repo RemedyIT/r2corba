@@ -391,7 +391,7 @@ CORBA::Boolean R2TAO_ArrayAny_Impl_T<CORBA::Octet>::marshal_value (TAO_OutputCDR
 }
 
 template<typename T>
-const void *R2TAO_ArrayAny_Impl_T<T>::value (void) const
+const void *R2TAO_ArrayAny_Impl_T<T>::value () const
 {
   return this->value_;
 }
@@ -527,12 +527,12 @@ R2TAO_Value* R2TAO_Value::_downcast (::CORBA::ValueBase *v)
   return dynamic_cast<R2TAO_Value*> (v);
 }
 
-CORBA::TypeCode_ptr R2TAO_Value::_tao_type (void) const
+CORBA::TypeCode_ptr R2TAO_Value::_tao_type () const
 {
   return this->val_tc_.in ();
 }
 
-const char * R2TAO_Value::_tao_obv_repository_id (void) const
+const char * R2TAO_Value::_tao_obv_repository_id () const
 {
   return this->val_tc_->id ();
 }
@@ -1089,7 +1089,7 @@ R2TAO_AbstractValue* R2TAO_AbstractValue::_downcast ( ::CORBA::ValueBase *v)
   return dynamic_cast< ::R2TAO_AbstractValue * > (v);
 }
 
-const char* R2TAO_AbstractValue::_tao_obv_repository_id (void) const
+const char* R2TAO_AbstractValue::_tao_obv_repository_id () const
 {
   return this->R2TAO_Value::_tao_obv_repository_id ();
 }
@@ -1254,7 +1254,7 @@ void R2TAO_AbstractObject::_remove_ref (void)
          this->::CORBA::Object::_is_a (type_id);
 }
 
-const char* R2TAO_AbstractObject::_interface_repository_id (void) const
+const char* R2TAO_AbstractObject::_interface_repository_id () const
 {
   return this->abs_tc_->id ();
 }
