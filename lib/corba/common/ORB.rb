@@ -259,7 +259,7 @@ module R2CORBA
       # Identifier name
       # TypeCode boxed_type
       # ret TypeCode
-      def create_value_box_tc (id, name, boxed_type)
+      def create_value_box_tc(id, name, boxed_type)
         return CORBA::TypeCode::Valuebox.new(id, name, boxed_type)
       end
 
