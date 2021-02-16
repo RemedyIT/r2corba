@@ -1,4 +1,4 @@
-{<img src="https://badge.fury.io/rb/r2corba.svg" alt="Gem Version" />}[https://badge.fury.io/rb/r2corba]
+{<img src="https://badge.fury.io/rb/r2corba.svg" alt="Gem Version" />}[https://rubygems.org/gems/r2corba]
 {<img src="https://www.codefactor.io/repository/github/remedyit/r2corba/badge" alt="CodeFactor" />}[https://www.codefactor.io/repository/github/remedyit/r2corba]
 {<img src="https://github.com/RemedyIT/r2corba/workflows/linux/badge.svg" alt="Linux CI" />}[https://github.com/RemedyIT/r2corba/actions?query=workflow%3Alinux]
 
