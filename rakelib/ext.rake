@@ -205,11 +205,7 @@ else # !JRUBY_VERSION
             cur_dir = Dir.getwd
             Dir.chdir File.expand_path(get_config('aceroot'))
             begin
-              if R2CORBA::Config.is_linux && R2CORBA::Config::linux_distro != :ubuntu && R2CORBA::Config.cpu_cores > 2
-                sh("#{get_config('makeprog')} -j#{R2CORBA::Config.cpu_cores} #{get_config('with-debug') ? ' debug=1' : ''}")
-              else
-                sh("#{get_config('makeprog')}#{get_config('with-debug') ? ' debug=1' : ''}")
-              end
+              sh("#{get_config('makeprog')} -j#{R2CORBA::Config.cpu_cores} #{get_config('with-debug') ? ' debug=1' : ''}")
             ensure
               Dir.chdir cur_dir
             end
