@@ -37,7 +37,7 @@ public:
   R2TAO_ArrayAny_Impl_T (CORBA::TypeCode_ptr,
                          T * const,
                          CORBA::ULong);
-  virtual ~R2TAO_ArrayAny_Impl_T (void);
+  virtual ~R2TAO_ArrayAny_Impl_T ();
 
   static void insert (CORBA::Any &,
                       CORBA::TypeCode_ptr,
@@ -45,8 +45,8 @@ public:
                       CORBA::ULong);
 
   virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
-  virtual const void *value (void) const;
-  virtual void free_value (void);
+  virtual const void *value () const;
+  virtual void free_value ();
 
 private:
   void* value_;
@@ -81,7 +81,7 @@ class R2TAO_Value : public ::CORBA::DefaultValueRefCountBase
     R2TAO_Value (VALUE rbValue, bool for_unmarshal=false);
     virtual ~R2TAO_Value ();
 
-    virtual CORBA::ValueBase* _copy_value (void);
+    virtual CORBA::ValueBase* _copy_value ();
 
     static void _tao_any_destructor (void *);
 
@@ -89,10 +89,10 @@ class R2TAO_Value : public ::CORBA::DefaultValueRefCountBase
 
     static R2TAO_Value* _downcast (::CORBA::ValueBase *v);
 
-    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type () const;
 
     /// Return the repository id of this valuetype.
-    virtual const char * _tao_obv_repository_id (void) const;
+    virtual const char * _tao_obv_repository_id () const;
 
     /// Give the list of the RepositoryIds in the valuetype "truncatable"
     /// inheritance hierarchy. List the id of this valuetype as first
@@ -177,18 +177,18 @@ class R2TAO_ValueFactory
     static R2TAO_ValueFactory* _downcast ( ::CORBA::ValueFactoryBase *);
 
     virtual ::CORBA::ValueBase *
-    create_for_unmarshal (void);
+    create_for_unmarshal ();
 
     virtual ::CORBA::AbstractBase_ptr
-    create_for_unmarshal_abstract (void);
+    create_for_unmarshal_abstract ();
 
     // TAO-specific extensions
-    virtual const char* tao_repository_id (void);
+    virtual const char* tao_repository_id ();
 
     VALUE get_ruby_factory () { return this->rbValueFactory_; }
 
   protected:
-    virtual ~R2TAO_ValueFactory (void);
+    virtual ~R2TAO_ValueFactory ();
 
   private:
     VALUE rbValueFactory_;
@@ -238,14 +238,14 @@ class R2TAO_AbstractValue :
 
     static R2TAO_AbstractValue* _downcast ( ::CORBA::ValueBase *v);
 
-    virtual const char* _tao_obv_repository_id (void) const;
+    virtual const char* _tao_obv_repository_id () const;
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
     virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t) const;
 
-    virtual void _add_ref (void);
-    virtual void _remove_ref (void);
-    virtual ::CORBA::ValueBase *_tao_to_value (void);
+    virtual void _add_ref ();
+    virtual void _remove_ref ();
+    virtual ::CORBA::ValueBase *_tao_to_value ();
 
     CORBA::TypeCode_ptr abstract_type () const;
 
@@ -312,11 +312,11 @@ class R2TAO_AbstractObject :
 
     static void _tao_release (R2TAO_AbstractObject_ptr obj);
 
-    virtual void _add_ref (void);
-    virtual void _remove_ref (void);
+    virtual void _add_ref ();
+    virtual void _remove_ref ();
 
     virtual ::CORBA::Boolean _is_a (const char *type_id);
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
     CORBA::TypeCode_ptr abstract_type () const;
@@ -372,7 +372,7 @@ namespace TAO
         R2TAO_AbstractValue_ptr p);
     static void release (
         R2TAO_AbstractValue_ptr p);
-    static R2TAO_AbstractValue_ptr nil (void);
+    static R2TAO_AbstractValue_ptr nil ();
     static ::CORBA::Boolean marshal (
         const R2TAO_AbstractValue_ptr p,
         TAO_OutputCDR & cdr);
@@ -385,7 +385,7 @@ namespace TAO
         R2TAO_AbstractObject_ptr p);
     static void release (
         R2TAO_AbstractObject_ptr p);
-    static R2TAO_AbstractObject_ptr nil (void);
+    static R2TAO_AbstractObject_ptr nil ();
     static ::CORBA::Boolean marshal (
         const R2TAO_AbstractObject_ptr p,
         TAO_OutputCDR & cdr);
