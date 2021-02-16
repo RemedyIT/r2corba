@@ -12,10 +12,6 @@
 #ifndef __R2TAO_EXT_H
 #define __R2TAO_EXT_H
 
-#if defined (__cplusplus)
-};
-#endif
-
 #if defined (OLD_MSC_VER)
   // un-fudge the version macro here that was fudged
   // in required.h otherwise ACE will complain
@@ -23,15 +19,7 @@
   #define _MSC_VER OLD_MSC_VER
 #endif
 
-#include <ace/pre.h>
-
 #include <ace/config-all.h>
-
-#include <ace/post.h>
-
-#if defined (__cplusplus)
-extern "C" {
-#endif
 
 #endif
 
