@@ -26,13 +26,13 @@ ARGV.options do |opts|
 
     opts.on("--o IORFILE",
             "Set IOR filename.",
-            "Default: 'server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -55,7 +55,7 @@ class Test_impl < POA::Test
   end
 
   def ros(s)
-    s.slice(s.size-1,1) << s.slice(0,s.size-1)
+    s.slice(s.size - 1, 1) << s.slice(0, s.size - 1)
   end
 
   def basic_op1(p1, p2)
@@ -94,25 +94,25 @@ class Test_impl < POA::Test
   end
 
   def seq_op1(p1, p2)
-    p3 = p2.collect {|e| e*5}
-    p2.collect! {|e| e*3}
+    p3 = p2.collect {|e| e * 5}
+    p2.collect! {|e| e * 3}
     retval = p1
     [retval, p2, p3]
   end
 
   def seq_op2(p1, p2)
-    p3 = p2.collect {|e| e*5}
-    p2.collect! {|e| e*3}
+    p3 = p2.collect {|e| e * 5}
+    p2.collect! {|e| e * 3}
     [p2, p3]
   end
 
   def struct_op1(p1, p2)
-    p3 = Fixed_Struct1.new(p2.l*5,
-                           Fixed_Struct1::Bstruct.new(p2.abstruct.s1*5,
-                                                      p2.abstruct.s2*5))
-    p2.l = p2.l*3
-    p2.abstruct.s1 = p2.abstruct.s1*3
-    p2.abstruct.s2 = p2.abstruct.s2*3
+    p3 = Fixed_Struct1.new(p2.l * 5,
+                           Fixed_Struct1::Bstruct.new(p2.abstruct.s1 * 5,
+                                                      p2.abstruct.s2 * 5))
+    p2.l = p2.l * 3
+    p2.abstruct.s1 = p2.abstruct.s1 * 3
+    p2.abstruct.s2 = p2.abstruct.s2 * 3
 
     retval = p1
     [retval, p2, p3]
@@ -121,9 +121,9 @@ class Test_impl < POA::Test
   def struct_op2(p1, p2)
     p3 = p1
 
-    p2.l = p2.l*3
-    p2.abstruct.s1 = p2.abstruct.s1*3
-    p2.abstruct.s2 = p2.abstruct.s2*3
+    p2.l = p2.l * 3
+    p2.abstruct.s1 = p2.abstruct.s1 * 3
+    p2.abstruct.s2 = p2.abstruct.s2 * 3
 
     [p2, p3]
   end
@@ -147,14 +147,14 @@ class Test_impl < POA::Test
   end
 
   def array_op1(p1, p2)
-    p2.collect! {|e| e*3}
+    p2.collect! {|e| e * 3}
     p3 = p2
     retval = p1
     [retval, p2, p3]
   end
 
   def array_op2(p1, p2)
-    p2.collect! {|e| e*3}
+    p2.collect! {|e| e * 3}
     p3 = p1
     [p2, p3]
   end
@@ -177,17 +177,17 @@ class Test_impl < POA::Test
     retval = VBfixed_union1.new(Fixed_Union1.new)
     case p1._disc
     when 1
-      p3.value.m1 = p1.m1*3
-      retval.value.m1 = p1.m1*3
+      p3.value.m1 = p1.m1 * 3
+      retval.value.m1 = p1.m1 * 3
     when 2
-      p3.value.m2 = p1.m2*3
-      retval.value.m2 = p1.m2*3
+      p3.value.m2 = p1.m2 * 3
+      retval.value.m2 = p1.m2 * 3
     end
     case p2._disc
     when 1
-      p2.m1 = p2.m1*3
+      p2.m1 = p2.m1 * 3
     when 2
-      p2.m2 = p2.m2*3
+      p2.m2 = p2.m2 * 3
     end
     [retval, p2, p3]
   end
@@ -196,9 +196,9 @@ class Test_impl < POA::Test
     p3 = p1
     case p2._disc
     when 1
-      p2.m1 = p2.m1*3
+      p2.m1 = p2.m1 * 3
     when 2
-      p2.m2 = p2.m2*3
+      p2.m2 = p2.m2 * 3
     end
     [p2, p3]
   end
@@ -216,7 +216,7 @@ class Test_impl < POA::Test
     end
     case p2._disc
     when 1
-      p2.m1 = p2.m1*3
+      p2.m1 = p2.m1 * 3
     when 2
       p2.m2 = ros(p2.m2)
     end
@@ -227,7 +227,7 @@ class Test_impl < POA::Test
     p3 = p1
     case p2._disc
     when 1
-      p2.m1 = p2.m1*3
+      p2.m1 = p2.m1 * 3
     when 2
       p2.m2 = ros(p2.m2)
     end

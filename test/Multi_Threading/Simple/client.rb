@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -59,7 +59,7 @@ begin
   hello_obj = Test::Hello._narrow(obj)
 
   unless defined?(JRUBY_VERSION) && CORBA::Native::Jacorb::MAJOR_VERSION == 3 &&
-      ([4,5].include? CORBA::Native::Jacorb::MINOR_VERSION)
+      ([4, 5].include? CORBA::Native::Jacorb::MINOR_VERSION)
     ## JacORB 3.4 introduced a bug which prevents this test from succeeding
     ## JacORB 3.6 will be released with a fix for this
     clt_trds = (0..1).collect do |i|

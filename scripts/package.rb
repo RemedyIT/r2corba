@@ -30,7 +30,7 @@ script_root = File.expand_path(File.dirname(__FILE__))
 pkg_root = File.dirname(script_root)
 pkg_base = File.basename(pkg_root)
 manifest = File.join(pkg_root, 'MANIFEST')
-ver_file = File.join(pkg_root,'lib','corba','common','version.rb')
+ver_file = File.join(pkg_root, 'lib', 'corba', 'common', 'version.rb')
 pkg_dir = File.join(pkg_root, 'pkg')
 Dir.mkdir(pkg_dir) unless File.directory?(pkg_dir)
 require ver_file
@@ -51,7 +51,7 @@ cur_dir = Dir.getwd
 Dir.chdir(File.expand_path('..', pkg_root))
 begin
   puts(cmd)
-  system(cmd+' > '+ manifest)
+  system(cmd + ' > ' + manifest)
   puts("tar --append -vf #{pkg} #{File.join(pkg_base, 'MANIFEST')}")
   system("tar --append -vf #{pkg} #{File.join(pkg_base, 'MANIFEST')} > /dev/null")
   puts("gzip #{pkg}")
@@ -77,7 +77,7 @@ cur_dir = Dir.getwd
 Dir.chdir(File.expand_path('..', pkg_root))
 begin
   puts(cmd)
-  system(cmd+'> /dev/null')
+  system(cmd + '> /dev/null')
 ensure
   Dir.chdir(cur_dir)
 end

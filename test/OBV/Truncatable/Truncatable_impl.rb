@@ -63,7 +63,7 @@ class Test_impl < POA::OBV_TruncatableTest::Test
     ov = ::OBV_TruncatableTest::TValue1.new
     iv = nil
     target = CORBA::Any.value_for_any(val)
-    if (target.nil?)
+    if target.nil?
       STDERR.puts "server:Test_impl::op5 extract failed\n"
       ov.basic_data = 101
       ov.data1 = 10101

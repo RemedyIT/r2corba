@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -63,7 +63,7 @@ begin
       hello_obj.test_exception
     rescue Test::ExOne => ex1
       assert "ERROR: got exception Test::ExOne when not expected" do
-        (i % 3) == 0 && ex1.code == (i+1)
+        (i % 3) == 0 && ex1.code == (i + 1)
       end
       puts "Caught expected exception Test::ExOne{why=#{ex1.why},code=#{ex1.code})"
     rescue CORBA::UNKNOWN => exu

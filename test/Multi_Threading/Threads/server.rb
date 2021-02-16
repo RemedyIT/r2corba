@@ -26,16 +26,16 @@ ARGV.options do |opts|
 
     opts.on("--o IORFILE",
             "Set IOR filename.",
-            "Default: 'server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--w IORFILE",
             "Set Watchdog IOR filename.",
-            "Default: 'file://watchdog.ior'") { |v| OPTIONS[:watchdog_iorfile]=v }
+            "Default: 'file://watchdog.ior'") { |v| OPTIONS[:watchdog_iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 

@@ -5,24 +5,137 @@ on:
     types: [published]
 
 jobs:
-  build:
+  linux:
     name: Publish
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@master
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: '2.7'
     - name: Publish to RubyGems
+      run: |
+        rake gem
+        rake r2corba:gem:taogem
+        rake r2corba:gem:devkit
+        gem push pkg/r2corba*.gem
+        gem push pkg/taosource*.gem
+        gem push pkg/r2corba_devkit*.gem
+      env:
+        GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
+  windows:
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        include:
+          - msystem: MINGW64
+            arch: x86_64
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+            ruby: '2.1'
+          - msystem: MINGW64
+            arch: x86_64
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+            ruby: '2.2'
+    name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
+    env:
+      DOC_ROOT: ${{ github.workspace }}/ACE_TAO
+      ACE_ROOT: ${{ github.workspace }}/ACE_TAO/ACE
+      TAO_ROOT: ${{ github.workspace }}/ACE_TAO/TAO
+      MPC_ROOT: ${{ github.workspace }}/ACE_TAO/MPC
+      RIDL_ROOT: ${{ github.workspace }}/ridl
+    steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: checkout r2corba
+      uses: actions/checkout@v2
+    - name: checkout ACE_TAO
+      uses: actions/checkout@v2
+      with:
+        repository: DOCGroup/ACE_TAO
+        path: ${{ env.DOC_ROOT }}
+        ref: Latest_ACE7TAO3_Micro
+    - name: checkout MPC
+      uses: actions/checkout@v2
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+        ref: Latest_ACE7TAO3_Micro
+    - name: checkout ridl
+      uses: actions/checkout@v2
+      with:
+        repository: RemedyIT/ridl
+        path: ${{ env.RIDL_ROOT }}
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        install: make
+    - run: pacman --noconfirm -S mingw-w64-${{ matrix.arch }}-gcc
+      shell: msys2 {0}
+    - name: Run rake configure
+      run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
+        export MPC_ROOT=`cygpath -u $MPC_ROOT`
+        rake configure
+      shell: msys2 {0}
+    - name: Run rake gem
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
         chmod 0600 $HOME/.gem/credentials
         printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
         rake gem
-        rake r2corba:gem:taogem
         gem push pkg/r2corba*.gem
-        gem push pkg/taosource*.gem
+      shell: msys2 {0}
+      env:
+        GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
+  jacorb:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            ruby: 'jruby'
+            jacorb_version: '3.1'
+            java-version: '8'
+            java-package: 'jdk'
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }}-${{ matrix.ruby }}-jacorb-${{ matrix.jacorb_version }}-${{ matrix.java-package }}-${{ matrix.java-version }}
+    env:
+      JACORB_HOME: ${{ github.workspace }}/jacorb/jacorb-${{ matrix.jacorb_version }}
+      RIDL_ROOT: ${{ github.workspace }}/ridl
+    steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java-version }}
+        java-package: ${{ matrix.java-package }}
+        architecture: 'x64'
+    - name: checkout r2corba
+      uses: actions/checkout@v2
+    - name: checkout ridl
+      uses: actions/checkout@v2
+      with:
+        repository: RemedyIT/ridl
+        path: ${{ env.RIDL_ROOT }}
+    - name: Download a file
+      uses: carlosperate/download-file-action@v1.0.3
+      id: download-jacorb
+      with:
+        file-url: 'https://www.jacorb.org/releases/${{ matrix.jacorb_version }}/jacorb-${{ matrix.jacorb_version }}-binary.zip'
+        file-name: 'jacorb-${{ matrix.jacorb_version }}.zip'
+        location: '${{ github.workspace }}'
+    - uses: montudor/action-zip@v0.1.1
+      with:
+        args: unzip -qq jacorb-${{ matrix.jacorb_version }}.zip -d jacorb
+    - name: Run rake configure
+      run: |
+        rake configure
+    - name: Run rake gem
+      run: |
+        rake gem
+        gem push pkg/r2corba*.gem
       env:
         GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}

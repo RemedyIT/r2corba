@@ -18,7 +18,7 @@ module R2CORBA
 
     def self.ridlc
       <<_SH_TXT
-#!#{Config.is_win32 ? '/bin/' : (`which env`).strip+' '}#{R2CORBA::RB_CONFIG['ruby_install_name']}
+#!#{Config.is_win32 ? '/bin/' : (`which env`).strip + ' '}#{R2CORBA::RB_CONFIG['ruby_install_name']}
 #---------------------------------
 # This file is generated
 #---------------------------------
@@ -86,7 +86,7 @@ _BAT_TXT
 
     def self.rins
       <<_SH_TXT
-#!#{Config.is_win32 ? '/bin/' : (`which env`).strip+' '}#{R2CORBA::RB_CONFIG['ruby_install_name']}
+#!#{Config.is_win32 ? '/bin/' : (`which env`).strip + ' '}#{R2CORBA::RB_CONFIG['ruby_install_name']}
 #---------------------------------
 # This file is generated
 #---------------------------------
@@ -98,7 +98,7 @@ _SH_TXT
 
     def self.r2corba
       <<_SH_TXT
-#!#{Config.is_win32 ? '/bin/' : (`which env`).strip+' '}#{R2CORBA::RB_CONFIG['ruby_install_name']}
+#!#{Config.is_win32 ? '/bin/' : (`which env`).strip + ' '}#{R2CORBA::RB_CONFIG['ruby_install_name']}
 #---------------------------------
 # This file is generated
 #---------------------------------

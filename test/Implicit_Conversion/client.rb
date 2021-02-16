@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -94,7 +94,7 @@ begin
 
   the_seq = hello_obj.echo_seq(arr = MyArray.new(10))
 
-  puts "sequence returned "+the_seq.inspect
+  puts "sequence returned " + the_seq.inspect
 
   assert "echo_seq failed" do
     [arr.to_ary.collect {|l| l.to_int }, the_seq].transpose.all? {|t| t.first == t.last}

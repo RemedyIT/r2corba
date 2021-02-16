@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://ins.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://ins.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -63,7 +63,7 @@ begin
   assert_not "ERROR: INS IOR resolved to nil object!", CORBA::is_nil(nc)
 
   # retrieve object reference for servant from Naming service
-  name = [CosNaming::NameComponent.new('Hello','ior')]
+  name = [CosNaming::NameComponent.new('Hello', 'ior')]
 
   obj = nc.resolve(name)
 

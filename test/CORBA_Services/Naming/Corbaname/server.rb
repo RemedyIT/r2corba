@@ -28,16 +28,16 @@ ARGV.options do |opts|
 
     opts.on("--o FILENAME",
             "Set corbaname IOR filename.",
-            "Default: 'corbaname.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'corbaname.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--p PORT", Integer,
             "INS port number.",
-            "Default: 2345") { |v| OPTIONS[:ins_port]=v }
+            "Default: 2345") { |v| OPTIONS[:ins_port] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -78,17 +78,17 @@ ins_url = "iiop:localhost:#{OPTIONS[:ins_port]}/NamingService"
 puts "server: resolving [corbaloc:#{ins_url}]"
 
 # resolve NamingContext
-obj = orb.string_to_object('corbaloc:'+ins_url)
+obj = orb.string_to_object('corbaloc:' + ins_url)
 
 nc = CosNaming::NamingContextExt._narrow(obj)
 
 # create context tree for registration
-full_name = [CosNaming::NameComponent.new('','root'),
-             CosNaming::NameComponent.new('base','dir'),
-             CosNaming::NameComponent.new('Hello','ior')]
+full_name = [CosNaming::NameComponent.new('', 'root'),
+             CosNaming::NameComponent.new('base', 'dir'),
+             CosNaming::NameComponent.new('Hello', 'ior')]
 
-nc_new = nc.bind_new_context(full_name[0,1])
-nc_new = nc_new.bind_new_context(full_name[1,1])
+nc_new = nc.bind_new_context(full_name[0, 1])
+nc_new = nc_new.bind_new_context(full_name[1, 1])
 
 assert_not "ERROR: INS IOR resolved to nil object!", CORBA::is_nil(nc)
 

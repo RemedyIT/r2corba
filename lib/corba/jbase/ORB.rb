@@ -38,12 +38,12 @@ module R2CORBA
           prop = nil
           a1, a2, a3 = args
           if Array === a1
-            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size>3
+            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 3
             argv = a1
             orb_id = (Hash === a2 ? nil : a2)
             prop = (Hash === a2 ? a2 : a3)
           elsif args.size == 1 || Hash === a2
-            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size>2
+            raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 2
             orb_id = a1
             prop = a2
           else
@@ -52,7 +52,7 @@ module R2CORBA
           raise ArgumentError, "Invalid argument #{prop.class}; expected Hash" unless prop.nil? || Hash === prop
           jprop = Java::JavaUtil::Properties.new
           jprop.setProperty('ORBid', orb_id) if orb_id
-          prop.each { |k,v| jprop.setProperty(k.to_s, v.to_s) } if prop
+          prop.each { |k, v| jprop.setProperty(k.to_s, v.to_s) } if prop
           @@cached_orb = CORBA::Native::ORB.init(argv.collect {|a| a.to_s }.to_java(:string), jprop)
         end
         @@wrapper_klass.new(n_orb)

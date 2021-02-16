@@ -19,7 +19,7 @@ module R2CORBA
     if RUBY_PLATFORM =~ /mingw32/
 
       mpc_os_block = <<OS_DEP__
-  libs += #{File.basename(RB_CONFIG['LIBRUBY'],'.a').sub(/^lib/,'')}
+  libs += #{File.basename(RB_CONFIG['LIBRUBY'], '.a').sub(/^lib/, '')}
   libout = .
   dllout = .
   verbatim(gnuace, macros, 1) {
@@ -73,7 +73,7 @@ project : taolib, portableserver, anytypecode, dynamicany, dynamicinterface, typ
   }
   dynamicflags = R2TAO_BUILD_DLL
   includes += "#{RB_CONFIG['rubyhdrdir'] || RB_CONFIG['archdir']}" \\
-              #{RB_CONFIG['rubyhdrdir'] ? '"'+File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch'])+'"' : ''} \\
+              #{RB_CONFIG['rubyhdrdir'] ? '"' + File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch']) + '"' : ''} \\
               .
   macros += RUBY_VER_MAJOR=#{Config.rb_ver_major} RUBY_VER_MINOR=#{Config.rb_ver_minor} RUBY_VER_RELEASE=#{Config.rb_ver_release}
   sharedname = r2tao
@@ -91,16 +91,16 @@ project : taolib, portableserver, anytypecode, dynamicany, dynamicinterface, typ
     iortable.cpp
   }
   dynamicflags = R2TAO_POA_BUILD_DLL
-  libpaths += #{File.join('..','libr2tao')}
+  libpaths += #{File.join('..', 'libr2tao')}
   includes += "#{RB_CONFIG['rubyhdrdir'] || RB_CONFIG['archdir']}" \\
-               #{RB_CONFIG['rubyhdrdir'] ? '"'+File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch'])+'"' : ''} \\
+               #{RB_CONFIG['rubyhdrdir'] ? '"' + File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch']) + '"' : ''} \\
                #{File.join('..', 'libr2tao')} \\
                .
   macros += RUBY_VER_MAJOR=#{Config.rb_ver_major} RUBY_VER_MINOR=#{Config.rb_ver_minor} RUBY_VER_RELEASE=#{Config.rb_ver_release}
   sharedname = rpoa
   libpaths += "#{RB_CONFIG['libdir']}"
   #{mpc_os_block}
-  libs += r2tao#{Config.is_win32 ? '.'+RB_CONFIG['DLEXT'] : ''}
+  libs += r2tao#{Config.is_win32 ? '.' + RB_CONFIG['DLEXT'] : ''}
 }
 THE_END
 
@@ -113,7 +113,7 @@ project : taolib, portableserver, anytypecode, dynamicany, dynamicinterface, typ
   dynamicflags = R2TAO_POL_BUILD_DLL
   libpaths += #{File.join('..', 'libr2tao')} #{File.join('..', 'librpoa')}
   includes += "#{RB_CONFIG['rubyhdrdir'] || RB_CONFIG['archdir']}" \\
-               #{RB_CONFIG['rubyhdrdir'] ? '"'+File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch'])+'"' : ''} \\
+               #{RB_CONFIG['rubyhdrdir'] ? '"' + File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch']) + '"' : ''} \\
                #{File.join('..', 'libr2tao')} \\
                #{File.join('..', 'librpoa')} \\
                .
@@ -121,8 +121,8 @@ project : taolib, portableserver, anytypecode, dynamicany, dynamicinterface, typ
   sharedname = rpol
   libpaths += "#{RB_CONFIG['libdir']}"
   #{mpc_os_block}
-  libs += r2tao#{Config.is_win32 ? '.'+RB_CONFIG['DLEXT'] : ''}
-  libs += rpoa#{Config.is_win32 ? '.'+RB_CONFIG['DLEXT'] : ''}
+  libs += r2tao#{Config.is_win32 ? '.' + RB_CONFIG['DLEXT'] : ''}
+  libs += rpoa#{Config.is_win32 ? '.' + RB_CONFIG['DLEXT'] : ''}
 }
 THE_END
 
@@ -147,13 +147,7 @@ project {
     extload.c
   }
   dynamicflags = EXTLOAD_BUILD_DLL
-  includes += "#{RB_CONFIG['rubyhdrdir'] || RB_CONFIG['archdir']}" \\
-              #{RB_CONFIG['rubyhdrdir'] ? '"'+File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch'])+'"' : ''} \\
-              .
-  macros += RUBY_VER_MAJOR=#{Config.rb_ver_major} RUBY_VER_MINOR=#{Config.rb_ver_minor} RUBY_VER_RELEASE=#{Config.rb_ver_release}
   sharedname = extload
-  libpaths += "#{RB_CONFIG['libdir']}"
-  libs += #{File.basename(RB_CONFIG['LIBRUBY'],'.a').sub(/^lib/,'')}
   libout = .
   dllout = .
   verbatim(gnuace, macros, 1) {
@@ -207,7 +201,7 @@ THE_END__
     end
 
     def self.download_tao_source(version, targetdir)
-      version_dir = version.gsub('.','_')
+      version_dir = version.gsub('.', '_')
       _url = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE%2BTAO-#{version_dir}/ACE+TAO-src-#{version}.tar.gz"
       print(_msg = "Downloading ACE+TAO-src-#{version}.tar.gz from #{_url}")
       _fnm = File.join(targetdir, "ACE+TAO-src-#{version}.tar.gz")
@@ -243,7 +237,7 @@ THE_END__
         %w{libr2taow libepoaw librpolw}
       else
         %w{libr2tao libepoa librpol}
-      end).collect {|lib| File.join('ext', lib+'.so') }
+      end).collect {|lib| File.join('ext', lib + '.so') }
     end
 
   end

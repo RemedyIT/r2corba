@@ -94,7 +94,7 @@ module R2CORBA
   @@gemspec = nil
 
   def self.define_spec(name, version, &block)
-    @@gemspec = Gem::Specification.new(name,version)
+    @@gemspec = Gem::Specification.new(name, version)
     @@gemspec.required_rubygems_version = Gem::Requirement.new(">= 0") if @@gemspec.respond_to? :required_rubygems_version=
     block.call(@@gemspec)
     @@gemspec

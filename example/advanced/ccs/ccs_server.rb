@@ -121,15 +121,15 @@ module CCS_Server
 
       opts.on("-h INSHOST",
               "Set NamingService host address.",
-              "Default: localhost") { |v| OPTIONS[:ins_host]=v }
+              "Default: localhost") { |v| OPTIONS[:ins_host] = v }
 
       opts.on("-p INSPORT",
               "Set NamingService port.", Integer,
-              "Default: 2345") { |v| OPTIONS[:ins_port]=v }
+              "Default: 2345") { |v| OPTIONS[:ins_port] = v }
 
       opts.on("-k IORFILE",
               "Set NamingService IOR filename.",
-              "Default: none") { |v| OPTIONS[:ins_ior]=v }
+              "Default: none") { |v| OPTIONS[:ins_ior] = v }
 
       opts.separator ""
 

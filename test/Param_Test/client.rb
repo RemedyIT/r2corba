@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set IOR.",
-            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -93,14 +93,14 @@ begin
   nums = hello_obj.numbers
 
   begin
-    hello_obj.numbers = (0...11).to_a.collect { |i| i*3 }
+    hello_obj.numbers = (0...11).to_a.collect { |i| i * 3 }
   rescue CORBA::MARSHAL => ex
     ## expected exception since sequence can hold max. 10 elements
   end
 
   assert "ERROR numbers attribute changed while it shouldn't", nums == hello_obj.numbers
 
-  hello_obj.numbers = nums.collect { |i| i*3 }
+  hello_obj.numbers = nums.collect { |i| i * 3 }
 
   assert_not "ERROR numbers attribute did not change while it should have", nums == hello_obj.numbers
 
@@ -264,7 +264,7 @@ begin
   reslen, resinoutstr, resoutstr = hello_obj.run_test(instr = Test::TString.new("This is instr"), inoutstr = "This is inoutstr")
 
   assert_not "ERROR with run_test" do
-    reslen != resoutstr.size || resinoutstr != instr || resoutstr != (instr+inoutstr)
+    reslen != resoutstr.size || resinoutstr != instr || resoutstr != (instr + inoutstr)
   end
 
   hello_obj.shutdown()

@@ -16,7 +16,7 @@ require File.join(File.dirname(__FILE__), 'ext_r2tao.rb')
 module R2CORBA
 
   module Ext
-    ACE_FILES  = [
+    ACE_FILES = [
         'ACE',
         'TAO',
         'TAO_TypeCodeFactory',
@@ -143,7 +143,7 @@ debug=#{get_config('with-debug') ? 1 : 0}
 fl_reactor=0
 tk_reactor=0
 no_hidden_visibility=1
-#{ /^cc/i =~ RB_CONFIG['CC'] ? 'include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU' :  'include $(ACE_ROOT)/include/makeinclude/platform_sunos5_g++.GNU' }
+#{ /^cc/i =~ RB_CONFIG['CC'] ? 'include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU' : 'include $(ACE_ROOT)/include/makeinclude/platform_sunos5_g++.GNU' }
 LDFLAGS += #{RB_CONFIG['SOLIBS']} #{ /^cc/i =~ RB_CONFIG['CC'] ? '-lCrun -lCstd' : ''}
       }
         when /darwin/
@@ -207,23 +207,23 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
     end
 
     def self.ace_config_path
-      File.join(get_config('aceroot'),'ace','config.h')
+      File.join(get_config('aceroot'), 'ace', 'config.h')
     end
 
     def self.platform_macros_path
-      File.join(get_config('aceroot'),'include','makeinclude','platform_macros.GNU')
+      File.join(get_config('aceroot'), 'include', 'makeinclude', 'platform_macros.GNU')
     end
 
     def self.default_features_path
-      File.join(get_config('aceroot'),'bin','MakeProjectCreator','config','default.features')
+      File.join(get_config('aceroot'), 'bin', 'MakeProjectCreator', 'config', 'default.features')
     end
 
     def self.tao_mwc_path
-      File.join(get_config('aceroot'),'TAO4Ruby.mwc')
+      File.join(get_config('aceroot'), 'TAO4Ruby.mwc')
     end
 
     def self.tao_makefile
-      File.join(get_config('aceroot'),'GNUmakefile')
+      File.join(get_config('aceroot'), 'GNUmakefile')
     end
 
     def self.ext_makefile
@@ -238,12 +238,12 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
           so_ext = '.dylib'
 
           inst_extlibs = Dir.glob(File.join('ext', '*.bundle'))
-          inst_dylibs = inst_extlibs + ACE_FILES.collect {|dep| File.join(get_config('aceroot'),'lib', 'lib'+dep+so_ext)}
+          inst_dylibs = inst_extlibs + ACE_FILES.collect {|dep| File.join(get_config('aceroot'), 'lib', 'lib' + dep + so_ext)}
           # cross dependencies of ext dynamic libs on each other
           # make sure they refer to *.bundle NOT *.dylib
           inst_extlibs.each do |extlib|
             inst_extlibs.each do |dep|
-              dep_org = File.basename(dep, '.bundle')+so_ext
+              dep_org = File.basename(dep, '.bundle') + so_ext
               sh("install_name_tool -change #{dep_org} @rpath/#{File.basename(dep)} #{extlib}")
             end
             # add install directory as rpath; first delete rpath ignoring errors, next add the rpath
@@ -253,7 +253,7 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
           # dependencies on ACE+TAO libs
           inst_dylibs.each do |dylib|
             ACE_FILES.each do |dep|
-              command("install_name_tool -change lib#{dep+so_ext} @rpath/lib#{dep+so_ext} #{dylib}")
+              command("install_name_tool -change lib#{dep + so_ext} @rpath/lib#{dep + so_ext} #{dylib}")
             end
             # add current dir and install dir as rpath entries; first delete rpath ignoring errors, next add the rpath
             sh("install_name_tool -delete_rpath . #{dylib} >/dev/null 2>&1")
@@ -264,8 +264,8 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
         elsif !is_win32
           # create unversioned ACE+TAO lib symlinks
 
-          ACE_FILES.collect {|dep| File.join(get_config('aceroot'),'lib', 'lib'+dep+'.so')}.each do |lib|
-            Dir.glob(lib+'.*').each {|verlib| File.symlink(verlib, lib) unless File.exist?(lib)}
+          ACE_FILES.collect {|dep| File.join(get_config('aceroot'), 'lib', 'lib' + dep + '.so')}.each do |lib|
+            Dir.glob(lib + '.*').each {|verlib| File.symlink(verlib, lib) unless File.exist?(lib)}
           end
         end
       end
@@ -274,4 +274,3 @@ ipv6=#{get_config('with-ipv6') ? 1 : 0}
   end # Ext
 
 end # R2CORBA
-

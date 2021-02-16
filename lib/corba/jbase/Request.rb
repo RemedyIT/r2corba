@@ -88,7 +88,7 @@ module R2CORBA
         # clear current arguments
         begin
           nvl = self.req_.arguments
-          nvl.remove(0) while nvl.count>0
+          nvl.remove(0) while nvl.count > 0
         rescue
           CORBA::Exception.native2r($!)
         end
@@ -120,7 +120,7 @@ module R2CORBA
         begin
           # clear current exceptions
           jexl = self.req_.exceptions
-          jexl.remove(0) while jexl.count>0
+          jexl.remove(0) while jexl.count > 0
           # add new exceptions
           exl.each do |extc|
             jexl.add(extc.tc_)
@@ -161,7 +161,7 @@ module R2CORBA
           elsif jex.is_a?(CORBA::Native::UnknownUserException)
             CORBA::UserException._raise(jex)
           else
-            raise CORBA::UNKNOWN.new(jex.getMessage(),0,CORBA::COMPLETED_MAYBE)
+            raise CORBA::UNKNOWN.new(jex.getMessage(), 0, CORBA::COMPLETED_MAYBE)
           end
         end
         self.result
@@ -207,12 +207,12 @@ module R2CORBA
           nvl = self.req_.arguments
           nvl.count.times do |i|
             nv = nvl.item(i)
-            rc << Any.from_java(nv.value,self.req_.target._orb) unless nv.flags == CORBA::ARG_IN
+            rc << Any.from_java(nv.value, self.req_.target._orb) unless nv.flags == CORBA::ARG_IN
           end
         rescue
           CORBA::Exception.native2r($!)
         end
-        if rc.size<2
+        if rc.size < 2
           return rc.shift
         else
           return *rc

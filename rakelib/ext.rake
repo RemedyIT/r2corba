@@ -119,6 +119,8 @@ else # !JRUBY_VERSION
           cur_dir = Dir.getwd
           Dir.chdir File.join('ext', 'extload')
           begin
+            # check availability of make program
+            raise "#{get_config('makeprog')} missing! A working version of #{get_config('makeprog')} in the PATH is required." unless system("#{get_config('makeprog')}")
             sh("#{get_config('makeprog')}#{get_config('with-debug') ? ' debug=1' : ''}")
           ensure
             Dir.chdir cur_dir
@@ -205,11 +207,7 @@ else # !JRUBY_VERSION
             cur_dir = Dir.getwd
             Dir.chdir File.expand_path(get_config('aceroot'))
             begin
-              if R2CORBA::Config.is_linux && R2CORBA::Config::linux_distro != :ubuntu && R2CORBA::Config.cpu_cores > 2
-                sh("#{get_config('makeprog')} -j#{R2CORBA::Config.cpu_cores} #{get_config('with-debug') ? ' debug=1' : ''}")
-              else
-                sh("#{get_config('makeprog')}#{get_config('with-debug') ? ' debug=1' : ''}")
-              end
+              sh("#{get_config('makeprog')} -j#{R2CORBA::Config.cpu_cores} #{get_config('with-debug') ? ' debug=1' : ''}")
             ensure
               Dir.chdir cur_dir
             end

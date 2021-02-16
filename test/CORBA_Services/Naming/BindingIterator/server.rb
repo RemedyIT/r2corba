@@ -27,13 +27,13 @@ ARGV.options do |opts|
 
     opts.on("--k IORFILE",
             "Set INS IOR filename.",
-            "Default: 'file://ins.ior'") { |v| OPTIONS[:iorfile]=v }
+            "Default: 'file://ins.ior'") { |v| OPTIONS[:iorfile] = v }
     opts.on("--d LVL",
             "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel]=v }
+            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
     opts.on("--use-implement",
             "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement]=v }
+            "Default: off") { |v| OPTIONS[:use_implement] = v }
 
     opts.separator ""
 
@@ -91,7 +91,7 @@ hello_obj = hello_srv._this()
 
 # register 5 object references with Naming service
 5.times do |i|
-  nc.bind([CosNaming::NameComponent.new("Hello#{i}",'ior')], hello_obj)
+  nc.bind([CosNaming::NameComponent.new("Hello#{i}", 'ior')], hello_obj)
 end
 
 # initialize signal handling
