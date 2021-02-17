@@ -14,10 +14,8 @@ jobs:
         ruby: [ '2.4', '2.5', '2.6', '2.7', '3.0' ]
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
-      DOC_ROOT: ${{ github.workspace }}/ACE_TAO
-      ACE_ROOT: ${{ github.workspace }}/ACE_TAO/ACE
-      TAO_ROOT: ${{ github.workspace }}/ACE_TAO/TAO
-      MPC_ROOT: ${{ github.workspace }}/ACE_TAO/MPC
+      DOC_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/ACE/MPC
       RIDL_ROOT: ${{ github.workspace }}/ridl
     steps:
     - uses: ruby/setup-ruby@v1
@@ -44,18 +42,11 @@ jobs:
         path: ${{ env.RIDL_ROOT }}
     - name: Run rake configure
       run: |
-        FOR /F %%i IN ('ridk exec cygpath -u %ACE_ROOT%') DO set ACE_ROOT=%%i
-        FOR /F %%i IN ('ridk exec cygpath -u %TAO_ROOT%') DO set TAO_ROOT=%%i
-        FOR /F %%i IN ('ridk exec cygpath -u %MPC_ROOT%') DO set MPC_ROOT=%%i
-        echo %ACE_ROOT%
         ridk exec rake configure
-      shell: cmd
     - name: Run rake build
       run: |
         rake build
       shell: cmd
     - name: Run rake test
       run: |
-        FOR /F %%i IN ('ridk exec cygpath -u %ACE_ROOT%') DO set ACE_ROOT=%%i
         rake test
-      shell: cmd
