@@ -44,10 +44,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ruby-${{ matrix.ruby }}
     env:
-      DOC_ROOT: ${{ github.workspace }}/ACE_TAO
-      ACE_ROOT: ${{ github.workspace }}/ACE_TAO/ACE
-      TAO_ROOT: ${{ github.workspace }}/ACE_TAO/TAO
-      MPC_ROOT: ${{ github.workspace }}/ACE_TAO/MPC
+      DOC_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/ACE/MPC
       RIDL_ROOT: ${{ github.workspace }}/ridl
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
