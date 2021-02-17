@@ -14,11 +14,9 @@ jobs:
         include:
           - msystem: MINGW64
             arch: x86_64
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
             ruby: '2.1'
           - msystem: MINGW64
             arch: x86_64
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
             ruby: '2.2'
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
