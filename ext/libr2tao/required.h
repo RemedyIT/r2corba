@@ -42,6 +42,9 @@
 #if defined (vsnprintf)
 # undef vsnprintf
 #endif
+#if defined (access)
+# undef access
+#endif
 
 #undef RUBY_METHOD_FUNC
 extern "C" {
