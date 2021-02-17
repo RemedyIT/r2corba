@@ -12,20 +12,6 @@
 #ifndef __R2TAO_REQUIRED_H
 #define __R2TAO_REQUIRED_H
 
-#if defined (WIN32) || defined (_MSC_VER) || defined (__MINGW32__)
-  // prevent inclusion of Ruby Win32 defs which clash with ACE
-  // are only important for Ruby internals
-  #define RUBY_WIN32_H
-  // if we're compiling with MSVC 7.1 this is most probably for
-  // the standard Ruby dist which is built with MSVC 6
-  // fudge the version macro so Ruby doesn't complain
-  #if (_MSC_VER >= 1310) && (_MSC_VER < 1400)
-  #define OLD_MSC_VER 1310
-  #undef _MSC_VER
-  #define _MSC_VER 1200
-  #endif
-#endif
-
 #define RUBY_EXTCONF_H "r2tao_ext.h"
 #include <ruby.h>
 // remove conflicting macro(s) defined by Ruby
