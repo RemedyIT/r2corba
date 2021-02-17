@@ -12,18 +12,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - msystem: MINGW64
-            arch: x86_64
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
-            ruby: '2.1'
-          - msystem: MINGW64
-            arch: x86_64
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
-            ruby: '2.2'
-          - msystem: MINGW64
-            arch: x86_64
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
-            ruby: '3.0'
+          - ruby: '3.0'
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE_TAO
@@ -54,25 +43,12 @@ jobs:
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{ matrix.msystem }}
-        install: make
-    - run: pacman --noconfirm -S mingw-w64-${{ matrix.arch }}-gcc
-      shell: msys2 {0}
     - name: Run rake configure
       run: |
-        export ACE_ROOT=`cygpath -u $ACE_ROOT`
-        export TAO_ROOT=`cygpath -u $TAO_ROOT`
-        export MPC_ROOT=`cygpath -u $MPC_ROOT`
         rake configure
-      shell: msys2 {0}
     - name: Run rake build
       run: |
         rake build
-      shell: msys2 {0}
     - name: Run rake test
       run: |
-        export ACE_ROOT=`cygpath -u $ACE_ROOT`
         rake test
-      shell: msys2 {0}
