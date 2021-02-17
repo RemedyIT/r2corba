@@ -122,9 +122,9 @@ protected:
   static VALUE invoke_helper (VALUE arg);
 
 private:
-  ID      fn_id_;
-  bool    throw_on_ex_;
-  bool    ex_caught_;
+  ID fn_id_;
+  bool const throw_on_ex_;
+  bool ex_caught_;
 };
 
 #endif
