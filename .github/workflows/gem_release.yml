@@ -39,6 +39,7 @@ jobs:
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/ACE/MPC
       RIDL_ROOT: ${{ github.workspace }}/ridl
     steps:
     - uses: ruby/setup-ruby@v1

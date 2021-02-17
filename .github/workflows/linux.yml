@@ -45,6 +45,7 @@ jobs:
     name: ${{ matrix.os }} ${{ matrix.CXX }} ruby-${{ matrix.ruby }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/ACE/MPC
       RIDL_ROOT: ${{ github.workspace }}/ridl
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
