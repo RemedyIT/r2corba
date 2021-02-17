@@ -11,8 +11,7 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        include:
-          - ruby: [ '2.4', '2.5', '2.6', '2.7', '3.0' ]
+        ruby: [ '2.4', '2.5', '2.6', '2.7', '3.0' ]
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE_TAO
