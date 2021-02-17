@@ -44,9 +44,9 @@ jobs:
         path: ${{ env.RIDL_ROOT }}
     - name: Run rake configure
       run: |
-        FOR /F %i IN ('ridk exec cygpath -u %ACE_ROOT%') DO set ACE_ROOT=%i
-        FOR /F %i IN ('ridk exec cygpath -u %TAO_ROOT%') DO set TAO_ROOT=%i
-        FOR /F %i IN ('ridk exec cygpath -u %MPC_ROOT%') DO set MPC_ROOT=%i
+        FOR /F %%i IN ('ridk exec cygpath -u %ACE_ROOT%') DO set ACE_ROOT=%%i
+        FOR /F %%i IN ('ridk exec cygpath -u %TAO_ROOT%') DO set TAO_ROOT=%%i
+        FOR /F %%i IN ('ridk exec cygpath -u %MPC_ROOT%') DO set MPC_ROOT=%%i
         ridk exec rake configure
       shell: cmd
     - name: Run rake build
@@ -55,6 +55,6 @@ jobs:
       shell: cmd
     - name: Run rake test
       run: |
-        FOR /F %i IN ('ridk exec cygpath -u %ACE_ROOT%') DO set ACE_ROOT=%i
+        FOR /F %%i IN ('ridk exec cygpath -u %ACE_ROOT%') DO set ACE_ROOT=%%i
         rake test
       shell: cmd
