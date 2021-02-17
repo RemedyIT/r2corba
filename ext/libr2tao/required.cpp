@@ -17,10 +17,10 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Singleton.h"
 #include "ace/TSS_T.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "tao/debug.h"
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -401,7 +401,7 @@ VALUE R2TAO_RBFuncall::_invoke (const FuncArgs& fa)
         _exc->completed (
           static_cast<CORBA::CompletionStatus> (NUM2ULONG (rb_iv_get (rexc, "@completed"))));
 
-        ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(_exc);
+        std::unique_ptr<CORBA::SystemException> e_ptr(_exc);
         _exc->_raise ();
       }
       else
