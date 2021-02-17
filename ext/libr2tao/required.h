@@ -70,9 +70,9 @@ public:
   VALUE invoke (VALUE rcvr, int argc, VALUE *args);
   VALUE invoke (VALUE rcvr);
 
-  bool has_caught_exception () { return this->ex_caught_; }
+  bool has_caught_exception () const { return this->ex_caught_; }
 
-  ID id () { return this->fn_id_; }
+  ID id () const { return this->fn_id_; }
 
 protected:
   struct FuncArgs
