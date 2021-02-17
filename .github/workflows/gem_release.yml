@@ -38,10 +38,7 @@ jobs:
             ruby: '2.2'
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
-      DOC_ROOT: ${{ github.workspace }}/ACE_TAO
-      ACE_ROOT: ${{ github.workspace }}/ACE_TAO/ACE
-      TAO_ROOT: ${{ github.workspace }}/ACE_TAO/TAO
-      MPC_ROOT: ${{ github.workspace }}/ACE_TAO/MPC
+      DOC_ROOT: ${{ github.workspace }}/ACE
       RIDL_ROOT: ${{ github.workspace }}/ridl
     steps:
     - uses: ruby/setup-ruby@v1
@@ -74,9 +71,6 @@ jobs:
       shell: msys2 {0}
     - name: Run rake configure
       run: |
-        export ACE_ROOT=`cygpath -u $ACE_ROOT`
-        export TAO_ROOT=`cygpath -u $TAO_ROOT`
-        export MPC_ROOT=`cygpath -u $MPC_ROOT`
         rake configure
       shell: msys2 {0}
     - name: Run rake gem
