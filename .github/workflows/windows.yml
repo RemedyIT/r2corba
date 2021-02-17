@@ -45,7 +45,6 @@ jobs:
     - name: Run rake build
       run: |
         rake build
-      shell: cmd
     - name: Run rake test
       run: |
         rake test
