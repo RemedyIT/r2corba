@@ -122,6 +122,7 @@ debug=#{get_config('with-debug') ? 1 : 0}
 fl_reactor=0
 tk_reactor=0
 boost=0
+inline=0
 include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
       }
         when /linux/
