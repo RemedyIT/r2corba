@@ -11,7 +11,6 @@
 #------------------------------------------------------------------*/
 
 #include "poa.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -25,6 +24,7 @@
 #include "exception.h"
 #include "orb.h"
 #include "servant.h"
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -192,7 +192,7 @@ R2TAO_POA_BlockedRegionCallerBase::~R2TAO_POA_BlockedRegionCallerBase() noexcept
   {
     if (corba_ex_)
     {
-      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(corba_ex_);
+      std::unique_ptr<CORBA::Exception> e_ptr(corba_ex_);
       corba_ex_->_raise ();
     }
     else

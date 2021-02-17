@@ -11,7 +11,6 @@
 #------------------------------------------------------------------*/
 
 #include "poa.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -25,6 +24,7 @@
 #include "exception.h"
 #include "orb.h"
 #include "servant.h"
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -518,7 +518,7 @@ void DSI_Servant::invoke (CORBA::ServerRequest_ptr request)
   if (rc != 0)
   {
     CORBA::SystemException* exc = reinterpret_cast<CORBA::SystemException*> (rc);
-    ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exc);
+    std::unique_ptr<CORBA::SystemException> e_ptr(exc);
     exc->_raise ();
   }
 }
@@ -631,7 +631,7 @@ void DSI_Servant::invoke_DSI (CORBA::ServerRequest_ptr request)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Servant::invoke_DSI(%C) entry\n", request->operation ()));
 
   // wrap request for Ruby; cleanup automatically
-  ACE_Auto_Basic_Ptr<DSI_Data>  dsi_data(new DSI_Data(request));
+  std::unique_ptr<DSI_Data>  dsi_data(new DSI_Data(request));
 
   VALUE srvreq = Data_Wrap_Struct(r2tao_cServerRequest, 0, 0, dsi_data.get ());
 
@@ -677,7 +677,7 @@ void DSI_Servant::invoke_DSI (CORBA::ServerRequest_ptr request)
       _exc->completed (
         static_cast<CORBA::CompletionStatus> (NUM2ULONG (rb_iv_get (rexc, "@completed"))));
 
-      ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(_exc);
+      std::unique_ptr<CORBA::SystemException> e_ptr(_exc);
       _exc->_raise ();
     }
     else
@@ -910,7 +910,7 @@ void DSI_Servant::invoke_SI (CORBA::ServerRequest_ptr request)
         _exc->completed (
           static_cast<CORBA::CompletionStatus> (NUM2ULONG (rb_iv_get (rexc, "@completed"))));
 
-        ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(_exc);
+        std::unique_ptr<CORBA::SystemException> e_ptr(_exc);
         _exc->_raise ();
       }
       else
