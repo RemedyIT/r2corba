@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: windows-2019
     strategy:
+      fail-fast: false
       matrix:
         ruby: [ '2.4', '2.5', '2.6', '2.7', '3.0' ]
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
