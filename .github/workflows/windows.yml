@@ -47,6 +47,7 @@ jobs:
         FOR /F %%i IN ('ridk exec cygpath -u %ACE_ROOT%') DO set ACE_ROOT=%%i
         FOR /F %%i IN ('ridk exec cygpath -u %TAO_ROOT%') DO set TAO_ROOT=%%i
         FOR /F %%i IN ('ridk exec cygpath -u %MPC_ROOT%') DO set MPC_ROOT=%%i
+        echo %ACE_ROOT%
         ridk exec rake configure
       shell: cmd
     - name: Run rake build
