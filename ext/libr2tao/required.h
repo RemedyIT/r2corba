@@ -38,7 +38,6 @@ extern "C" {
 #define RUBY_ALLOC_FUNC(func) ((TfnRbAlloc)func)
 
 #include "r2tao_export.h"
-#include <tao/Version.h>
 
 #if defined (HAVE_NATIVETHREAD)
 # define R2TAO_THREAD_SAFE
