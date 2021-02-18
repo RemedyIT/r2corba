@@ -138,7 +138,7 @@ __EOT
     end
     inst = Gem::DependencyInstaller.new
     begin
-      inst.install "taosource", ">= 6.5.7"
+      inst.install "taosource", ">= 7.0.0"
     rescue
       $stderr.puts 'Failed to install taosource gem.'
       exit(1)
