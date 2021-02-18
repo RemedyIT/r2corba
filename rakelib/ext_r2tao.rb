@@ -234,9 +234,9 @@ THE_END__
 
     def self.ext_shlibs
       (if Config.is_win32
-        %w{libr2taow libepoaw librpolw}
+        %w{libr2taow librpoaw librpolw}
       else
-        %w{libr2tao libepoa librpol}
+        %w{libr2tao librpoa librpol}
       end).collect {|lib| File.join('ext', lib + '.so') }
     end
 
