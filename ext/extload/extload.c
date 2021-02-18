@@ -9,13 +9,12 @@ static TCHAR *pszPathEnd = 0;
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
   (void)lpvReserved;
-  size_t len;
 
   if (fdwReason == DLL_PROCESS_ATTACH)
   {
     GetModuleFileName(hinstDLL, &szModulePath[0], MAX_PATH);
     /* find last path separator and cut off path to get foldername incl. last separator */
-    len = strlen (&szModulePath[0]);
+    size_t len = strlen (&szModulePath[0]);
     while (len > 0 && szModulePath[--len] != '\\') ;
     pszPathEnd = &szModulePath[len+1];
     *pszPathEnd = '\0';
@@ -28,11 +27,10 @@ typedef void (WINAPI *TExtInit)();
 #define DEF_EXTENSION_INIT(LIBNAME) \
 __declspec (dllexport) void Init_ ## LIBNAME ## w() \
 { \
-  const char *pszLibName; \
   HMODULE hlib; \
   TExtInit pfInit; \
 \
-  pszLibName = #LIBNAME ".so"; \
+  const char *pszLibName = #LIBNAME ".so"; \
   strcat (&szModulePath[0], pszLibName); \
   if (NULL == (hlib = LoadLibraryEx(szModulePath, NULL, LOAD_WITH_ALTERED_SEARCH_PATH))) \
   { \
