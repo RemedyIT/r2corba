@@ -42,6 +42,9 @@
 #if defined (vsnprintf)
 # undef vsnprintf
 #endif
+#if defined (access)
+# undef access
+#endif
 
 #undef RUBY_METHOD_FUNC
 extern "C" {
@@ -52,7 +55,6 @@ extern "C" {
 #define RUBY_ALLOC_FUNC(func) ((TfnRbAlloc)func)
 
 #include "r2tao_export.h"
-#include <tao/Version.h>
 
 #if defined (HAVE_NATIVETHREAD)
 # define R2TAO_THREAD_SAFE
@@ -137,9 +139,9 @@ protected:
   static VALUE invoke_helper (VALUE arg);
 
 private:
-  ID      fn_id_;
-  bool    throw_on_ex_;
-  bool    ex_caught_;
+  ID fn_id_;
+  bool const throw_on_ex_;
+  bool ex_caught_;
 };
 
 #endif
