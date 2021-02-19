@@ -11,12 +11,12 @@
 #------------------------------------------------------------------*/
 
 #include "poa.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/ORB.h"
 #include "tao/IORTable/IORTable.h"
 #include "object.h"
 #include "exception.h"
 #include "orb.h"
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -135,7 +135,7 @@ char* R2taoLocator::locate (const char * object_key)
   if (tca_.exception_)
   {
     CORBA::SystemException* exc = reinterpret_cast<CORBA::SystemException*> (rc);
-    ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exc);
+    std::unique_ptr<CORBA::SystemException> e_ptr(exc);
     exc->_raise ();
     return 0;
   }
@@ -171,7 +171,7 @@ char* R2taoLocator::inner_locate (const char * object_key)
       _exc->completed (
         static_cast<CORBA::CompletionStatus> (NUM2ULONG (rb_iv_get (rexc, "@completed"))));
 
-      ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(_exc);
+      std::unique_ptr<CORBA::SystemException> e_ptr(_exc);
       _exc->_raise ();
     }
     else

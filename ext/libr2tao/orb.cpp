@@ -20,7 +20,7 @@
 #include "ace/Reactor.h"
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -242,7 +242,7 @@ VALUE rCORBA_ORB_init(int _argc, VALUE *_argv, VALUE /*klass*/) {
   char **argv;
   int i;
   CORBA::ORB_var orb;
-  ACE_Auto_Basic_Ptr<char*> argv_safe;
+  std::unique_ptr<char*> argv_safe;
 
   rb_scan_args(_argc, _argv, "02", &v0, &v1);
 
@@ -483,7 +483,7 @@ R2TAO_ORB_BlockedRegionCaller::~R2TAO_ORB_BlockedRegionCaller() noexcept(false)
   {
     if (corba_ex_)
     {
-      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(corba_ex_);
+      std::unique_ptr<CORBA::Exception> e_ptr(corba_ex_);
       corba_ex_->_raise ();
     }
     else
@@ -585,7 +585,7 @@ R2TAO_ORB_BlockedWorkPending::~R2TAO_ORB_BlockedWorkPending() noexcept(false)
     try {
       if (corba_ex_)
       {
-        ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(corba_ex_);
+        std::unique_ptr<CORBA::Exception> e_ptr(corba_ex_);
         corba_ex_->_raise ();
       }
       else
