@@ -45,6 +45,9 @@
 #if defined (access)
 # undef access
 #endif
+#if defined (memcpy)
+# undef memcpy
+#endif
 
 #undef RUBY_METHOD_FUNC
 extern "C" {
