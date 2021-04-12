@@ -108,6 +108,7 @@ jobs:
         java-version: ${{ matrix.java-version }}
         java-package: ${{ matrix.java-package }}
         architecture: 'x64'
+        distribution: 'zulu'
     - name: checkout r2corba
       uses: actions/checkout@v2
     - name: checkout ridl
