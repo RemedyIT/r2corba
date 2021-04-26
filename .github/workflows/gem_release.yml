@@ -18,9 +18,9 @@ jobs:
         rake gem
         rake r2corba:gem:taogem
         rake r2corba:gem:devkit
-        gem push pkg/r2corba*.gem
-        gem push pkg/taosource*.gem
-        gem push pkg/r2corba_devkit*.gem
+        gem push pkg/r2corba-*.gem
+        gem push pkg/taosource-*.gem
+        gem push pkg/r2corba_devkit-*.gem
       env:
         GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
   windows:
@@ -79,7 +79,9 @@ jobs:
         chmod 0600 $HOME/.gem/credentials
         printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
         rake gem
-        gem push pkg/r2corba*.gem
+        rake r2corba:gem:extbingem
+        gem push pkg/r2corba-*.gem
+        gem push pkg/r2corba_ext*.gem
       shell: msys2 {0}
       env:
         GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
@@ -101,11 +103,12 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - uses: actions/setup-java@v1
+    - uses: actions/setup-java@v2
       with:
         java-version: ${{ matrix.java-version }}
         java-package: ${{ matrix.java-package }}
         architecture: 'x64'
+        distribution: 'zulu'
     - name: checkout r2corba
       uses: actions/checkout@v2
     - name: checkout ridl
@@ -120,7 +123,7 @@ jobs:
         file-url: 'https://www.jacorb.org/releases/${{ matrix.jacorb_version }}/jacorb-${{ matrix.jacorb_version }}-binary.zip'
         file-name: 'jacorb-${{ matrix.jacorb_version }}.zip'
         location: '${{ github.workspace }}'
-    - uses: montudor/action-zip@v0.1.1
+    - uses: montudor/action-zip@v1
       with:
         args: unzip -qq jacorb-${{ matrix.jacorb_version }}.zip -d jacorb
     - name: Run rake configure
@@ -129,6 +132,6 @@ jobs:
     - name: Run rake gem
       run: |
         rake gem
-        gem push pkg/r2corba*.gem
+        gem push pkg/r2corba-*.gem
       env:
         GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
