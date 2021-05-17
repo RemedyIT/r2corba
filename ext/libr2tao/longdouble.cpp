@@ -36,7 +36,7 @@ void r2tao_init_LongDouble()
 
   k = r2tao_cLongDouble =
     rb_define_class_under (r2tao_nsCORBA, "LongDouble", rb_cObject);
-  rb_define_alloc_func (r2tao_cLongDouble, RUBY_ALLOC_FUNC (ld_alloc));
+  rb_define_alloc_func (r2tao_cLongDouble, ld_alloc);
   rb_define_method(k, "initialize", RUBY_METHOD_FUNC(r2tao_LongDouble_initialize), -1);
   rb_define_method(k, "to_s", RUBY_METHOD_FUNC(r2tao_LongDouble_to_s), -1);
   rb_define_method(k, "to_f", RUBY_METHOD_FUNC(r2tao_LongDouble_to_f), 0);
