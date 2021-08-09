@@ -12,7 +12,7 @@
 require 'corba/idl/TAO_ExtC'
 
 begin
-  require RUBY_PLATFORM =~ /mingw32/ ? "librpolw" : "librpol"
+  require "librpol"
 rescue LoadError
   $stderr.puts $!.to_s if $VERBOSE
   raise
