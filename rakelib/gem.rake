@@ -75,7 +75,7 @@ namespace :r2corba do
           gem.extensions = ['mkrf_conf_taogem.rb']
           gem.require_paths = %w{lib}
           gem.executables = []
-          gem.required_ruby_version = '>= 2.0'
+          gem.required_ruby_version = '>= 2.4'
           gem.licenses = ['DOC']
           gem.metadata = {
             "bug_tracker_uri"   => "https://github.com/DOCGroup/ACE_TAO/issues",
@@ -100,7 +100,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.extensions = ['mkrf_conf_srcgem.rb']
     gem.require_paths = %w{lib}
     gem.executables = %w{ridlc rins r2corba}
-    gem.required_ruby_version = '>= 2.0'
+    gem.required_ruby_version = '>= 2.4'
     gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
     gem.require_paths << 'ext'
     gem.add_dependency 'ridl', '~> 2.8'
@@ -139,7 +139,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.extensions = []
       gem.require_paths = %w{ext}
       gem.executables = []
-      gem.required_ruby_version = '>= 2.0'
+      gem.required_ruby_version = '>= 2.4'
       gem.licenses = ['Nonstandard', 'DOC']
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so'
       gem.metadata = {
@@ -184,11 +184,11 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.extensions = ['mkrf_conf_bingem.rb']
       if defined?(JRUBY_VERSION)
         gem.require_paths << 'jacorb/lib'
-        gem.required_ruby_version = '>= 2.0'
+        gem.required_ruby_version = '>= 2.4'
         gem.licenses = ['Nonstandard', 'GPL-2.0']
       else
         gem.files << File.join('ext', '.keep') unless ENV['FULL_BINGEM'] # to force installation of ext folder if libs are left out
-        gem.required_ruby_version = '>= 2.0'
+        gem.required_ruby_version = '>= 2.4'
         gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
         gem.require_paths << 'ext'
       end
