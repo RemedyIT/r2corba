@@ -20,7 +20,7 @@ begin
       RubyInstaller::Runtime.add_dll_directory(path) if File.exist?(File.join(path, 'libACE.dll'))
     end
   end
-  require RUBY_PLATFORM =~ /mingw32/ ? "libr2taow" : "libr2tao"
+  require "libr2tao"
 rescue LoadError
   $stderr.puts $!.to_s if $VERBOSE
   raise
