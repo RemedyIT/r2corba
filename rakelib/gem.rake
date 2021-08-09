@@ -211,36 +211,6 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
 end
 t_.enhance ['mkrf_conf_bingem.rb']
 
-unless defined?(JRUBY_VERSION)
-  # Devkit faker Gem for binary Windows gems
-  t_devkit = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba_devkit', '1.0.0', :devkit)}.gem") => 'lib/rubygems_plugin.rb' do
-    # create gemspec
-    gemspec = R2CORBA::Gem.define_spec('r2corba_devkit', '1.0.0', :devkit) do |gem|
-      gem.summary = %Q{R2CORBA Devkit faker for RubyInstaller Rubies}
-      gem.description = %Q{Fake Devkit loader to satisfy stupid RubyInstaller pre-install hook. }
-      gem.email = 'mcorino@remedy.nl'
-      gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
-      gem.authors = ['Martin Corino', 'Johnny Willemsen']
-      gem.files = 'lib/rubygems_plugin.rb'
-      gem.require_paths = %w{lib}
-      gem.executables = []
-      gem.extensions = []
-      gem.required_ruby_version = '>= 2.0'
-      gem.licenses = ['Nonstandard']
-      gem.metadata = {
-        "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
-        "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
-      }
-    end
-    R2CORBA::Gem.build_gem(gemspec)
-  end
-  namespace :r2corba do
-    namespace :gem do
-      task :devkit => t_devkit.name
-    end
-  end
-end
-
 desc 'Build R2CORBA gem'
 if defined?(JRUBY_VERSION)
   task :gem => 'r2corba:gem:bingem'
