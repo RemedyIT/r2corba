@@ -12,20 +12,6 @@
 #ifndef __R2TAO_REQUIRED_H
 #define __R2TAO_REQUIRED_H
 
-#if defined (WIN32) || defined (_MSC_VER) || defined (__MINGW32__)
-  // prevent inclusion of Ruby Win32 defs which clash with ACE
-  // are only important for Ruby internals
-  #define RUBY_WIN32_H
-  // if we're compiling with MSVC 7.1 this is most probably for
-  // the standard Ruby dist which is built with MSVC 6
-  // fudge the version macro so Ruby doesn't complain
-  #if (_MSC_VER >= 1310) && (_MSC_VER < 1400)
-  #define OLD_MSC_VER 1310
-  #undef _MSC_VER
-  #define _MSC_VER 1200
-  #endif
-#endif
-
 #define RUBY_EXTCONF_H "r2tao_ext.h"
 #include <ruby.h>
 // remove conflicting macro(s) defined by Ruby
@@ -42,6 +28,12 @@
 #if defined (vsnprintf)
 # undef vsnprintf
 #endif
+#if defined (access)
+# undef access
+#endif
+#if defined (memcpy)
+# undef memcpy
+#endif
 
 #undef RUBY_METHOD_FUNC
 extern "C" {
@@ -52,7 +44,6 @@ extern "C" {
 #define RUBY_ALLOC_FUNC(func) ((TfnRbAlloc)func)
 
 #include "r2tao_export.h"
-#include <tao/Version.h>
 
 #if defined (HAVE_NATIVETHREAD)
 # define R2TAO_THREAD_SAFE
@@ -85,9 +76,9 @@ public:
   VALUE invoke (VALUE rcvr, int argc, VALUE *args);
   VALUE invoke (VALUE rcvr);
 
-  bool has_caught_exception () { return this->ex_caught_; }
+  bool has_caught_exception () const { return this->ex_caught_; }
 
-  ID id () { return this->fn_id_; }
+  ID id () const { return this->fn_id_; }
 
 protected:
   struct FuncArgs
@@ -137,16 +128,9 @@ protected:
   static VALUE invoke_helper (VALUE arg);
 
 private:
-  ID      fn_id_;
-  bool    throw_on_ex_;
-  bool    ex_caught_;
+  ID fn_id_;
+  bool const throw_on_ex_;
+  bool ex_caught_;
 };
-
-#if defined (ACE_HAS_CPP11)
-# define R2CORBA_NO_EXCEPT_FALSE noexcept(false)
-#else
-# define R2CORBA_NO_EXCEPT_FALSE
-#endif /* ACE_HAS_CPP11 */
-
 
 #endif

@@ -11,7 +11,6 @@
 #------------------------------------------------------------------*/
 
 #include "poa.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -25,6 +24,7 @@
 #include "exception.h"
 #include "orb.h"
 #include "servant.h"
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -171,7 +171,7 @@ public:
   R2TAO_POA_BlockedRegionCallerBase ()
     : exception_ (false),
       corba_ex_ (0) {}
-  virtual ~R2TAO_POA_BlockedRegionCallerBase () R2CORBA_NO_EXCEPT_FALSE;
+  virtual ~R2TAO_POA_BlockedRegionCallerBase () noexcept(false);
 
   VALUE call ();
 
@@ -186,13 +186,13 @@ protected:
   CORBA::Exception* corba_ex_;
 };
 
-R2TAO_POA_BlockedRegionCallerBase::~R2TAO_POA_BlockedRegionCallerBase() R2CORBA_NO_EXCEPT_FALSE
+R2TAO_POA_BlockedRegionCallerBase::~R2TAO_POA_BlockedRegionCallerBase() noexcept(false)
 {
   if (this->exception_)
   {
     if (corba_ex_)
     {
-      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(corba_ex_);
+      std::unique_ptr<CORBA::Exception> e_ptr(corba_ex_);
       corba_ex_->_raise ();
     }
     else
@@ -974,7 +974,7 @@ public:
 protected:
   virtual VALUE do_exec ();
 
-  bool wait_for_completion_;
+  bool const wait_for_completion_;
 };
 
 VALUE R2TAO_POAMan_BlockedDiscardReq::do_exec ()
@@ -1015,8 +1015,8 @@ public:
 protected:
   virtual VALUE do_exec ();
 
-  bool etherealize_;
-  bool wait_for_completion_;
+  bool const etherealize_;
+  bool const wait_for_completion_;
 };
 
 VALUE R2TAO_POAMan_BlockedDeactivate::do_exec ()

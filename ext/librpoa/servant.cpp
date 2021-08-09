@@ -11,7 +11,6 @@
 #------------------------------------------------------------------*/
 
 #include "poa.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -25,10 +24,7 @@
 #include "exception.h"
 #include "orb.h"
 #include "servant.h"
-
-#if RPOA_NEED_DSI_FIX
-# include "srvreq_fix.cpp"
-#endif
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -113,12 +109,12 @@ void r2tao_init_Servant()
 //===================================================================
 
 struct DSI_Data {
-  R2CORBA_ServerRequest_ptr  _request;
+  CORBA::ServerRequest_ptr  _request;
   CORBA::NVList_ptr _nvlist;
   CORBA::TypeCode_var _result_type;
   VALUE _rData;
 
-  DSI_Data(R2CORBA_ServerRequest_ptr _req)
+  DSI_Data(CORBA::ServerRequest_ptr _req)
     : _request(_req), _nvlist(0), _rData(Qnil) {}
   ~DSI_Data() {
     if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = 0; }
@@ -134,7 +130,7 @@ VALUE r2tao_ServerRequest_operation(VALUE self)
 {
   if (DATA_PTR (self) != 0)
   {
-    R2CORBA_ServerRequest_ptr request = static_cast<DSI_Data*> (DATA_PTR (self))->_request;
+    CORBA::ServerRequest_ptr request = static_cast<DSI_Data*> (DATA_PTR (self))->_request;
     return rb_str_new2 (request->operation ());
   }
   return Qnil;
@@ -152,7 +148,7 @@ VALUE r2tao_ServerRequest_describe(VALUE self, VALUE desc)
       X_CORBA (BAD_INV_ORDER);
     }
 
-    R2CORBA_ServerRequest_ptr request = dsi_data->_request;
+    CORBA::ServerRequest_ptr request = dsi_data->_request;
 
     if (desc != Qnil && rb_type (desc) == T_HASH)
     {
@@ -497,73 +493,6 @@ DSI_Servant::METHOD  DSI_Servant::method_id (const char* method)
   return NONE;
 }
 
-#if RPOA_NEED_DSI_FIX
-void DSI_Servant::invoke (CORBA::ServerRequest_ptr /*request*/)
-{}
-
-void DSI_Servant::_dispatch (TAO_ServerRequest &request,
-                             void * /*context*/)
-{
-  // No need to do any of this if the client isn't waiting.
-  if (request.response_expected ())
-    {
-      if (request.is_forwarded ())
-        {
-          request.init_reply ();
-          request.tao_send_reply ();
-
-          // No need to invoke in this case.
-          return;
-        }
-      else if (request.sync_with_server ())
-        {
-          // The last line before the call to this function
-          // was an ACE_CHECK_RETURN, so if we're here, we
-          // know there is no exception so far, and that's all
-          // a SYNC_WITH_SERVER client request cares about.
-          request.send_no_exception_reply ();
-        }
-    }
-
-  // Create DSI request object.
-  R2CORBA::ServerRequest *dsi_request = 0;
-  ACE_NEW (dsi_request,
-           R2CORBA::ServerRequest (request));
-
-  try
-    {
-      // Delegate to user.
-      this->invoke_fix (dsi_request);
-
-      // Only if the client is waiting.
-      if (request.response_expected () && !request.sync_with_server ())
-        {
-          dsi_request->dsi_marshal ();
-        }
-    }
-  catch (::CORBA::Exception& ex)
-    {
-      // Only if the client is waiting.
-      if (request.response_expected () && !request.sync_with_server ())
-        {
-          if (request.collocated ()
-               && request.operation_details ()->cac () != 0)
-            {
-              // If we have a cac it will handle the exception and no
-              // need to do any further processing
-              request.operation_details ()->cac ()->handle_corba_exception (
-                request, &ex);
-              return;
-            }
-          else
-            request.tao_send_reply_exception (ex);
-        }
-    }
-
-  ::CORBA::release (dsi_request);
-}
-#endif
-
 // invocation helper for threadsafe calling of Ruby code
 void* DSI_Servant::thread_safe_invoke (void * arg)
 {
@@ -581,11 +510,7 @@ void* DSI_Servant::thread_safe_invoke (void * arg)
   return 0;
 }
 
-# if RPOA_NEED_DSI_FIX
-void DSI_Servant::invoke_fix (R2CORBA::ServerRequest_ptr request)
-# else
 void DSI_Servant::invoke (CORBA::ServerRequest_ptr request)
-# endif
 {
   ThreadSafeArg tca_(this, request);
 
@@ -593,12 +518,12 @@ void DSI_Servant::invoke (CORBA::ServerRequest_ptr request)
   if (rc != 0)
   {
     CORBA::SystemException* exc = reinterpret_cast<CORBA::SystemException*> (rc);
-    ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exc);
+    std::unique_ptr<CORBA::SystemException> e_ptr(exc);
     exc->_raise ();
   }
 }
 
-void DSI_Servant::inner_invoke (R2CORBA_ServerRequest_ptr request)
+void DSI_Servant::inner_invoke (CORBA::ServerRequest_ptr request)
 {
   if (TAO_debug_level > 7)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Servant::invoke(%C)\n", request->operation ()));
@@ -634,7 +559,7 @@ void DSI_Servant::inner_invoke (R2CORBA_ServerRequest_ptr request)
       f = this->_is_a (tmp);
 
       if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _is_a (%s) -> %d\n", tmp, f));
+        ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _is_a (%C) -> %d\n", tmp, f));
     }
     else
     {
@@ -663,7 +588,7 @@ void DSI_Servant::inner_invoke (R2CORBA_ServerRequest_ptr request)
     CORBA::String_var repo_id = this->_repository_id ();
 
     if (TAO_debug_level > 5)
-      ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _repository_id () -> %s\n", repo_id.in ()));
+      ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) _repository_id () -> %C\n", repo_id.in ()));
 
     CORBA::Any _any;
     _any <<= repo_id.in ();
@@ -700,13 +625,13 @@ void DSI_Servant::inner_invoke (R2CORBA_ServerRequest_ptr request)
   }
 }
 
-void DSI_Servant::invoke_DSI (R2CORBA_ServerRequest_ptr request)
+void DSI_Servant::invoke_DSI (CORBA::ServerRequest_ptr request)
 {
   if (TAO_debug_level > 5)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Servant::invoke_DSI(%C) entry\n", request->operation ()));
 
   // wrap request for Ruby; cleanup automatically
-  ACE_Auto_Basic_Ptr<DSI_Data>  dsi_data(new DSI_Data(request));
+  std::unique_ptr<DSI_Data>  dsi_data(new DSI_Data(request));
 
   VALUE srvreq = Data_Wrap_Struct(r2tao_cServerRequest, 0, 0, dsi_data.get ());
 
@@ -752,7 +677,7 @@ void DSI_Servant::invoke_DSI (R2CORBA_ServerRequest_ptr request)
       _exc->completed (
         static_cast<CORBA::CompletionStatus> (NUM2ULONG (rb_iv_get (rexc, "@completed"))));
 
-      ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(_exc);
+      std::unique_ptr<CORBA::SystemException> e_ptr(_exc);
       _exc->_raise ();
     }
     else
@@ -825,7 +750,7 @@ void DSI_Servant::invoke_DSI (R2CORBA_ServerRequest_ptr request)
   }
 }
 
-void DSI_Servant::invoke_SI (R2CORBA_ServerRequest_ptr request)
+void DSI_Servant::invoke_SI (CORBA::ServerRequest_ptr request)
 {
   if (TAO_debug_level > 5)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Servant::invoke_SI(%C) entry\n", request->operation ()));
@@ -985,7 +910,7 @@ void DSI_Servant::invoke_SI (R2CORBA_ServerRequest_ptr request)
         _exc->completed (
           static_cast<CORBA::CompletionStatus> (NUM2ULONG (rb_iv_get (rexc, "@completed"))));
 
-        ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(_exc);
+        std::unique_ptr<CORBA::SystemException> e_ptr(_exc);
         _exc->_raise ();
       }
       else
@@ -1131,7 +1056,7 @@ CORBA::Object_ptr DSI_Servant::_get_component (void)
   }
 }
 
-const char *DSI_Servant::_interface_repository_id (void) const
+const char *DSI_Servant::_interface_repository_id () const
 {
   static R2TAO_RBFuncall FN_repository_id ("_repository_id");
 

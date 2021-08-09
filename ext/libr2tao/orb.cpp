@@ -20,7 +20,7 @@
 #include "ace/Reactor.h"
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -242,7 +242,7 @@ VALUE rCORBA_ORB_init(int _argc, VALUE *_argv, VALUE /*klass*/) {
   char **argv;
   int i;
   CORBA::ORB_var orb;
-  ACE_Auto_Basic_Ptr<char*> argv_safe;
+  std::unique_ptr<char*> argv_safe;
 
   rb_scan_args(_argc, _argv, "02", &v0, &v1);
 
@@ -457,7 +457,7 @@ public:
       timeout_ (&to),
       exception_ (false),
       corba_ex_ (0) {}
-  virtual ~R2TAO_ORB_BlockedRegionCaller () R2CORBA_NO_EXCEPT_FALSE;
+  virtual ~R2TAO_ORB_BlockedRegionCaller () noexcept(false);
 
   VALUE call (bool with_unblock=true);
 
@@ -477,13 +477,13 @@ protected:
   CORBA::Exception* corba_ex_;
 };
 
-R2TAO_ORB_BlockedRegionCaller::~R2TAO_ORB_BlockedRegionCaller() R2CORBA_NO_EXCEPT_FALSE
+R2TAO_ORB_BlockedRegionCaller::~R2TAO_ORB_BlockedRegionCaller() noexcept(false)
 {
   if (this->exception_)
   {
     if (corba_ex_)
     {
-      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(corba_ex_);
+      std::unique_ptr<CORBA::Exception> e_ptr(corba_ex_);
       corba_ex_->_raise ();
     }
     else
@@ -568,7 +568,7 @@ public:
     : R2TAO_ORB_BlockedRegionCaller (orb), sg_(sg) {}
   R2TAO_ORB_BlockedWorkPending (R2CSigGuard& sg, CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : R2TAO_ORB_BlockedRegionCaller (orb, to), sg_(sg) {}
-  virtual ~R2TAO_ORB_BlockedWorkPending () R2CORBA_NO_EXCEPT_FALSE;
+  virtual ~R2TAO_ORB_BlockedWorkPending () noexcept(false);
 
 protected:
   virtual VALUE do_exec ();
@@ -577,7 +577,7 @@ private:
   R2CSigGuard& sg_;
 };
 
-R2TAO_ORB_BlockedWorkPending::~R2TAO_ORB_BlockedWorkPending() R2CORBA_NO_EXCEPT_FALSE
+R2TAO_ORB_BlockedWorkPending::~R2TAO_ORB_BlockedWorkPending() noexcept(false)
 {
   if (this->exception_)
   {
@@ -585,7 +585,7 @@ R2TAO_ORB_BlockedWorkPending::~R2TAO_ORB_BlockedWorkPending() R2CORBA_NO_EXCEPT_
     try {
       if (corba_ex_)
       {
-        ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(corba_ex_);
+        std::unique_ptr<CORBA::Exception> e_ptr(corba_ex_);
         corba_ex_->_raise ();
       }
       else

@@ -147,13 +147,7 @@ project {
     extload.c
   }
   dynamicflags = EXTLOAD_BUILD_DLL
-  includes += "#{RB_CONFIG['rubyhdrdir'] || RB_CONFIG['archdir']}" \\
-              #{RB_CONFIG['rubyhdrdir'] ? '"' + File.join(RB_CONFIG['rubyhdrdir'], RB_CONFIG['arch']) + '"' : ''} \\
-              .
-  macros += RUBY_VER_MAJOR=#{Config.rb_ver_major} RUBY_VER_MINOR=#{Config.rb_ver_minor} RUBY_VER_RELEASE=#{Config.rb_ver_release}
   sharedname = extload
-  libpaths += "#{RB_CONFIG['libdir']}"
-  libs += #{File.basename(RB_CONFIG['LIBRUBY'], '.a').sub(/^lib/, '')}
   libout = .
   dllout = .
   verbatim(gnuace, macros, 1) {
@@ -240,9 +234,9 @@ THE_END__
 
     def self.ext_shlibs
       (if Config.is_win32
-        %w{libr2taow libepoaw librpolw}
+        %w{libr2taow librpoaw librpolw}
       else
-        %w{libr2tao libepoa librpol}
+        %w{libr2tao librpoa librpol}
       end).collect {|lib| File.join('ext', lib + '.so') }
     end
 

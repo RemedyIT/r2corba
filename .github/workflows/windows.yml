@@ -5,23 +5,23 @@ on:
   pull_request:
   schedule:
     - cron: '0 7 * * SUN'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: windows-2019
     strategy:
+      fail-fast: false
       matrix:
-        include:
-          - msystem: MINGW64
-            arch: x86_64
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
-            ruby: '2.4'
+        ruby: [ '2.4', '2.5', '2.6', '2.7' ]
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
-      DOC_ROOT: ${{ github.workspace }}/ACE_TAO
-      ACE_ROOT: ${{ github.workspace }}/ACE_TAO/ACE
-      TAO_ROOT: ${{ github.workspace }}/ACE_TAO/TAO
-      MPC_ROOT: ${{ github.workspace }}/ACE_TAO/MPC
+      DOC_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/ACE/MPC
       RIDL_ROOT: ${{ github.workspace }}/ridl
     steps:
     - uses: ruby/setup-ruby@v1
@@ -46,28 +46,12 @@ jobs:
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{ matrix.msystem }}
-        install: make
-    - run: pacman --noconfirm -S mingw-w64-${{ matrix.arch }}-gcc
-      shell: msys2 {0}
-    - name: Run rake configure
+    - name: Run ridk exec rake configure
       run: |
-        export ACE_ROOT=`cygpath -u $ACE_ROOT`
-        export TAO_ROOT=`cygpath -u $TAO_ROOT`
-        export MPC_ROOT=`cygpath -u $MPC_ROOT`
-        rake configure
-      shell: msys2 {0}
-    - name: Run rake build
+        ridk exec rake configure
+    - name: Run ridk exec rake build
       run: |
-        rake build
-      shell: msys2 {0}
-    - name: Run rake test
+        ridk exec rake build
+    - name: Run ridk exec rake test
       run: |
-        export ACE_ROOT=`cygpath -u $ACE_ROOT`
-        export TAO_ROOT=`cygpath -u $TAO_ROOT`
-        export MPC_ROOT=`cygpath -u $MPC_ROOT`
-        rake show
-        rake test
-      shell: msys2 {0}
+        ridk exec rake test

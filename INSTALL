@@ -9,12 +9,9 @@ Ruby MRI 2.0 or newer
   https://rubyinstaller.org/downloads (Windows binaries) if not available as
   a standard package on your platform.
 
-ACE+TAO 2.0.1+ (required minimum version for Value type support and Windows
-  MingW32 support)
-  Download latest minor release from http://download.dre.vanderbilt.edu/
-  (select a source only package containing at least ACE + TAO)
-  For Windows 64bit + Ruby 2.0.0 support ACE+TAO > 2.1.8 is required (currently
-  this means the SVN trunk version).
+ACE+TAO 7.0.0
+  Download latest micro release from https://github.com/DOCGroup/ACE_TAO/releases
+  (select a source only package containing ACE+TAO)
 
 An installed (recent) version of PERL is required to generate the ACE+TAO and
 R2CORBA makefiles with the MPC toolset included with ACE+TAO (R2CORBA does not

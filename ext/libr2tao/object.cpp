@@ -15,11 +15,11 @@
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "ace/Truncate.h"
-#include "ace/Auto_Ptr.h"
 #include "typecode.h"
 #include "object.h"
 #include "exception.h"
 #include "orb.h"
+#include <memory>
 
 R2TAO_EXPORT VALUE r2corba_cObject = 0;
 R2TAO_EXPORT VALUE r2tao_cObject = 0;
@@ -562,7 +562,7 @@ public:
     : req_ (req),
       exception_ (false),
       corba_ex_ (0) {}
-  virtual ~R2TAO_Request_BlockedRegionCaller () R2CORBA_NO_EXCEPT_FALSE;
+  virtual ~R2TAO_Request_BlockedRegionCaller () noexcept(false);
 
   VALUE call ();
 
@@ -578,13 +578,13 @@ protected:
   CORBA::Exception* corba_ex_;
 };
 
-R2TAO_Request_BlockedRegionCaller::~R2TAO_Request_BlockedRegionCaller() R2CORBA_NO_EXCEPT_FALSE
+R2TAO_Request_BlockedRegionCaller::~R2TAO_Request_BlockedRegionCaller() noexcept(false)
 {
   if (this->exception_)
   {
     if (corba_ex_)
     {
-      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(corba_ex_);
+      std::unique_ptr<CORBA::Exception> e_ptr(corba_ex_);
       corba_ex_->_raise ();
     }
     else
