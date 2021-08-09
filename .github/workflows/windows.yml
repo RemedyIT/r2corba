@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '2.4', '2.5', '2.6', '2.7', '3.0' ]
+        ruby: [ '2.4', '2.5', '2.6', '2.7' ]
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE
@@ -34,22 +34,24 @@ jobs:
       with:
         repository: DOCGroup/ACE_TAO
         path: ${{ env.DOC_ROOT }}
+        ref: Latest_ACE7TAO3_Micro
     - name: checkout MPC
       uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
+        ref: Latest_ACE7TAO3_Micro
     - name: checkout ridl
       uses: actions/checkout@v2
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
-    - name: Run rake configure
+    - name: Run ridk exec rake configure
       run: |
         ridk exec rake configure
-    - name: Run rake build
+    - name: Run ridk exec rake build
       run: |
-        rake build
-    - name: Run rake test
+        ridk exec rake build
+    - name: Run ridk exec rake test
       run: |
-        rake test
+        ridk exec rake test
