@@ -103,7 +103,7 @@ public:
 };
 
 #if defined (WIN32)
-R2CSigGuard* R2CSigGuard::c_sig_guard = 0;
+R2CSigGuard* R2CSigGuard::c_sig_guard = nullptr;
 
 BOOL WINAPI CtrlHandlerRoutine (DWORD /*dwCtrlType*/)
 {

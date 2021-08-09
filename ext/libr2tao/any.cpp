@@ -658,7 +658,7 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
       {
         if (rb_obj_is_kind_of (rval, r2corba_cObject) == Qtrue)
         {
-          R2TAO_AbstractObject_ptr abs_obj = 0;
+          R2TAO_AbstractObject_ptr abs_obj = nullptr;
           ACE_NEW_NORETURN (abs_obj,
                             R2TAO_AbstractObject (r2corba_Object_r2t (rval), _tc));
           _any <<= &abs_obj;
@@ -666,7 +666,7 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
         else
         {
           // abstract wrapper for Values
-          R2TAO_AbstractValue_ptr abs_obj = 0;
+          R2TAO_AbstractValue_ptr abs_obj = nullptr;
           ACE_NEW_NORETURN (abs_obj,
                             R2TAO_AbstractValue (rval, _tc));
           _any <<= &abs_obj;
@@ -721,7 +721,7 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
     {
       if (!NIL_P (rval))
       {
-        R2TAO_Value_ptr r2tval = 0;
+        R2TAO_Value_ptr r2tval = nullptr;
         ACE_NEW_NORETURN (r2tval,
                           R2TAO_Value (rval));
         _any <<= &r2tval;
@@ -1408,7 +1408,7 @@ R2TAO_EXPORT VALUE r2tao_Any2Ruby(const CORBA::Any& _any, CORBA::TypeCode_ptr _t
     }
     case CORBA::tk_abstract_interface:
     {
-      CORBA::AbstractBase_ptr abs = 0;
+      CORBA::AbstractBase_ptr abs = nullptr;
       TAO::Any_Impl_T<CORBA::AbstractBase>::extract (
           _any,
           CORBA::AbstractBase::_tao_any_destructor,
@@ -1462,7 +1462,7 @@ R2TAO_EXPORT VALUE r2tao_Any2Ruby(const CORBA::Any& _any, CORBA::TypeCode_ptr _t
     case CORBA::tk_value:
     case CORBA::tk_event:
     {
-      R2TAO_Value_ptr r2tval = 0;
+      R2TAO_Value_ptr r2tval = nullptr;
       TAO::Any_Impl_T<R2TAO_Value>::extract (
           _any,
           R2TAO_Value::_tao_any_destructor,
@@ -1524,7 +1524,7 @@ R2TAO_EXPORT void r2tao_Any4Value(CORBA::Any& _any, CORBA::TypeCode_ptr _tc)
     CORBA::ValueBase * vb = factory->create_for_unmarshal ();
     R2TAO_Value_ptr r2tval = R2TAO_Value::_downcast (vb);
 
-    TAO::Any_Impl * vimpl = 0;
+    TAO::Any_Impl * vimpl = nullptr;
     ACE_NEW_THROW_EX (vimpl,
                    TAO::Any_Impl_T<R2TAO_Value> (R2TAO_Value::_tao_any_destructor,
                                                  _tc,

@@ -553,7 +553,7 @@ void DSI_Servant::inner_invoke (CORBA::ServerRequest_ptr request)
       // set ORB arguments (retrieves data for IN/INOUT args)
       request->arguments (nvlist);
 
-      const char *tmp = 0;
+      const char *tmp = nullptr;
       (*_nv->value ()) >>= tmp;
 
       f = this->_is_a (tmp);
@@ -1022,7 +1022,7 @@ CORBA::Boolean DSI_Servant::_is_a (const char *logical_type_id)
   }
 }
 
-CORBA::Boolean DSI_Servant::_non_existent (void)
+CORBA::Boolean DSI_Servant::_non_existent ()
 {
   static R2TAO_RBFuncall FN_non_existent ("_non_existent?");
 
@@ -1038,7 +1038,7 @@ CORBA::Boolean DSI_Servant::_non_existent (void)
   }
 }
 
-CORBA::Object_ptr DSI_Servant::_get_component (void)
+CORBA::Object_ptr DSI_Servant::_get_component ()
 {
   static R2TAO_RBFuncall FN_get_component ("_get_component");
 
@@ -1104,7 +1104,7 @@ const char *DSI_Servant::_interface_repository_id () const
   }
 }
 
-char * DSI_Servant::_repository_id (void)
+char * DSI_Servant::_repository_id ()
 {
   return CORBA::string_dup (this->_interface_repository_id ());
 }
@@ -1168,7 +1168,7 @@ VALUE r2tao_Servant_default_POA(VALUE self)
 {
   R2TAO_TRY
   {
-    DSI_Servant* _servant = 0;
+    DSI_Servant* _servant = nullptr;
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object
@@ -1194,7 +1194,7 @@ VALUE r2tao_Servant_this(VALUE self)
   R2TAO_TRY
   {
     bool _new_srv = false;
-    DSI_Servant* _servant = 0;
+    DSI_Servant* _servant = nullptr;
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object

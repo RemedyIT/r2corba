@@ -124,12 +124,12 @@ class R2TAO_Value : public ::CORBA::DefaultValueRefCountBase
   private:
     typedef ACE_Array_Base<CORBA::Any*> ChunkElements;
     struct Chunk {
-      Chunk () : next_(0) {}
+      Chunk () : next_(nullptr) {}
       ~Chunk() {
         for (ChunkElements::size_type i=0; i<this->elems_.size () ;++i)
         { delete this->elems_[i]; }
         delete this->next_;
-        this->next_ = 0;
+        this->next_ = nullptr;
       }
       ChunkElements elems_;
       Chunk* next_;

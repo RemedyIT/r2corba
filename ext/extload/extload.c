@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 static TCHAR  szModulePath[MAX_PATH+1] = {0};
-static TCHAR *pszPathEnd = 0;
+static TCHAR *pszPathEnd = nullptr;
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
