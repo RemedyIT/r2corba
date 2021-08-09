@@ -14,6 +14,7 @@ concurrency:
 jobs:
   tao:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - CC: gcc-4.8
