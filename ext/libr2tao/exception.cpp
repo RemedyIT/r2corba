@@ -102,10 +102,10 @@ R2TAO_EXPORT void r2tao_userex(const CORBA::UserException& ex)
     TAO_OutputCDR outstrm;
     ex._tao_encode (outstrm);
     TAO_InputCDR instrm (outstrm);
-    TAO::Unknown_IDL_Type *any_impl = 0;
+    TAO::Unknown_IDL_Type *any_impl = nullptr;
     ACE_NEW_NORETURN (any_impl,
                     TAO::Unknown_IDL_Type (ex._tao_type ()));
-    if (any_impl == 0)
+    if (!any_impl)
     {
       X_CORBA (NO_MEMORY);
     }

@@ -95,7 +95,7 @@ VALUE r2tao_LongDouble_initialize(int _argc, VALUE *_argv, VALUE self)
 
   if (rb_obj_is_kind_of(v0, rb_cString) == Qtrue)
   {
-    char* endp = 0;
+    char* endp = nullptr;
 #if defined (NONNATIVE_LONGDOUBLE) && defined (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE)
     NATIVE_LONGDOUBLE _ld = ::strtod (RSTRING_PTR (v0), &endp);
 #else
