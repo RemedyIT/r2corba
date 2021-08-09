@@ -34,11 +34,13 @@ jobs:
       with:
         repository: DOCGroup/ACE_TAO
         path: ${{ env.DOC_ROOT }}
+        ref: Latest_ACE7TAO3_Micro
     - name: checkout MPC
       uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
+        ref: Latest_ACE7TAO3_Micro
     - name: checkout ridl
       uses: actions/checkout@v2
       with:
@@ -49,7 +51,7 @@ jobs:
         ridk exec rake configure
     - name: Run rake build
       run: |
-        rake build
+        ridk exec rake build
     - name: Run rake test
       run: |
-        rake test
+        ridk exec rake test
