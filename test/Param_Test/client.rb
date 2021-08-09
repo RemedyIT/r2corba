@@ -23,22 +23,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set IOR.",
+    opts.on('--k IORFILE',
+            'Set IOR.',
             "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -50,7 +50,7 @@ else
   require 'TestC.rb'
 end
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
 
@@ -86,7 +86,7 @@ begin
 
   hello_obj.message = str
 
-  assert "ERROR setting message attribute", str == hello_obj.message
+  assert 'ERROR setting message attribute', str == hello_obj.message
 
   ## sequence test
 
@@ -102,7 +102,7 @@ begin
 
   hello_obj.numbers = nums.collect { |i| i * 3 }
 
-  assert_not "ERROR numbers attribute did not change while it should have", nums == hello_obj.numbers
+  assert_not 'ERROR numbers attribute did not change while it should have', nums == hello_obj.numbers
 
   doubles_list = hello_obj.list_of_doubles
 
@@ -123,7 +123,7 @@ begin
   hello_obj.structSeq = svseq
 
   ix = 0
-  assert_not "ERROR setting attribute structSeq" do
+  assert_not 'ERROR setting attribute structSeq' do
     hello_obj.structSeq.any? { |sv|
       sv2 = svseq[ix]
       ix += 1
@@ -149,7 +149,7 @@ begin
 
   hello_obj.theCube = cube2
 
-  assert_not "ERROR setting attribute theCube" do
+  assert_not 'ERROR setting attribute theCube' do
     cube2 != hello_obj.theCube || cube == hello_obj.theCube
   end
 
@@ -157,7 +157,7 @@ begin
 
   self_obj = hello_obj.selfref
 
-  assert "ERROR with attribute selfref", self_obj.message == hello_obj.message
+  assert 'ERROR with attribute selfref', self_obj.message == hello_obj.message
 
   ## Any test
 
@@ -165,19 +165,19 @@ begin
 
   hello_obj.anyValue = 1
 
-  assert_not "ERROR with attribute anyValue" do
+  assert_not 'ERROR with attribute anyValue' do
     any == hello_obj.anyValue || 1 == hello_obj.anyValue
   end
 
   hello_obj.anyValue = 2
 
-  assert_not "ERROR with attribute anyValue" do
+  assert_not 'ERROR with attribute anyValue' do
     any == hello_obj.anyValue || 2 == hello_obj.anyValue
   end
 
   hello_obj.anyValue = 3
 
-  assert_not "ERROR with attribute anyValue" do
+  assert_not 'ERROR with attribute anyValue' do
     any == hello_obj.anyValue || 3 == hello_obj.anyValue
   end
 
@@ -190,7 +190,7 @@ begin
 
   hello_obj.unionValue = uv2
 
-  assert_not "ERROR with attribute unionValue" do
+  assert_not 'ERROR with attribute unionValue' do
     uv1._disc == hello_obj.unionValue._disc || uv1._value == hello_obj.unionValue._value
   end
 
@@ -201,47 +201,47 @@ begin
 
   hello_obj.unionValue2 = uv22
 
-  assert_not "ERROR with attribute unionValue2" do
+  assert_not 'ERROR with attribute unionValue2' do
     uv21._disc == hello_obj.unionValue2._disc || uv21._value == hello_obj.unionValue2._value
   end
 
-  assert_not "ERROR with attribute unionValue2" do
+  assert_not 'ERROR with attribute unionValue2' do
     uv21._disc == hello_obj.unionValue2._disc || uv21._value == hello_obj.unionValue2._value
   end
 
   uv3 = hello_obj.unionValue3
 
-  assert_except "ERROR with attribute unionValue3", CORBA::BAD_PARAM do
+  assert_except 'ERROR with attribute unionValue3', CORBA::BAD_PARAM do
     uv3._disc = false
   end
 
   uv3._default  # set implicit default
 
-  assert "ERROR with implicit default union U3" do
+  assert 'ERROR with implicit default union U3' do
     uv3._disc == false
   end
 
   hello_obj.unionValue3 = uv3
 
-  assert "ERROR with implicit default attribute unionValue3" do
+  assert 'ERROR with implicit default attribute unionValue3' do
     hello_obj.unionValue3._disc == false
   end
 
   uv4 = hello_obj.unionValue4
 
-  assert_except "ERROR with attribute unionValue4", CORBA::BAD_PARAM do
+  assert_except 'ERROR with attribute unionValue4', CORBA::BAD_PARAM do
     uv4._disc = Test::TE_THIRD
   end
 
   uv4._default  # set implicit default
 
-  assert "ERROR with implicit default union U4" do
+  assert 'ERROR with implicit default union U4' do
     uv4._disc == Test::TE_THIRD
   end
 
   hello_obj.unionValue4 = uv4
 
-  assert "ERROR with implicit default attribute unionValue4" do
+  assert 'ERROR with implicit default attribute unionValue4' do
     hello_obj.unionValue4._disc == Test::TE_THIRD
   end
 
@@ -255,15 +255,15 @@ begin
 
   hello_obj.s3Value = s3val
 
-  assert_not "ERROR with attribute s3Value" do
+  assert_not 'ERROR with attribute s3Value' do
     s3val.m_seq.size != hello_obj.s3Value.m_seq.size || s3val.m_seq.first.m_has_more != hello_obj.s3Value.m_seq.first.m_has_more
   end
 
   ## in, inout, out test
 
-  reslen, resinoutstr, resoutstr = hello_obj.run_test(instr = Test::TString.new("This is instr"), inoutstr = "This is inoutstr")
+  reslen, resinoutstr, resoutstr = hello_obj.run_test(instr = Test::TString.new('This is instr'), inoutstr = 'This is inoutstr')
 
-  assert_not "ERROR with run_test" do
+  assert_not 'ERROR with run_test' do
     reslen != resoutstr.size || resinoutstr != instr || resoutstr != (instr + inoutstr)
   end
 

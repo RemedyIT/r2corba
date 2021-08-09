@@ -23,22 +23,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set IOR.",
+    opts.on('--k IORFILE',
+            'Set IOR.',
             "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -50,7 +50,7 @@ else
   require 'TestC.rb'
 end
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
 
@@ -64,11 +64,11 @@ begin
 
   hello_obj.shutdown()
 
-  assert_not "ERROR: Object is reported nil!", CORBA::is_nil(hello_obj)
+  assert_not 'ERROR: Object is reported nil!', CORBA::is_nil(hello_obj)
 
   hello_obj._free_ref()
 
-  assert "ERROR: Object is reported non-nil!", CORBA::is_nil(hello_obj)
+  assert 'ERROR: Object is reported non-nil!', CORBA::is_nil(hello_obj)
 
 ensure
 

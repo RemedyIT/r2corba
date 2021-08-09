@@ -17,7 +17,7 @@ module R2CORBA
     class Servant
 
       module Intf
-        Id  = "IDL:omg.org/CORBA/Object:1.0".freeze
+        Id  = 'IDL:omg.org/CORBA/Object:1.0'.freeze
         Ids = [ Id ].freeze
         Operations = {}.freeze
       end
@@ -93,7 +93,7 @@ module R2CORBA
 
     class DynamicImplementation < Servant
       def invoke(request)
-        if self.class.const_defined?("OPTABLE") && self.class::OPTABLE.has_key?(request.operation)
+        if self.class.const_defined?('OPTABLE') && self.class::OPTABLE.has_key?(request.operation)
           request.describe(self.class::OPTABLE[request.operation])
           return self.__send__(request.operation, *request.arguments) { request }
         else

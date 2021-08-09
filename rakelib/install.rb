@@ -20,16 +20,16 @@ module R2CORBA
       OptionParser.new do |opts|
         opts.banner = "Usage: rake [rake options] -- #{task} [options] [NO_HARM=1]"
 
-        opts.separator ""
+        opts.separator ''
 
         opts.on('--prefix=path',
                 "path prefix of target environment [#{get_config(:prefix)}]") {|v| set_config(:prefix, File.expand_path(v)) }
 
-        opts.separator ""
+        opts.separator ''
 
         opts.on('--help', 'Show this help message') { puts opts; puts; exit }
 
-        opts.separator ""
+        opts.separator ''
 
         opts.separator "\tAdding 'NO_HARM=1' will run the command without actually executing any\n\tactions but only printing what it would do."
 

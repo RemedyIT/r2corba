@@ -37,16 +37,16 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-o IORFILE",
-            "Set IOR filename.",
+    opts.on('-o IORFILE',
+            'Set IOR filename.',
             "Default: 'ins.ior'") { |v| OPTIONS[:iorfile] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -285,14 +285,14 @@ obj = orb.resolve_initial_references('IORTable')
 
 iortbl = IORTable::Table._narrow(obj)
 
-iortbl.bind("NamingServer", naming_ior)
+iortbl.bind('NamingServer', naming_ior)
 
 open(OPTIONS[:iorfile], 'w') { |io|
   io.write naming_ior
 }
 
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
+  puts 'SIGINT - shutting down ORB...'
   orb.shutdown()
 end
 

@@ -21,22 +21,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--o IORFILE",
-            "Set IOR filename.",
+    opts.on('--o IORFILE',
+            'Set IOR filename.',
             "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -57,7 +57,7 @@ class MyHello < POA::Test::Hello
     s1 = Test::S1.new
     s1.m_one = 123
     s1.m_two = 2.54
-    s1.m_three = "field three"
+    s1.m_three = 'field three'
     s1.m_four = Test::S1::S2.new
     s1.m_four.m_b = false
     s1.m_five = ::Test::TE_ZEROTH
@@ -79,7 +79,7 @@ class MyHello < POA::Test::Hello
     @s3.m_seq << s3_
     @u1 = Test::U1.new
     @u1._disc = Test::TE_FIRST
-    @u1.m_str = "Hello world!"
+    @u1.m_str = 'Hello world!'
     @u2 = Test::U2.new
     @u2._disc = Test::U2::ONE
     @u2.l_ = 12345
@@ -88,7 +88,7 @@ class MyHello < POA::Test::Hello
     @u3.lval = 123456
     @u4 = Test::U4.new
     @u4._disc = Test::TE_FIRST
-    @u4.m_str = "Hello world!"
+    @u4.m_str = 'Hello world!'
     @nex = 0
   end
 
@@ -149,7 +149,7 @@ class MyHello < POA::Test::Hello
   end #of attribute get_Min_Octet
 
   def get_string()
-    "Hello there!"
+    'Hello there!'
   end
 
   def message()
@@ -261,7 +261,7 @@ class MyHello < POA::Test::Hello
 end #of servant Hello
 
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 obj = orb.resolve_initial_references('RootPOA')
 
@@ -284,7 +284,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 }
 
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
+  puts 'SIGINT - shutting down ORB...'
   orb.shutdown()
 end
 

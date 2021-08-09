@@ -23,22 +23,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set IOR.",
+    opts.on('--k IORFILE',
+            'Set IOR.',
             "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -52,7 +52,7 @@ end
 
 require 'supports_impl'
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
   # make sure valuetype factory is registered
@@ -64,7 +64,7 @@ begin
 
   account = Account._narrow(obj)
 
-  STDERR.puts "* get start balance"
+  STDERR.puts '* get start balance'
 
   balance = account.get_balance();
 
@@ -72,7 +72,7 @@ begin
 
   account.print_it()
 
-  STDERR.puts "* local deposit"
+  STDERR.puts '* local deposit'
 
   balance.deposit(10.5)
 
@@ -80,7 +80,7 @@ begin
 
   account.print_it()
 
-  STDERR.puts "* remote deposit"
+  STDERR.puts '* remote deposit'
 
   account.deposit(10.77)
 
@@ -88,7 +88,7 @@ begin
 
   account.print_it()
 
-  STDERR.puts "* remote withdrawal"
+  STDERR.puts '* remote withdrawal'
 
   account.withdraw(3.33)
 
@@ -96,7 +96,7 @@ begin
 
   account.print_it()
 
-  STDERR.puts "* update balance"
+  STDERR.puts '* update balance'
 
   balance = account.get_balance();
 

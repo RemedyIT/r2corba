@@ -22,19 +22,19 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -53,7 +53,7 @@ class MyHello < POA::Test::Hello
   end
 
   def get_string()
-    "Hello there!"
+    'Hello there!'
   end
 
   def shutdown()
@@ -64,13 +64,13 @@ end #of servant MyHello
 if defined?(JRUBY_VERSION)
   ## JacORB needs explicit activation of this option
   props = {
-    "org.omg.PortableInterceptor.ORBInitializerClass.bidir_init" =>
-               "org.jacorb.orb.giop.BiDirConnectionInitializer"
+    'org.omg.PortableInterceptor.ORBInitializerClass.bidir_init' =>
+               'org.jacorb.orb.giop.BiDirConnectionInitializer'
   }
 else
   props = {}
 end
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB', props)
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB', props)
 
 begin
 

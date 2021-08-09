@@ -67,7 +67,7 @@ namespace :r2corba do
           gem.summary = %Q{TAO sourcecode for building R2CORBA}
           gem.description = %Q{TAO sourcecode for building R2CORBA.}
           gem.email = 'mcorino@remedy.nl'
-          gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
+          gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
           gem.authors = ['Martin Corino', 'Johnny Willemsen']
           gem.files = Dir['lib/taosource/**/*']
           gem.files.concat(Dir["src/ACE+TAO-src-#{_ace_ver}.tar.gz"])
@@ -78,8 +78,8 @@ namespace :r2corba do
           gem.required_ruby_version = '>= 2.4'
           gem.licenses = ['DOC']
           gem.metadata = {
-            "bug_tracker_uri"   => "https://github.com/DOCGroup/ACE_TAO/issues",
-            "source_code_uri"   => "https://github.com/DOCGroup/ACE_TAO"
+            'bug_tracker_uri'   => 'https://github.com/DOCGroup/ACE_TAO/issues',
+            'source_code_uri'   => 'https://github.com/DOCGroup/ACE_TAO'
           }
         end
         R2CORBA::Gem.build_gem(gemspec)
@@ -94,7 +94,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.summary = %Q{CORBA language mapping implementation for Ruby}
     gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
     gem.email = 'mcorino@remedy.nl'
-    gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
+    gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
     gem.authors = ['Martin Corino', 'Johnny Willemsen']
     gem.files = R2CORBA::Gem.manifest
     gem.extensions = ['mkrf_conf_srcgem.rb']
@@ -107,8 +107,8 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gem.add_dependency 'rake', '>= 12.3.3'
     gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
     gem.metadata = {
-      "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
-      "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+      'bug_tracker_uri'   => 'https://github.com/RemedyIT/r2corba/issues',
+      'source_code_uri'   => 'https://github.com/RemedyIT/r2corba'
     }
   end
   R2CORBA::Gem.build_gem(gemspec)
@@ -133,7 +133,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.summary = %Q{CORBA language mapping implementation for Ruby (extension binaries)}
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. (extension binaries)}
       gem.email = 'mcorino@remedy.nl'
-      gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
+      gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
       gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = R2CORBA::Gem.manifest(:extbin)
       gem.extensions = []
@@ -143,8 +143,8 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.licenses = ['Nonstandard', 'DOC']
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so'
       gem.metadata = {
-        "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
-        "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+        'bug_tracker_uri'   => 'https://github.com/RemedyIT/r2corba/issues',
+        'source_code_uri'   => 'https://github.com/RemedyIT/r2corba'
       }
     end
     R2CORBA::Gem.build_gem(gemspec)
@@ -176,7 +176,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.summary = %Q{CORBA language mapping implementation for Ruby}
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
       gem.email = 'mcorino@remedy.nl'
-      gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
+      gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
       gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = R2CORBA::Gem.manifest(:bin)
       gem.require_paths = %w{lib}
@@ -196,8 +196,8 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.add_dependency 'rake', '>= 12.3.3'
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so' << '--exclude=\\.pidlc'
       gem.metadata = {
-        "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
-        "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+        'bug_tracker_uri'   => 'https://github.com/RemedyIT/r2corba/issues',
+        'source_code_uri'   => 'https://github.com/RemedyIT/r2corba'
       }
     end
     R2CORBA::Gem.build_gem(gemspec)
@@ -219,7 +219,7 @@ unless defined?(JRUBY_VERSION)
       gem.summary = %Q{R2CORBA Devkit faker for RubyInstaller Rubies}
       gem.description = %Q{Fake Devkit loader to satisfy stupid RubyInstaller pre-install hook. }
       gem.email = 'mcorino@remedy.nl'
-      gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
+      gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
       gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = 'lib/rubygems_plugin.rb'
       gem.require_paths = %w{lib}
@@ -228,8 +228,8 @@ unless defined?(JRUBY_VERSION)
       gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard']
       gem.metadata = {
-        "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
-        "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+        'bug_tracker_uri'   => 'https://github.com/RemedyIT/r2corba/issues',
+        'source_code_uri'   => 'https://github.com/RemedyIT/r2corba'
       }
     end
     R2CORBA::Gem.build_gem(gemspec)

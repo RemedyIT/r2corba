@@ -22,25 +22,25 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--o IORFILE",
-            "Set IOR filename.",
+    opts.on('--o IORFILE',
+            'Set IOR filename.',
             "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
-    opts.on("--i ITERATIONS",
-            "Set number of iterations.",
-            "Default: 10", Integer) { |v| OPTIONS[:iter_num] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
+    opts.on('--i ITERATIONS',
+            'Set number of iterations.',
+            'Default: 10', Integer) { |v| OPTIONS[:iter_num] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -97,14 +97,14 @@ end #of servant Simple_Server_i
 if defined?(JRUBY_VERSION)
   ## JacORB needs explicit activation of this option
   props = {
-    "org.omg.PortableInterceptor.ORBInitializerClass.bidir_init" =>
-               "org.jacorb.orb.giop.BiDirConnectionInitializer"
+    'org.omg.PortableInterceptor.ORBInitializerClass.bidir_init' =>
+               'org.jacorb.orb.giop.BiDirConnectionInitializer'
   }
 else
   props = {}
 end
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB', props)
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB', props)
 
 obj = orb.resolve_initial_references('RootPOA')
 
@@ -143,7 +143,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 }
 
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
+  puts 'SIGINT - shutting down ORB...'
   orb.shutdown()
 end
 

@@ -86,8 +86,8 @@ if (Rake::Version::MAJOR.to_i == 10 &&
 
       begin
         return OptionParser.new do |opts|
-          opts.banner = ""
-          opts.separator ""
+          opts.banner = ''
+          opts.separator ''
 
           standard_rake_options.each { |args| opts.on(*args) }
           opts.environment('RAKEOPT')
@@ -367,9 +367,9 @@ module R2CORBA
     def self.define
       _argv = Rake.application.cleanup_args(ARGV)
       OptionParser.new do |opts|
-        opts.banner = "Usage: rake [rake options] -- configure [options]"
+        opts.banner = 'Usage: rake [rake options] -- configure [options]'
 
-        opts.separator ""
+        opts.separator ''
 
         opts.on('--prefix=path',
                 "path prefix of target environment [#{get_config(:prefix)}]") {|v| set_config(:prefix, File.expand_path(v))}
@@ -429,7 +429,7 @@ module R2CORBA
                   "build with debugger support [#{get_config('with-debug')}]")  {|v| CONFIG[:'with-debug'] = true}
         end
 
-        opts.separator ""
+        opts.separator ''
 
         opts.on('--help', 'Show this help message') { puts opts; puts; exit }
       end.parse!(_argv)
@@ -441,7 +441,7 @@ module R2CORBA
         if get_config('jacorb_home') == '' && File.directory?('jacorb')
           set_config('jacorb_home', File.expand_path('jacorb'))
         end
-        raise "Cannot find JacORB. Missing JACORB_HOME configuration!" if get_config('jacorb_home').empty?
+        raise 'Cannot find JacORB. Missing JACORB_HOME configuration!' if get_config('jacorb_home').empty?
       else
         if Dir[File.join('ext', 'libACE.*')].empty? # Don't check for ACE/TAO installation when executed for binary gem install
 
@@ -515,7 +515,7 @@ module R2CORBA
 
       # check availability of RIDL; either as gem or in subdir
       unless File.exist?(File.join('ridl', 'lib', 'ridl', 'ridl.rb')) || (`gem search -i -q ridl`.strip) == 'true'
-        raise "Missing RIDL installation. R2CORBA requires RIDL installed either as gem or in subdirectory ridl."
+        raise 'Missing RIDL installation. R2CORBA requires RIDL installed either as gem or in subdirectory ridl.'
       end
     end
 

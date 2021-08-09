@@ -15,7 +15,7 @@ require 'corba/idl/POAC.rb'
 require 'corba/idl/IORTableC'
 
 begin
-  require "librpoa"
+  require 'librpoa'
 rescue LoadError
   $stderr.puts $!.to_s if $VERBOSE
   raise

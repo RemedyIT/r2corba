@@ -60,7 +60,7 @@ module R2CORBA
           fname
         else
           fp = paths.find do |p|
-            f = p + "/" + fname
+            f = p + '/' + fname
             File.file?(f) && File.readable?(f)
           end
           fp += '/' + fname if !fp.nil?
