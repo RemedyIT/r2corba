@@ -46,12 +46,12 @@ jobs:
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
-    - name: Run rake configure
+    - name: Run ridk exec rake configure
       run: |
         ridk exec rake configure
-    - name: Run rake build
+    - name: Run ridk exec rake build
       run: |
         ridk exec rake build
-    - name: Run rake test
+    - name: Run ridk exec rake test
       run: |
         ridk exec rake test
