@@ -466,8 +466,8 @@ module R2CORBA
             if get_config('taoroot').empty? && (File.directory?(File.join(get_config('aceroot'), 'TAO')) || File.directory?(File.join('ACE', 'TAO')))
               set_config('taoroot', File.directory?(File.join(get_config('aceroot'), 'TAO')) ? File.expand_path(File.join(get_config('aceroot'), 'TAO')) : File.expand_path(File.join('ACE', 'TAO')))
             end
-            if get_config('mpcroot').empty? && (File.directory?(File.join(get_config('aceroot'), 'MPC')) || File.directory?(File.join('ACE', 'MPC')))
-              set_config('mpcroot', File.directory?(File.join(get_config('aceroot'), 'MPC')) ? File.expand_path(File.join(get_config('aceroot'), 'MPC')) : File.expand_path(File.join('ACE', 'MPC')))
+            if get_config('mpcroot').empty? && (File.directory?(File.join('ACE', 'MPC')) || File.directory?(File.join(get_config('aceroot'), 'MPC')))
+              set_config('mpcroot', File.directory?(File.join('ACE', 'MPC')) ? File.expand_path(File.join('ACE', 'MPC')) : File.expand_path(File.join(get_config('aceroot'), 'MPC')))
             end
 
             set_config('aceinstdir', get_config('sodir')) if get_config('aceinstdir').empty?
