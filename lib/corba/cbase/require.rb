@@ -16,6 +16,9 @@ begin
   if RUBY_PLATFORM =~ /mingw32/
     require 'ruby_installer/runtime'
     RubyInstaller::add_dll_directory(_ext_dir)
+    ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+      RubyInstaller::Runtime.add_dll_directory(path) if File.exist?(File.join(path, 'libACE.dll'))
+    end
   end
   require RUBY_PLATFORM =~ /mingw32/ ? "libr2taow" : "libr2tao"
 rescue LoadError
