@@ -85,7 +85,7 @@ begin
   ov1, odesc = tester.op1("case1", v1, desc)
 
   assert '\nERROR: tester.op1 desc FAILED', odesc == "case1: #{desc}"
-  assert '\nERROR: tester.op1 ov FAILED' , v1.basic_data == ov1.basic_data
+  assert '\nERROR: tester.op1 ov FAILED', v1.basic_data == ov1.basic_data
 
   STDERR.puts 'passed'
 
@@ -101,7 +101,7 @@ begin
   ov2, odesc = tester.op1("case2", v2, desc)
 
   assert '\nERROR: tester.op1 - 2 desc FAILED', odesc == "case2: #{desc}"
-  assert '\nERROR: tester.op1 - 2 ov FAILED' , v2.basic_data == ov2.basic_data
+  assert '\nERROR: tester.op1 - 2 ov FAILED', v2.basic_data == ov2.basic_data
   STDERR.puts 'passed'
 
   desc = "A<-tB<-tC, truncate C to B"
@@ -110,8 +110,8 @@ begin
   otv1, odesc = tester.op2(v2, "case2b", desc)
 
   assert '\nERROR: tester.op2 - 2b desc FAILED', odesc == "case2b: #{desc}"
-  assert '\nERROR: tester.op2 - 2b otv1 FAILED' , v2.basic_data == otv1.basic_data
-  assert '\nERROR: tester.op2 - 2b otv1 FAILED' , v2.data1 == otv1.data1
+  assert '\nERROR: tester.op2 - 2b otv1 FAILED', v2.basic_data == otv1.basic_data
+  assert '\nERROR: tester.op2 - 2b otv1 FAILED', v2.data1 == otv1.data1
   STDERR.puts 'passed'
 
   # 3.
@@ -125,8 +125,8 @@ begin
   otv1b, odesc = tester.op2(itv1b, "case3", desc)
 
   assert '\nERROR: tester.op2 - 3 desc FAILED', odesc == "case3: #{desc}"
-  assert '\nERROR: tester.op2 - 3 otv1b FAILED' , itv1b.basic_data == otv1b.basic_data
-  assert '\nERROR: tester.op2 - 3 otv1b FAILED' , itv1b.data1 == otv1b.data1
+  assert '\nERROR: tester.op2 - 3 otv1b FAILED', itv1b.basic_data == otv1b.basic_data
+  assert '\nERROR: tester.op2 - 3 otv1b FAILED', itv1b.data1 == otv1b.data1
   STDERR.puts 'passed'
 
   # 4.
@@ -163,7 +163,7 @@ begin
   ov5, odesc = tester.op1("case5", v5, desc)
 
   assert '\nERROR: tester.op1 - 5 desc FAILED', odesc == "case5: #{desc}"
-  assert '\nERROR: tester.op1 - 5 ov5 FAILED' , v5.basic_data == ov5.basic_data
+  assert '\nERROR: tester.op1 - 5 ov5 FAILED', v5.basic_data == ov5.basic_data
   STDERR.puts 'passed'
 
   desc = "A<-tB<-tC, B & C have nested value type, truncate C to B"
@@ -171,9 +171,9 @@ begin
   otv4, odesc = tester.op3("case5b", v5, desc)
 
   assert '\nERROR: tester.op3 - 5b desc FAILED', odesc == "case5b: #{desc}"
-  assert '\nERROR: tester.op3 - 5b otv4 FAILED' , v5.basic_data == otv4.basic_data
-  assert '\nERROR: tester.op3 - 5b otv4.nv4 FAILED' , v5.nv4.data == otv4.nv4.data
-  assert '\nERROR: tester.op3 - 5b otv4.data4 FAILED' , v5.data4 == otv4.data4
+  assert '\nERROR: tester.op3 - 5b otv4 FAILED', v5.basic_data == otv4.basic_data
+  assert '\nERROR: tester.op3 - 5b otv4.nv4 FAILED', v5.nv4.data == otv4.nv4.data
+  assert '\nERROR: tester.op3 - 5b otv4.data4 FAILED', v5.data4 == otv4.data4
   STDERR.puts 'passed'
 
   # 6.
@@ -185,7 +185,7 @@ begin
   ov, odesc = tester.op1("case6", iv, desc)
 
   assert '\nERROR: tester.op1 - 6 desc FAILED', odesc == "case6: #{desc}"
-  assert '\nERROR: tester.op1 - 6 ov FAILED' , iv.basic_data == ov.basic_data
+  assert '\nERROR: tester.op1 - 6 ov FAILED', iv.basic_data == ov.basic_data
   STDERR.puts 'passed'
 
   # 7.
@@ -218,7 +218,7 @@ begin
   assert '\nERROR: tester.op4 - 7 desc FAILED', odesc == "case7: #{desc}"
   total = 5 * (v1.basic_data + v2.basic_data +
                v3.basic_data + v4.basic_data)
-  assert '\nERROR: tester.op4 - 7 ov FAILED' ,  total == ov.basic_data
+  assert '\nERROR: tester.op4 - 7 ov FAILED',  total == ov.basic_data
   STDERR.puts 'passed'
 
   # 8.
@@ -232,7 +232,7 @@ begin
   ov1, odesc = tester.op2(v1, "case8", desc)
 
   assert '\nERROR: tester.op2 - 8 desc FAILED', odesc == "case8: #{desc}"
-  assert '\nERROR: tester.op2 - 8 ov1 FAILED' , v1.basic_data == ov1.basic_data &&
+  assert '\nERROR: tester.op2 - 8 ov1 FAILED', v1.basic_data == ov1.basic_data &&
                                                 v1.data1 == ov1.data1
   STDERR.puts 'passed'
 
@@ -247,7 +247,7 @@ begin
   ov1, odesc = tester.op5(a, "case9", desc)
 
   assert '\nERROR: tester.op5 - 9 desc FAILED', odesc == "case9: #{desc}"
-  assert '\nERROR: tester.op5 - 9 ov1 FAILED' , v1.basic_data == ov1.basic_data &&
+  assert '\nERROR: tester.op5 - 9 ov1 FAILED', v1.basic_data == ov1.basic_data &&
                                                 v1.data1 == ov1.data1
   STDERR.puts 'passed'
 
@@ -263,7 +263,7 @@ begin
   ov1, odesc = tester.op5(a, "case10", desc)
 
   assert '\nERROR: tester.op5 - 10 desc FAILED', odesc == "case10: #{desc}"
-  assert '\nERROR: tester.op5 - 10 ov1 FAILED' , v1.basic_data == ov1.basic_data &&
+  assert '\nERROR: tester.op5 - 10 ov1 FAILED', v1.basic_data == ov1.basic_data &&
                                                  v1.data1 == ov1.data1
   STDERR.puts 'passed'
 

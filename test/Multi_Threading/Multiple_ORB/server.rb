@@ -96,7 +96,7 @@ orb_trds.concat((0..1).collect do |i|
 
     hello_ior = orb.object_to_string(hello_obj)
 
-    open("#{OPTIONS[:iorfile]}#{sid}.ior" , 'w') { |io|
+    open("#{OPTIONS[:iorfile]}#{sid}.ior", 'w') { |io|
       io.write hello_ior
     }
 

@@ -81,31 +81,31 @@ begin
   assert_not 'Failed to resolve RootPOA', CORBA.is_nil(rootpoa) || !rootpoa.is_a?(PortableServer::POA)
 
   pol = rootpoa.create_thread_policy(PortableServer::SINGLE_THREAD_MODEL)
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(PortableServer::ThreadPolicy) and pol.value == PortableServer::SINGLE_THREAD_MODEL
 
   pol = rootpoa.create_lifespan_policy(PortableServer::PERSISTENT)
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(PortableServer::LifespanPolicy) and pol.value == PortableServer::PERSISTENT
 
   pol = rootpoa.create_id_uniqueness_policy(PortableServer::UNIQUE_ID)
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(PortableServer::IdUniquenessPolicy) and pol.value == PortableServer::UNIQUE_ID
 
   pol = rootpoa.create_id_assignment_policy(PortableServer::USER_ID)
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(PortableServer::IdAssignmentPolicy) and pol.value == PortableServer::USER_ID
 
   pol = rootpoa.create_implicit_activation_policy(PortableServer::NO_IMPLICIT_ACTIVATION)
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(PortableServer::ImplicitActivationPolicy) and pol.value == PortableServer::NO_IMPLICIT_ACTIVATION
 
   pol = rootpoa.create_servant_retention_policy(PortableServer::RETAIN)
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(PortableServer::ServantRetentionPolicy) and pol.value == PortableServer::RETAIN
 
   pol = rootpoa.create_request_processing_policy(PortableServer::USE_DEFAULT_SERVANT)
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(PortableServer::RequestProcessingPolicy) and pol.value == PortableServer::USE_DEFAULT_SERVANT
 
   assert_except('orb.create_policy should have thrown a PolicyError',
@@ -113,7 +113,7 @@ begin
 
   pol = orb.create_policy(BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                           CORBA::Any.to_any(BiDirPolicy::BOTH, BiDirPolicy::BidirectionalPolicyValue._tc))
-  assert 'Failed to create correct policy'  ,
+  assert 'Failed to create correct policy',
          !pol.nil? and pol.is_a?(BiDirPolicy) and pol.value == BiDirPolicy::BOTH
 
   poa_man = rootpoa.the_POAManager
