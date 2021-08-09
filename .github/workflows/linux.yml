@@ -7,15 +7,20 @@ on:
     - cron: '0 7 * * SUN'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tao:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - CC: gcc-4.8
             CXX: g++-4.8
             PackageDeps: g++-4.8
-            os: ubuntu-16.04
+            os: ubuntu-18.04
             ruby: '2.4'
           - CC: gcc-6
             CXX: g++-6
@@ -40,6 +45,11 @@ jobs:
           - CC: gcc-10
             CXX: g++-10
             PackageDeps: g++-10
+            os: ubuntu-20.04
+            ruby: '2.7'
+          - CC: gcc-11
+            CXX: g++-11
+            PackageDeps: g++-11
             os: ubuntu-20.04
             ruby: '2.7'
     runs-on: ${{ matrix.os }}
