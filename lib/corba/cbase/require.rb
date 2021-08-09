@@ -13,7 +13,7 @@
 begin
   _ext_dir = File.expand_path(File.join(File.dirname(__FILE__), '../../../ext'))
   $: << _ext_dir unless $:.include?(_ext_dir) || !File.directory?(_ext_dir)
-  require RUBY_PLATFORM =~ /mingw32/ ? "libr2taow" : "libr2tao"
+  require "libr2tao"
 rescue LoadError
   $stderr.puts $!.to_s if $VERBOSE
   raise
