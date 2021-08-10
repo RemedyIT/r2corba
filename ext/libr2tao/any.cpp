@@ -792,7 +792,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 VALUE r2tao_Struct2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE rtc, VALUE roottc)
 {
   if (TAO_debug_level > 9)
-    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Struct2Ruby:: tc=%@, id=%s\n", _tc, _tc->id ()));
+    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Struct2Ruby:: tc=%@, id=%C\n", _tc, _tc->id ()));
 
   DynamicAny::DynAny_var da = r2tao_CreateDynAny (_any);
   DynamicAny::DynStruct_var das = DynamicAny::DynStruct::_narrow (da.in ());
@@ -822,7 +822,7 @@ VALUE r2tao_Struct2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE 
 VALUE r2tao_Union2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE rtc, VALUE roottc)
 {
   if (TAO_debug_level > 9)
-    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Union2Ruby:: tc=%@, id=%s\n", _tc, _tc->id ()));
+    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Union2Ruby:: tc=%@, id=%C\n", _tc, _tc->id ()));
 
   VALUE new_ru = R2TAO_NEW_TCOBJECT (roottc);
 
@@ -1513,7 +1513,7 @@ R2TAO_EXPORT void r2tao_Any4Value(CORBA::Any& _any, CORBA::TypeCode_ptr _tc)
 {
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - r2tao_Any4Value:: "
-                         "initialising any for value %s\n",
+                         "initialising any for value %C\n",
                          _tc->id ()));
 
   CORBA::ValueFactory factory =

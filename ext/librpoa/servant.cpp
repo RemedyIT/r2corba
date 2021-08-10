@@ -70,16 +70,16 @@ void r2tao_init_Servant()
   VALUE klass;
 
   r2tao_cServant = klass = rb_eval_string("::R2CORBA::PortableServer::Servant");
-  rb_define_alloc_func (r2tao_cServant, RUBY_ALLOC_FUNC (srv_alloc));
-  rb_define_method(klass, "_default_POA", RUBY_METHOD_FUNC(r2tao_Servant_default_POA), 0);
-  rb_define_method(klass, "_this", RUBY_METHOD_FUNC(r2tao_Servant_this), 0);
+  rb_define_alloc_func (r2tao_cServant, srv_alloc);
+  rb_define_method(klass, "_default_POA", r2tao_Servant_default_POA, 0);
+  rb_define_method(klass, "_this", r2tao_Servant_this, 0);
 
   r2tao_cServerRequest = klass = rb_define_class_under (r2tao_nsCORBA, "ServerRequest", rb_cObject);
-  rb_define_method(klass, "operation", RUBY_METHOD_FUNC(r2tao_ServerRequest_operation), 0);
-  rb_define_method(klass, "describe", RUBY_METHOD_FUNC(r2tao_ServerRequest_describe), 1);
-  rb_define_method(klass, "arguments", RUBY_METHOD_FUNC(r2tao_ServerRequest_arguments), 0);
-  rb_define_method(klass, "[]", RUBY_METHOD_FUNC(r2tao_ServerRequest_get), 1);
-  rb_define_method(klass, "[]=", RUBY_METHOD_FUNC(r2tao_ServerRequest_set), 2);
+  rb_define_method(klass, "operation", r2tao_ServerRequest_operation, 0);
+  rb_define_method(klass, "describe", r2tao_ServerRequest_describe, 1);
+  rb_define_method(klass, "arguments", r2tao_ServerRequest_arguments, 0);
+  rb_define_method(klass, "[]", r2tao_ServerRequest_get, 1);
+  rb_define_method(klass, "[]=", r2tao_ServerRequest_set, 2);
 
   ID_arg_list = rb_eval_string (":arg_list");
   ID_result_type = rb_eval_string (":result_type");
@@ -94,6 +94,7 @@ void r2tao_init_Servant()
   interface_repository_id_ID = rb_intern ("_interface_repository_id");
 
   r2tao_cDynamicImp = klass = rb_eval_string("::R2CORBA::PortableServer::DynamicImplementation");
+  //rb_define_alloc_func (r2tao_cDynamicImp, srv_alloc);
 
   invoke_ID = rb_intern ("invoke");
   primary_interface_ID = rb_intern ("_primary_interface");
@@ -115,9 +116,9 @@ struct DSI_Data {
   VALUE _rData;
 
   DSI_Data(CORBA::ServerRequest_ptr _req)
-    : _request(_req), _nvlist(0), _rData(Qnil) {}
+    : _request(_req), _nvlist(nullptr), _rData(Qnil) {}
   ~DSI_Data() {
-    if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = 0; }
+    if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = nullptr; }
   }
 };
 
@@ -1168,7 +1169,7 @@ VALUE r2tao_Servant_default_POA(VALUE self)
 {
   R2TAO_TRY
   {
-    DSI_Servant* _servant = nullptr;
+    DSI_Servant* _servant {};
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object
@@ -1194,7 +1195,7 @@ VALUE r2tao_Servant_this(VALUE self)
   R2TAO_TRY
   {
     bool _new_srv = false;
-    DSI_Servant* _servant = nullptr;
+    DSI_Servant* _servant {};
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object
@@ -1246,9 +1247,8 @@ VALUE r2tao_Servant_this(VALUE self)
 static VALUE
 srv_alloc(VALUE klass)
 {
-  VALUE obj;
   // we start off without the C++ representation
-  obj = Data_Wrap_Struct(klass, 0, srv_free, 0);
+  VALUE obj = Data_Wrap_Struct(klass, nullptr, srv_free, nullptr);
   return obj;
 }
 

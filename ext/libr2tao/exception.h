@@ -28,7 +28,7 @@
   { \
     r2tao_sysex(sex); \
   } \
-  catch (CORBA::UnknownUserException& uex) \
+  catch (const CORBA::UnknownUserException& uex) \
   { \
     r2tao_unknown_userex (uex); \
   } \

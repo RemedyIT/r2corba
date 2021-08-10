@@ -18,25 +18,25 @@ class DSI_Servant : public PortableServer::DynamicImplementation
 {
 public:
   /// ctor
+  DSI_Servant () = delete;
   DSI_Servant (VALUE rbServant);
-  /// dtor
-  virtual ~DSI_Servant ();
+  ~DSI_Servant () override;
 
-  virtual void invoke (CORBA::ServerRequest_ptr request);
+  void invoke (CORBA::ServerRequest_ptr request) override;
 
-  virtual CORBA::RepositoryId _primary_interface (
+  CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+      PortableServer::POA_ptr poa) override;
 
-  virtual CORBA::Boolean _is_a (const char *logical_type_id);
+  CORBA::Boolean _is_a (const char *logical_type_id) override;
 
-  virtual CORBA::Boolean _non_existent ();
+  CORBA::Boolean _non_existent () override;
 
   //virtual CORBA::InterfaceDef_ptr _get_interface ();
 
-  virtual CORBA::Object_ptr _get_component ();
+  CORBA::Object_ptr _get_component () override;
 
-  virtual char * _repository_id ();
+  char * _repository_id () override;
 
   enum METHOD {
     NONE,
@@ -56,7 +56,7 @@ public:
   void activate_servant ();
 
 protected:
-  virtual const char *_interface_repository_id () const;
+  const char *_interface_repository_id () const override;
 
   void register_with_servant ();
 
