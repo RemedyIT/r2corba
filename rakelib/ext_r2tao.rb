@@ -175,7 +175,7 @@ THE_END
       # First follow all http redirects
       url = URI(follow_url(_url))
       Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
-       _fout = File.open(_fnm, "wb")
+       _fout = File.open(_fnm, 'wb')
         begin
           http.request_get(url) do |resp|
             _sndlen =  resp.content_length

@@ -23,22 +23,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set IOR.",
+    opts.on('--k IORFILE',
+            'Set IOR.',
             "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0", Integer) { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0', Integer) { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -55,7 +55,7 @@ Min_timeout = 0
 Max_timeout = 20
 
 None, Orb1, Thread1, Object1 = (0..3).to_a
-To_type_names = [ "none", "orb", "thread", "object" ]
+To_type_names = [ 'none', 'orb', 'thread', 'object' ]
 
 Timeout_count = [0, 0, 0, 0]
 In_time_count = [0, 0, 0, 0]
@@ -69,7 +69,7 @@ def send_echo (ctype, orb, server, t)
       Timeout_count[ctype] += 1
 
       # Trap this exception and continue...
-      puts "==> Trapped a TIMEOUT exception (expected)"
+      puts '==> Trapped a TIMEOUT exception (expected)'
 
       # Sleep so the server can send the reply...
       tv = Max_timeout / 1000.0  # max_timeout is in msec, so get seconds
@@ -87,7 +87,7 @@ def send_echo (ctype, orb, server, t)
 end
 
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
 
@@ -129,7 +129,7 @@ begin
   puts "client (#{Process.pid}) testing from #{Min_timeout} to #{Max_timeout} milliseconds"
 
   for t in Min_timeout...Max_timeout
-    puts ""
+    puts ''
     puts "client (#{Process.pid}) ================================"
     puts "client (#{Process.pid}) Trying with timeout = #{t} msec"
 

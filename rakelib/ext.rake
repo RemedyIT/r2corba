@@ -42,7 +42,7 @@ else # !JRUBY_VERSION
                                      R2CORBA::Ext.rpoa_mpc_file,
                                      R2CORBA::Ext.rpol_mpc_file] do
     # check availability of PERL
-    raise "PERL missing! A working version of PERL in the PATH is required." unless system('perl -v')
+    raise 'PERL missing! A working version of PERL in the PATH is required.' unless system('perl -v')
     # configure R2TAO build
     _mwc = File.join(get_config('aceroot'), 'bin', 'mwc.pl')
 
@@ -89,7 +89,7 @@ else # !JRUBY_VERSION
   unless get_config('without-tao')
 
     file R2CORBA::Ext.ace_config_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") {|f|
+      File.open(t.name, 'w') {|f|
         f.puts R2CORBA::Ext.ace_config
       }
     end
@@ -97,7 +97,7 @@ else # !JRUBY_VERSION
     CLOBBER.include R2CORBA::Ext.ace_config_path
 
     file R2CORBA::Ext.platform_macros_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") {|f|
+      File.open(t.name, 'w') {|f|
         f.puts R2CORBA::Ext.platform_macros
       }
     end
@@ -105,7 +105,7 @@ else # !JRUBY_VERSION
     CLOBBER.include R2CORBA::Ext.platform_macros_path
 
     file R2CORBA::Ext.default_features_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") do |f|
+      File.open(t.name, 'w') do |f|
         f.puts R2CORBA::Ext.default_features
       end
     end
@@ -113,7 +113,7 @@ else # !JRUBY_VERSION
     CLOBBER.include R2CORBA::Ext.default_features_path
 
     file R2CORBA::Ext.tao_mwc_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") do |f|
+      File.open(t.name, 'w') do |f|
         f.puts R2CORBA::Ext.tao_mwc
       end
     end
@@ -125,7 +125,7 @@ else # !JRUBY_VERSION
                                        R2CORBA::Ext.default_features_path,
                                        R2CORBA::Ext.tao_mwc_path]  do
       # check availability of PERL
-      raise "PERL missing! A working version of PERL in the PATH is required." unless system('perl -v')
+      raise 'PERL missing! A working version of PERL in the PATH is required.' unless system('perl -v')
       # generate ACE+TAO makefile
       cur_dir = Dir.getwd
       Dir.chdir File.expand_path(get_config('aceroot'))

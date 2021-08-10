@@ -29,7 +29,7 @@ namespace :r2corba do
   namespace :config do
     task :show do
       R2CORBA::CFGKEYS.each do |ck|
-        puts "%20s => %s" % [ck, get_config(ck)]
+        puts '%20s => %s' % [ck, get_config(ck)]
       end
     end
   end

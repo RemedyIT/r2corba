@@ -23,22 +23,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set INS IOR filename.",
+    opts.on('--k IORFILE',
+            'Set INS IOR filename.',
             "Default: 'file://ins.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -57,7 +57,7 @@ class MyHello < POA::Test::Hello
   end
 
   def get_string()
-    "Hello there!"
+    'Hello there!'
   end
 
   def shutdown()
@@ -66,14 +66,14 @@ class MyHello < POA::Test::Hello
 end #of servant MyHello
 
 # initialize ORB
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 # resolve NamingContext
 obj = orb.string_to_object(OPTIONS[:iorfile])
 
 nc = CosNaming::NamingContextExt._narrow(obj)
 
-assert_not "ERROR: INS IOR resolved to nil object!", CORBA::is_nil(nc)
+assert_not 'ERROR: INS IOR resolved to nil object!', CORBA::is_nil(nc)
 
 # initialize POA
 obj = orb.resolve_initial_references('RootPOA')
@@ -96,7 +96,7 @@ nc.bind(name, hello_obj)
 
 # initialize signal handling
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
+  puts 'SIGINT - shutting down ORB...'
   orb.shutdown()
 end
 

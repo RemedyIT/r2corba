@@ -102,7 +102,7 @@ module R2CORBA
             return jany
           else
             dynFactory = CORBA::Native::Dynamic::DynAnyFactoryHelper.narrow(
-                          (jorb || CORBA::ORB._orb).resolve_initial_references("DynAnyFactory"))
+                          (jorb || CORBA::ORB._orb).resolve_initial_references('DynAnyFactory'))
             jdynany = dynFactory.create_dyn_any_from_type_code(rtc.tc_)
             begin
               unless rval.nil?
@@ -224,7 +224,7 @@ module R2CORBA
             end
           else
             dynFactory = CORBA::Native::Dynamic::DynAnyFactoryHelper.narrow(
-                          (jorb || CORBA::ORB._orb).resolve_initial_references("DynAnyFactory"))
+                          (jorb || CORBA::ORB._orb).resolve_initial_references('DynAnyFactory'))
             jdynany = dynFactory.create_dyn_any(jany)
             begin
               restc = rtc.resolved_tc

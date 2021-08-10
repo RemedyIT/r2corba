@@ -21,22 +21,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--o IORFILE",
-            "Set IOR base filename.",
+    opts.on('--o IORFILE',
+            'Set IOR base filename.',
             "Default: 'server'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -66,7 +66,7 @@ end #of servant MyHello
 orb_trds = []
 
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
+  puts 'SIGINT - shutting down ORB...'
   orb_trds.each { |t| t[:orb].shutdown() }
 end
 
@@ -76,7 +76,7 @@ end
 
 orb_trds.concat((0..1).collect do |i|
   Thread.new(i) do |sid|
-    orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], "myORB#{sid}")
+    orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], "myORB#{sid}")
 
     Thread.current[:orb] = orb # TSS
 
@@ -96,7 +96,7 @@ orb_trds.concat((0..1).collect do |i|
 
     hello_ior = orb.object_to_string(hello_obj)
 
-    open("#{OPTIONS[:iorfile]}#{sid}.ior" , 'w') { |io|
+    open("#{OPTIONS[:iorfile]}#{sid}.ior", 'w') { |io|
       io.write hello_ior
     }
 

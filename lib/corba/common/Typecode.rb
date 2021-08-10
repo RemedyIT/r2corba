@@ -184,7 +184,7 @@ module R2CORBA
       end
 
       def equal?(tc)
-        raise ArgumentError, "expected CORBA::TypeCode" unless tc.is_a?(CORBA::TypeCode)
+        raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
         begin
           self.tc_.equal(tc.tc_)
         rescue ::NativeException
@@ -193,7 +193,7 @@ module R2CORBA
       end
 
       def equivalent?(tc)
-        raise ArgumentError, "expected CORBA::TypeCode" unless tc.is_a?(CORBA::TypeCode)
+        raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
         begin
           self.tc_.equivalent(tc.tc_)
         rescue ::NativeException
@@ -466,7 +466,7 @@ module R2CORBA
             "widestring size exceeds bound: #{self.length.to_s}",
             1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           raise ::CORBA::MARSHAL.new(
-            "invalid widestring element(s)",
+            'invalid widestring element(s)',
             1, ::CORBA::COMPLETED_NO) if val.any? { |el| !(UShortRange === (el.respond_to?(:to_int) ? el.to_int : el)) }
           val.any? { |el| !(::Integer === el) } ? val.collect { |el| el.to_int } : val
         end
@@ -1093,17 +1093,17 @@ module R2CORBA
     end
 
     def CORBA._tc_CCMObject
-      @@tc_CCMObject ||= TypeCode::Component.new("IDL:omg.org/CORBA/CCMObject:1.0", "CCMObject", CORBA::Object).freeze
+      @@tc_CCMObject ||= TypeCode::Component.new('IDL:omg.org/CORBA/CCMObject:1.0', 'CCMObject', CORBA::Object).freeze
     end
 
     def CORBA._tc_CCHome
-      @@tc_CCHome ||= TypeCode::Home.new("IDL:omg.org/CORBA/CCHome:1.0", "CCHome", CORBA::Object).freeze
+      @@tc_CCHome ||= TypeCode::Home.new('IDL:omg.org/CORBA/CCHome:1.0', 'CCHome', CORBA::Object).freeze
     end
 
     # define system exception related typecode constants
 
     def CORBA._tc_CompletionStatus
-      @@tc_CompletionStatus ||= TypeCode::Enum.new("IDL:omg.org/CORBA/CompletionStatus:1.0", "CompletionStatus",
+      @@tc_CompletionStatus ||= TypeCode::Enum.new('IDL:omg.org/CORBA/CompletionStatus:1.0', 'CompletionStatus',
                                                    CORBA::COMPLETED_TXT.collect {|t| "COMPLETED_#{t}"})
     end
 

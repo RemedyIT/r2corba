@@ -31,12 +31,12 @@ module R2CORBA
           end
         end
 
-        Id  = "IDL:omg.org/CORBA/Object:1.0".freeze
+        Id  = 'IDL:omg.org/CORBA/Object:1.0'.freeze
         Ids = [ Id ].freeze
 
         protected
         def init_corba_portable_stub()
-          @ids ||= ["IDL:omg.org/CORBA/Object:1.0"]
+          @ids ||= ['IDL:omg.org/CORBA/Object:1.0']
         end
 
         def _ids; @ids; end
@@ -47,7 +47,7 @@ module R2CORBA
 
         public
         def _narrow!(klass)
-          raise CORBA::OBJECT_NOT_EXIST.new("Nil object narrowed!") if self._is_nil?
+          raise CORBA::OBJECT_NOT_EXIST.new('Nil object narrowed!') if self._is_nil?
           raise(TypeError, "invalid object narrowed: #{self.class}") unless self.is_a?(CORBA::Stub) && self._is_a?(klass::Id)
           self.extend klass
           _append_ids(*klass::Ids)
@@ -55,7 +55,7 @@ module R2CORBA
         end
 
         def _unchecked_narrow!(klass)
-          raise CORBA::OBJECT_NOT_EXIST.new("Nil object narrowed!") if self._is_nil?
+          raise CORBA::OBJECT_NOT_EXIST.new('Nil object narrowed!') if self._is_nil?
           raise(TypeError, "invalid object narrowed: #{self.class}") unless self.is_a?(CORBA::Stub)
           self.extend klass
           _append_ids(*klass::Ids)
@@ -67,10 +67,10 @@ module R2CORBA
         end
 
         def inspect()
-          s = ""
+          s = ''
           s << self.class.name.to_s << "\n" <<
                "type_id: \n" <<
-               "  " << @ids.join("\n  ") << "\n"
+               '  ' << @ids.join("\n  ") << "\n"
         end
       end # Stub
     end # Portable

@@ -23,22 +23,22 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set IOR.",
+    opts.on('--k IORFILE',
+            'Set IOR.',
             "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -52,27 +52,27 @@ end
 
 # tests to test preprocessor processing
 
-assert "ERROR: struct Test::S1 not defined (correctly)!" do
+assert 'ERROR: struct Test::S1 not defined (correctly)!' do
   Test.const_defined?('S1') and Test::S1.ancestors.include?(CORBA::Portable::Struct)
 end
 
-assert "ERROR: Test::MyNum constant not defined (correctly)!" do
+assert 'ERROR: Test::MyNum constant not defined (correctly)!' do
   Test.const_defined?('MyNum') and Test::MyNum == 12345
 end
 
-assert "ERROR: Test::MyString constant not defined (correctly)!" do
+assert 'ERROR: Test::MyString constant not defined (correctly)!' do
   Test.const_defined?('MyString') and Test::MyString == 'hello'
 end
 
 # test results of 'typeprefix' and 'typeid'
 
-assert "ERROR: typeprefix not correctly handled", I2::If3._tc.id == "IDL:MyPrefix/i2/if3:1.0"
+assert 'ERROR: typeprefix not correctly handled', I2::If3._tc.id == 'IDL:MyPrefix/i2/if3:1.0'
 
-assert "ERROR: typeid not correctly handled", I2::If2._tc.id == "IDL:MyIF2:0.1"
+assert 'ERROR: typeid not correctly handled', I2::If2._tc.id == 'IDL:MyIF2:0.1'
 
 # CORBA IDL tests
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
 
@@ -90,11 +90,11 @@ begin
 
   hello_obj.shutdown()
 
-  assert_not "ERROR: Object is reported nil!", CORBA::is_nil(hello_obj)
+  assert_not 'ERROR: Object is reported nil!', CORBA::is_nil(hello_obj)
 
   hello_obj._free_ref()
 
-  assert "ERROR: Object is reported non-nil!", CORBA::is_nil(hello_obj)
+  assert 'ERROR: Object is reported non-nil!', CORBA::is_nil(hello_obj)
 
 ensure
 

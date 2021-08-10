@@ -12,7 +12,7 @@ module TAOGem
 
   def self.define_spec(name, version, &block)
     @@gemspec = Gem::Specification.new(name, version)
-    @@gemspec.required_rubygems_version = Gem::Requirement.new(">= 0") if @@gemspec.respond_to? :required_rubygems_version=
+    @@gemspec.required_rubygems_version = Gem::Requirement.new('>= 0') if @@gemspec.respond_to? :required_rubygems_version=
     block.call(@@gemspec)
     @@gemspec
   end
@@ -39,7 +39,7 @@ task :define_gemspec do
     gem.summary = %Q{TAO sourcecode for building R2CORBA}
     gem.description = %Q{TAO sourcecode for building R2CORBA}
     gem.email = 'mcorino@remedy.nl'
-    gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
+    gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
     gem.authors = ['Martin Corino', 'Johnny Willemsen']
     gem.files = Dir['lib/**/*']
     gem.files.concat(Dir["src/ACE+TAO-src-#{TAOGem::VERSION}.tar.gz"])
@@ -51,8 +51,8 @@ task :define_gemspec do
     gem.required_ruby_version = '>= 2.0'
     gem.licenses = ['DOC']
     gem.metadata = {
-      "bug_tracker_uri"   => "https://github.com/DOCGroup/ACE_TAO/issues",
-      "source_code_uri"   => "https://github.com/DOCGroup/ACE_TAO"
+      'bug_tracker_uri'   => 'https://github.com/DOCGroup/ACE_TAO/issues',
+      'source_code_uri'   => 'https://github.com/DOCGroup/ACE_TAO'
     }
   end
 end

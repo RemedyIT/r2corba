@@ -24,25 +24,25 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--o FILENAME",
-            "Set corbaname IOR filename.",
+    opts.on('--o FILENAME',
+            'Set corbaname IOR filename.',
             "Default: 'corbaname.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--p PORT", Integer,
-            "INS port number.",
-            "Default: 2345") { |v| OPTIONS[:ins_port] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--p PORT', Integer,
+            'INS port number.',
+            'Default: 2345') { |v| OPTIONS[:ins_port] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -61,7 +61,7 @@ class MyHello < POA::Test::Hello
   end
 
   def get_string()
-    "Hello there!"
+    'Hello there!'
   end
 
   def shutdown()
@@ -70,7 +70,7 @@ class MyHello < POA::Test::Hello
 end #of servant MyHello
 
 # initialize ORB
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 # create NameService corbaloc
 ins_url = "iiop:localhost:#{OPTIONS[:ins_port]}/NamingService"
@@ -90,7 +90,7 @@ full_name = [CosNaming::NameComponent.new('', 'root'),
 nc_new = nc.bind_new_context(full_name[0, 1])
 nc_new = nc_new.bind_new_context(full_name[1, 1])
 
-assert_not "ERROR: INS IOR resolved to nil object!", CORBA::is_nil(nc)
+assert_not 'ERROR: INS IOR resolved to nil object!', CORBA::is_nil(nc)
 
 # initialize POA
 obj = orb.resolve_initial_references('RootPOA')
@@ -122,7 +122,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 
 # initialize signal handling
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
+  puts 'SIGINT - shutting down ORB...'
   orb.shutdown()
 end
 

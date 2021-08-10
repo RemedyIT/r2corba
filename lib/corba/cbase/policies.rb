@@ -12,7 +12,7 @@
 require 'corba/idl/TAO_ExtC'
 
 begin
-  require "librpol"
+  require 'librpol'
 rescue LoadError
   $stderr.puts $!.to_s if $VERBOSE
   raise
