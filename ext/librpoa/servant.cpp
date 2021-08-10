@@ -25,6 +25,7 @@
 #include "orb.h"
 #include "servant.h"
 #include <memory>
+#include <cstring>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -70,7 +71,7 @@ void r2tao_init_Servant()
   VALUE klass;
 
   r2tao_cServant = klass = rb_eval_string("::R2CORBA::PortableServer::Servant");
-  rb_define_alloc_func (r2tao_cServant, RUBY_ALLOC_FUNC (srv_alloc));
+  rb_define_alloc_func (r2tao_cServant, srv_alloc);
   rb_define_method(klass, "_default_POA", RUBY_METHOD_FUNC(r2tao_Servant_default_POA), 0);
   rb_define_method(klass, "_this", RUBY_METHOD_FUNC(r2tao_Servant_this), 0);
 
@@ -94,6 +95,7 @@ void r2tao_init_Servant()
   interface_repository_id_ID = rb_intern ("_interface_repository_id");
 
   r2tao_cDynamicImp = klass = rb_eval_string("::R2CORBA::PortableServer::DynamicImplementation");
+  //rb_define_alloc_func (r2tao_cDynamicImp, srv_alloc);
 
   invoke_ID = rb_intern ("invoke");
   primary_interface_ID = rb_intern ("_primary_interface");
@@ -115,9 +117,9 @@ struct DSI_Data {
   VALUE _rData;
 
   DSI_Data(CORBA::ServerRequest_ptr _req)
-    : _request(_req), _nvlist(0), _rData(Qnil) {}
+    : _request(_req), _nvlist(nullptr), _rData(Qnil) {}
   ~DSI_Data() {
-    if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = 0; }
+    if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = nullptr; }
   }
 };
 
@@ -285,11 +287,11 @@ VALUE r2tao_ServerRequest_get(VALUE self, VALUE key)
     if (rb_obj_is_kind_of (key, rb_cString) == Qtrue)
     {
       char* arg_name = RSTRING_PTR (key);
-      CORBA::ULong arg_num = dsi_data->_nvlist->count ();
-      for (CORBA::ULong ix=0; ix<arg_num ;++ix)
+      CORBA::ULong const arg_num = dsi_data->_nvlist->count ();
+      for (CORBA::ULong ix=0; ix < arg_num ;++ix)
       {
         CORBA::NamedValue_ptr _nv = dsi_data->_nvlist->item (ix);
-        if (_nv->name () && ACE_OS::strcmp (arg_name, _nv->name ()) == 0)
+        if (_nv->name () && std::strcmp (arg_name, _nv->name ()) == 0)
         {
           R2TAO_TRY
           {
@@ -339,11 +341,11 @@ VALUE r2tao_ServerRequest_set(VALUE self, VALUE key, VALUE val)
     if (rb_obj_is_kind_of (key, rb_cString) == Qtrue)
     {
       char* arg_name = RSTRING_PTR (key);
-      CORBA::ULong arg_num = dsi_data->_nvlist->count ();
-      for (CORBA::ULong ix=0; ix<arg_num ;++ix)
+      CORBA::ULong const arg_num = dsi_data->_nvlist->count ();
+      for (CORBA::ULong ix = 0; ix < arg_num ;++ix)
       {
         CORBA::NamedValue_ptr _nv = dsi_data->_nvlist->item (ix);
-        if (_nv->name () && ACE_OS::strcmp (arg_name, _nv->name ()) == 0)
+        if (_nv->name () && std::strcmp (arg_name, _nv->name ()) == 0)
         {
           R2TAO_TRY
           {
@@ -479,15 +481,15 @@ VALUE DSI_Servant::_invoke_implementation(VALUE args)
 
 DSI_Servant::METHOD  DSI_Servant::method_id (const char* method)
 {
-  if (ACE_OS::strcmp (method, "_is_a") == 0)
+  if (std::strcmp (method, "_is_a") == 0)
     return IS_A;
-  else if (ACE_OS::strcmp (method, "_repository_id") == 0)
+  else if (std::strcmp (method, "_repository_id") == 0)
     return REPOSITORY_ID;
-  else if (ACE_OS::strcmp (method, "_non_existent") == 0)
+  else if (std::strcmp (method, "_non_existent") == 0)
     return NON_EXISTENT;
-  else if (ACE_OS::strcmp (method, "_component") == 0)
+  else if (std::strcmp (method, "_component") == 0)
     return GET_COMPONENT;
-  else if (ACE_OS::strcmp (method, "_interface") == 0)
+  else if (std::strcmp (method, "_interface") == 0)
     return GET_INTERFACE;
 
   return NONE;
@@ -515,7 +517,7 @@ void DSI_Servant::invoke (CORBA::ServerRequest_ptr request)
   ThreadSafeArg tca_(this, request);
 
   void* rc = r2tao_call_thread_safe (DSI_Servant::thread_safe_invoke, &tca_);
-  if (rc != 0)
+  if (rc != nullptr)
   {
     CORBA::SystemException* exc = reinterpret_cast<CORBA::SystemException*> (rc);
     std::unique_ptr<CORBA::SystemException> e_ptr(exc);
@@ -1168,7 +1170,7 @@ VALUE r2tao_Servant_default_POA(VALUE self)
 {
   R2TAO_TRY
   {
-    DSI_Servant* _servant = nullptr;
+    DSI_Servant* _servant {};
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object
@@ -1194,7 +1196,7 @@ VALUE r2tao_Servant_this(VALUE self)
   R2TAO_TRY
   {
     bool _new_srv = false;
-    DSI_Servant* _servant = nullptr;
+    DSI_Servant* _servant {};
     if (DATA_PTR (self) == 0)
     {
       // create new C++ servant object
@@ -1246,9 +1248,8 @@ VALUE r2tao_Servant_this(VALUE self)
 static VALUE
 srv_alloc(VALUE klass)
 {
-  VALUE obj;
   // we start off without the C++ representation
-  obj = Data_Wrap_Struct(klass, 0, srv_free, 0);
+  VALUE obj = Data_Wrap_Struct(klass, nullptr, srv_free, nullptr);
   return obj;
 }
 

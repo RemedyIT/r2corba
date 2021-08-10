@@ -54,6 +54,7 @@
 #include "tao/Object_Loader.h"
 #include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
+#include <cstring>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -792,7 +793,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 VALUE r2tao_Struct2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE rtc, VALUE roottc)
 {
   if (TAO_debug_level > 9)
-    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Struct2Ruby:: tc=%@, id=%s\n", _tc, _tc->id ()));
+    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Struct2Ruby:: tc=%@, id=%C\n", _tc, _tc->id ()));
 
   DynamicAny::DynAny_var da = r2tao_CreateDynAny (_any);
   DynamicAny::DynStruct_var das = DynamicAny::DynStruct::_narrow (da.in ());
@@ -809,7 +810,7 @@ VALUE r2tao_Struct2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE 
     VALUE mrtc = rb_funcall (rtc, member_type_ID, 1, ULONG2NUM(m));
     VALUE rmval = r2tao_Any2Ruby (nvps[m].value, mtc.in (), mrtc, mrtc);
     const char* name = _tc->member_name (m);
-    CORBA::String_var mname = CORBA::string_alloc (2 + ACE_OS::strlen (name));
+    CORBA::String_var mname = CORBA::string_alloc (2 + std::strlen (name));
     ACE_OS::sprintf ((char*)mname.in (), "@%s", name);
     rb_iv_set (new_rs, mname.in (), rmval);
   }
@@ -822,7 +823,7 @@ VALUE r2tao_Struct2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE 
 VALUE r2tao_Union2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE rtc, VALUE roottc)
 {
   if (TAO_debug_level > 9)
-    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Union2Ruby:: tc=%@, id=%s\n", _tc, _tc->id ()));
+    ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - Union2Ruby:: tc=%@, id=%C\n", _tc, _tc->id ()));
 
   VALUE new_ru = R2TAO_NEW_TCOBJECT (roottc);
 
@@ -1513,7 +1514,7 @@ R2TAO_EXPORT void r2tao_Any4Value(CORBA::Any& _any, CORBA::TypeCode_ptr _tc)
 {
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - r2tao_Any4Value:: "
-                         "initialising any for value %s\n",
+                         "initialising any for value %C\n",
                          _tc->id ()));
 
   CORBA::ValueFactory factory =

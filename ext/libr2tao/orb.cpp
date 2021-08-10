@@ -61,8 +61,8 @@ public:
   virtual ~R2CSigGuard();
 
   virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+                             siginfo_t * = nullptr,
+                             ucontext_t * = nullptr);
 
   bool has_caught_signal () { return this->m_signal_caught; }
 
@@ -71,9 +71,9 @@ private:
   {
   public:
     Signal(int signum) : m_signum (signum) {}
-    virtual ~Signal() {}
+    ~Signal() override = default;
 
-    virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+    int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   private:
     int inner_handler ();
@@ -85,7 +85,7 @@ private:
 
   static VALUE c_signums;
   static int c_nsig;
-  static ACE_Auto_Ptr<ACE_SIGACTION>  c_sa;
+  static ACE_Auto_Ptr<ACE_SIGACTION> c_sa;
 
   static void init_ ();
 
@@ -124,11 +124,8 @@ _orb_free(void *ptr)
 R2TAO_EXPORT VALUE
 r2tao_ORB_t2r(CORBA::ORB_ptr obj)
 {
-  VALUE ret;
-  CORBA::ORB_ptr _orb;
-
-  _orb = CORBA::ORB::_duplicate(obj);
-  ret = Data_Wrap_Struct(r2tao_cORB, 0, _orb_free, _orb);
+  CORBA::ORB_ptr _orb = CORBA::ORB::_duplicate(obj);
+  VALUE ret = Data_Wrap_Struct(r2tao_cORB, 0, _orb_free, _orb);
 
   return ret;
 }
@@ -222,11 +219,9 @@ VALUE r2tao_ORB_hash(VALUE self)
 static
 VALUE r2tao_ORB_eql(VALUE self, VALUE _other)
 {
-  CORBA::ORB_ptr other, obj;
-
-  obj = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr obj = r2tao_ORB_r2t (self);
   r2tao_check_type (_other, r2tao_cORB);
-  other = r2tao_ORB_r2t (_other);
+  CORBA::ORB_ptr other = r2tao_ORB_r2t (_other);
 
   if (obj == other)
     return Qtrue;
@@ -306,12 +301,10 @@ VALUE rCORBA_ORB_init(int _argc, VALUE *_argv, VALUE /*klass*/) {
 static
 VALUE rCORBA_ORB_object_to_string(VALUE self, VALUE _obj)
 {
-  CORBA::Object_ptr obj;
-  char *str=0;
-  CORBA::ORB_ptr orb;
+  char *str = nullptr;
 
-  orb = r2tao_ORB_r2t (self);
-  obj = r2tao_Object_r2t (_obj);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
+  CORBA::Object_ptr obj = r2tao_Object_r2t (_obj);
 
   if (obj->_is_local ())
   {
@@ -331,10 +324,9 @@ static
 VALUE rCORBA_ORB_string_to_object(VALUE self, VALUE _str)
 {
   CORBA::Object_var obj;
-  char *str=0;
-  CORBA::ORB_ptr orb;
+  char *str = nullptr;
 
-  orb = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
   Check_Type(_str, T_STRING);
   str = RSTRING_PTR (_str);
 
@@ -364,12 +356,8 @@ VALUE rCORBA_ORB_get_current(VALUE /*self*/)
 static
 VALUE rCORBA_ORB_list_initial_services(VALUE self)
 {
-  CORBA::ULong i;
-  VALUE ary;
   CORBA::ORB::ObjectIdList_var list;
-  CORBA::ORB_ptr orb;
-
-  orb = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
 
   R2TAO_TRY
   {
@@ -377,8 +365,8 @@ VALUE rCORBA_ORB_list_initial_services(VALUE self)
   }
   R2TAO_CATCH;
 
-  ary = rb_ary_new2(list->length ());
-  for (i=0; i<list->length (); i++)
+  VALUE ary = rb_ary_new2(list->length ());
+  for (CORBA::ULong i = 0; i < list->length (); i++)
   {
     char const * id = list[i];
     rb_ary_push (ary, rb_str_new2 (id));
@@ -391,13 +379,10 @@ static
 VALUE rCORBA_ORB_resolve_initial_references(VALUE self, VALUE _id)
 {
   CORBA::Object_var obj;
-  char *id;
-  CORBA::ORB_ptr orb;
-
-  orb = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
 
   Check_Type(_id, T_STRING);
-  id = RSTRING_PTR (_id);
+  char *id = RSTRING_PTR (_id);
 
   R2TAO_TRY
   {
@@ -418,15 +403,11 @@ VALUE rCORBA_ORB_resolve_initial_references(VALUE self, VALUE _id)
 static
 VALUE rCORBA_ORB_register_initial_reference(VALUE self, VALUE _id, VALUE _obj)
 {
-  CORBA::Object_var obj;
-  char *id;
-  CORBA::ORB_ptr orb;
-
-  orb = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
 
   Check_Type(_id, T_STRING);
-  id = RSTRING_PTR (_id);
-  obj = r2tao_Object_r2t(_obj);
+  char *id = RSTRING_PTR (_id);
+  CORBA::Object_var obj = r2tao_Object_r2t(_obj);
 
   R2TAO_TRY
   {
@@ -448,15 +429,10 @@ class R2TAO_ORB_BlockedRegionCaller
 {
 public:
   R2TAO_ORB_BlockedRegionCaller (CORBA::ORB_ptr orb)
-    : orb_ (orb),
-      timeout_ (0),
-      exception_ (false),
-      corba_ex_ (0) {}
+    : orb_ (orb) {}
   R2TAO_ORB_BlockedRegionCaller (CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : orb_ (orb),
-      timeout_ (&to),
-      exception_ (false),
-      corba_ex_ (0) {}
+      timeout_ (std::addressof(to)) {}
   virtual ~R2TAO_ORB_BlockedRegionCaller () noexcept(false);
 
   VALUE call (bool with_unblock=true);
@@ -472,9 +448,9 @@ protected:
   virtual VALUE do_exec () = 0;
 
   CORBA::ORB_ptr orb_;
-  ACE_Time_Value* timeout_;
-  bool exception_;
-  CORBA::Exception* corba_ex_;
+  ACE_Time_Value* timeout_ {};
+  bool exception_ {};
+  CORBA::Exception* corba_ex_ {};
 };
 
 R2TAO_ORB_BlockedRegionCaller::~R2TAO_ORB_BlockedRegionCaller() noexcept(false)
@@ -546,10 +522,10 @@ public:
     : R2TAO_ORB_BlockedRegionCaller (orb) {}
   R2TAO_ORB_BlockedRun (CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : R2TAO_ORB_BlockedRegionCaller (orb, to) {}
-  virtual ~R2TAO_ORB_BlockedRun () {}
+  ~R2TAO_ORB_BlockedRun () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_ORB_BlockedRun::do_exec ()
@@ -571,7 +547,7 @@ public:
   virtual ~R2TAO_ORB_BlockedWorkPending () noexcept(false);
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
 private:
   R2CSigGuard& sg_;
@@ -623,10 +599,10 @@ public:
     : R2TAO_ORB_BlockedRegionCaller (orb) {}
   R2TAO_ORB_BlockedPerformWork (CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : R2TAO_ORB_BlockedRegionCaller (orb, to) {}
-  virtual ~R2TAO_ORB_BlockedPerformWork () {}
+  ~R2TAO_ORB_BlockedPerformWork () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_ORB_BlockedPerformWork::do_exec ()
@@ -641,10 +617,10 @@ VALUE R2TAO_ORB_BlockedPerformWork::do_exec ()
 class R2TAO_ORB_BlockedShutdown : public R2TAO_ORB_BlockedRegionCaller
 {
 public:
-  R2TAO_ORB_BlockedShutdown (CORBA::ORB_ptr orb, bool wait=false)
+  R2TAO_ORB_BlockedShutdown (CORBA::ORB_ptr orb, bool wait = false)
     : R2TAO_ORB_BlockedRegionCaller (orb),
       wait_ (wait) {}
-  virtual ~R2TAO_ORB_BlockedShutdown () {}
+  ~R2TAO_ORB_BlockedShutdown () override = default;
 
 protected:
   virtual VALUE do_exec ();
@@ -662,7 +638,6 @@ VALUE R2TAO_ORB_BlockedShutdown::do_exec ()
 static
 VALUE rCORBA_ORB_run(int _argc, VALUE *_argv, VALUE self)
 {
-  CORBA::ORB_ptr orb;
   VALUE rtimeout = Qnil;
   ACE_Time_Value timeout;
   double tmleft=0.0;
@@ -682,7 +657,7 @@ VALUE rCORBA_ORB_run(int _argc, VALUE *_argv, VALUE self)
     // convert to ACE_Time_Value
   }
 
-  orb = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
 
   R2TAO_TRY
   {
@@ -715,7 +690,6 @@ VALUE rCORBA_ORB_run(int _argc, VALUE *_argv, VALUE self)
 static
 VALUE rCORBA_ORB_work_pending(int _argc, VALUE *_argv, VALUE self)
 {
-  CORBA::ORB_ptr orb;
   VALUE rtimeout = Qnil;
   ACE_Time_Value timeout;
   double tmleft=0.0;
@@ -735,7 +709,7 @@ VALUE rCORBA_ORB_work_pending(int _argc, VALUE *_argv, VALUE self)
     // convert to ACE_Time_Value
   }
 
-  orb = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
 
   VALUE _rc = Qfalse;
 
@@ -858,8 +832,7 @@ VALUE rCORBA_ORB_shutdown(int _argc, VALUE *_argv, VALUE self)
 static
 VALUE rCORBA_ORB_destroy(VALUE self)
 {
-  CORBA::ORB_ptr orb;
-  orb = r2tao_ORB_r2t (self);
+  CORBA::ORB_ptr orb = r2tao_ORB_r2t (self);
   R2TAO_TRY
   {
     orb->destroy ();

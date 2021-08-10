@@ -168,9 +168,7 @@ extern "C" R2TAO_POA_EXPORT void Init_librpoa()
 class R2TAO_POA_BlockedRegionCallerBase
 {
 public:
-  R2TAO_POA_BlockedRegionCallerBase ()
-    : exception_ (false),
-      corba_ex_ (0) {}
+  R2TAO_POA_BlockedRegionCallerBase () = default;
   virtual ~R2TAO_POA_BlockedRegionCallerBase () noexcept(false);
 
   VALUE call ();
@@ -182,8 +180,8 @@ protected:
 
   virtual VALUE do_exec () = 0;
 
-  bool exception_;
-  CORBA::Exception* corba_ex_;
+  bool exception_ {};
+  CORBA::Exception* corba_ex_ {};
 };
 
 R2TAO_POA_BlockedRegionCallerBase::~R2TAO_POA_BlockedRegionCallerBase() noexcept(false)
@@ -265,8 +263,7 @@ VALUE r2tao_PS_string_to_ObjectId(VALUE /*self*/, VALUE string)
   string = rb_check_convert_type(string, T_STRING, "String", "to_s");
   R2TAO_TRY
   {
-    PortableServer::ObjectId_var oid =
-        PortableServer::string_to_ObjectId (RSTRING_PTR (string));
+    PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId (RSTRING_PTR (string));
     return r2tao_ObjectId_t2r (oid);
   }
   R2TAO_CATCH;
@@ -296,7 +293,7 @@ public:
   R2TAO_POA_BlockedRegionCaller (PortableServer::POA_ptr _poa)
     : poa_ (PortableServer::POA::_duplicate (_poa))
   {}
-  virtual ~R2TAO_POA_BlockedRegionCaller () {}
+  ~R2TAO_POA_BlockedRegionCaller () override = default;
 
 protected:
   //virtual VALUE do_exec () = 0;
@@ -323,7 +320,7 @@ public:
       etherealize_ (_etherealize),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POA_BlockedDestroy () {}
+  ~R2TAO_POA_BlockedDestroy () override = default;
 
 protected:
   virtual VALUE do_exec ();
@@ -427,14 +424,14 @@ public:
       oid_ (oid),
       with_id_ (true)
   {}
-  virtual ~R2TAO_POA_BlockedActivateObject () {}
+  ~R2TAO_POA_BlockedActivateObject () override = default;
 
   const PortableServer::ObjectId& oid () const { return this->oid_.in (); }
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
-  DSI_Servant* servant_;
+  DSI_Servant* servant_ {};
   PortableServer::ObjectId_var oid_;
   bool with_id_;
 };
@@ -458,7 +455,7 @@ VALUE r2tao_POA_activate_object(VALUE self, VALUE servant)
     {
       PortableServer::POA_var _poa = r2tao_POA_r2t (self);
 
-      DSI_Servant* _servant;
+      DSI_Servant* _servant {};
       if (DATA_PTR (servant) == 0)
       {
         _servant = new DSI_Servant (servant);
@@ -495,7 +492,7 @@ VALUE r2tao_POA_activate_object_with_id(VALUE self, VALUE oid, VALUE servant)
     {
       PortableServer::POA_var _poa = r2tao_POA_r2t (self);
 
-      DSI_Servant* _servant;
+      DSI_Servant* _servant {};
       if (DATA_PTR (servant) == 0)
       {
         _servant = new DSI_Servant (servant);
@@ -533,10 +530,10 @@ public:
     : R2TAO_POA_BlockedRegionCaller (_poa),
       oid_ (oid)
   {}
-  virtual ~R2TAO_POA_BlockedDeactivateObject () {}
+  ~R2TAO_POA_BlockedDeactivateObject () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   PortableServer::ObjectId_var oid_;
 };
@@ -877,7 +874,7 @@ public:
   R2TAO_POAMan_BlockedRegionCaller (PortableServer::POAManager_ptr _poaman)
     : poaman_ (PortableServer::POAManager::_duplicate (_poaman))
   {}
-  virtual ~R2TAO_POAMan_BlockedRegionCaller () {}
+  ~R2TAO_POAMan_BlockedRegionCaller () override = default;
 
 protected:
   //virtual VALUE do_exec () = 0;
@@ -891,10 +888,10 @@ public:
   R2TAO_POAMan_BlockedActivate (PortableServer::POAManager_ptr _poaman)
     : R2TAO_POAMan_BlockedRegionCaller (_poaman)
   {}
-  virtual ~R2TAO_POAMan_BlockedActivate () {}
+  ~R2TAO_POAMan_BlockedActivate () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_POAMan_BlockedActivate::do_exec ()
@@ -929,10 +926,10 @@ public:
     : R2TAO_POAMan_BlockedRegionCaller (_poaman),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POAMan_BlockedHoldReq () {}
+  ~R2TAO_POAMan_BlockedHoldReq () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   bool wait_for_completion_;
 };
@@ -969,10 +966,10 @@ public:
     : R2TAO_POAMan_BlockedRegionCaller (_poaman),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POAMan_BlockedDiscardReq () {}
+  ~R2TAO_POAMan_BlockedDiscardReq () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   bool const wait_for_completion_;
 };
@@ -1010,10 +1007,10 @@ public:
       etherealize_ (_etherealize),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POAMan_BlockedDeactivate () {}
+  ~R2TAO_POAMan_BlockedDeactivate () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   bool const etherealize_;
   bool const wait_for_completion_;
