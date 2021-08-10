@@ -302,7 +302,7 @@ module R2CORBA
               report 'INS - stopped'
             end
           else
-            STDERR.puts "INS - restart command is only functional in daemon mode"
+            STDERR.puts 'INS - restart command is only functional in daemon mode'
             exit 1
           end
         end
@@ -385,7 +385,7 @@ module R2CORBA
     def INS.parse_arg
       script_name = File.basename($0, '.bat')
       if not script_name =~ /rins/
-        script_name = "ruby " + $0
+        script_name = 'ruby ' + $0
       end
 
       @@command = ARGV.shift.to_sym unless ARGV.empty?
@@ -425,51 +425,51 @@ module R2CORBA
         ARGV.options do |opts|
             opts.banner = "Usage: #{script_name} start [options]"
 
-            opts.separator ""
+            opts.separator ''
 
-            opts.on("-i FILE", "--ior=FILE", String,
-                    "Specifies filename (incl. path) to write IOR to.",
-                    "Default: ./ins.ior") { |v| OPTIONS[:iorfile] = v }
+            opts.on('-i FILE', '--ior=FILE', String,
+                    'Specifies filename (incl. path) to write IOR to.',
+                    'Default: ./ins.ior') { |v| OPTIONS[:iorfile] = v }
             unless IS_WIN32
-              opts.on("-p DIR", "--pid=DIR", String,
-                      "Specifies path to write pidfile to.",
-                      "Default: ./") { |v| OPTIONS[:piddir] = v }
+              opts.on('-p DIR', '--pid=DIR', String,
+                      'Specifies path to write pidfile to.',
+                      'Default: ./') { |v| OPTIONS[:piddir] = v }
               unless IS_JRUBY
-                opts.on("-o DIR", "--output=DIR", String,
-                        "Specifies filename to write logfile to.",
-                        "Default: <piddir>") { |v| OPTIONS[:logdir] = v }
+                opts.on('-o DIR', '--output=DIR', String,
+                        'Specifies filename to write logfile to.',
+                        'Default: <piddir>') { |v| OPTIONS[:logdir] = v }
               end
             else
-              opts.on("-o DIR", "--output=DIR", String,
-                      "Specifies path to write logfile to.",
-                      "Default: ./") { |v| OPTIONS[:logdir] = v }
+              opts.on('-o DIR', '--output=DIR', String,
+                      'Specifies path to write logfile to.',
+                      'Default: ./') { |v| OPTIONS[:logdir] = v }
             end
-            opts.on("-l PORTNUM", "--listen=PORTNUM", Integer,
-                    "Specifies port number for service endpoint.",
-                    "Default: none") { |v| OPTIONS[:port] = v }
+            opts.on('-l PORTNUM', '--listen=PORTNUM', Integer,
+                    'Specifies port number for service endpoint.',
+                    'Default: none') { |v| OPTIONS[:port] = v }
             if IS_JRUBY or R2CORBA::TAO::RUBY_THREAD_SUPPORT
-              opts.on("-t THREADNUM", "--threads=THREADNUM", Integer,
-                      "Specifies (minimum) number of threads for service.",
-                      "Default: 5") { |v| OPTIONS[:threads] = v }
+              opts.on('-t THREADNUM', '--threads=THREADNUM', Integer,
+                      'Specifies (minimum) number of threads for service.',
+                      'Default: 5') { |v| OPTIONS[:threads] = v }
             end
 
             unless IS_JRUBY || !INS.daemons_installed
-              opts.on("-d", "--daemon",
-                      "Run as daemon.",
-                      "Default: off") { |v| OPTIONS[:daemon] = v }
+              opts.on('-d', '--daemon',
+                      'Run as daemon.',
+                      'Default: off') { |v| OPTIONS[:daemon] = v }
             end
-            opts.on("-v", "--verbose",
-                    "Run verbose.",
-                    "Default: off") { |v| OPTIONS[:verbose] = v }
+            opts.on('-v', '--verbose',
+                    'Run verbose.',
+                    'Default: off') { |v| OPTIONS[:verbose] = v }
 
-            opts.on("--debug=LVL", Integer,
-                    "Specifies debug level.",
-                    "Default: 0") { |v| OPTIONS[:debug] = v }
+            opts.on('--debug=LVL', Integer,
+                    'Specifies debug level.',
+                    'Default: 0') { |v| OPTIONS[:debug] = v }
 
-            opts.separator ""
+            opts.separator ''
 
-            opts.on("-h", "--help",
-                    "Show this help message.") { puts opts; puts; exit }
+            opts.on('-h', '--help',
+                    'Show this help message.') { puts opts; puts; exit }
 
             opts.parse!
         end
@@ -478,28 +478,28 @@ module R2CORBA
         ARGV.options do |opts|
             opts.banner = "Usage: #{script_name} stop [options]"
 
-            opts.separator ""
+            opts.separator ''
 
             unless IS_WIN32
-              opts.on("-p DIR", "--pid=DIR", String,
-                      "Specifies path where pidfile is stored.",
-                      "Default: ./") { |v| OPTIONS[:piddir] = v }
+              opts.on('-p DIR', '--pid=DIR', String,
+                      'Specifies path where pidfile is stored.',
+                      'Default: ./') { |v| OPTIONS[:piddir] = v }
             end
 
             unless @@command == 'status'
               OPTIONS[:daemon] = true unless IS_JRUBY || !INS.daemons_installed
-              opts.on("--[no-]daemon",
-                      "Do not run in daemon mode.",
+              opts.on('--[no-]daemon',
+                      'Do not run in daemon mode.',
                       "Default: #{OPTIONS[:daemon] ? 'on' : 'off'}") { |v| OPTIONS[:daemon] = v }
             end
-            opts.on("-v", "--verbose",
-                    "Run verbose.",
-                    "Default: off") { |v| OPTIONS[:verbose] = v }
+            opts.on('-v', '--verbose',
+                    'Run verbose.',
+                    'Default: off') { |v| OPTIONS[:verbose] = v }
 
-            opts.separator ""
+            opts.separator ''
 
-            opts.on("-h", "--help",
-                    "Show this help message.") { puts opts; puts; exit }
+            opts.on('-h', '--help',
+                    'Show this help message.') { puts opts; puts; exit }
 
             opts.parse!
         end

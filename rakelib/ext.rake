@@ -42,7 +42,7 @@ else # !JRUBY_VERSION
                                      R2CORBA::Ext.rpoa_mpc_file,
                                      R2CORBA::Ext.rpol_mpc_file] do
     # check availability of PERL
-    raise "PERL missing! A working version of PERL in the PATH is required." unless system('perl -v')
+    raise 'PERL missing! A working version of PERL in the PATH is required.' unless system('perl -v')
     # configure R2TAO build
     _mwc = File.join(get_config('aceroot'), 'bin', 'mwc.pl')
 
@@ -85,70 +85,11 @@ else # !JRUBY_VERSION
 
   Rake::Task['clobber'].enhance ['r2corba:ext:clobber']
 
-  if R2CORBA::Config.is_win32
-
-    file R2CORBA::Ext.extload_mpc_file do |t|
-      File.open(t.name, 'w') {|f| f.puts R2CORBA::Ext::EXTLOAD_MPC }
-    end
-
-    file R2CORBA::Ext.extload_makefile => [R2CORBA::BUILD_CFG,
-                                           R2CORBA::Ext.default_features_path,
-                                           R2CORBA::Ext.ace_config_path,
-                                           R2CORBA::Ext.platform_macros_path,
-                                           R2CORBA::Ext.extload_mpc_file] do
-      # check availability of PERL
-      raise "PERL missing! A working version of PERL in the PATH is required." unless system('perl -v')
-      # configure extload build
-      _mwc = File.join(get_config('aceroot'), 'bin', 'mwc.pl')
-
-      cur_dir = Dir.getwd
-      Dir.chdir File.join('ext', 'extload')
-      begin
-        sh("perl #{_mwc} -type gnuace -workers #{R2CORBA::Config.cpu_cores}")
-      ensure
-        Dir.chdir cur_dir
-      end
-    end
-
-    CLOBBER.include [R2CORBA::Ext.extload_makefile, R2CORBA::Ext.extload_mpc_file]
-
-    namespace :r2corba do
-      namespace :ext do
-        #desc 'Build extension loader'
-        task :build_extload => R2CORBA::Ext.extload_makefile do
-          cur_dir = Dir.getwd
-          Dir.chdir File.join('ext', 'extload')
-          begin
-            # check availability of make program
-            raise "#{get_config('makeprog')} missing! A working version of #{get_config('makeprog')} in the PATH is required." unless system("#{get_config('makeprog')}")
-            sh("#{get_config('makeprog')}#{get_config('with-debug') ? ' debug=1' : ''}")
-          ensure
-            Dir.chdir cur_dir
-          end
-        end
-
-        task :clobber_extload do
-          cur_dir = Dir.getwd
-          Dir.chdir File.join('ext', 'extload')
-          begin
-            sh("#{get_config('makeprog')} realclean") if File.exist?('GNUmakefile')
-          ensure
-            Dir.chdir cur_dir
-          end
-        end
-      end
-    end
-
-    Rake::Task['r2corba:ext:build'].enhance ['r2corba:ext:build_extload']
-    Rake::Task['clobber'].enhance ['r2corba:ext:clobber_extload']
-
-  end
-
   # Do we handle ACE+TAO here?
   unless get_config('without-tao')
 
     file R2CORBA::Ext.ace_config_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") {|f|
+      File.open(t.name, 'w') {|f|
         f.puts R2CORBA::Ext.ace_config
       }
     end
@@ -156,7 +97,7 @@ else # !JRUBY_VERSION
     CLOBBER.include R2CORBA::Ext.ace_config_path
 
     file R2CORBA::Ext.platform_macros_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") {|f|
+      File.open(t.name, 'w') {|f|
         f.puts R2CORBA::Ext.platform_macros
       }
     end
@@ -164,7 +105,7 @@ else # !JRUBY_VERSION
     CLOBBER.include R2CORBA::Ext.platform_macros_path
 
     file R2CORBA::Ext.default_features_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") do |f|
+      File.open(t.name, 'w') do |f|
         f.puts R2CORBA::Ext.default_features
       end
     end
@@ -172,7 +113,7 @@ else # !JRUBY_VERSION
     CLOBBER.include R2CORBA::Ext.default_features_path
 
     file R2CORBA::Ext.tao_mwc_path => R2CORBA::BUILD_CFG do |t|
-      File.open(t.name, "w") do |f|
+      File.open(t.name, 'w') do |f|
         f.puts R2CORBA::Ext.tao_mwc
       end
     end
@@ -184,7 +125,7 @@ else # !JRUBY_VERSION
                                        R2CORBA::Ext.default_features_path,
                                        R2CORBA::Ext.tao_mwc_path]  do
       # check availability of PERL
-      raise "PERL missing! A working version of PERL in the PATH is required." unless system('perl -v')
+      raise 'PERL missing! A working version of PERL in the PATH is required.' unless system('perl -v')
       # generate ACE+TAO makefile
       cur_dir = Dir.getwd
       Dir.chdir File.expand_path(get_config('aceroot'))

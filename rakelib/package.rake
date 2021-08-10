@@ -14,7 +14,7 @@ require 'rake/packagetask'
 
 require File.join(File.dirname(__FILE__), 'config.rb')
 
-Rake::PackageTask.new("r2corba", R2CORBA::R2CORBA_VERSION) do |p|
+Rake::PackageTask.new('r2corba', R2CORBA::R2CORBA_VERSION) do |p|
   p.need_tar_gz = true
   p.need_zip = true
   p.package_files.include(%w{ext/**/*.{mwc,cpp,c,h}})

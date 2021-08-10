@@ -4,12 +4,12 @@ Requirements
 Windows 7/8 (not tested on Vista), Linux (kernel version 2.4+; tested on
 openSuSE 11.3 - 13.2 and Fedora 13-21).
 
-Ruby MRI 2.0 or newer
+Ruby MRI 2.4 or newer
   Download from http://www.ruby-lang.org (source packages) or
   https://rubyinstaller.org/downloads (Windows binaries) if not available as
   a standard package on your platform.
 
-ACE+TAO 7.0.0
+ACE+TAO 7.0.3
   Download latest micro release from https://github.com/DOCGroup/ACE_TAO/releases
   (select a source only package containing ACE+TAO)
 

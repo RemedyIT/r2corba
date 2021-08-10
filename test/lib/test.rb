@@ -264,7 +264,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
 
     protected
       # Used by Process.create
-      ProcessInfo = Struct.new("ProcessInfo",
+      ProcessInfo = Struct.new('ProcessInfo',
           :process_handle,
           :thread_handle,
           :process_id,
@@ -305,7 +305,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
         )
 
         unless bool
-           raise ProcessError, "CreateProcess() failed: ", get_last_error
+           raise ProcessError, 'CreateProcess() failed: ', get_last_error
         end
 
         ProcessInfo.new(
@@ -324,7 +324,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
         else
           CloseHandle(pi_.process_handle) unless pi_.process_handle == INVALID_HANDLE_VALUE
           pi_.process_handle = INVALID_HANDLE_VALUE
-          raise ProcessError, "GetExitCodeProcess failed: ", get_last_error
+          raise ProcessError, 'GetExitCodeProcess failed: ', get_last_error
         end
       end
 
@@ -472,7 +472,7 @@ end
   class Test
     def initialize
       @proc = nil
-      @cmd = ""
+      @cmd = ''
     end
 
     def run(cmd_, arg_)

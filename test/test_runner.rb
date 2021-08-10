@@ -126,7 +126,7 @@ module TestFinder
           puts dir
         end
       else
-        Dir.glob(File.join(path, "*")) {|psub| self.process_directory(psub)}
+        Dir.glob(File.join(path, '*')) {|psub| self.process_directory(psub)}
       end
     end
   end
@@ -136,25 +136,25 @@ module TestFinder
     script_name = File.basename($0)
     opts.banner = "Usage: #{script_name} #{/r2corba/ =~ script_name ? 'test ' : nil}[options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-x MATCH", "--exclude=MATCH",
-            "Do not run tests matching MATCH.",
-            "Default: nil") { |v| (OPTIONS[:exclude] ||= []) << v.to_s }
-    opts.on("-r MATCH", "--run=MATCH",
-            "Only run tests matching MATCH.",
-            "Default: nil (run all)") { |v| (OPTIONS[:runonly] ||= []) << v.to_s }
+    opts.on('-x MATCH', '--exclude=MATCH',
+            'Do not run tests matching MATCH.',
+            'Default: nil') { |v| (OPTIONS[:exclude] ||= []) << v.to_s }
+    opts.on('-r MATCH', '--run=MATCH',
+            'Only run tests matching MATCH.',
+            'Default: nil (run all)') { |v| (OPTIONS[:runonly] ||= []) << v.to_s }
     opts.on('-l', '--list',
             'List tests, do not run.',
-            "Default: off") { OPTIONS[:listonly] = true }
-    opts.on("-d",
-            "Run with debugging output.",
+            'Default: off') { OPTIONS[:listonly] = true }
+    opts.on('-d',
+            'Run with debugging output.',
             "Default: ENV['R2CORBA_DEBUG'].nil? ? false : true") { OPTIONS[:debug] = true }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!(argv)
 
@@ -170,7 +170,7 @@ module TestFinder
     end
 
     if OPTIONS[:runonly].nil?
-      Dir.glob(File.join(TestFinder::ROOT, "*")) do |p|
+      Dir.glob(File.join(TestFinder::ROOT, '*')) do |p|
         TestFinder.process_directory(p)
       end
     else

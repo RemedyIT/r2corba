@@ -117,24 +117,24 @@ module CCS_Server
       script_name = File.basename($0)
       opts.banner = "Usage: ruby #{script_name} [options]"
 
-      opts.separator ""
+      opts.separator ''
 
-      opts.on("-h INSHOST",
-              "Set NamingService host address.",
-              "Default: localhost") { |v| OPTIONS[:ins_host] = v }
+      opts.on('-h INSHOST',
+              'Set NamingService host address.',
+              'Default: localhost') { |v| OPTIONS[:ins_host] = v }
 
-      opts.on("-p INSPORT",
-              "Set NamingService port.", Integer,
-              "Default: 2345") { |v| OPTIONS[:ins_port] = v }
+      opts.on('-p INSPORT',
+              'Set NamingService port.', Integer,
+              'Default: 2345') { |v| OPTIONS[:ins_port] = v }
 
-      opts.on("-k IORFILE",
-              "Set NamingService IOR filename.",
-              "Default: none") { |v| OPTIONS[:ins_ior] = v }
+      opts.on('-k IORFILE',
+              'Set NamingService IOR filename.',
+              'Default: none') { |v| OPTIONS[:ins_ior] = v }
 
-      opts.separator ""
+      opts.separator ''
 
-      opts.on("-h", "--help",
-              "Show this help message.") { puts opts; exit }
+      opts.on('-h', '--help',
+              'Show this help message.') { puts opts; exit }
 
       opts.parse!
     end
@@ -155,7 +155,7 @@ module CCS_Server
     poa_man = root_poa.the_POAManager
 
     # Create a POA for all CCS elements.
-    ccs_poa = root_poa.create_POA("CCS_POA", poa_man, [])
+    ccs_poa = root_poa.create_POA('CCS_POA', poa_man, [])
 
     # create and activate controller servant
     ccs_srv = CCS_Server::Controller.new(ccs_poa)
@@ -195,7 +195,7 @@ end
 
 if $0 == __FILE__
   Signal.trap('INT') do
-    puts "SIGINT - shutting down ORB..."
+    puts 'SIGINT - shutting down ORB...'
     CCS_Server.shutdown
   end
 

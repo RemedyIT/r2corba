@@ -92,9 +92,9 @@ module R2CORBA
       end
 
       def run
-        STDERR.puts "INS - starting service run" if @options[:verbose]
+        STDERR.puts 'INS - starting service run' if @options[:verbose]
         if defined?(JRUBY_VERSION) or !R2CORBA::TAO::RUBY_THREAD_SUPPORT
-          STDERR.puts "INS - running ORB" if @options[:verbose]
+          STDERR.puts 'INS - running ORB' if @options[:verbose]
           @orb.run
         else
           STDERR.puts "INS - starting #{@options[:threads]} ORB threads" if @options[:verbose]
@@ -102,16 +102,16 @@ module R2CORBA
           @options[:threads].times do
             @threads << Thread.new(@orb) { |orb| orb.run }
           end
-          STDERR.puts "INS - joining ORB threads" if @options[:verbose]
+          STDERR.puts 'INS - joining ORB threads' if @options[:verbose]
           @threads.each { |t| t.join }
         end
-        STDERR.puts "INS - service run ended" if @options[:verbose]
+        STDERR.puts 'INS - service run ended' if @options[:verbose]
       end
 
       def shutdown
-        STDERR.puts "INS - shutting down ORB" if @options[:verbose]
+        STDERR.puts 'INS - shutting down ORB' if @options[:verbose]
         @orb.shutdown if @orb
-        STDERR.puts "INS - shutdown finished" if @options[:verbose]
+        STDERR.puts 'INS - shutdown finished' if @options[:verbose]
       end
     end
   end

@@ -98,7 +98,7 @@ module R2CORBA
       if gemtype == :bin || gemtype == :extbin
         gemspec.platform = defined?(JRUBY_VERSION) ? ::Gem::Platform.new('universal-java') : ::Gem::Platform::CURRENT
       end
-      gemspec.required_rubygems_version = ::Gem::Requirement.new(">= 0") if gemspec.respond_to? :required_rubygems_version=
+      gemspec.required_rubygems_version = ::Gem::Requirement.new('>= 0') if gemspec.respond_to? :required_rubygems_version=
       block.call(gemspec) if block_given?
       gemspec
     end
