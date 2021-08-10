@@ -52,7 +52,7 @@ else
   require 'TestS.rb'
 end
 
-begin STDERR.puts 'Not supported on this platform'; open(OPTIONS[:iorfile], 'w') {|io|io.write ''}; exit(0); end unless defined?(IORTable)
+ STDERR.puts 'Not supported on this platform'; open(OPTIONS[:iorfile], 'w') {|io|io.write ''}; exit(0);  unless defined?(IORTable)
 
 class MyHello < POA::Test::Hello
   def initialize(orb, id)

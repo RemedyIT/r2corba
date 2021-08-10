@@ -38,7 +38,7 @@ module R2CORBA
         end
 
         def invoke(jsrvreq)
-          begin
+          
             raise CORBA::NO_IMPLEMENT.new('', 0, CORBA::COMPLETED_NO) unless @rsrv
             rsrvreq = CORBA::ServerRequest._wrap_native(jsrvreq, self._orb())
             begin
@@ -100,7 +100,7 @@ module R2CORBA
             else
               jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
             end
-          end
+          
         end
 
         def _all_interfaces(poa, oid)
@@ -218,11 +218,11 @@ module R2CORBA
       end
 
       def _default_POA()
-        begin
+        
           return PortableServer::POA._narrow(CORBA::Object._wrap_native(self.srvref_._default_POA()))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       def _this()

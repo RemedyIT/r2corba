@@ -51,7 +51,7 @@ else
 end
 require 'corba/policies.rb'
 
-begin STDERR.puts 'Not supported on this platform'; exit(0); end unless defined?(TAO::CONNECTION_TIMEOUT_POLICY_TYPE)
+ STDERR.puts 'Not supported on this platform'; exit(0);  unless defined?(TAO::CONNECTION_TIMEOUT_POLICY_TYPE)
 
 Timeout_period = 1000000
 

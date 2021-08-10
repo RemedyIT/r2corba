@@ -157,7 +157,7 @@ if defined?(JRUBY_VERSION)
         end
 
         def self.wait(pid)
-          begin
+          
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
             if tmp == pid and status.success? != nil
               return [pid, status.success?() ? 0 : status.exitstatus ]
@@ -165,7 +165,7 @@ if defined?(JRUBY_VERSION)
             return [nil, 0]
           rescue Errno::ECHILD
             return [pid, 0]
-          end
+          
         end
 
         private
@@ -221,7 +221,7 @@ if defined?(JRUBY_VERSION)
     end
 
     def check_status
-      begin
+      
         unless @trd.alive?
           @exitstatus = @trd.value
         end
@@ -229,7 +229,7 @@ if defined?(JRUBY_VERSION)
       rescue
         @exitstatus = 0
         return false
-      end
+      
     end
 
     def exitstatus
@@ -439,7 +439,7 @@ else # !win32
     attr_reader :pid
 
     def check_status
-      begin
+      
         tmp, @status = ::Process.waitpid2(@pid, ::Process::WNOHANG)
         if tmp == @pid and @status.success? == false
           @exitstatus = @status.exitstatus
@@ -449,7 +449,7 @@ else # !win32
       rescue Errno::ECHILD
         @exitstatus = 0
         return false
-      end
+      
     end
 
     def exitstatus

@@ -61,7 +61,7 @@ Timeout_count = [0, 0, 0, 0]
 In_time_count = [0, 0, 0, 0]
 
 def send_echo (ctype, orb, server, t)
-  begin
+  
     server.echo(0, t)
 
     In_time_count[ctype] += 1
@@ -83,7 +83,7 @@ def send_echo (ctype, orb, server, t)
       # client ORB a chance to cleanup the reply that's come back
       # from the server.
 #orb.run(tv)
-  end
+  
 end
 
 

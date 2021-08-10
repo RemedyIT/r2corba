@@ -74,11 +74,11 @@ module R2CORBA
       #str ::String
       #ret ::CORBA::Object
       def string_to_object(str)
-        begin
+        
           Object._wrap_native(self.orb_.string_to_object(str))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       #str ::Integer
@@ -140,11 +140,11 @@ module R2CORBA
       # ret Object
       # raises InvalidName
       def resolve_initial_references(identifier)
-        begin
+        
           Object._wrap_native(self.orb_.resolve_initial_references(identifier))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       # ::String identifier
@@ -284,48 +284,48 @@ module R2CORBA
 
       # ret boolean
       def work_pending()
-        begin
+        
           self.orb_.work_pending()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       # ret void
       def perform_work()
-        begin
+        
           self.orb_.perform_work()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       # ret void
       def run()
-        begin
+        
           self.orb_.run()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       # boolean wait_for_completion
       # ret void
       def shutdown(wait_for_completion = false)
-        begin
+        
           self.orb_.shutdown(wait_for_completion)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
       # ret void
       def destroy()
-        begin
+        
           self.orb_.destroy()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        end
+        
       end
 
 =begin

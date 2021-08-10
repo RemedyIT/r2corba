@@ -49,7 +49,7 @@ else
   require 'TestC.rb'
 end
 
-begin STDERR.puts 'Not supported on this platform'; exit(0); end unless defined?(IORTable)
+ STDERR.puts 'Not supported on this platform'; exit(0);  unless defined?(IORTable)
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 

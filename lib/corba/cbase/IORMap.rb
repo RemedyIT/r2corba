@@ -23,10 +23,10 @@ module R2CORBA
     end
 
     def unmap_ior(object_key)
-      begin
+      
         @iortbl.unbind(object_key)
       rescue IORTable::NotFound
-      end
+      
     end
   end
 end
