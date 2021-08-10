@@ -429,15 +429,10 @@ class R2TAO_ORB_BlockedRegionCaller
 {
 public:
   R2TAO_ORB_BlockedRegionCaller (CORBA::ORB_ptr orb)
-    : orb_ (orb),
-      timeout_ (0),
-      exception_ (false),
-      corba_ex_ (nullptr) {}
+    : orb_ (orb) {}
   R2TAO_ORB_BlockedRegionCaller (CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : orb_ (orb),
-      timeout_ (&to),
-      exception_ (false),
-      corba_ex_ (nullptr) {}
+      timeout_ (std::addressof(to)) {}
   virtual ~R2TAO_ORB_BlockedRegionCaller () noexcept(false);
 
   VALUE call (bool with_unblock=true);
@@ -453,9 +448,9 @@ protected:
   virtual VALUE do_exec () = 0;
 
   CORBA::ORB_ptr orb_;
-  ACE_Time_Value* timeout_;
-  bool exception_;
-  CORBA::Exception* corba_ex_;
+  ACE_Time_Value* timeout_ {};
+  bool exception_ {};
+  CORBA::Exception* corba_ex_ {};
 };
 
 R2TAO_ORB_BlockedRegionCaller::~R2TAO_ORB_BlockedRegionCaller() noexcept(false)
@@ -527,10 +522,10 @@ public:
     : R2TAO_ORB_BlockedRegionCaller (orb) {}
   R2TAO_ORB_BlockedRun (CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : R2TAO_ORB_BlockedRegionCaller (orb, to) {}
-  virtual ~R2TAO_ORB_BlockedRun () {}
+  ~R2TAO_ORB_BlockedRun () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_ORB_BlockedRun::do_exec ()
@@ -552,7 +547,7 @@ public:
   virtual ~R2TAO_ORB_BlockedWorkPending () noexcept(false);
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
 private:
   R2CSigGuard& sg_;
@@ -604,10 +599,10 @@ public:
     : R2TAO_ORB_BlockedRegionCaller (orb) {}
   R2TAO_ORB_BlockedPerformWork (CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : R2TAO_ORB_BlockedRegionCaller (orb, to) {}
-  virtual ~R2TAO_ORB_BlockedPerformWork () {}
+  ~R2TAO_ORB_BlockedPerformWork () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_ORB_BlockedPerformWork::do_exec ()

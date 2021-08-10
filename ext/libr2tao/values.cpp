@@ -1249,8 +1249,7 @@ void R2TAO_AbstractObject::_remove_ref ()
 ::CORBA::Boolean R2TAO_AbstractObject::_is_a (const char *type_id)
 {
   return this->::CORBA::AbstractBase::_is_a (type_id) ||
-         ACE_OS::strcmp (type_id,
-             "IDL:omg.org/CORBA/Object:1.0") == 0 ||
+         std::strcmp (type_id, "IDL:omg.org/CORBA/Object:1.0") == 0 ||
          this->::CORBA::Object::_is_a (type_id);
 }
 

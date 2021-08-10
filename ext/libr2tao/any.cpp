@@ -809,7 +809,7 @@ VALUE r2tao_Struct2Ruby (const CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALUE 
     VALUE mrtc = rb_funcall (rtc, member_type_ID, 1, ULONG2NUM(m));
     VALUE rmval = r2tao_Any2Ruby (nvps[m].value, mtc.in (), mrtc, mrtc);
     const char* name = _tc->member_name (m);
-    CORBA::String_var mname = CORBA::string_alloc (2 + ACE_OS::strlen (name));
+    CORBA::String_var mname = CORBA::string_alloc (2 + std::strlen (name));
     ACE_OS::sprintf ((char*)mname.in (), "@%s", name);
     rb_iv_set (new_rs, mname.in (), rmval);
   }

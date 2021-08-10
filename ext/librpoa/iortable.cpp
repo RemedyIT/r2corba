@@ -35,10 +35,10 @@ void r2tao_init_IORTable()
 
   r2tao_nsIORTable = klass = rb_eval_string("::R2CORBA::IORTable::Table");
 
-  rb_define_method(klass, "bind", r2tao_IORTable_bind, 2);
-  rb_define_method(klass, "rebind", r2tao_IORTable_rebind, 2);
-  rb_define_method(klass, "unbind", r2tao_IORTable_unbind, 1);
-  rb_define_method(klass, "set_locator", r2tao_IORTable_set_locator, 1);
+  rb_define_method(klass, "bind", RUBY_METHOD_FUNC(r2tao_IORTable_bind), 2);
+  rb_define_method(klass, "rebind", RUBY_METHOD_FUNC(r2tao_IORTable_rebind), 2);
+  rb_define_method(klass, "unbind", RUBY_METHOD_FUNC(r2tao_IORTable_unbind), 1);
+  rb_define_method(klass, "set_locator", RUBY_METHOD_FUNC(r2tao_IORTable_set_locator), 1);
 
   r2tao_cIORTableNotFoundX = rb_eval_string("::R2CORBA::IORTable::NotFound");
   r2tao_cIORTableLocator = rb_eval_string("::R2CORBA::IORTable::Locator");
@@ -78,11 +78,10 @@ private:
     ThreadSafeArg (R2taoLocator* loc,
                    const char * obj_key)
       : locator_(loc),
-        object_key_(obj_key),
-        exception_ (false) {}
+        object_key_(obj_key) {}
     R2taoLocator* locator_;
     const char * object_key_;
-    bool exception_;
+    bool exception_ {};
   };
 
   static void* thread_safe_invoke (void * arg);
