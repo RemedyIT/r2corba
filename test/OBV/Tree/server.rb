@@ -77,7 +77,7 @@ class Passer_i < POA::Passer
   def shutdown ()
     @orb.shutdown()
   end
-end #of servant Passer_i
+end # of servant Passer_i
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 

@@ -237,7 +237,7 @@ class Test_impl < POA::Test
   def shutdown()
     @orb.shutdown()
   end
-end #of servant Test_impl
+end # of servant Test_impl
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 

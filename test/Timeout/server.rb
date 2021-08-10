@@ -74,7 +74,7 @@ class Simple_Server_i < POA::Simple_Server
     puts "server (#{Process.pid}) received shutdown request from client"
     @orb.shutdown()
   end
-end #of servant Simple_Server_i
+end # of servant Simple_Server_i
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 

@@ -50,7 +50,7 @@ end
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
-##s = open(OPTIONS[:iorfile], 'r').read
+# #s = open(OPTIONS[:iorfile], 'r').read
 
 obj = orb.string_to_object(OPTIONS[:iorfile])
 

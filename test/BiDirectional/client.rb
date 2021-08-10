@@ -64,7 +64,7 @@ class MyCallback < POA::Callback
     end
   end
 
-end #of servant Callback
+end # of servant Callback
 
 if defined?(JRUBY_VERSION)
   ## JacORB needs explicit activation of this option

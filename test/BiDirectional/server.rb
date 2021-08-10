@@ -92,7 +92,7 @@ class Simple_Server_i < POA::Simple_Server
     return 0
   end
 
-end #of servant Simple_Server_i
+end # of servant Simple_Server_i
 
 if defined?(JRUBY_VERSION)
   ## JacORB needs explicit activation of this option

@@ -71,7 +71,7 @@ class MyHello < PortableServer::DynamicImplementation
   def shutdown()
     @orb.shutdown()
   end
-end #of servant MyHello
+end # of servant MyHello
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 

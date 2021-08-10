@@ -62,7 +62,7 @@ class MyHello < POA::Test::Hello
   def shutdown()
     @orb.shutdown()
   end
-end #of servant MyHello
+end # of servant MyHello
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
