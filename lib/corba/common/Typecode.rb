@@ -49,6 +49,7 @@ module R2CORBA
           @name_types = {}
           super
         end
+
         def []=(id, tc)
           synchronize do
             @id_types[id] = tc
@@ -57,6 +58,7 @@ module R2CORBA
             @name_types[tc.name] = types_for_name_
           end
         end
+
         def [](id)
           tc = nil
           synchronize do
@@ -64,6 +66,7 @@ module R2CORBA
           end
           tc
         end
+
         def types_for_name(name)
           tcs = nil
           synchronize do
@@ -397,19 +400,24 @@ module R2CORBA
           @recursive_tc ||= TypeCode.typecode_for_id(self.id)
           @recursive_tc || ::CORBA::TypeCode.new(TK_NULL)
         end
+
         def resolved_tc
           recursed_tc.resolved_tc
         end
+
         def is_recursive_tc?
           true
         end
+
         def get_type
           @recursive_tc ||= TypeCode.typecode_for_id(self.id)
           if @recursive_tc.nil? then nil; else @recursive_tc.get_type; end
         end
+
         def validate(val)
           recursed_tc.validate(val)
         end
+
         def needs_conversion(val)
           recursed_tc.needs_conversion(val)
         end
@@ -607,6 +615,7 @@ module R2CORBA
         def get_type
           @type || self.content_type.get_type
         end
+
         def validate(val)
           self.content_type.validate(val)
         end
@@ -625,6 +634,7 @@ module R2CORBA
         def initialize(*args)
           raise 'overload required'
         end
+
         def add_member(name, tc, access)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
           @members << [name, tc, access]
@@ -683,10 +693,12 @@ module R2CORBA
         def member_count
           @members.size
         end
+
         def member_name(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][0]
         end
+
         def member_type(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][1]
@@ -773,6 +785,7 @@ module R2CORBA
         def initialize(*args)
           raise 'overload required'
         end
+
         def add_member(name, tc)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
           @members << [name, tc]
@@ -821,10 +834,12 @@ module R2CORBA
         def member_count
           @members.size
         end
+
         def member_name(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][0]
         end
+
         def member_type(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][1]
@@ -883,16 +898,20 @@ module R2CORBA
         def initialize(*args)
           raise 'overload required'
         end
+
         # because creating the native tc involves creating Any's we postpone until actually needed
         def tc_
           raise 'overload required'
         end
+
         def id
           @id
         end
+
         def name
           @name
         end
+
         def add_member(label, name, tc)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
           @switchtype.validate(label) unless label == :default
@@ -935,7 +954,7 @@ module R2CORBA
           return val if val.nil?
           super(val)
           @switchtype.validate(val._disc) unless val._disc == :default
-          #raise CORBA::MARSHAL.new(
+          # raise CORBA::MARSHAL.new(
           #  "invalid discriminator value (#{val._disc.to_s}) for union #{name}",
           #  1, CORBA::COMPLETED_NO) unless @labels.has_key?(val._disc)
           if @labels.has_key?(val._disc)  # no need to check for implicit defaults
@@ -958,28 +977,33 @@ module R2CORBA
         def member_count
           @members.size
         end
+
         def member_name(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][1]
         end
+
         def member_type(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][2]
         end
+
         def member_label(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index][0]
         end
+
         def discriminator_type
           @switchtype
         end
+
         def default_index
           if @labels.has_key? :default then @labels[:default]; else -1; end
         end
 
         def label_index(val)
           val = @switchtype.validate(val) unless val == :default
-          #raise CORBA::MARSHAL.new(
+          # raise CORBA::MARSHAL.new(
           #  "invalid discriminator value (#{val}) for union #{name}",
           #  1, CORBA::COMPLETED_NO) unless val == :default || @labels.has_key?(val) || @labels.has_key?(:default)
           if val == :default then @labels[:default]; elsif @labels.has_key?(val) then @labels[val] else nil end
@@ -1002,6 +1026,7 @@ module R2CORBA
         def initialize(*args)
           raise 'overload required'
         end
+
         def get_type
           ::Integer
         end
@@ -1021,6 +1046,7 @@ module R2CORBA
         def member_count
           @members.size
         end
+
         def member_name(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
           @members[index]
@@ -1111,6 +1137,7 @@ module R2CORBA
       def to_d(precision)
         BigDecimal(self.to_s(precision))
       end
+
       def LongDouble._tc
         CORBA._tc_longdouble
       end

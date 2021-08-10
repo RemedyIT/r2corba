@@ -61,7 +61,7 @@ class MyHello < POA::Test::Hello
   def shutdown()
     @orb.shutdown()
   end
-end #of servant MyHello
+end # of servant MyHello
 
 orb_trds = []
 

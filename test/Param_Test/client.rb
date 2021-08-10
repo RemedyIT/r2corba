@@ -60,20 +60,20 @@ begin
 
   ## integer max/min values test
 
-  [ :max_LongLong,
-    :min_LongLong,
-    :max_ULongLong,
-    :min_ULongLong,
-    :max_Long,
-    :min_Long,
-    :max_ULong,
-    :min_ULong,
-    :max_Short,
-    :min_Short,
-    :max_UShort,
-    :min_UShort,
-    :max_Octet,
-    :min_Octet ].each do |att|
+  [:max_LongLong,
+   :min_LongLong,
+   :max_ULongLong,
+   :min_ULongLong,
+   :max_Long,
+   :min_Long,
+   :max_ULong,
+   :min_ULong,
+   :max_Short,
+   :min_Short,
+   :max_UShort,
+   :min_UShort,
+   :max_Octet,
+   :min_Octet].each do |att|
     att_val = hello_obj.send(att)
     assert "ERROR: value of attribute #{att} (#{att_val}) does not match expected value #{Test.const_get(att.to_s.capitalize)}", Test.const_get(att.to_s.capitalize) == att_val
   end

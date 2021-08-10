@@ -15,12 +15,14 @@ module R2CORBA
       module Dynamic
         include_package 'org.omg.DynamicAny'
       end
+
       module Reflect
         java_import java.lang.reflect.Array
       end
     end
+
     class Any
-      def to_java(jorb=nil, jany=nil)
+      def to_java(jorb = nil, jany = nil)
         rtc = self._tc
         rval = self._value.nil? ? self._value : rtc.validate(self._value)
         restc = rtc.resolved_tc
@@ -152,7 +154,7 @@ module R2CORBA
         end
       end # to_java
 
-      def Any.from_java(jany, jorb=nil, rtc=nil)
+      def Any.from_java(jany, jorb = nil, rtc = nil)
         rtc ||= CORBA::TypeCode.from_native(jany.type)
         rval = nil
         begin

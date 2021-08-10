@@ -36,7 +36,7 @@ module R2CORBA
         end
       end
 
-      def add_in_arg(tc, val, nm='')
+      def add_in_arg(tc, val, nm = '')
         begin
           self.req_.arguments.add_value(nm, Any.to_any(val, tc).to_java(self.req_.target._orb), CORBA::ARG_IN)
         rescue ::NativeException
@@ -45,7 +45,7 @@ module R2CORBA
         self.req_.arguments.count
       end
 
-      def add_out_arg(tc, nm='')
+      def add_out_arg(tc, nm = '')
         begin
           self.req_.arguments.add_value(nm, Any.to_any(nil, tc).to_java(self.req_.target._orb), CORBA::ARG_OUT)
         rescue ::NativeException
@@ -54,7 +54,7 @@ module R2CORBA
         self.req_.arguments.count
       end
 
-      def add_inout_arg(tc, val, nm='')
+      def add_inout_arg(tc, val, nm = '')
         begin
           self.req_.arguments.add_value(nm, Any.to_any(val, tc).to_java(self.req_.target._orb), CORBA::ARG_INOUT)
         rescue ::NativeException

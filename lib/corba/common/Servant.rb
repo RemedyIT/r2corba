@@ -82,9 +82,9 @@ module R2CORBA
         end
         self.const_set(:TRUNCATABLE_IDS, vt::TRUNCATABLE_IDS)
         self.const_set(:VT_TC, vt._tc)
-        #@@tc_vt_ = vt._tc
+        # @@tc_vt_ = vt._tc
         def self._tc
-          #@@tc_vt_
+          # @@tc_vt_
           self.const_get(:VT_TC)
         end
         include vt::Intf

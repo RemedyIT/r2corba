@@ -78,7 +78,7 @@ class MyHello < POA::Test::Hello
     puts %Q{Server - pinged watchdog #{@count} times.}
     @orb.shutdown()
   end
-end #of servant MyHello
+end # of servant MyHello
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 

@@ -14,6 +14,7 @@ class Event_impl < Event
     self.value_ = val
     self.msg_ = msg
   end
+
   def do_print(loc)
     STDERR.puts("@#{loc} (value=#{self.value_}; msg=#{self.msg_})")
   end
@@ -22,6 +23,7 @@ class Event_impl < Event
     os.write_long(self.value_)
     os.write_string(self.msg_)
   end
+
   def unmarshal(is)
     self.value_ = is.read_long
     self.msg_ = is.read_string

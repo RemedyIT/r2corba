@@ -367,6 +367,7 @@ module Test
       assert 'boxed_array_invocations:6 failed', (p3_out[i] == e)
     end
   end
+
   def Test.boxed_union_invocations(test)
     # basic test
     p1 = VBfixed_union1.new(Fixed_Union1.new)

@@ -54,6 +54,7 @@ class MyMsg
   def initialize(txt)
     @txt = txt
   end
+
   def to_str
     @txt
   end
@@ -63,6 +64,7 @@ class MyLong
   def initialize(i)
     @i = i
   end
+
   def to_int
     @i
   end
@@ -73,6 +75,7 @@ class MyArray
     @arr = []
     len.times {|i| @arr << MyLong.new(i) }
   end
+
   def to_ary
     @arr
   end

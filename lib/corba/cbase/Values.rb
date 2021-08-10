@@ -21,6 +21,7 @@ module R2CORBA
         end
       end
     end
+
     module ValueBase
       def self.included(mod)
         mod.module_eval do
@@ -30,10 +31,10 @@ module R2CORBA
           def kind_of?(mod)
             if mod < CORBA::AbstractValueBase && mod.const_defined?(:Intf)
               org_kind_of?(mod::Intf)
-              #super(mod::Intf)   ## problematic with Ruby 1.9.2 (known bug)
+              # super(mod::Intf)   ## problematic with Ruby 1.9.2 (known bug)
             else
               org_kind_of?(mod)
-              #super              ## problematic with Ruby 1.9.2 (known bug)
+              # super              ## problematic with Ruby 1.9.2 (known bug)
             end
           end
           alias :is_a? :kind_of?
@@ -97,6 +98,7 @@ module R2CORBA
         class FactoryBase < CORBA::Portable::ValueFactoryBase
           ## generic factory base
         end
+
         def self.included(mod)
           mod.module_eval do
             include CORBA::ValueBase unless self.include?(CORBA::ValueBase)

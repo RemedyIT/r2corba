@@ -69,7 +69,7 @@ class MyHello < POA::Test::Hello
     # activate and return object ref
     hello_srv._this()
   end
-end #of servant MyHello
+end # of servant MyHello
 
 class MyHello2 < POA::Test::Hello
   def initialize(orb)
@@ -92,7 +92,7 @@ class MyHello2 < POA::Test::Hello
   def _is_a?(id)
     Intf::Ids.include?(id) or id == 'IDL:org.omg/custom.Test/Hello:1.0'
   end
-end #of servant MyHello
+end # of servant MyHello
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 obj = orb.resolve_initial_references('RootPOA')

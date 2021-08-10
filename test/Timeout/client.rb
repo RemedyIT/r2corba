@@ -55,7 +55,7 @@ Min_timeout = 0
 Max_timeout = 20
 
 None, Orb1, Thread1, Object1 = (0..3).to_a
-To_type_names = [ 'none', 'orb', 'thread', 'object' ]
+To_type_names = ['none', 'orb', 'thread', 'object']
 
 Timeout_count = [0, 0, 0, 0]
 In_time_count = [0, 0, 0, 0]
@@ -82,7 +82,7 @@ def send_echo (ctype, orb, server, t)
       # This is a non-standard TAO call that's used to give the
       # client ORB a chance to cleanup the reply that's come back
       # from the server.
-#orb.run(tv)
+# orb.run(tv)
   end
 end
 

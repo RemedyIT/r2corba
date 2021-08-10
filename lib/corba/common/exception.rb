@@ -29,6 +29,7 @@ module R2CORBA
       def reason
         self.message
       end
+
       def to_s
         "CORBA::#{self.class::Name}(#{super}) [minor=#{@minor};completed=#{COMPLETED_TXT[@completed.to_i]}]"
       end

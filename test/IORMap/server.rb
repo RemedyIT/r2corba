@@ -65,7 +65,7 @@ class MyHello < POA::Test::Hello
   def shutdown()
     @orb.shutdown()
   end
-end #of servant MyHello
+end # of servant MyHello
 
 orb = if defined?(JRUBY_VERSION)
     CORBA.ORB_init('myORB', {'OAAddress' => "iiop://localhost:#{OPTIONS[:listenport]}"})

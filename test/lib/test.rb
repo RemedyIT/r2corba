@@ -160,7 +160,7 @@ if defined?(JRUBY_VERSION)
           begin
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
             if tmp == pid and status.success? != nil
-              return [pid, status.success?() ? 0 : status.exitstatus ]
+              return [pid, status.success?() ? 0 : status.exitstatus]
             end
             return [nil, 0]
           rescue Errno::ECHILD
@@ -185,6 +185,7 @@ if defined?(JRUBY_VERSION)
         end
       end
     end
+
     def initialize(cmd_, arg_)
       @pid = nil
       @exitstatus = nil
@@ -237,6 +238,7 @@ if defined?(JRUBY_VERSION)
     end
 
     def is_running?; @exitstatus.nil?; end
+
     def has_error? ; @trd.status.nil? or (!self.is_running? and self.exitstatus != 0) ;end
 
     def stop
@@ -395,6 +397,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
       def exitstatus; @exitstatus; end
 
       def is_running?; @exitstatus.nil?; end
+
       def has_error?; !@exitstatus.nil? and (@exitstatus != 0); end
 
       def stop
@@ -457,6 +460,7 @@ else # !win32
     end
 
     def is_running?; @exitstatus.nil?; end
+
     def has_error?; !@status.nil? and (@status.success? == false); end
 
     def stop
@@ -487,10 +491,12 @@ end
     end
 
     def pid; @proc.pid; end
+
     def is_running?; @proc.is_running?; end
+
     def exit_status; @proc.exitstatus; end
 
-    def wait(timeout, check_exit=true)
+    def wait(timeout, check_exit = true)
       t = Time.now
       begin
         if @proc.check_status
@@ -523,7 +529,7 @@ end
 
   def TestUtil.wait_for_file(filename, timeout)
     t = Time.now
-    while !File.readable?(filename) do
+    while !File.readable?(filename)
       sleep(0.1)
       if (Time.now() - t) >= timeout.to_f
         STDERR.puts "ERROR: could not find file '#{filename}'"

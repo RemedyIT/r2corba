@@ -144,17 +144,20 @@ module R2CORBA
           @q_ = []
           super
         end
+
         def push(vfklass)
           synchronize do
             @q_ << vfklass
           end
         end
+
         def process_all(&block)
           synchronize do
             @q_.each { |vf| block.call(vf) }
             @q_.clear
           end
         end
+
         def empty?()
           f = false
           synchronize do
@@ -186,22 +189,22 @@ module R2CORBA
    private
      @@sigreg = {}
      def CORBA.signal_numbers
-      ( [1, # HUP
-         2, # INT
-         3, # QUIT
-         5, # TRAP
-         6, # ABRT
-         10, # USR1
-         12, # USR2
-         13, # SIGPIPE
-         14, # ALRM
-         15, # TERM
-         17, # CHLD
-         18, # CONT
-         23, # URG
-         30, # PWR
-         31  # SYS
-        ]) & Signal.list.values
+      ([1, # HUP
+        2, # INT
+        3, # QUIT
+        5, # TRAP
+        6, # ABRT
+        10, # USR1
+        12, # USR2
+        13, # SIGPIPE
+        14, # ALRM
+        15, # TERM
+        17, # CHLD
+        18, # CONT
+        23, # URG
+        30, # PWR
+        31  # SYS
+       ]) & Signal.list.values
      end
 
      def CORBA.handled_signals

@@ -54,7 +54,7 @@ class MyHello < PortableServer::DynamicImplementation
         :result_type => CORBA._tc_string,
         :arg_list => [
         ['message', CORBA::ARG_IN, CORBA._tc_string],
-        ['msglen', CORBA::ARG_OUT, CORBA._tc_long] ] }
+        ['msglen', CORBA::ARG_OUT, CORBA._tc_long]] }
   }
 
   Id = 'IDL:Test/Hello:1.0'
@@ -71,7 +71,7 @@ class MyHello < PortableServer::DynamicImplementation
   def shutdown()
     @orb.shutdown()
   end
-end #of servant MyHello
+end # of servant MyHello
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 

@@ -58,7 +58,7 @@ module R2CORBA
         end
       end
 
-      def Any.to_any(o, tc=nil)
+      def Any.to_any(o, tc = nil)
         if tc.nil?
           tc = self.typecode_for_value(o)
           if tc.is_a?(CORBA::TypeCode)
@@ -72,6 +72,7 @@ module R2CORBA
       def _tc
         @__tc
       end
+
       def _value
         @__value
       end
