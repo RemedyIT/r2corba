@@ -72,6 +72,7 @@ module R2CORBA
       def _tc
         @__tc
       end
+
       def _value
         @__value
       end

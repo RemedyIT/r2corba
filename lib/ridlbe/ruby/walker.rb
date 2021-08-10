@@ -19,12 +19,17 @@ module IDL
     end
 
     def print(str);       @output << str; end
+
     def println(str = '');  @output << str << "\n"; end
+
     def printi(str = '');   @output << indent() << str; end
+
     def printiln(str = ''); @output << indent() << str << "\n"; end
+
     def indent()
       @indent * @nest
     end
+
     def nest(in_ = 1)
       @nest += in_
       begin
@@ -100,6 +105,7 @@ module IDL
       println()
       @nest += 1
     end
+
     def leave_module(node)
       @nest -= 1
       printiln("end #of module #{node.rubyname}")
@@ -114,6 +120,7 @@ module IDL
         printiln("module #{name}; end  ## interface forward")
       end
     end
+
     def enter_interface(node)
       println
       name = node.rubyname
@@ -195,6 +202,7 @@ module IDL
       end
       println
     end
+
     def leave_interface(node)
       name = node.rubyname
       @nest -= 1
@@ -246,6 +254,7 @@ module IDL
 
     def declare_valuetype(node)
     end
+
     def enter_valuetype(node)
       println()
       name = node.rubyname
@@ -860,12 +869,14 @@ module IDL
 
     def declare_struct(node)
     end
+
     def enter_struct(node)
       println()
       name = node.rubyname
       printiln("class #{name} < CORBA::Portable::Struct")
       @nest += 1
     end
+
     def leave_struct(node)
       tc_ = if node.is_a? IDL::AST::Exception then 'Except' else 'Struct' end
       println()
@@ -915,18 +926,21 @@ module IDL
       printiln("class #{name} < CORBA::UserException")
       @nest += 1
     end
+
     def leave_exception(node)
       leave_struct(node)
     end
 
     def declare_union(node)
     end
+
     def enter_union(node)
       println()
       name = node.rubyname
       printiln("class #{name} < CORBA::Portable::Union")
       @nest += 1
     end
+
     def leave_union(node)
       println()
       printiln(format('def %s._tc', node.rubyname))
@@ -1168,6 +1182,7 @@ module IDL
       println()
       @nest += 1
     end
+
     def leave_module(node)
       @nest -= 1
       printiln("end #of module #{node.rubyname}")
@@ -1177,6 +1192,7 @@ module IDL
     def declare_interface(node)
       printiln("class #{node.rubyname} < PortableServer::Servant; end  ## servant forward")
     end
+
     def enter_interface(node)
       if !node.is_local?
         println
@@ -1196,6 +1212,7 @@ module IDL
         println()
       end
     end
+
     def leave_interface(node)
       if !node.is_local?
         name = node.rubyname
@@ -1228,6 +1245,7 @@ module IDL
 
     def declare_valuetype(node)
     end
+
     def enter_valuetype(node)
       println
       printiln("class #{node.rubyname} < PortableServer::Servant ## servant")
@@ -1552,20 +1570,25 @@ module IDL
 
     def declare_struct(node)
     end
+
     def enter_struct(node)
     end
+
     def leave_struct(node)
     end
 
     def enter_exception(node)
     end
+
     def leave_exception(node)
     end
 
     def declare_union(node)
     end
+
     def enter_union(node)
     end
+
     def leave_union(node)
     end
 

@@ -45,6 +45,7 @@ module R2CORBA
           Kernel.raise exklass.new(reason, minor, completed)
         end
       end
+
       def initialize(reason = '', minor = 0, completed = nil)
         super(reason)
         @minor = minor
@@ -53,6 +54,7 @@ module R2CORBA
       end
       attr_accessor :ids
       def _ids; @ids; end
+
       def _interface_repository_id
         self.class::Id
       end

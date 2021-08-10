@@ -73,6 +73,7 @@ module R2CORBA
         end
         raise exklass.new(jex)
       end
+
       def initialize(*args)
         if (NativeException === args.first and args.first.cause.is_a? Native::SystemException) or args.first.is_a?(Native::SystemException)
           java_ex = args.first.is_a?(Native::SystemException) ? args.first : args.first.cause

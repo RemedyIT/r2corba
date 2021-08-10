@@ -144,17 +144,20 @@ module R2CORBA
           @q_ = []
           super
         end
+
         def push(vfklass)
           synchronize do
             @q_ << vfklass
           end
         end
+
         def process_all(&block)
           synchronize do
             @q_.each { |vf| block.call(vf) }
             @q_.clear
           end
         end
+
         def empty?()
           f = false
           synchronize do

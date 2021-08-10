@@ -42,6 +42,7 @@ module R2CORBA
         def marshal(os)
           raise CORBA::NO_IMPLEMENT
         end
+
         def unmarshal(is)
           raise CORBA::NO_IMPLEMENT
         end

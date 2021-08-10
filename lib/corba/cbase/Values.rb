@@ -21,6 +21,7 @@ module R2CORBA
         end
       end
     end
+
     module ValueBase
       def self.included(mod)
         mod.module_eval do
@@ -97,6 +98,7 @@ module R2CORBA
         class FactoryBase < CORBA::Portable::ValueFactoryBase
           ## generic factory base
         end
+
         def self.included(mod)
           mod.module_eval do
             include CORBA::ValueBase unless self.include?(CORBA::ValueBase)

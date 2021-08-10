@@ -16,12 +16,15 @@ module IDL
     def initialize()
       @str = ''
     end
+
     def clear
       @str = ''
     end
+
     def to_s
       @str
     end
+
     def <<(s)
       @str << s
     end
@@ -43,6 +46,7 @@ module IDL
       end
       opts
     end
+
     def RIDL.parse0(src, params)
       params = merge_params(params)
       IDL.verbose_level = params[:verbose]
@@ -53,6 +57,7 @@ module IDL
       IDL::Ruby.process_input(parser, params, s)
       s
     end
+
     def RIDL.parse(src, params)
       s = parse0(src, params)
       s.to_s
@@ -67,6 +72,7 @@ module IDL
       Kernel.eval(s.to_s, ::TOPLEVEL_BINDING)
       s = nil
     end
+
     def RIDL.fparse(fname, params = {})
       params[:client_stubs] = true if params[:client_stubs].nil?
       params[:stubs_only] ||= false
@@ -75,6 +81,7 @@ module IDL
     ensure
       f.close
     end
+
     def RIDL.feval(fname, params = {})
       File.open(fname, 'r') { |io| self.eval(io, params) }
     end

@@ -15,10 +15,12 @@ module R2CORBA
       module Dynamic
         include_package 'org.omg.DynamicAny'
       end
+
       module Reflect
         java_import java.lang.reflect.Array
       end
     end
+
     class Any
       def to_java(jorb = nil, jany = nil)
         rtc = self._tc

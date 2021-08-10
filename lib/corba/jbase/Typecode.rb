@@ -449,6 +449,7 @@ module R2CORBA
             super(id)
           end
         end
+
         # because creating the native tc involves creating Any's we postpone until actually needed
         def tc_
           @tc_ ||= begin

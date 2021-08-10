@@ -27,6 +27,7 @@ module R2CORBA
         def initialize(nobj)
           @objref_ = nobj
         end
+
         def _free_ref
           self._release
         end
