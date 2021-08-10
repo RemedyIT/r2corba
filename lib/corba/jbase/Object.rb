@@ -69,7 +69,7 @@ module R2CORBA
       #PolicyList policies
       #SetOverrideType set_add
       #ret ::CORBA::Object
-      def _set_policy_overrides(policies, set_add )
+      def _set_policy_overrides(policies, set_add)
         raise ::CORBA::NO_IMPLEMENT
       end
 

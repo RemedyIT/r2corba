@@ -499,7 +499,7 @@ module IDL
 
       println()
       printi("def #{node.rubyname}(")
-      print( _in.collect{ |p| p.rubyname }.join(', ') )
+      print(_in.collect{ |p| p.rubyname }.join(', '))
       if node.oneway
         println(')    # oneway')
       else
@@ -1314,7 +1314,7 @@ module IDL
       println()
 
       printi("def #{node.rubyname}(")
-      print( _in.collect{ |p| p.rubyname }.join(', ') )
+      print(_in.collect{ |p| p.rubyname }.join(', '))
       if node.oneway
         println(')    # oneway')
       else
