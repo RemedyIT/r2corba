@@ -13,6 +13,7 @@ class Event_impl < Event
   def initialize(val = nil)
     self.value_ = val
   end
+
   def do_print(loc)
     STDERR.puts("@#{loc} (value #{self.value_})")
   end

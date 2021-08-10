@@ -71,6 +71,7 @@ class Left < POA::Diamond::Left
   def shape
     'the left line'
   end
+
   def color
     'black'
   end
@@ -80,9 +81,11 @@ class Right < POA::Diamond::Right
   def shape
     'the right line'
   end
+
   def color
     'red'
   end
+
   def width
     0
   end
@@ -92,15 +95,19 @@ class Buttom < POA::Diamond::Buttom
   def shape
     'a diamond'
   end
+
   def color
     'translucent'
   end
+
   def name
     'Jubilee'
   end
+
   def width
     100
   end
+
   def area(unit)
     case unit
       when Diamond::Buttom::MM

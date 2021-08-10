@@ -55,6 +55,7 @@ class Foo_i < POA::Foo
     end
     raise BadInput.new('expected "base_op"')
   end
+
   def foo_op (inarg)
     if inarg == 'foo_op'
       return 'good'
