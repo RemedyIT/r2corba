@@ -160,7 +160,7 @@ if defined?(JRUBY_VERSION)
           begin
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
             if tmp == pid and status.success? != nil
-              return [pid, status.success?() ? 0 : status.exitstatus ]
+              return [pid, status.success?() ? 0 : status.exitstatus]
             end
             return [nil, 0]
           rescue Errno::ECHILD
