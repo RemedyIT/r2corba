@@ -490,7 +490,7 @@ end
     def is_running?; @proc.is_running?; end
     def exit_status; @proc.exitstatus; end
 
-    def wait(timeout, check_exit=true)
+    def wait(timeout, check_exit = true)
       t = Time.now
       begin
         if @proc.check_status
