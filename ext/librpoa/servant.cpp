@@ -286,11 +286,11 @@ VALUE r2tao_ServerRequest_get(VALUE self, VALUE key)
     if (rb_obj_is_kind_of (key, rb_cString) == Qtrue)
     {
       char* arg_name = RSTRING_PTR (key);
-      CORBA::ULong arg_num = dsi_data->_nvlist->count ();
-      for (CORBA::ULong ix=0; ix<arg_num ;++ix)
+      CORBA::ULong const arg_num = dsi_data->_nvlist->count ();
+      for (CORBA::ULong ix=0; ix < arg_num ;++ix)
       {
         CORBA::NamedValue_ptr _nv = dsi_data->_nvlist->item (ix);
-        if (_nv->name () && ACE_OS::strcmp (arg_name, _nv->name ()) == 0)
+        if (_nv->name () && std::strcmp (arg_name, _nv->name ()) == 0)
         {
           R2TAO_TRY
           {
@@ -340,11 +340,11 @@ VALUE r2tao_ServerRequest_set(VALUE self, VALUE key, VALUE val)
     if (rb_obj_is_kind_of (key, rb_cString) == Qtrue)
     {
       char* arg_name = RSTRING_PTR (key);
-      CORBA::ULong arg_num = dsi_data->_nvlist->count ();
-      for (CORBA::ULong ix=0; ix<arg_num ;++ix)
+      CORBA::ULong const arg_num = dsi_data->_nvlist->count ();
+      for (CORBA::ULong ix = 0; ix < arg_num ;++ix)
       {
         CORBA::NamedValue_ptr _nv = dsi_data->_nvlist->item (ix);
-        if (_nv->name () && ACE_OS::strcmp (arg_name, _nv->name ()) == 0)
+        if (_nv->name () && std::strcmp (arg_name, _nv->name ()) == 0)
         {
           R2TAO_TRY
           {
@@ -480,15 +480,15 @@ VALUE DSI_Servant::_invoke_implementation(VALUE args)
 
 DSI_Servant::METHOD  DSI_Servant::method_id (const char* method)
 {
-  if (ACE_OS::strcmp (method, "_is_a") == 0)
+  if (std::strcmp (method, "_is_a") == 0)
     return IS_A;
-  else if (ACE_OS::strcmp (method, "_repository_id") == 0)
+  else if (std::strcmp (method, "_repository_id") == 0)
     return REPOSITORY_ID;
-  else if (ACE_OS::strcmp (method, "_non_existent") == 0)
+  else if (std::strcmp (method, "_non_existent") == 0)
     return NON_EXISTENT;
-  else if (ACE_OS::strcmp (method, "_component") == 0)
+  else if (std::strcmp (method, "_component") == 0)
     return GET_COMPONENT;
-  else if (ACE_OS::strcmp (method, "_interface") == 0)
+  else if (std::strcmp (method, "_interface") == 0)
     return GET_INTERFACE;
 
   return NONE;
@@ -516,7 +516,7 @@ void DSI_Servant::invoke (CORBA::ServerRequest_ptr request)
   ThreadSafeArg tca_(this, request);
 
   void* rc = r2tao_call_thread_safe (DSI_Servant::thread_safe_invoke, &tca_);
-  if (rc != 0)
+  if (rc != nullptr)
   {
     CORBA::SystemException* exc = reinterpret_cast<CORBA::SystemException*> (rc);
     std::unique_ptr<CORBA::SystemException> e_ptr(exc);

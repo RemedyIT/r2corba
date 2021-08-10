@@ -548,9 +548,7 @@ class R2TAO_Request_BlockedRegionCaller
 {
 public:
   R2TAO_Request_BlockedRegionCaller (CORBA::Request_ptr req)
-    : req_ (req),
-      exception_ (false),
-      corba_ex_ (nullptr) {}
+    : req_ (req) {}
   virtual ~R2TAO_Request_BlockedRegionCaller () noexcept(false);
 
   VALUE call ();
@@ -563,8 +561,8 @@ protected:
   virtual VALUE do_exec () = 0;
 
   CORBA::Request_ptr req_;
-  bool exception_;
-  CORBA::Exception* corba_ex_;
+  bool exception_ {false};
+  CORBA::Exception* corba_ex_ {};
 };
 
 R2TAO_Request_BlockedRegionCaller::~R2TAO_Request_BlockedRegionCaller() noexcept(false)
@@ -617,10 +615,10 @@ class R2TAO_Request_BlockedInvoke : public R2TAO_Request_BlockedRegionCaller
 public:
   R2TAO_Request_BlockedInvoke (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedInvoke () {}
+  ~R2TAO_Request_BlockedInvoke () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedInvoke::do_exec ()
@@ -634,10 +632,10 @@ class R2TAO_Request_BlockedSendOneway : public R2TAO_Request_BlockedRegionCaller
 public:
   R2TAO_Request_BlockedSendOneway (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedSendOneway () {}
+  ~R2TAO_Request_BlockedSendOneway () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedSendOneway::do_exec ()
@@ -755,18 +753,14 @@ static VALUE _r2tao_invoke_request(CORBA::Request_ptr _req,
         ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - invoke_request(%C): user exception from remote twoway\n", _req->operation ()));
 
       CORBA::Any& _excany = user_ex.exception ();
-
-      CORBA::ULong exc_len = _req->exceptions ()->count ();
-      for (CORBA::ULong x=0; x<exc_len ;++x)
+      CORBA::ULong const exc_len = _req->exceptions ()->count ();
+      for (CORBA::ULong x=0; x < exc_len ;++x)
       {
         CORBA::TypeCode_var _xtc = _req->exceptions ()->item (x);
-        if (ACE_OS::strcmp (_xtc->id (),
-                            _excany._tao_get_typecode ()->id ()) == 0)
+        if (std::strcmp (_xtc->id (), _excany._tao_get_typecode ()->id ()) == 0)
         {
           VALUE x_rtc = r2corba_TypeCode_t2r (_xtc.in ());
-          VALUE rexc = r2tao_Any2Ruby (_excany,
-                                       _xtc.in (),
-                                       x_rtc, x_rtc);
+          VALUE rexc = r2tao_Any2Ruby (_excany, _xtc.in (), x_rtc, x_rtc);
           _raise = true;
           return rexc;
         }

@@ -168,9 +168,7 @@ extern "C" R2TAO_POA_EXPORT void Init_librpoa()
 class R2TAO_POA_BlockedRegionCallerBase
 {
 public:
-  R2TAO_POA_BlockedRegionCallerBase ()
-    : exception_ (false),
-      corba_ex_ (0) {}
+  R2TAO_POA_BlockedRegionCallerBase () = default;
   virtual ~R2TAO_POA_BlockedRegionCallerBase () noexcept(false);
 
   VALUE call ();
@@ -182,8 +180,8 @@ protected:
 
   virtual VALUE do_exec () = 0;
 
-  bool exception_;
-  CORBA::Exception* corba_ex_;
+  bool exception_ {};
+  CORBA::Exception* corba_ex_ {};
 };
 
 R2TAO_POA_BlockedRegionCallerBase::~R2TAO_POA_BlockedRegionCallerBase() noexcept(false)
@@ -265,8 +263,7 @@ VALUE r2tao_PS_string_to_ObjectId(VALUE /*self*/, VALUE string)
   string = rb_check_convert_type(string, T_STRING, "String", "to_s");
   R2TAO_TRY
   {
-    PortableServer::ObjectId_var oid =
-        PortableServer::string_to_ObjectId (RSTRING_PTR (string));
+    PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId (RSTRING_PTR (string));
     return r2tao_ObjectId_t2r (oid);
   }
   R2TAO_CATCH;
@@ -296,7 +293,7 @@ public:
   R2TAO_POA_BlockedRegionCaller (PortableServer::POA_ptr _poa)
     : poa_ (PortableServer::POA::_duplicate (_poa))
   {}
-  virtual ~R2TAO_POA_BlockedRegionCaller () {}
+  ~R2TAO_POA_BlockedRegionCaller () override = default;
 
 protected:
   //virtual VALUE do_exec () = 0;
