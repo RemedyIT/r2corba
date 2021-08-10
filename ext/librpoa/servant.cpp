@@ -95,7 +95,7 @@ void r2tao_init_Servant()
   interface_repository_id_ID = rb_intern ("_interface_repository_id");
 
   r2tao_cDynamicImp = klass = rb_eval_string("::R2CORBA::PortableServer::DynamicImplementation");
-  //rb_define_alloc_func (r2tao_cDynamicImp, srv_alloc);
+  rb_define_alloc_func (r2tao_cDynamicImp, srv_alloc);
 
   invoke_ID = rb_intern ("invoke");
   primary_interface_ID = rb_intern ("_primary_interface");
