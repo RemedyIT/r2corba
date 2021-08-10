@@ -505,7 +505,7 @@ void R2TAO_Value::init ()
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::ctor "
-                         "created Value wrapper %@ for %s %s\n",
+                         "created Value wrapper %@ for %C %C\n",
                          this, this->val_tc_->id (),
                          this->is_truncatable_ ? "(truncatable)" : ""));
 }
@@ -572,7 +572,7 @@ class CI_Guard
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                         "marshaling value %@ for %s %s\n",
+                         "marshaling value %@ for %s %C\n",
                          this,
                          this->val_tc_->id (),
                          ci.chunking_ ? "(chunked)" : ""));
@@ -589,7 +589,7 @@ class CI_Guard
 
     if (TAO_debug_level > 10)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                           "marshaling chunk %@ for value %@ for %s\n",
+                           "marshaling chunk %@ for value %@ for %C\n",
                            p,
                            this,
                            this->val_tc_->id ()));
@@ -599,7 +599,7 @@ class CI_Guard
     {
       if (TAO_debug_level > 10)
         ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                             "marshaling chunk element %u for value %@ for %s\n",
+                             "marshaling chunk element %u for value %@ for %C\n",
                              e,
                              this,
                              this->val_tc_->id ()));
@@ -608,7 +608,7 @@ class CI_Guard
       {
         // should not ever happen
         ACE_DEBUG ((LM_ERROR, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                              "chunk element %u for value %@ for %s is INVALID (%C is null)\n",
+                              "chunk element %u for value %@ for %C is INVALID (%C is null)\n",
                               e,
                               this,
                               this->val_tc_->id (),
@@ -627,7 +627,7 @@ class CI_Guard
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                         "succeeded marshaling value %@ for %s\n",
+                         "succeeded marshaling value %@ for %C\n",
                          this,
                          this->val_tc_->id ()));
 
@@ -652,7 +652,7 @@ bool R2TAO_Value::add_chunk ()
 
     if (TAO_debug_level > 10)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::add_chunk: "
-                           "added chunk %@ for value %@ for %s\n",
+                           "added chunk %@ for value %@ for %C\n",
                            new_chunk,
                            this,
                            this->val_tc_->id ()));
@@ -672,7 +672,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
     if (TAO_debug_level > 10)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::add_chunk: "
-                           "added chunk %@ element %u for value %@ for %s\n",
+                           "added chunk %@ element %u for value %@ for %C\n",
                            this->last_chunk_,
                            last_ix,
                            this,
@@ -688,7 +688,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 {
   static R2TAO_RBFuncall FN_unmarshal ("do_unmarshal", false);
 
-  if (!this->for_unmarshal_)   return false;
+  if (!this->for_unmarshal_) return false;
 
   // setup chunking info
   TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_, 1);
@@ -697,7 +697,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_unmarshal_v: "
-                         "unmarshaling value %@ for %s\n",
+                         "unmarshaling value %@ for %C\n",
                          this->rbValue_,
                          this->val_tc_->id ()));
 
@@ -710,7 +710,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
   if (TAO_debug_level > 10)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_unmarshal_v: "
-                         "invoking Ruby unmarshaling for value %@ for %s\n",
+                         "invoking Ruby unmarshaling for value %@ for %C\n",
                          this->rbValue_,
                          this->val_tc_->id ()));
 
@@ -723,7 +723,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
   if (TAO_debug_level > 10)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_unmarshal_v: "
-                         "succeeded unmarshaling value %@ for %s %s\n",
+                         "succeeded unmarshaling value %@ for %C %C\n",
                          this->rbValue_,
                          this->val_tc_->id (),
                          this->requires_truncation_ ? "(with truncation)" : ""));
@@ -845,7 +845,7 @@ VALUE r2tao_Value_pre_unmarshal(VALUE self, VALUE rstrm)
 
   if (TAO_debug_level > 10)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2CORBA::CORBA::ValueBase::pre_unmarshal: "
-                         "unmarshaling value state for %@ %s\n",
+                         "unmarshaling value state for %@ %C\n",
                          self,
                          val->requires_truncation () ? "with truncation" : ""));
 
@@ -914,7 +914,7 @@ R2TAO_ValueFactory* R2TAO_ValueFactory::_downcast ( ::CORBA::ValueFactoryBase * 
   if (fn_create_default_.has_caught_exception ())
   {
     rb_eval_string ("STDERR.puts $!.to_s+\"\\n\"+$!.backtrace.join(\"\\n\")");
-    return 0;
+    return nullptr;
   }
 
   R2TAO_Value *ret_val = nullptr;
@@ -926,7 +926,7 @@ R2TAO_ValueFactory* R2TAO_ValueFactory::_downcast ( ::CORBA::ValueFactoryBase * 
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_ValueFactory::create_for_unmarshal: "
-                         "created value wrapper %@ for %s\n",
+                         "created value wrapper %@ for %C\n",
                          ret_val,
                          this->tao_repository_id ()));
 
@@ -977,7 +977,7 @@ VALUE r2tao_VFB_register_value_factory(VALUE /*self*/, VALUE id, VALUE rfact)
 
     if (TAO_debug_level > 5)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - ValueFactoryBase::register_value_factory:: "
-                           "registering factory for %s\n",
+                           "registering factory for %C\n",
                            RSTRING_PTR (id)));
 
     CORBA::ValueFactory factory = new R2TAO_ValueFactory (rfact);
@@ -1002,7 +1002,7 @@ VALUE r2tao_VFB_unregister_value_factory(VALUE /*self*/, VALUE id)
 
     if (TAO_debug_level > 5)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - ORB::unregister_value_factory:: "
-                           "unregistering factory for %s\n",
+                           "unregistering factory for %C\n",
                            RSTRING_PTR (id)));
 
     TAO_ORB_Core_instance ()->orb ()->unregister_value_factory (
@@ -1023,7 +1023,7 @@ VALUE r2tao_VFB_lookup_value_factory(VALUE /*self*/, VALUE id)
 
     if (TAO_debug_level > 5)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - ORB::lookup_value_factory:: "
-                           "looking up factory for %s\n",
+                           "looking up factory for %C\n",
                            RSTRING_PTR (id)));
 
     CORBA::ValueFactory factory =
