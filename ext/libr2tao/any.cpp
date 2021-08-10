@@ -54,6 +54,7 @@
 #include "tao/Object_Loader.h"
 #include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
+#include <cstring>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 

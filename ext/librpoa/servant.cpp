@@ -25,6 +25,7 @@
 #include "orb.h"
 #include "servant.h"
 #include <memory>
+#include <cstring>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 

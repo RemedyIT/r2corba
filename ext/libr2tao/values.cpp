@@ -19,6 +19,7 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/DynamicAny/DynamicAny.h"
+#include <cstring>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
