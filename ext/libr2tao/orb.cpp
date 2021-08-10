@@ -599,10 +599,10 @@ public:
     : R2TAO_ORB_BlockedRegionCaller (orb) {}
   R2TAO_ORB_BlockedPerformWork (CORBA::ORB_ptr orb, ACE_Time_Value& to)
     : R2TAO_ORB_BlockedRegionCaller (orb, to) {}
-  virtual ~R2TAO_ORB_BlockedPerformWork () {}
+  ~R2TAO_ORB_BlockedPerformWork () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_ORB_BlockedPerformWork::do_exec ()

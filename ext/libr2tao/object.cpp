@@ -649,10 +649,10 @@ class R2TAO_Request_BlockedSendDeferred : public R2TAO_Request_BlockedRegionCall
 public:
   R2TAO_Request_BlockedSendDeferred (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedSendDeferred () {}
+  ~R2TAO_Request_BlockedSendDeferred () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedSendDeferred::do_exec ()
@@ -666,10 +666,10 @@ class R2TAO_Request_BlockedGetResponse : public R2TAO_Request_BlockedRegionCalle
 public:
   R2TAO_Request_BlockedGetResponse (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedGetResponse () {}
+  ~R2TAO_Request_BlockedGetResponse () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedGetResponse::do_exec ()
@@ -683,10 +683,10 @@ class R2TAO_Request_BlockedPollResponse : public R2TAO_Request_BlockedRegionCall
 public:
   R2TAO_Request_BlockedPollResponse (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedPollResponse () {}
+  ~R2TAO_Request_BlockedPollResponse () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedPollResponse::do_exec ()

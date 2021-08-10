@@ -107,8 +107,8 @@ extern "C" R2TAO_POA_EXPORT void Init_librpoa()
   if (r2tao_nsPOA) return;
 
   r2tao_nsPortableServer = klass = rb_eval_string("::R2CORBA::PortableServer");
-  rb_define_singleton_method(klass, "string_to_ObjectId", r2tao_PS_string_to_ObjectId, 1);
-  rb_define_singleton_method(klass, "ObjectId_to_string", r2tao_PS_ObjectId_to_string, 1);
+  rb_define_singleton_method(klass, "string_to_ObjectId", RUBY_METHOD_FUNC(r2tao_PS_string_to_ObjectId), 1);
+  rb_define_singleton_method(klass, "ObjectId_to_string", RUBY_METHOD_FUNC(r2tao_PS_ObjectId_to_string), 1);
 
   r2tao_nsPOA = klass = rb_eval_string("::R2CORBA::PortableServer::POA");
 
@@ -124,37 +124,37 @@ extern "C" R2TAO_POA_EXPORT void Init_librpoa()
   r2tao_x_POA_WrongAdapter = rb_const_get (r2tao_nsPOA, rb_intern ("WrongAdapter"));
   r2tao_x_POA_WrongPolicy = rb_const_get (r2tao_nsPOA, rb_intern ("WrongPolicy"));
 
-  rb_define_method(klass, "destroy", r2tao_POA_destroy, 2);
-  rb_define_method(klass, "the_name", r2tao_POA_the_name, 0);
-  rb_define_method(klass, "the_POAManager", r2tao_POA_the_POAManager, 0);
-  rb_define_method(klass, "the_parent", r2tao_POA_the_parent, 0);
-  rb_define_method(klass, "the_children", r2tao_POA_the_children, 0);
-  rb_define_method(klass, "activate_object", r2tao_POA_activate_object, 1);
-  rb_define_method(klass, "activate_object_with_id", r2tao_POA_activate_object_with_id, 2);
-  rb_define_method(klass, "deactivate_object", r2tao_POA_deactivate_object, 1);
-  rb_define_method(klass, "create_reference", r2tao_POA_create_reference, 1);
-  rb_define_method(klass, "create_reference_with_id", r2tao_POA_create_reference_with_id, 2);
-  rb_define_method(klass, "servant_to_id", r2tao_POA_servant_to_id, 1);
-  rb_define_method(klass, "servant_to_reference", r2tao_POA_servant_to_reference, 1);
-  rb_define_method(klass, "reference_to_servant", r2tao_POA_reference_to_servant, 1);
-  rb_define_method(klass, "reference_to_id", r2tao_POA_reference_to_id, 1);
-  rb_define_method(klass, "id_to_servant", r2tao_POA_id_to_servant, 1);
-  rb_define_method(klass, "id_to_reference", r2tao_POA_id_to_reference, 1);
-  rb_define_method(klass, "create_POA", r2tao_POA_create_POA, 3);
-  rb_define_method(klass, "find_POA", r2tao_POA_find_POA, 2);
-  rb_define_method(klass, "id", r2tao_POA_id, 0);
+  rb_define_method(klass, "destroy", RUBY_METHOD_FUNC(r2tao_POA_destroy), 2);
+  rb_define_method(klass, "the_name", RUBY_METHOD_FUNC(r2tao_POA_the_name), 0);
+  rb_define_method(klass, "the_POAManager", RUBY_METHOD_FUNC(r2tao_POA_the_POAManager), 0);
+  rb_define_method(klass, "the_parent", RUBY_METHOD_FUNC(r2tao_POA_the_parent), 0);
+  rb_define_method(klass, "the_children", RUBY_METHOD_FUNC(r2tao_POA_the_children), 0);
+  rb_define_method(klass, "activate_object", RUBY_METHOD_FUNC(r2tao_POA_activate_object), 1);
+  rb_define_method(klass, "activate_object_with_id", RUBY_METHOD_FUNC(r2tao_POA_activate_object_with_id), 2);
+  rb_define_method(klass, "deactivate_object", RUBY_METHOD_FUNC(r2tao_POA_deactivate_object), 1);
+  rb_define_method(klass, "create_reference", RUBY_METHOD_FUNC(r2tao_POA_create_reference), 1);
+  rb_define_method(klass, "create_reference_with_id", RUBY_METHOD_FUNC(r2tao_POA_create_reference_with_id), 2);
+  rb_define_method(klass, "servant_to_id", RUBY_METHOD_FUNC(r2tao_POA_servant_to_id), 1);
+  rb_define_method(klass, "servant_to_reference", RUBY_METHOD_FUNC(r2tao_POA_servant_to_reference), 1);
+  rb_define_method(klass, "reference_to_servant", RUBY_METHOD_FUNC(r2tao_POA_reference_to_servant), 1);
+  rb_define_method(klass, "reference_to_id", RUBY_METHOD_FUNC(r2tao_POA_reference_to_id), 1);
+  rb_define_method(klass, "id_to_servant", RUBY_METHOD_FUNC(r2tao_POA_id_to_servant), 1);
+  rb_define_method(klass, "id_to_reference", RUBY_METHOD_FUNC(r2tao_POA_id_to_reference), 1);
+  rb_define_method(klass, "create_POA", RUBY_METHOD_FUNC(r2tao_POA_create_POA), 3);
+  rb_define_method(klass, "find_POA", RUBY_METHOD_FUNC(r2tao_POA_find_POA), 2);
+  rb_define_method(klass, "id", RUBY_METHOD_FUNC(r2tao_POA_id), 0);
 
   r2tao_nsPOAManager = klass = rb_eval_string("::R2CORBA::PortableServer::POAManager");
 
   r2tao_x_POAManager_AdapterInactive = rb_const_get (r2tao_nsPOAManager, rb_intern ("AdapterInactive"));
 
-  rb_define_method(klass, "activate", r2tao_POAManager_activate, 0);
-  rb_define_method(klass, "hold_requests", r2tao_POAManager_hold_requests, 1);
-  rb_define_method(klass, "discard_requests", r2tao_POAManager_discard_requests, 1);
-  rb_define_method(klass, "deactivate", r2tao_POAManager_deactivate, 2);
-  rb_define_method(klass, "get_state", r2tao_POAManager_get_state, 0);
-  rb_define_method(klass, "get_id", r2tao_POAManager_get_id, 0);
-  rb_define_method(klass, "_get_orb", r2tao_POAManager_get_orb, 0);
+  rb_define_method(klass, "activate", RUBY_METHOD_FUNC(r2tao_POAManager_activate), 0);
+  rb_define_method(klass, "hold_requests", RUBY_METHOD_FUNC(r2tao_POAManager_hold_requests), 1);
+  rb_define_method(klass, "discard_requests", RUBY_METHOD_FUNC(r2tao_POAManager_discard_requests), 1);
+  rb_define_method(klass, "deactivate", RUBY_METHOD_FUNC(r2tao_POAManager_deactivate), 2);
+  rb_define_method(klass, "get_state", RUBY_METHOD_FUNC(r2tao_POAManager_get_state), 0);
+  rb_define_method(klass, "get_id", RUBY_METHOD_FUNC(r2tao_POAManager_get_id), 0);
+  rb_define_method(klass, "_get_orb", RUBY_METHOD_FUNC(r2tao_POAManager_get_orb), 0);
 
   new_ID = rb_intern ("new");
 
@@ -320,7 +320,7 @@ public:
       etherealize_ (_etherealize),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POA_BlockedDestroy () {}
+  ~R2TAO_POA_BlockedDestroy () override = default;
 
 protected:
   virtual VALUE do_exec ();
@@ -530,10 +530,10 @@ public:
     : R2TAO_POA_BlockedRegionCaller (_poa),
       oid_ (oid)
   {}
-  virtual ~R2TAO_POA_BlockedDeactivateObject () {}
+  ~R2TAO_POA_BlockedDeactivateObject () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   PortableServer::ObjectId_var oid_;
 };
@@ -874,7 +874,7 @@ public:
   R2TAO_POAMan_BlockedRegionCaller (PortableServer::POAManager_ptr _poaman)
     : poaman_ (PortableServer::POAManager::_duplicate (_poaman))
   {}
-  virtual ~R2TAO_POAMan_BlockedRegionCaller () {}
+  ~R2TAO_POAMan_BlockedRegionCaller () override = default;
 
 protected:
   //virtual VALUE do_exec () = 0;
@@ -888,10 +888,10 @@ public:
   R2TAO_POAMan_BlockedActivate (PortableServer::POAManager_ptr _poaman)
     : R2TAO_POAMan_BlockedRegionCaller (_poaman)
   {}
-  virtual ~R2TAO_POAMan_BlockedActivate () {}
+  ~R2TAO_POAMan_BlockedActivate () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_POAMan_BlockedActivate::do_exec ()
@@ -926,10 +926,10 @@ public:
     : R2TAO_POAMan_BlockedRegionCaller (_poaman),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POAMan_BlockedHoldReq () {}
+  ~R2TAO_POAMan_BlockedHoldReq () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   bool wait_for_completion_;
 };
@@ -966,10 +966,10 @@ public:
     : R2TAO_POAMan_BlockedRegionCaller (_poaman),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POAMan_BlockedDiscardReq () {}
+  ~R2TAO_POAMan_BlockedDiscardReq () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   bool const wait_for_completion_;
 };
@@ -1007,10 +1007,10 @@ public:
       etherealize_ (_etherealize),
       wait_for_completion_ (_wait_for_completion)
   {}
-  virtual ~R2TAO_POAMan_BlockedDeactivate () {}
+  ~R2TAO_POAMan_BlockedDeactivate () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 
   bool const etherealize_;
   bool const wait_for_completion_;

@@ -71,15 +71,15 @@ void r2tao_init_Servant()
 
   r2tao_cServant = klass = rb_eval_string("::R2CORBA::PortableServer::Servant");
   rb_define_alloc_func (r2tao_cServant, srv_alloc);
-  rb_define_method(klass, "_default_POA", r2tao_Servant_default_POA, 0);
-  rb_define_method(klass, "_this", r2tao_Servant_this, 0);
+  rb_define_method(klass, "_default_POA", RUBY_METHOD_FUNC(r2tao_Servant_default_POA), 0);
+  rb_define_method(klass, "_this", RUBY_METHOD_FUNC(r2tao_Servant_this), 0);
 
   r2tao_cServerRequest = klass = rb_define_class_under (r2tao_nsCORBA, "ServerRequest", rb_cObject);
-  rb_define_method(klass, "operation", r2tao_ServerRequest_operation, 0);
-  rb_define_method(klass, "describe", r2tao_ServerRequest_describe, 1);
-  rb_define_method(klass, "arguments", r2tao_ServerRequest_arguments, 0);
-  rb_define_method(klass, "[]", r2tao_ServerRequest_get, 1);
-  rb_define_method(klass, "[]=", r2tao_ServerRequest_set, 2);
+  rb_define_method(klass, "operation", RUBY_METHOD_FUNC(r2tao_ServerRequest_operation), 0);
+  rb_define_method(klass, "describe", RUBY_METHOD_FUNC(r2tao_ServerRequest_describe), 1);
+  rb_define_method(klass, "arguments", RUBY_METHOD_FUNC(r2tao_ServerRequest_arguments), 0);
+  rb_define_method(klass, "[]", RUBY_METHOD_FUNC(r2tao_ServerRequest_get), 1);
+  rb_define_method(klass, "[]=", RUBY_METHOD_FUNC(r2tao_ServerRequest_set), 2);
 
   ID_arg_list = rb_eval_string (":arg_list");
   ID_result_type = rb_eval_string (":result_type");
