@@ -501,7 +501,6 @@ void R2TAO_Value::init ()
                            "Ruby marshaling succeeded for value %@ for %C\n",
                            this->rbValue_,
                            this->val_tc_->id ()));
-
   }
 
   if (TAO_debug_level > 9)

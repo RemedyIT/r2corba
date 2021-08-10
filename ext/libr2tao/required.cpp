@@ -113,7 +113,6 @@ private:
       objreg->clear_registry ();
     }
   }
-
 };
 
 VALUE R2TAO_ObjectRegistry::registry_anchor_ = Qnil;
