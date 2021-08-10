@@ -14,11 +14,11 @@ module R2CORBA
 
     module Object
 
-      #ret InterfaceDef
+      # ret InterfaceDef
       def _get_interface()
         raise ::CORBA::NO_IMPLEMENT
-        #ifdef_obj = self.objref_._get_interface_def rescue CORBA::Exception.native2r($!)
-        #(ifdef_obj = CORBA::Native::InterfaceDefHelper.narrow(ifdef_obj) rescue CORBA::Exception.native2r($!)) unless ifdef_obj.nil?
+        # ifdef_obj = self.objref_._get_interface_def rescue CORBA::Exception.native2r($!)
+        # (ifdef_obj = CORBA::Native::InterfaceDefHelper.narrow(ifdef_obj) rescue CORBA::Exception.native2r($!)) unless ifdef_obj.nil?
       end
 
       # ::String logical_type_id
@@ -48,7 +48,7 @@ module R2CORBA
       end
 
       unless CORBA::Native::Portable::ObjectImpl.public_instance_methods.include?(:_get_component)
-        #ret ::CORBA::Object
+        # ret ::CORBA::Object
         def _get_component()
           raise CORBA::INV_OBJREF.new if self._is_nil?()
           ## ask the remote side
@@ -60,27 +60,27 @@ module R2CORBA
         end
       end
 
-      #def PolicyType policy_type
+      # def PolicyType policy_type
       # ret Policy
       def _get_policy(policy_type)
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #PolicyList policies
-      #SetOverrideType set_add
-      #ret ::CORBA::Object
+      # PolicyList policies
+      # SetOverrideType set_add
+      # ret ::CORBA::Object
       def _set_policy_overrides(policies, set_add)
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #int[] types
-      #ret PolicyList
+      # int[] types
+      # ret PolicyList
       def _get_policy_overrides(types)
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #PolicyList inconsistent_policies
-      #ret bool
+      # PolicyList inconsistent_policies
+      # ret bool
       def _validate_connection(inconsistent_policies)
         raise ::CORBA::NO_IMPLEMENT
       end

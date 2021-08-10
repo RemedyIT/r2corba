@@ -486,7 +486,7 @@ module IDL
     end
 
     def visit_const(node)
-      #v = Expression::Value.new(node.idltype, node.value)
+      # v = Expression::Value.new(node.idltype, node.value)
       s = node.rubyname + ' = ' + expression_to_s(node.expression)
       printiln(s)
     end
@@ -813,9 +813,9 @@ module IDL
           end
         end).compact
         s = "[#{v.join(',')}]"
-      #when Type::Fixed
-      #when Type::Any
-      #when Type::Object
+      # when Type::Fixed
+      # when Type::Any
+      # when Type::Object
       when Type::ScopedName
         s = value_to_s(Expression::Value.new(exp.idltype.node.idltype, v))
       else
@@ -1004,8 +1004,8 @@ module IDL
     end
 
     def visit_typedef(node)
-      #tc_ = node.enclosure.rubyname + '._tc_' + node.rubyname
-      #typ_ = node.enclosure.rubyname + '.' + node.rubyname
+      # tc_ = node.enclosure.rubyname + '._tc_' + node.rubyname
+      # typ_ = node.enclosure.rubyname + '.' + node.rubyname
       case t = node.idltype
       when Type::ScopedName
         if Type::Interface === t.resolved_type
@@ -1237,7 +1237,7 @@ module IDL
       println
       printiln('## object interfaces')
       node.interfaces.each do |intf|
-        #printiln("include #{@stub_root}#{intf.scoped_rubyname}")
+        # printiln("include #{@stub_root}#{intf.scoped_rubyname}")
         printiln("include #{intf.scoped_rubyname}")
       end
     end
@@ -1505,9 +1505,9 @@ module IDL
         s = "'#{v.to_s}'"
       when Type::WString
         s = "[#{v.join(',')}]"
-      #when Type::Fixed
-      #when Type::Any
-      #when Type::Object
+      # when Type::Fixed
+      # when Type::Any
+      # when Type::Object
       when Type::ScopedName
         s = value_to_s(Expression::Value.new(exp.idltype.node.idltype, v))
       else

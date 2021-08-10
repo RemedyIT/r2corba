@@ -58,8 +58,8 @@ module R2CORBA
         @@wrapper_klass.new(n_orb)
       end
 
-      #str ::String
-      #ret ::CORBA::Object
+      # str ::String
+      # ret ::CORBA::Object
       def string_to_object(str)
         begin
           begin

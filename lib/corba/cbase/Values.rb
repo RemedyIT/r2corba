@@ -30,10 +30,10 @@ module R2CORBA
           def kind_of?(mod)
             if mod < CORBA::AbstractValueBase && mod.const_defined?(:Intf)
               org_kind_of?(mod::Intf)
-              #super(mod::Intf)   ## problematic with Ruby 1.9.2 (known bug)
+              # super(mod::Intf)   ## problematic with Ruby 1.9.2 (known bug)
             else
               org_kind_of?(mod)
-              #super              ## problematic with Ruby 1.9.2 (known bug)
+              # super              ## problematic with Ruby 1.9.2 (known bug)
             end
           end
           alias :is_a? :kind_of?

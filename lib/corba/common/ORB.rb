@@ -60,8 +60,8 @@ module R2CORBA
         self
       end
 
-      #obj ::CORBA::Object
-      #ret ::String
+      # obj ::CORBA::Object
+      # ret ::String
       def object_to_string(obj)
         raise CORBA::BAD_PARAM.new('CORBA::Object required', 0, CORBA::COMPLETED_NO) unless obj.is_a?(CORBA::Object)
         begin
@@ -71,8 +71,8 @@ module R2CORBA
         end
       end
 
-      #str ::String
-      #ret ::CORBA::Object
+      # str ::String
+      # ret ::CORBA::Object
       def string_to_object(str)
         begin
           Object._wrap_native(self.orb_.string_to_object(str))
@@ -81,41 +81,41 @@ module R2CORBA
         end
       end
 
-      #str ::Integer
-      #ret ::CORBA::NVList
+      # str ::Integer
+      # ret ::CORBA::NVList
       def create_list(count)
         raise CORBA::NO_IMPLEMENT
       end
 
-      #str OperationDef
-      #ret ::CORBA::NVList
+      # str OperationDef
+      # ret ::CORBA::NVList
       def create_operation_list(oper)
         raise CORBA::NO_IMPLEMENT
       end
 
-      #ret Context
+      # ret Context
       def get_default_context()
         raise CORBA::NO_IMPLEMENT
       end
 
-      #req RequestSeq
-      #ret void
+      # req RequestSeq
+      # ret void
       def send_multiple_request_oneway(req)
         raise CORBA::NO_IMPLEMENT
       end
 
-      #req RequestSeq
-      #ret void
+      # req RequestSeq
+      # ret void
       def send_multiple_request_deferred(req)
         raise CORBA::NO_IMPLEMENT
       end
 
-      #ret boolean
+      # ret boolean
       def poll_next_response()
         raise CORBA::NO_IMPLEMENT
       end
 
-      #ret Request
+      # ret Request
       def get_next_response()
         raise CORBA::NO_IMPLEMENT
       end
@@ -334,8 +334,8 @@ module R2CORBA
 
       # PolicyType type
       # any val
-      #ret Policy
-      #raises PolicyError
+      # ret Policy
+      # raises PolicyError
       def create_policy(type, val)
         raise ::CORBA::NO_IMPLEMENT
       end
@@ -345,7 +345,7 @@ module R2CORBA
 =end
       # RepositoryId id
       # ValueFactory factory
-      #ret ValueFactory
+      # ret ValueFactory
       def register_value_factory(id, factory)
         self.orb_().register_value_factory(id, factory)
       end
@@ -357,7 +357,7 @@ module R2CORBA
       end
 
       # RepositoryId id
-      #ret ValueFactory
+      # ret ValueFactory
       def lookup_value_factory(id)
         self.orb_().lookup_value_factory(id)
       end

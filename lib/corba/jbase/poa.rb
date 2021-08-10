@@ -40,7 +40,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation destroy
+      end # of operation destroy
 
       def the_name()
         begin
@@ -48,7 +48,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_the_name
+      end # of attribute get_the_name
 
       def the_POAManager()
         begin
@@ -56,7 +56,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_the_POAManager
+      end # of attribute get_the_POAManager
 
       def the_parent()
         begin
@@ -64,7 +64,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_the_parent
+      end # of attribute get_the_parent
 
       def the_children()
         begin
@@ -72,7 +72,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_the_children
+      end # of attribute get_the_children
 
       def activate_object(p_servant)
         begin
@@ -80,7 +80,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation activate_object
+      end # of operation activate_object
 
       def activate_object_with_id(r_id, p_servant)
         begin
@@ -88,7 +88,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation activate_object_with_id
+      end # of operation activate_object_with_id
 
       def deactivate_object(oid)
         begin
@@ -96,7 +96,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation deactivate_object
+      end # of operation deactivate_object
 
       def create_reference(intf)
         begin
@@ -104,7 +104,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_reference
+      end # of operation create_reference
 
       def create_reference_with_id(oid, intf)
         begin
@@ -112,7 +112,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_reference_with_id
+      end # of operation create_reference_with_id
 
       def servant_to_id(p_servant)
         begin
@@ -120,7 +120,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation servant_to_id
+      end # of operation servant_to_id
 
       def servant_to_reference(p_servant)
         begin
@@ -128,7 +128,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation servant_to_reference
+      end # of operation servant_to_reference
 
       def reference_to_servant(reference)
         begin
@@ -136,7 +136,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation reference_to_servant
+      end # of operation reference_to_servant
 
       def reference_to_id(reference)
         begin
@@ -144,7 +144,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation reference_to_id
+      end # of operation reference_to_id
 
       def id_to_servant(oid)
         begin
@@ -152,7 +152,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation id_to_servant
+      end # of operation id_to_servant
 
       def id_to_reference(oid)
         begin
@@ -160,7 +160,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation id_to_reference
+      end # of operation id_to_reference
 
       def create_POA(adapter_name, a_POAManager, policies)
         raise CORBA::BAD_PARAM.new('expected POAManager', 0, CORBA::COMPLETED_NO) unless a_POAManager.is_a?(PortableServer::POAManager)
@@ -172,7 +172,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_POA
+      end # of operation create_POA
 
       def find_POA(adapter_name, activate_it)
         begin
@@ -180,7 +180,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation find_POA
+      end # of operation find_POA
     end # POA
 
     module POAManager

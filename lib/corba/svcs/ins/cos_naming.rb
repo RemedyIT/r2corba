@@ -417,7 +417,7 @@ module R2CORBA
         end
       end
 
-    end #of NamingContext servant
+    end # of NamingContext servant
 
   end
 end

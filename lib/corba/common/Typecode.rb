@@ -935,7 +935,7 @@ module R2CORBA
           return val if val.nil?
           super(val)
           @switchtype.validate(val._disc) unless val._disc == :default
-          #raise CORBA::MARSHAL.new(
+          # raise CORBA::MARSHAL.new(
           #  "invalid discriminator value (#{val._disc.to_s}) for union #{name}",
           #  1, CORBA::COMPLETED_NO) unless @labels.has_key?(val._disc)
           if @labels.has_key?(val._disc)  # no need to check for implicit defaults
@@ -979,7 +979,7 @@ module R2CORBA
 
         def label_index(val)
           val = @switchtype.validate(val) unless val == :default
-          #raise CORBA::MARSHAL.new(
+          # raise CORBA::MARSHAL.new(
           #  "invalid discriminator value (#{val}) for union #{name}",
           #  1, CORBA::COMPLETED_NO) unless val == :default || @labels.has_key?(val) || @labels.has_key?(:default)
           if val == :default then @labels[:default]; elsif @labels.has_key?(val) then @labels[val] else nil end
