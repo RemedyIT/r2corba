@@ -115,9 +115,9 @@ struct DSI_Data {
   VALUE _rData;
 
   DSI_Data(CORBA::ServerRequest_ptr _req)
-    : _request(_req), _nvlist(0), _rData(Qnil) {}
+    : _request(_req), _nvlist(nullptr), _rData(Qnil) {}
   ~DSI_Data() {
-    if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = 0; }
+    if (this->_rData!=Qnil) { DATA_PTR(this->_rData) = nullptr; }
   }
 };
 

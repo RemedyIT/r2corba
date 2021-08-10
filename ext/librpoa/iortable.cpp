@@ -65,7 +65,7 @@ public:
     r2tao_call_thread_safe (R2taoLocator::thread_safe_unregister, this);
   }
 
-  virtual char * locate (const char * object_key);
+  char * locate (const char * object_key) override;
 
 private:
   VALUE     rb_locator_;
