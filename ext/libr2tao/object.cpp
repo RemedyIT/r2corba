@@ -20,6 +20,7 @@
 #include "exception.h"
 #include "orb.h"
 #include <memory>
+#include <cstring>
 
 R2TAO_EXPORT VALUE r2corba_cObject = 0;
 R2TAO_EXPORT VALUE r2tao_cObject = 0;
