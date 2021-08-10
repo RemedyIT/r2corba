@@ -59,29 +59,29 @@ module R2CORBA
       end
 
       def kind
-        
+
           self.tc_.kind.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def member_label(index)
-        
+
           Any.from_java(self.tc_.member_label(index.to_i))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       class Recursive < CORBA::TypeCode
 
         def initialize(id)
-          
+
             @tc_ = CORBA::ORB._orb.create_recursive_tc(id)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Recursive
@@ -248,7 +248,7 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, modifier, base, jmembers)
-          
+
             CORBA::ORB._orb.create_value_tc(id.to_s,
                                             name.to_s,
                                             CORBA::VT_MODIFIERS[modifier],
@@ -256,7 +256,7 @@ module R2CORBA
                                             jmembers)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Valuetype
@@ -269,7 +269,7 @@ module R2CORBA
           # JaCORB 2.3.1' does not support tk_event typecodes yet;
           # so just let it be a regular valuetype
           # NOTE: this will not be interoperable between jR2CORBA and R2CORBA
-          
+
             CORBA::ORB._orb.create_value_tc(id.to_s,
                                             name.to_s,
                                             CORBA::VT_MODIFIERS[modifier],
@@ -277,7 +277,7 @@ module R2CORBA
                                             jmembers)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Eventtype
@@ -377,11 +377,11 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, jmembers)
-          
+
             CORBA::ORB._orb.create_struct_tc(id.to_s, name.to_s, jmembers)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Struct
@@ -403,11 +403,11 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, jmembers)
-          
+
             CORBA::ORB._orb.create_exception_tc(id.to_s, name.to_s, jmembers)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Except
@@ -468,11 +468,11 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, disctc, jmembers)
-          
+
             CORBA::ORB._orb.create_union_tc(id.to_s, name.to_s, disctc.tc_, jmembers)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Union

@@ -157,7 +157,7 @@ if defined?(JRUBY_VERSION)
         end
 
         def self.wait(pid)
-          
+
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
             if tmp == pid and status.success? != nil
               return [pid, status.success?() ? 0 : status.exitstatus ]
@@ -165,7 +165,7 @@ if defined?(JRUBY_VERSION)
             return [nil, 0]
           rescue Errno::ECHILD
             return [pid, 0]
-          
+
         end
 
         private
@@ -221,7 +221,7 @@ if defined?(JRUBY_VERSION)
     end
 
     def check_status
-      
+
         unless @trd.alive?
           @exitstatus = @trd.value
         end
@@ -229,7 +229,7 @@ if defined?(JRUBY_VERSION)
       rescue
         @exitstatus = 0
         return false
-      
+
     end
 
     def exitstatus
@@ -439,7 +439,7 @@ else # !win32
     attr_reader :pid
 
     def check_status
-      
+
         tmp, @status = ::Process.waitpid2(@pid, ::Process::WNOHANG)
         if tmp == @pid and @status.success? == false
           @exitstatus = @status.exitstatus
@@ -449,7 +449,7 @@ else # !win32
       rescue Errno::ECHILD
         @exitstatus = 0
         return false
-      
+
     end
 
     def exitstatus
@@ -523,7 +523,7 @@ end
 
   def TestUtil.wait_for_file(filename, timeout)
     t = Time.now
-    while !File.readable?(filename) do
+    while !File.readable?(filename)
       sleep(0.1)
       if (Time.now() - t) >= timeout.to_f
         STDERR.puts "ERROR: could not find file '#{filename}'"

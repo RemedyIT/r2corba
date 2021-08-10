@@ -15,29 +15,29 @@ module R2CORBA
     class TypeCode
 
       def kind
-        
+
           self.tc_.kind
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def member_label(index)
-        
+
           self.tc_.member_label(index.to_i)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       class Recursive < CORBA::TypeCode
 
         def initialize(id)
-          
+
             @tc_ = CORBA::Native::TypeCode.create_recursive_tc(id)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Recursive
@@ -197,14 +197,14 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, modifier, base, members)
-          
+
             CORBA::Native::TypeCode.create_tc(TK_VALUE, id.to_s, name.to_s,
                                               CORBA::VT_MODIFIERS[modifier],
                                               base.nil? ? nil : base.tc_,
                                               members)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Valuetype
@@ -214,14 +214,14 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, modifier, base, members)
-          
+
             CORBA::Native::TypeCode.create_tc(TK_EVENT, id.to_s, name.to_s,
                                               CORBA::VT_MODIFIERS[modifier],
                                               base.nil? ? nil : base.tc_,
                                               members)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Eventtype
@@ -322,11 +322,11 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, members)
-          
+
             CORBA::Native::TypeCode.create_tc(TK_STRUCT, id.to_s, name.to_s, members)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Struct
@@ -336,11 +336,11 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, members)
-          
+
             CORBA::Native::TypeCode.create_tc(TK_EXCEPT, id.to_s, name.to_s, members)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Except
@@ -394,11 +394,11 @@ module R2CORBA
         protected
 
         def _create_tc(id, name, disctc, members)
-          
+
             CORBA::Native::TypeCode.create_tc(TK_UNION, id.to_s, name.to_s, disctc.tc_, members)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
-          
+
         end
 
       end # Union

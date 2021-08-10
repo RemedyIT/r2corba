@@ -110,7 +110,7 @@ def test_operation(abs)
 end
 
 def test_exception(abs)
-  
+
     retval = abs.base_op('bad_name')
     if $VERBOSE
       STDERR.puts retval
@@ -119,7 +119,7 @@ def test_exception(abs)
     if $VERBOSE
       STDERR.puts ex.to_s
     end
-  
+
 end
 
 orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')

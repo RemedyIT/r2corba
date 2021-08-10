@@ -86,11 +86,11 @@ module R2CORBA
       end
 
       def _request(operation)
-        
+
           CORBA::Request._wrap_native(self.objref_._request(operation.to_s), self)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
     end # Object

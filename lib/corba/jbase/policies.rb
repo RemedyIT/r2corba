@@ -86,19 +86,19 @@ module R2CORBA
       #-------------------  "Policy Operations"
 
       def policy_type()
-        
+
           self.objref_.policy_type()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_policy_type
 
       def copy()
-        
+
           Policy._wrap_native(self.objref_.copy())
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation copy
 
       def destroy()
@@ -140,143 +140,143 @@ module R2CORBA
 
     module POA
       def create_thread_policy(value)
-        
+
           PortableServer::ThreadPolicy._narrow(
             CORBA::Object._wrap_native(
                 self.objref_.create_thread_policy(PortableServer::Native::ThreadPolicyValue.from_int(value))))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation create_thread_policy
 
       def create_lifespan_policy(value)
-        
+
           PortableServer::LifespanPolicy._narrow(
             CORBA::Object._wrap_native(
                 self.objref_.create_lifespan_policy(PortableServer::Native::LifespanPolicyValue.from_int(value))))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation create_lifespan_policy
 
       def create_id_uniqueness_policy(value)
-        
+
           PortableServer::IdUniquenessPolicy._narrow(
             CORBA::Object._wrap_native(
                 self.objref_.create_id_uniqueness_policy(PortableServer::Native::IdUniquenessPolicyValue.from_int(value))))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation create_id_uniqueness_policy
 
       def create_id_assignment_policy(value)
-        
+
           PortableServer::IdAssignmentPolicy._narrow(
             CORBA::Object._wrap_native(
                 self.objref_.create_id_assignment_policy(PortableServer::Native::IdAssignmentPolicyValue.from_int(value))))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation create_id_assignment_policy
 
       def create_implicit_activation_policy(value)
-        
+
           PortableServer::ImplicitActivationPolicy._narrow(
             CORBA::Object._wrap_native(
                 self.objref_.create_implicit_activation_policy(PortableServer::Native::ImplicitActivationPolicyValue.from_int(value))))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation create_implicit_activation_policy
 
       def create_servant_retention_policy(value)
-        
+
           PortableServer::ServantRetentionPolicy._narrow(
             CORBA::Object._wrap_native(
                 self.objref_.create_servant_retention_policy(PortableServer::Native::ServantRetentionPolicyValue.from_int(value))))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation create_servant_retention_policy
 
       def create_request_processing_policy(value)
-        
+
           PortableServer::RequestProcessingPolicy._narrow(
             CORBA::Object._wrap_native(
                 self.objref_.create_request_processing_policy(PortableServer::Native::RequestProcessingPolicyValue.from_int(value))))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of operation create_request_processing_policy
     end # POA
 
     module ThreadPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface ThreadPolicy
 
     module LifespanPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface LifespanPolicy
 
     module IdUniquenessPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface IdUniquenessPolicy
 
     module IdAssignmentPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface IdAssignmentPolicy
 
     module ImplicitActivationPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface ImplicitActivationPolicy
 
     module ServantRetentionPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface RequestProcessingPolicy
 
     module RequestProcessingPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface RequestProcessingPolicy
 
@@ -286,11 +286,11 @@ module R2CORBA
 
     module BidirectionalPolicy  ## interface
       def value()
-        
+
           self.objref_.value().value()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end #of attribute get_value
     end #of interface BidirectionalPolicy
 

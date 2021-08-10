@@ -38,7 +38,7 @@ module R2CORBA
         end
 
         def invoke(jsrvreq)
-          
+
             raise CORBA::NO_IMPLEMENT.new('', 0, CORBA::COMPLETED_NO) unless @rsrv
             rsrvreq = CORBA::ServerRequest._wrap_native(jsrvreq, self._orb())
             begin
@@ -80,9 +80,9 @@ module R2CORBA
             else
               STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}" unless $VERBOSE
               if jsrvreq.respond_to?(:setSystemException) # JacORB special
-                jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}", 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
+                jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new(ex_.to_s, 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
               else
-                jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
+                jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new(ex_.to_s, 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
               end
             end
           rescue CORBA::SystemException => ex_
@@ -96,11 +96,11 @@ module R2CORBA
           rescue Exception => ex_
             STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}"
             if jsrvreq.respond_to?(:setSystemException) # JacORB special
-              jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}", 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
+              jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new(ex_.to_s, 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
             else
-              jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
+              jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new(ex_.to_s, 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
             end
-          
+
         end
 
         def _all_interfaces(poa, oid)
@@ -218,11 +218,11 @@ module R2CORBA
       end
 
       def _default_POA()
-        
+
           return PortableServer::POA._narrow(CORBA::Object._wrap_native(self.srvref_._default_POA()))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def _this()

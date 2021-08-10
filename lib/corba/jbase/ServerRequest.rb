@@ -44,11 +44,11 @@ module R2CORBA
       end
 
       def operation
-        
+
           self.srvreq_.operation
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def describe(opsig)

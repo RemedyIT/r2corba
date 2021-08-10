@@ -202,43 +202,43 @@ module R2CORBA
       end
 
       def id
-        
+
           self.tc_.id()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def name
-        
+
           self.tc_.name()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def member_count
-        
+
           self.tc_.member_count()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def member_name(index)
-        
+
           self.tc_.member_name(index.to_i)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def member_type(index)
-        
+
           CORBA::TypeCode.from_native(self.tc_.member_type(index.to_i))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def member_label(index)
@@ -250,19 +250,19 @@ module R2CORBA
       end
 
       def default_index
-        
+
           self.tc_.default_index()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def length
-        
+
           self.tc_.length()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def content_type
@@ -270,35 +270,35 @@ module R2CORBA
       end
 
       def fixed_digits
-        
+
           self.tc_.fixed_digits()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def fixed_scale
-        
+
           self.tc_.fixed_scale()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def member_visibility(index)
-        
+
           self.tc_.member_visibility(index.to_i)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def type_modifier
-        
+
           self.tc_.type_modifier()
         rescue ::NativeException
           CORBA::Exception.native2r($!)
-        
+
       end
 
       def concrete_base_type
@@ -430,7 +430,7 @@ module R2CORBA
           super(val) unless ::String === val || val.respond_to?(:to_str)
           val = ::String === val ? val : val.to_str
           raise ::CORBA::MARSHAL.new(
-            "string size exceeds bound: #{self.length.to_s}",
+            "string size exceeds bound: #{self.length}",
             1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           val
         end
@@ -463,7 +463,7 @@ module R2CORBA
             a
           end
           raise ::CORBA::MARSHAL.new(
-            "widestring size exceeds bound: #{self.length.to_s}",
+            "widestring size exceeds bound: #{self.length}",
             1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           raise ::CORBA::MARSHAL.new(
             'invalid widestring element(s)',
@@ -537,7 +537,7 @@ module R2CORBA
               a
           end
           raise ::CORBA::MARSHAL.new(
-            "sequence size exceeds bound: #{self.length.to_s}",
+            "sequence size exceeds bound: #{self.length}",
             1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           if ::Array === val
             if val.any? { |e| self.content_type.needs_conversion(e) }
@@ -579,10 +579,10 @@ module R2CORBA
           return val if val.nil?
           super(val)
           raise ::CORBA::MARSHAL.new(
-            "array size exceeds bound: #{self.length.to_s}",
+            "array size exceeds bound: #{self.length}",
             1, ::CORBA::COMPLETED_NO) unless val.nil? || val.size <= self.length
           raise ::CORBA::MARSHAL.new(
-            "array size too small: #{self.length.to_s}",
+            "array size too small: #{self.length}",
             1, ::CORBA::COMPLETED_NO) unless val.nil? || val.size >= self.length
           val.any? { |e| self.content_type.needs_conversion(e) } ? val.collect { |e| self.content_type.validate(e) } : val.each { |e| self.content_type.validate(e) }
         end
@@ -916,7 +916,7 @@ module R2CORBA
           accessors.each do |mname, ix|
             union_type.module_eval(%Q{
               def #{mname}; @value; end
-              def #{mname}=(val); _set_value(#{ix.to_s}, val); end
+              def #{mname}=(val); _set_value(#{ix}, val); end
             })
           end
           if tc.implicit_default
@@ -992,7 +992,7 @@ module R2CORBA
 
         def inspect
           s = "#{self.class.name}: #{name} - #{id}\n"
-          @members.each { |l, n, t| s += "  case #{l.to_s}: #{n} = " + t.inspect + "\n" }
+          @members.each { |l, n, t| s += "  case #{l}: #{n} = " + t.inspect + "\n" }
           s
         end
       end # Union
