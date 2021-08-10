@@ -18,8 +18,8 @@ class DSI_Servant : public PortableServer::DynamicImplementation
 {
 public:
   /// ctor
+  DSI_Servant () = delete;
   DSI_Servant (VALUE rbServant);
-  /// dtor
   ~DSI_Servant () override;
 
   void invoke (CORBA::ServerRequest_ptr request) override;
