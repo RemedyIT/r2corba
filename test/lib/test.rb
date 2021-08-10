@@ -523,7 +523,7 @@ end
 
   def TestUtil.wait_for_file(filename, timeout)
     t = Time.now
-    while !File.readable?(filename) do
+    while !File.readable?(filename)
       sleep(0.1)
       if (Time.now() - t) >= timeout.to_f
         STDERR.puts "ERROR: could not find file '#{filename}'"
