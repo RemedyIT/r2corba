@@ -208,13 +208,13 @@ module R2CORBA
 
       # Integer bound
       # ret TypeCode
-      def create_string_tc(bound=nil)
+      def create_string_tc(bound = nil)
         return CORBA::TypeCode::String.new(bound)
       end
 
       # Integer bound
       # ret TypeCode
-      def create_wstring_tc(bound=nil)
+      def create_wstring_tc(bound = nil)
         return CORBA::TypeCode::WString.new(bound)
       end
 

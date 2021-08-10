@@ -17,7 +17,7 @@ module Kernel
 
   alias :r2corba_devkit_load :load
 
-  def load(file, wrap=false)
+  def load(file, wrap = false)
     return true if file == 'devkit'
     r2corba_devkit_load(file, wrap)
   end

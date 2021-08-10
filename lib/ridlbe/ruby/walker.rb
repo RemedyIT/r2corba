@@ -19,9 +19,9 @@ module IDL
     end
 
     def print(str);       @output << str; end
-    def println(str='');  @output << str << "\n"; end
-    def printi(str='');   @output << indent() << str; end
-    def printiln(str=''); @output << indent() << str << "\n"; end
+    def println(str = '');  @output << str << "\n"; end
+    def printi(str = '');   @output << indent() << str; end
+    def printiln(str = ''); @output << indent() << str << "\n"; end
     def indent()
       @indent * @nest
     end
@@ -491,7 +491,7 @@ module IDL
       printiln(s)
     end
 
-    def visit_operation(node, from_valuetype=false)
+    def visit_operation(node, from_valuetype = false)
       _parm = node.params
       _in = node.in_params
       _out = node.out_params
@@ -595,7 +595,7 @@ module IDL
       printiln("end #of operation #{node.rubyname}")
     end
 
-    def visit_attribute(node, from_valuetype=false)
+    def visit_attribute(node, from_valuetype = false)
       _intf = node.enclosure
       println()
       printiln("def #{node.rubyname}()")

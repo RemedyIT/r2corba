@@ -58,7 +58,7 @@ module IDL
       s.to_s
     end
     public
-    def RIDL.eval(src, params={})
+    def RIDL.eval(src, params = {})
       params[:idl_eval] = true
       params[:expand_includes] = true
       params[:client_stubs] = true if params[:client_stubs].nil?
