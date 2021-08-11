@@ -66,6 +66,8 @@ jobs:
         chmod 0600 $HOME/.gem/credentials
         printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
       shell: bash
+      env:
+        GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
     - name: Run ridk exec rake configure
       run: |
         ridk exec rake configure
@@ -75,7 +77,8 @@ jobs:
         ridk exec rake r2corba:gem:extbingem
         gem push pkg/r2corba-*.gem
         gem push pkg/r2corba_ext*.gem
-
+      env:
+        GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
   jacorb:
     strategy:
       fail-fast: false
