@@ -30,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '2.7' ]
+        ruby: [ '2.4', '2.5', '2.6', '2.7', '3.0' ]
     name: ${{ matrix.runs-os }} ${{ matrix.msystem }} ruby-${{ matrix.ruby }}
     env:
       DOC_ROOT: ${{ github.workspace }}/ACE
@@ -59,6 +59,13 @@ jobs:
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
+    - name: Setup rubygems credentials
+      run: |
+        mkdir -p $HOME/.gem
+        touch $HOME/.gem/credentials
+        chmod 0600 $HOME/.gem/credentials
+        printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+      shell: bash
     - name: Run ridk exec rake configure
       run: |
         ridk exec rake configure
@@ -68,8 +75,10 @@ jobs:
         ridk exec rake r2corba:gem:extbingem
         gem push pkg/r2corba-*.gem
         gem push pkg/r2corba_ext*.gem
+
   jacorb:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: ubuntu-20.04
