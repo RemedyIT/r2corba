@@ -52,6 +52,11 @@ jobs:
             PackageDeps: g++-11
             os: ubuntu-20.04
             ruby: '3.0'
+          - CC: gcc-11
+            CXX: g++-11
+            PackageDeps: g++-11
+            os: ubuntu-20.04
+            ruby: '3.1'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ruby-${{ matrix.ruby }}
     env:
