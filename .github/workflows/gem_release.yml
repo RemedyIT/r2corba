@@ -112,7 +112,7 @@ jobs:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
     - name: Download a file
-      uses: carlosperate/download-file-action@v1.1.0
+      uses: carlosperate/download-file-action@v1.1.1
       id: download-jacorb
       with:
         file-url: 'https://www.jacorb.org/releases/${{ matrix.jacorb_version }}/jacorb-${{ matrix.jacorb_version }}-binary.zip'
