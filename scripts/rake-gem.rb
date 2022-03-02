@@ -21,7 +21,7 @@ task :define_gemspec do
       gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'GPL-2.0']
     else
-      gem.platform = Gem::Platform::CURRENT if RUBY_PLATFORM =~ /mingw32/
+      gem.platform = Gem::Platform::CURRENT if RUBY_PLATFORM =~ /mingw/
       gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
       gem.require_paths << 'ext'
@@ -40,7 +40,7 @@ end
 
 namespace :r2corba do
   task :prepare do
-    if RUBY_PLATFORM =~ /mingw32/
+    if RUBY_PLATFORM =~ /mingw/
       # copy required dlls to gem install folder
       ext_inst_dir = File.join(R2CORBA.pkg_root, 'ext')
       R2CORBA.ext_dlls.each do |dll_path|
@@ -63,7 +63,7 @@ THE_END__
     end
   end
   task :clean do
-    if RUBY_PLATFORM =~ /mingw32/
+    if RUBY_PLATFORM =~ /mingw/
       # clean up copied dlls
       ext_inst_dir = File.join(R2CORBA.pkg_root, 'ext')
       R2CORBA.ext_dlls.each do |dll_path|

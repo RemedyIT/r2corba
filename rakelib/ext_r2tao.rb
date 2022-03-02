@@ -16,7 +16,7 @@ module R2CORBA
 
   module Ext
 
-    if RUBY_PLATFORM =~ /mingw32/
+    if RUBY_PLATFORM =~ /mingw/
 
       mpc_os_block = <<OS_DEP__
   libs += #{File.basename(RB_CONFIG['LIBRUBY'], '.a').sub(/^lib/, '')}
