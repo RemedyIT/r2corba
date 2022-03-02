@@ -171,7 +171,7 @@ module R2CORBA
       :aceinstdir => '',
       :'with-ipv6' => false,
       :'with-ssl' => false,
-      :sslroot => ENV['SSL_ROOT'] || (RUBY_PLATFORM =~ /mingw32/ ? '' : '/usr'),
+      :sslroot => ENV['SSL_ROOT'] || (RUBY_PLATFORM =~ /mingw/ ? '' : '/usr'),
       :'with-debug' => false,
     })
     BUILD_CFG = '.rconfig'
