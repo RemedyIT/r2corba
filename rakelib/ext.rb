@@ -110,7 +110,7 @@ module R2CORBA
 
     def self.platform_macros
       case RUBY_PLATFORM
-        when /mingw32/
+        when /mingw/
           (is_win64 ? %Q{
 TCPU:=generic
 buildbits=64
