@@ -19,7 +19,7 @@ else
   RB_CONFIG = Config::CONFIG
 end
 
-is_win32 = (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw32/) ? true : false
+is_win32 = (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw/) ? true : false
 
 root_path = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 

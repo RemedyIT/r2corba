@@ -29,11 +29,11 @@ SUBDIRS = [
   'example'
 ]
 
-if RUBY_PLATFORM =~ /mingw32/
+if RUBY_PLATFORM =~ /mingw/
   pkg_cmd = 'zip -r {pkgfile}.zip'
   pkg_cmd2 = 'zip -r {pkgfile}.zip'
   exl_arg = ' -x@{xcl_path}\pkg-excludes-prebuilt-win.lst'
-  so_pfx = RUBY_PLATFORM =~ /mingw32/ ? 'lib' : ''
+  so_pfx = RUBY_PLATFORM =~ /mingw/ ? 'lib' : ''
   so_ext = '.dll'
   nul_redir = '> NUL'
   except_dll = (RUBY_PLATFORM =~ /x64/) ? 'libgcc_s_sjlj-1.dll' : 'libgcc_s_dw2-1.dll'
@@ -93,7 +93,7 @@ end
 ACE_FILES.each {|f|
   cmd << " #{File.join(ace_root, 'lib', so_pfx + f + so_ext)}"
 }
-if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
+if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw/
   cmd << exl_arg
 end
 cmd = cmd.gsub('{pkgfile}', pkg).gsub('{xcl_path}', File.join(pkg_root, 'scripts'))
@@ -102,7 +102,7 @@ Dir.glob(pkg + '.{zip,tar.gz,tar.bz2}').each {|f| rm_f(f) if File.exist?(f) }
 
 mkdir_p(pkg_dir) unless File.directory?(pkg_dir)
 
-if RUBY_PLATFORM =~ /mingw32/
+if RUBY_PLATFORM =~ /mingw/
   ENV['PATH'].split(';').each do |p|
     if File.exist?(File.join(p, except_dll)) && File.exist?(File.join(p, 'libstdc++-6.dll'))
       cp(File.join(p, except_dll), ext_dir)
@@ -121,7 +121,7 @@ begin
   cmd = pkg_cmd2.gsub('{pkgfile}', pkg)
   system(cmd + " #{File.join(pkg_base, 'MANIFEST')} #{nul_redir}")
 
-  unless RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
+  unless RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw/
     cmd = gz_cmd.gsub('{pkgfile}', pkg)
     puts(cmd)
     system(cmd + " #{nul_redir}")

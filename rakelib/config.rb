@@ -171,7 +171,7 @@ module R2CORBA
       :aceinstdir => '',
       :'with-ipv6' => false,
       :'with-ssl' => false,
-      :sslroot => ENV['SSL_ROOT'] || (RUBY_PLATFORM =~ /mingw32/ ? '' : '/usr'),
+      :sslroot => ENV['SSL_ROOT'] || (RUBY_PLATFORM =~ /mingw/ ? '' : '/usr'),
       :'with-debug' => false,
     })
     BUILD_CFG = '.rconfig'
@@ -205,7 +205,7 @@ module R2CORBA
       @@ruby_ver[2]
     end
 
-    @@is_win32 = RUBY_PLATFORM =~ /mingw32/ ? true : false
+    @@is_win32 = RUBY_PLATFORM =~ /mingw/ ? true : false
     @@is_win64 = (@@is_win32 && (RUBY_PLATFORM =~ /x64/)) ? true : false
     @@is_linux = RB_CONFIG['target_os'] =~ /linux/ ? true : false
     @@is_osx = RUBY_PLATFORM =~ /darwin/ ? true : false

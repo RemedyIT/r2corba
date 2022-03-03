@@ -21,7 +21,7 @@ module TestUtil
   end
 
   def self.is_win32?
-    (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw32/) ? true : false
+    (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw/) ? true : false
   end
 
   RBVersion = RUBY_VERSION.split('.').collect {|x| x.to_i}
