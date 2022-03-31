@@ -13,7 +13,7 @@ jobs:
         ruby: [ '2.7' ]
     name: ubuntu-latest ruby-${{ matrix.ruby }}
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v3
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
@@ -41,9 +41,9 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: checkout r2corba
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: checkout ACE_TAO
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: DOCGroup/ACE_TAO
         path: ${{ env.DOC_ROOT }}
@@ -98,16 +98,16 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - uses: actions/setup-java@v2
+    - uses: actions/setup-java@v3
       with:
         java-version: ${{ matrix.java-version }}
         java-package: ${{ matrix.java-package }}
         architecture: 'x64'
         distribution: 'zulu'
     - name: checkout r2corba
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: checkout ridl
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
