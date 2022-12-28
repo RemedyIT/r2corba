@@ -27,8 +27,9 @@ has_local_ridl = File.directory?(File.join(root_path, 'ridl'))
 
 if defined?(JRUBY_VERSION)
   ENV['JACORB_HOME'] ||= File.expand_path(File.join(root_path, 'jacorb'))
+  ENV['RIDL_ROOT'] ||= File.expand_path(File.join(root_path, 'ridl'))
   incdirs = [
-      has_local_ridl ? File.expand_path(File.join(root_path, 'ridl', 'lib')) : nil,
+      has_local_ridl ? File.expand_path(File.join(ENV['RIDL_ROOT'], 'lib')) : nil,
       File.expand_path(File.join(root_path, 'lib')),
       File.expand_path(File.join(root_path, 'ext')),
       File.expand_path(File.join(ENV['JACORB_HOME'], 'lib')),
@@ -38,9 +39,10 @@ if defined?(JRUBY_VERSION)
   ENV['RUBYLIB'] = incdirs.join(File::PATH_SEPARATOR)
 else
   ace_root = ENV['ACE_ROOT'] || File.expand_path(File.join(root_path, 'ACE', 'ACE_wrappers'))
+  ENV['RIDL_ROOT'] ||= File.expand_path(File.join(root_path, 'ridl'))
   ## setup the right environment for running tests
   incdirs = [
-      has_local_ridl ? File.expand_path(File.join(root_path, 'ridl', 'lib')) : nil,
+      has_local_ridl ? File.expand_path(File.join(ENV['RIDL_ROOT'], 'lib')) : nil,
       File.expand_path(File.join(root_path, 'lib')),
       File.expand_path(File.join(root_path, 'ext')),
       ENV['RUBYLIB'],
