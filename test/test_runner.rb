@@ -23,11 +23,11 @@ is_win32 = (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /ming
 
 root_path = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-has_local_ridl = File.directory?(File.join(root_path, 'ridl'))
+ENV['RIDL_ROOT'] ||= File.expand_path(File.join(root_path, 'ridl'))
+has_local_ridl = File.directory?(ENV['RIDL_ROOT'])
 
 if defined?(JRUBY_VERSION)
   ENV['JACORB_HOME'] ||= File.expand_path(File.join(root_path, 'jacorb'))
-  ENV['RIDL_ROOT'] ||= File.expand_path(File.join(root_path, 'ridl'))
   incdirs = [
       has_local_ridl ? File.expand_path(File.join(ENV['RIDL_ROOT'], 'lib')) : nil,
       File.expand_path(File.join(root_path, 'lib')),
@@ -39,7 +39,6 @@ if defined?(JRUBY_VERSION)
   ENV['RUBYLIB'] = incdirs.join(File::PATH_SEPARATOR)
 else
   ace_root = ENV['ACE_ROOT'] || File.expand_path(File.join(root_path, 'ACE', 'ACE_wrappers'))
-  ENV['RIDL_ROOT'] ||= File.expand_path(File.join(root_path, 'ridl'))
   ## setup the right environment for running tests
   incdirs = [
       has_local_ridl ? File.expand_path(File.join(ENV['RIDL_ROOT'], 'lib')) : nil,
