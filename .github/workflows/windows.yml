@@ -37,7 +37,6 @@ jobs:
       with:
         repository: jwillemsen/ATCD
         path: ${{ env.DOC_ROOT }}
-        ref: jwi-curtfix
     - name: checkout MPC
       uses: actions/checkout@v3
       with:
