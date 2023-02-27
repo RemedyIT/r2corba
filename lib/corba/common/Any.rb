@@ -19,7 +19,7 @@ module R2CORBA
             return val._tc
           when ::NilClass
             return CORBA._tc_null
-          when ::Bignum
+          when BIGNUM_KLASS
             return CORBA._tc_longlong
           when ::Integer
             return CORBA._tc_long
