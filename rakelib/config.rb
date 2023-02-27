@@ -346,10 +346,12 @@ module R2CORBA
 
       @@ridlc = File.join('bin', 'ridlc')
 
-      # check availability of RIDL; either as gem or in subdir
-      if (@@ridl_local = File.exist?(File.join('ridl', 'lib', 'ridl', 'ridl.rb')))
+      # check availability of RIDL; either as gem or in ridl subdir, or to a location as set
+      # in the RIDL_ROOT environment variable
+      ENV['RIDL_ROOT'] ||= File.expand_path('ridl')
+      if (@@ridl_local = File.exist?(File.join(ENV['RIDL_ROOT'], 'lib', 'ridl', 'ridl.rb')))
         incdirs = [
-            File.expand_path(File.join('ridl', 'lib')),
+            File.expand_path(File.join(ENV['RIDL_ROOT'], 'lib')),
             File.expand_path('lib'),
             ENV['RUBYLIB']
         ].compact
@@ -513,9 +515,10 @@ module R2CORBA
         end
       end
 
-      # check availability of RIDL; either as gem or in subdir
-      unless File.exist?(File.join('ridl', 'lib', 'ridl', 'ridl.rb')) || (`gem search -i -q ridl`.strip) == 'true'
-        raise 'Missing RIDL installation. R2CORBA requires RIDL installed either as gem or in subdirectory ridl.'
+      # check availability of RIDL; either as gem or in subdir or as set in RIDL_ROOT
+      ENV['RIDL_ROOT'] ||= File.expand_path('ridl')
+      unless File.exist?(File.join(ENV['RIDL_ROOT'], 'lib', 'ridl', 'ridl.rb')) || (`gem search -i -q ridl`.strip) == 'true'
+        raise 'Missing RIDL installation. R2CORBA requires RIDL installed either as gem or in the subdirectory ridl, or at the location as set by RIDL_ROOT.'
       end
     end
 

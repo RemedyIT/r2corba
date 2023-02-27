@@ -66,7 +66,7 @@ namespace :r2corba do
         gemspec = R2CORBA::Gem.define_spec('taosource', _ace_ver) do |gem|
           gem.summary = %Q{TAO sourcecode for building R2CORBA}
           gem.description = %Q{TAO sourcecode for building R2CORBA.}
-          gem.email = 'mcorino@remedy.nl'
+          gem.email = 'info@remedy.nl'
           gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
           gem.authors = ['Martin Corino', 'Johnny Willemsen']
           gem.files = Dir['lib/taosource/**/*']
@@ -75,7 +75,7 @@ namespace :r2corba do
           gem.extensions = ['mkrf_conf_taogem.rb']
           gem.require_paths = %w{lib}
           gem.executables = []
-          gem.required_ruby_version = '>= 2.4'
+          gem.required_ruby_version = '>= 2.5'
           gem.licenses = ['DOC']
           gem.metadata = {
             'bug_tracker_uri'   => 'https://github.com/DOCGroup/ACE_TAO/issues',
@@ -93,14 +93,14 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
   gemspec = R2CORBA::Gem.define_spec('r2corba', R2CORBA::R2CORBA_VERSION) do |gem|
     gem.summary = %Q{CORBA language mapping implementation for Ruby}
     gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
-    gem.email = 'mcorino@remedy.nl'
+    gem.email = 'info@remedy.nl'
     gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
     gem.authors = ['Martin Corino', 'Johnny Willemsen']
     gem.files = R2CORBA::Gem.manifest
     gem.extensions = ['mkrf_conf_srcgem.rb']
     gem.require_paths = %w{lib}
     gem.executables = %w{ridlc rins r2corba}
-    gem.required_ruby_version = '>= 2.4'
+    gem.required_ruby_version = '>= 2.5'
     gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
     gem.require_paths << 'ext'
     gem.add_dependency 'ridl', '~> 2.8'
@@ -132,14 +132,14 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gemspec = R2CORBA::Gem.define_spec('r2corba', R2CORBA::R2CORBA_VERSION, :extbin) do |gem|
       gem.summary = %Q{CORBA language mapping implementation for Ruby (extension binaries)}
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. (extension binaries)}
-      gem.email = 'mcorino@remedy.nl'
+      gem.email = 'info@remedy.nl'
       gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
       gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = R2CORBA::Gem.manifest(:extbin)
       gem.extensions = []
       gem.require_paths = %w{ext}
       gem.executables = []
-      gem.required_ruby_version = '>= 2.4'
+      gem.required_ruby_version = '>= 2.5'
       gem.licenses = ['Nonstandard', 'DOC']
       gem.rdoc_options << '--exclude=\\.dll' << '--exclude=\\.so'
       gem.metadata = {
@@ -175,7 +175,7 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
     gemspec = R2CORBA::Gem.define_spec('r2corba', R2CORBA::R2CORBA_VERSION, :bin) do |gem|
       gem.summary = %Q{CORBA language mapping implementation for Ruby}
       gem.description = %Q{OMG CORBA v3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
-      gem.email = 'mcorino@remedy.nl'
+      gem.email = 'info@remedy.nl'
       gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
       gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = R2CORBA::Gem.manifest(:bin)
@@ -184,11 +184,11 @@ t_ = file File.join('pkg', "#{R2CORBA::Gem.gem_name('r2corba', R2CORBA::R2CORBA_
       gem.extensions = ['mkrf_conf_bingem.rb']
       if defined?(JRUBY_VERSION)
         gem.require_paths << 'jacorb/lib'
-        gem.required_ruby_version = '>= 2.4'
+        gem.required_ruby_version = '>= 2.5'
         gem.licenses = ['Nonstandard', 'GPL-2.0']
       else
         gem.files << File.join('ext', '.keep') unless ENV['FULL_BINGEM'] # to force installation of ext folder if libs are left out
-        gem.required_ruby_version = '>= 2.4'
+        gem.required_ruby_version = '>= 2.5'
         gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
         gem.require_paths << 'ext'
       end
@@ -218,14 +218,14 @@ unless defined?(JRUBY_VERSION)
     gemspec = R2CORBA::Gem.define_spec('r2corba_devkit', '1.0.0', :devkit) do |gem|
       gem.summary = %Q{R2CORBA Devkit faker for RubyInstaller Rubies}
       gem.description = %Q{Fake Devkit loader to satisfy stupid RubyInstaller pre-install hook. }
-      gem.email = 'mcorino@remedy.nl'
+      gem.email = 'info@remedy.nl'
       gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
       gem.authors = ['Martin Corino', 'Johnny Willemsen']
       gem.files = 'lib/rubygems_plugin.rb'
       gem.require_paths = %w{lib}
       gem.executables = []
       gem.extensions = []
-      gem.required_ruby_version = '>= 2.0'
+      gem.required_ruby_version = '>= 2.5'
       gem.licenses = ['Nonstandard']
       gem.metadata = {
         'bug_tracker_uri'   => 'https://github.com/RemedyIT/r2corba/issues',

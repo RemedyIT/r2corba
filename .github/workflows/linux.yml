@@ -27,13 +27,13 @@ jobs:
           - CC: gcc-7
             CXX: g++-7
             PackageDeps: g++-7
-            os: ubuntu-18.04
-            ruby: '2.6'
+            os: ubuntu-20.04
+            ruby: '2.5'
           - CC: gcc-8
             CXX: g++-8
             PackageDeps: g++-8
             os: ubuntu-20.04
-            ruby: '2.7'
+            ruby: '2.6'
           - CC: gcc-9
             CXX: g++-9
             PackageDeps: g++-9
@@ -47,7 +47,7 @@ jobs:
           - CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
-            os: ubuntu-20.04
+            os: ubuntu-22.04
             ruby: '3.0'
           - CC: gcc-11
             CXX: g++-11
@@ -58,7 +58,7 @@ jobs:
             CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
-            os: ubuntu-20.04
+            os: ubuntu-22.04
             ruby: '3.1'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ruby-${{ matrix.ruby }}
@@ -122,6 +122,7 @@ jobs:
       if: matrix.feature == 'CodeQL'
   jacorb:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: ubuntu-20.04
@@ -162,7 +163,7 @@ jobs:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
     - name: Download a file
-      uses: carlosperate/download-file-action@v1
+      uses: carlosperate/download-file-action@v2
       id: download-jacorb
       with:
         file-url: 'https://www.jacorb.org/releases/${{ matrix.jacorb_version }}/jacorb-${{ matrix.jacorb_version }}-binary.zip'
