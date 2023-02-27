@@ -237,7 +237,7 @@ VALUE rCORBA_ORB_init(int _argc, VALUE *_argv, VALUE /*klass*/) {
   char **argv;
   int i;
   CORBA::ORB_var orb;
-  std::unique_ptr<char*> argv_safe;
+  std::unique_ptr<char*[]> argv_safe;
 
   rb_scan_args(_argc, _argv, "02", &v0, &v1);
 
