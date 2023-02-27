@@ -35,7 +35,7 @@ jobs:
     - name: checkout ACE_TAO
       uses: actions/checkout@v3
       with:
-        repository: jwillemsen/ATCD
+        repository: DOCGroup/ACE_TAO
         path: ${{ env.DOC_ROOT }}
     - name: checkout MPC
       uses: actions/checkout@v3
