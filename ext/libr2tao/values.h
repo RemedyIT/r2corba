@@ -20,6 +20,7 @@
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/VarOut_T.h"
+#include <memory>
 
 extern VALUE r2tao_cBoxedValueBase;
 
@@ -37,16 +38,16 @@ public:
   R2TAO_ArrayAny_Impl_T (CORBA::TypeCode_ptr,
                          T * const,
                          CORBA::ULong);
-  virtual ~R2TAO_ArrayAny_Impl_T ();
+  ~R2TAO_ArrayAny_Impl_T () override;
 
   static void insert (CORBA::Any &,
                       CORBA::TypeCode_ptr,
                       T * const,
                       CORBA::ULong);
 
-  virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
+  CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
   virtual const void *value () const;
-  virtual void free_value ();
+  void free_value () override;
 
 private:
   void* value_;
@@ -62,18 +63,9 @@ private:
 //===================================================================
 
 class R2TAO_Value;
-typedef R2TAO_Value * R2TAO_Value_ptr;
-typedef
-  TAO_Value_Var_T<
-    R2TAO_Value
-    >
-  R2TAO_Value_var;
-
-typedef
-  TAO_Value_Out_T<
-    R2TAO_Value
-    >
-  R2TAO_Value_out;
+using R2TAO_Value_ptr = R2TAO_Value *;
+using R2TAO_Value_var = TAO_Value_Var_T<R2TAO_Value>;
+using R2TAO_Value_out = TAO_Value_Out_T<R2TAO_Value>;
 
 class R2TAO_Value : public ::CORBA::DefaultValueRefCountBase
 {
@@ -81,7 +73,7 @@ class R2TAO_Value : public ::CORBA::DefaultValueRefCountBase
     R2TAO_Value (VALUE rbValue, bool for_unmarshal=false);
     ~R2TAO_Value () override;
 
-    virtual CORBA::ValueBase* _copy_value ();
+    CORBA::ValueBase* _copy_value () override;
 
     static void _tao_any_destructor (void *);
 
@@ -150,7 +142,7 @@ class R2TAO_Value : public ::CORBA::DefaultValueRefCountBase
 
     CORBA::TypeCode_var val_tc_; // the typecode for the valuetype
 
-    ACE_Auto_Ptr<Chunk> chunk_list_;
+    std::unique_ptr<Chunk> chunk_list_;
     Chunk* last_chunk_;
 };
 
@@ -206,19 +198,9 @@ VALUE r2tao_VFB_lookup_value_factory(VALUE self, VALUE id);
 //===================================================================
 
 class R2TAO_AbstractValue;
-typedef R2TAO_AbstractValue* R2TAO_AbstractValue_ptr;
-
-typedef
-  TAO_Objref_Var_T<
-    R2TAO_AbstractValue
-    >
-  R2TAO_AbstractValue_var;
-
-typedef
-  TAO_Objref_Out_T<
-    R2TAO_AbstractValue
-    >
-  R2TAO_AbstractValue_out;
+using R2TAO_AbstractValue_ptr = R2TAO_AbstractValue*;
+using R2TAO_AbstractValue_var = TAO_Objref_Var_T<R2TAO_AbstractValue>;
+using R2TAO_AbstractValue_out = TAO_Objref_Out_T<R2TAO_AbstractValue>;
 
 class R2TAO_AbstractValue :
   public ::CORBA::AbstractBase,
@@ -281,19 +263,9 @@ void operator<<= (::CORBA::Any &, R2TAO_AbstractValue_ptr *); // non-copying
 //===================================================================
 
 class R2TAO_AbstractObject;
-typedef R2TAO_AbstractObject* R2TAO_AbstractObject_ptr;
-
-typedef
-  TAO_Objref_Var_T<
-    R2TAO_AbstractObject
-    >
-  R2TAO_AbstractObject_var;
-
-typedef
-  TAO_Objref_Out_T<
-    R2TAO_AbstractObject
-    >
-  R2TAO_AbstractObject_out;
+using R2TAO_AbstractObject_ptr = R2TAO_AbstractObject*;
+using R2TAO_AbstractObject_var = TAO_Objref_Var_T<R2TAO_AbstractObject>;
+using R2TAO_AbstractObject_out = TAO_Objref_Out_T<R2TAO_AbstractObject>;
 
 class R2TAO_AbstractObject :
   public ::CORBA::AbstractBase,
@@ -366,26 +338,18 @@ namespace TAO
   template<>
   struct  Objref_Traits< R2TAO_AbstractValue>
   {
-    static R2TAO_AbstractValue_ptr duplicate (
-        R2TAO_AbstractValue_ptr p);
-    static void release (
-        R2TAO_AbstractValue_ptr p);
+    static R2TAO_AbstractValue_ptr duplicate (R2TAO_AbstractValue_ptr p);
+    static void release (R2TAO_AbstractValue_ptr p);
     static R2TAO_AbstractValue_ptr nil ();
-    static ::CORBA::Boolean marshal (
-        const R2TAO_AbstractValue_ptr p,
-        TAO_OutputCDR & cdr);
+    static ::CORBA::Boolean marshal (const R2TAO_AbstractValue_ptr p, TAO_OutputCDR & cdr);
   };
 
   template<>
   struct  Objref_Traits< R2TAO_AbstractObject>
   {
-    static R2TAO_AbstractObject_ptr duplicate (
-        R2TAO_AbstractObject_ptr p);
-    static void release (
-        R2TAO_AbstractObject_ptr p);
+    static R2TAO_AbstractObject_ptr duplicate (R2TAO_AbstractObject_ptr p);
+    static void release (R2TAO_AbstractObject_ptr p);
     static R2TAO_AbstractObject_ptr nil ();
-    static ::CORBA::Boolean marshal (
-        const R2TAO_AbstractObject_ptr p,
-        TAO_OutputCDR & cdr);
+    static ::CORBA::Boolean marshal (const R2TAO_AbstractObject_ptr p, TAO_OutputCDR & cdr);
   };
 }

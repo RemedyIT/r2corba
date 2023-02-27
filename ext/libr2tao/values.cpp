@@ -1806,7 +1806,7 @@ VALUE r2tao_OStream_write_any_array (VALUE self, VALUE rval, VALUE offset, VALUE
       ACE_NEW_THROW_EX (any_array,
                         CORBA::Any[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Any> any_array_safe (any_array);
+      std::unique_ptr<CORBA::Any[]> any_array_safe (any_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -1845,7 +1845,7 @@ VALUE r2tao_OStream_write_boolean_array (VALUE self, VALUE rval, VALUE offset, V
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Boolean[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Boolean> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Boolean[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -1884,7 +1884,7 @@ VALUE r2tao_OStream_write_char_array (VALUE self, VALUE rval, VALUE offset, VALU
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Char[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Char> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Char[]> native_array_safe (native_array);
       char* s = RSTRING_PTR (rval);
       for (CORBA::ULong l=0; l<len ;++l)
       {
@@ -1923,7 +1923,7 @@ VALUE r2tao_OStream_write_wchar_array (VALUE self, VALUE rval, VALUE offset, VAL
       ACE_NEW_THROW_EX (native_array,
                         CORBA::WChar[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::WChar> native_array_safe (native_array);
+      std::unique_ptr<CORBA::WChar[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -1962,7 +1962,7 @@ VALUE r2tao_OStream_write_octet_array (VALUE self, VALUE rval, VALUE offset, VAL
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Octet[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Octet> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Octet[]> native_array_safe (native_array);
       unsigned char* s = (unsigned char*)RSTRING_PTR (rval);
       for (CORBA::ULong l=0; l<len ;++l)
       {
@@ -2001,7 +2001,7 @@ VALUE r2tao_OStream_write_short_array (VALUE self, VALUE rval, VALUE offset, VAL
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Short[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Short> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Short[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2040,7 +2040,7 @@ VALUE r2tao_OStream_write_ushort_array (VALUE self, VALUE rval, VALUE offset, VA
       ACE_NEW_THROW_EX (native_array,
                         CORBA::UShort[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::UShort> native_array_safe (native_array);
+      std::unique_ptr<CORBA::UShort[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2079,7 +2079,7 @@ VALUE r2tao_OStream_write_long_array (VALUE self, VALUE rval, VALUE offset, VALU
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Long[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Long> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Long[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2118,7 +2118,7 @@ VALUE r2tao_OStream_write_ulong_array (VALUE self, VALUE rval, VALUE offset, VAL
       ACE_NEW_THROW_EX (native_array,
                         CORBA::ULong[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::ULong> native_array_safe (native_array);
+      std::unique_ptr<CORBA::ULong[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2157,7 +2157,7 @@ VALUE r2tao_OStream_write_longlong_array (VALUE self, VALUE rval, VALUE offset, 
       ACE_NEW_THROW_EX (native_array,
                         CORBA::LongLong[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::LongLong> native_array_safe (native_array);
+      std::unique_ptr<CORBA::LongLong[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2196,7 +2196,7 @@ VALUE r2tao_OStream_write_ulonglong_array (VALUE self, VALUE rval, VALUE offset,
       ACE_NEW_THROW_EX (native_array,
                         CORBA::ULongLong[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::ULongLong> native_array_safe (native_array);
+      std::unique_ptr<CORBA::ULongLong[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2235,7 +2235,7 @@ VALUE r2tao_OStream_write_float_array (VALUE self, VALUE rval, VALUE offset, VAL
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Float[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Float> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Float[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2274,7 +2274,7 @@ VALUE r2tao_OStream_write_double_array (VALUE self, VALUE rval, VALUE offset, VA
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Double[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Double> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Double[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2313,7 +2313,7 @@ VALUE r2tao_OStream_write_longdouble_array (VALUE self, VALUE rval, VALUE offset
       ACE_NEW_THROW_EX (native_array,
                         CORBA::LongDouble[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::LongDouble> native_array_safe (native_array);
+      std::unique_ptr<CORBA::LongDouble[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
