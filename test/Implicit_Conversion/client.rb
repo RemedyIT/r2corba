@@ -103,10 +103,10 @@ begin
     [arr.to_ary.collect {|l| l.to_int }, the_seq].transpose.all? {|t| t.first == t.last}
   end
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

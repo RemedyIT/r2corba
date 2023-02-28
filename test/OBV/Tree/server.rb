@@ -75,7 +75,7 @@ class Passer_i < POA::Passer
   end
 
   def shutdown ()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant Passer_i
 
@@ -96,7 +96,7 @@ poa_man.activate
 
 passer = Passer_i.new(orb)
 
-obj = passer._this()
+obj = passer._this
 
 ior = orb.object_to_string(obj)
 
@@ -106,7 +106,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

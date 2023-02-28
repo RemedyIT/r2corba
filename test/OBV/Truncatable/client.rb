@@ -269,10 +269,10 @@ begin
 
   # shutdown tester service
 
-  tester.shutdown()
+  tester.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

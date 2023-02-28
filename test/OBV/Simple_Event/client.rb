@@ -76,10 +76,10 @@ begin
 
   # shutdown checkpoint service
 
-  checkpoint.shutdown()
+  checkpoint.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

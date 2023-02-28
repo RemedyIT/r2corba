@@ -106,7 +106,7 @@ if defined?(JRUBY_VERSION)
           stat_ptr = FFI::MemoryPointer.new(:int, 1)
           tmp_pid = _wait(stat_ptr, pid, 0)
           if tmp_pid == pid
-            return [pid, stat_ptr.get_int()]
+            return [pid, stat_ptr.get_int]
           else
             return [pid, 0]
           end
@@ -160,7 +160,7 @@ if defined?(JRUBY_VERSION)
           begin
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
             if tmp == pid and status.success? != nil
-              return [pid, status.success?() ? 0 : status.exitstatus]
+              return [pid, status.success? ? 0 : status.exitstatus]
             end
             return [nil, 0]
           rescue Errno::ECHILD
@@ -189,7 +189,7 @@ if defined?(JRUBY_VERSION)
     def initialize(cmd_, arg_)
       @pid = nil
       @exitstatus = nil
-      @trd = Thread.start() do
+      @trd = Thread.start do
         exit_status = 0
         @pid = Exec.run(cmd_, arg_)
         if @pid
@@ -500,7 +500,7 @@ end
       t = Time.now
       begin
         if @proc.check_status
-          if (Time.now() - t) >= timeout.to_f
+          if (Time.now - t) >= timeout.to_f
             STDERR.puts "ERROR: KILLING #{@cmd}"
             @proc.kill
             return 255
@@ -531,7 +531,7 @@ end
     t = Time.now
     while !File.readable?(filename)
       sleep(0.1)
-      if (Time.now() - t) >= timeout.to_f
+      if (Time.now - t) >= timeout.to_f
         STDERR.puts "ERROR: could not find file '#{filename}'"
         return false
       end

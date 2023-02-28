@@ -59,7 +59,7 @@ class BalancedAccount_i < POA::BalancedAccount
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 
   def print_it()
@@ -82,7 +82,7 @@ poa_man.activate
 
 account = BalancedAccount_i.new(orb)
 
-obj = account._this()
+obj = account._this
 
 ior = orb.object_to_string(obj)
 
@@ -92,7 +92,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

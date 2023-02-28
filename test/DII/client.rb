@@ -59,7 +59,7 @@ begin
   ]
   req.set_return_type(CORBA::_tc_string)
 
-  the_string = req.invoke()
+  the_string = req.invoke
 
   puts "string returned <#{the_string}>"
   puts
@@ -72,9 +72,9 @@ begin
   ]
   req.set_return_type(CORBA::_tc_string)
 
-  req.send_deferred()
+  req.send_deferred
   puts 'getting response...'
-  req.get_response()
+  req.get_response
 
   puts "string returned <#{req.return_value}>"
   puts
@@ -92,12 +92,12 @@ begin
     ]
     req.set_return_type(CORBA::_tc_string)
 
-    req.send_deferred()
+    req.send_deferred
     begin
       puts 'sleeping...'
       sleep(0.01)
       puts 'polling for response...'
-    end while !req.poll_response()
+    end while !req.poll_response
 
     puts "string returned <#{req.return_value}>"
     puts
@@ -105,10 +105,10 @@ begin
 
   puts '***** Oneway shutdown'
   req = obj._request('shutdown')
-  req.send_oneway()
+  req.send_oneway
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

@@ -71,7 +71,7 @@ begin
   n = binding_list.first.binding_name.first
   puts "first binding: id=#{n.r_id}, kind=#{n.kind}"
 
-  has_one, binding = binding_iterator.next_one()
+  has_one, binding = binding_iterator.next_one
 
   assert 'ERROR: INS BindingIterator#next_one() does not function',
          (has_one && binding) &&
@@ -93,11 +93,11 @@ begin
     puts "#{counts.shift} binding: id=#{n.r_id}, kind=#{n.kind}"
   end
 
-  has_one, binding = binding_iterator.next_one()
+  has_one, binding = binding_iterator.next_one
 
   assert_not 'ERROR: INS BindingIterator#next_one() does not function (2)', has_one
 
-  binding_iterator.destroy()
+  binding_iterator.destroy
 
   # retrieve object reference for servant from Naming service
   name = binding_list.last.binding_name
@@ -107,14 +107,14 @@ begin
   # narrow object ref and call
   hello_obj = Test::Hello._narrow(obj)
 
-  the_string = hello_obj.get_string()
+  the_string = hello_obj.get_string
 
   puts "string returned <#{the_string}>"
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

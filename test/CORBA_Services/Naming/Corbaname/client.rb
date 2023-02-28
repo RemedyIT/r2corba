@@ -71,14 +71,14 @@ begin
 
   assert_not 'ERROR: corbaname resolved to nil object!', CORBA::is_nil(hello_obj)
 
-  the_string = hello_obj.get_string()
+  the_string = hello_obj.get_string
 
   puts "client: string returned <#{the_string}>"
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

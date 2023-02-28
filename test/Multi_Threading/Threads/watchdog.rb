@@ -51,7 +51,7 @@ class MyWatchdog < POA::Test::Watchdog
 
   def shutdown()
     puts %Q{Watchdog - received #{@count} pings}
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant MyWatchdog
 
@@ -67,7 +67,7 @@ poa_man.activate
 
 srv = MyWatchdog.new(orb)
 
-obj = srv._this()
+obj = srv._this
 
 ior = orb.object_to_string(obj)
 
@@ -77,7 +77,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

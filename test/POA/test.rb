@@ -60,7 +60,7 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant MyHello
 

@@ -74,9 +74,9 @@ class MyHello < POA::Test::Hello
   def shutdown()
     @stop = true
     @wdt.join
-    @watchdog.shutdown()
+    @watchdog.shutdown
     puts %Q{Server - pinged watchdog #{@count} times.}
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant MyHello
 
@@ -96,7 +96,7 @@ watchdog_obj = Test::Watchdog._narrow(obj)
 
 hello_srv = MyHello.new(orb, watchdog_obj)
 
-hello_obj = hello_srv._this()
+hello_obj = hello_srv._this
 
 hello_ior = orb.object_to_string(hello_obj)
 
@@ -106,7 +106,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

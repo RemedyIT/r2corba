@@ -123,7 +123,7 @@ begin
 
   simple_timeout_srv = Simple_Server._narrow(obj)
 
-  policies[0].destroy()
+  policies[0].destroy
   policies[0] = nil
 
   puts "client (#{Process.pid}) testing from #{Min_timeout} to #{Max_timeout} milliseconds"
@@ -135,7 +135,7 @@ begin
 
     puts "client (#{Process.pid}) Cleanup ORB/Thread/Object policies"
 
-    policies.clear()
+    policies.clear
     pol_man.set_policy_overrides(policies, CORBA::SET_OVERRIDE)
     pol_cur.set_policy_overrides(policies, CORBA::SET_OVERRIDE) if pol_cur
 
@@ -150,12 +150,12 @@ begin
 
     send_echo(Orb1, orb, simple_srv, t)
 
-    policies[0].destroy()
+    policies[0].destroy
 
     if pol_cur
       puts "client (#{Process.pid}) Set the thread policies"
 
-      policies.clear()
+      policies.clear
       policies << orb.create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                                     any_thread)
 
@@ -163,7 +163,7 @@ begin
 
       send_echo(Thread1, orb, simple_srv, t)
 
-      policies[0].destroy()
+      policies[0].destroy
     end
 
     puts "client (#{Process.pid}) Use the object policies"
@@ -174,13 +174,13 @@ begin
   puts "\n\n"
   puts "client (#{Process.pid}) Test completed, resynch with server"
 
-  policies.clear()
+  policies.clear
   pol_man.set_policy_overrides(policies, CORBA::SET_OVERRIDE)
   pol_cur.set_policy_overrides(policies, CORBA::SET_OVERRIDE) if pol_cur
 
   send_echo(None, orb, simple_srv, 0)
 
-  simple_srv.shutdown()
+  simple_srv.shutdown
 
   timeout_count_total = 0
   in_time_count_total = 0
@@ -201,6 +201,6 @@ begin
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

@@ -68,7 +68,7 @@ poa_man.activate
 
 tester = Test_impl.new(orb)
 
-obj = tester._this()
+obj = tester._this
 
 ior = orb.object_to_string(obj)
 
@@ -78,7 +78,7 @@ open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

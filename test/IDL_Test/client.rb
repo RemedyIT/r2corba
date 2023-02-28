@@ -80,24 +80,24 @@ begin
 
   hello_obj = Test::Hello._narrow(obj)
 
-  hello_obj.r_super()
+  hello_obj.r_super
 
-  hello_obj2 = Test::Hello._narrow(hello_obj.r_self())
+  hello_obj2 = Test::Hello._narrow(hello_obj.r_self)
 
-  the_string = hello_obj2.get_string()
+  the_string = hello_obj2.get_string
 
   puts "string returned <#{the_string}>"
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
   assert_not 'ERROR: Object is reported nil!', CORBA::is_nil(hello_obj)
 
-  hello_obj._free_ref()
+  hello_obj._free_ref
 
   assert 'ERROR: Object is reported non-nil!', CORBA::is_nil(hello_obj)
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

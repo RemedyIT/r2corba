@@ -61,14 +61,14 @@ begin
       hello_obj = Test::Hello._narrow(obj)
 
       10.times do
-        the_string = hello_obj.get_string()
+        the_string = hello_obj.get_string
 
         puts "[thread \##{sid}] string returned <#{the_string}>"
 
         Thread.pass
       end
 
-      hello_obj.shutdown()
+      hello_obj.shutdown
    end
   end
 
@@ -76,6 +76,6 @@ begin
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

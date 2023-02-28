@@ -72,7 +72,7 @@ class Simple_Server_i < POA::Simple_Server
 
   def shutdown()
     puts "server (#{Process.pid}) received shutdown request from client"
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant Simple_Server_i
 
@@ -88,7 +88,7 @@ poa_man.activate
 
 simple_srv = Simple_Server_i.new(orb)
 
-simple_ref = simple_srv._this()
+simple_ref = simple_srv._this
 
 ior = orb.object_to_string(simple_ref)
 
@@ -98,11 +98,11 @@ open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')
   Signal.trap('USR2', 'EXIT')
 end
 
-orb.run()
+orb.run
