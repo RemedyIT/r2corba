@@ -100,7 +100,7 @@ obj = passer._this()
 
 ior = orb.object_to_string(obj)
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write ior
 }
 

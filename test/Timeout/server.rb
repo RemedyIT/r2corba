@@ -92,7 +92,7 @@ simple_ref = simple_srv._this()
 
 ior = orb.object_to_string(simple_ref)
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write ior
 }
 

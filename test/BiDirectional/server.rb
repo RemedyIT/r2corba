@@ -138,7 +138,7 @@ ior = orb.object_to_string(obj)
 
 puts "Activated as <#{ior}>"
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write ior
 }
 

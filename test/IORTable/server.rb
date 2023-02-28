@@ -52,7 +52,7 @@ else
   require 'TestS.rb'
 end
 
-begin STDERR.puts 'Not supported on this platform'; open(OPTIONS[:iorfile], 'w') {|io|io.write ''}; exit(0); end unless defined?(IORTable)
+begin STDERR.puts 'Not supported on this platform'; File.open(OPTIONS[:iorfile], 'w') {|io|io.write ''}; exit(0); end unless defined?(IORTable)
 
 class MyHello < POA::Test::Hello
   def initialize(orb, id)
@@ -113,7 +113,7 @@ hello_ior = orb.object_to_string(hello_obj)
 
 iortbl.set_locator(MyLocator.new('Hello2', hello_ior))
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write hello_ior
 }
 
