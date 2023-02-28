@@ -19,10 +19,10 @@ TEST_OPERATION = 2
 TEST_EXCEPTION = 3
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'file://server.ior',
-  :test => TEST_ALL
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'file://server.ior',
+  test: TEST_ALL
 }
 
 ARGV.options do |opts|

@@ -74,10 +74,10 @@ end
 
 module TestFinder
   OPTIONS = {
-    :exclude => nil,
-    :runonly => nil,
-    :listonly => false,
-    :debug => !ENV['R2CORBA_DEBUG'].nil?
+    exclude: nil,
+    runonly: nil,
+    listonly: false,
+    debug: !ENV['R2CORBA_DEBUG'].nil?
     }
 
   ROOT = File.expand_path(File.dirname(__FILE__))

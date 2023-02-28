@@ -14,10 +14,10 @@ require 'lib/assert.rb'
 include TestUtil::Assertions
 
 OPTIONS = {
-  :iorfile => 'corbaname.ior',
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :ins_port => 2345
+  iorfile: 'corbaname.ior',
+  use_implement: false,
+  orb_debuglevel: 0,
+  ins_port: 2345
 }
 
 ARGV.options do |opts|

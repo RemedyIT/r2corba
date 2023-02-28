@@ -79,9 +79,9 @@ module R2CORBA
 
       def invoke
         self._invoke({
-          :arg_list => self._arguments,
-          :result_type => @_rettc,
-          :exc_list => self._exceptions
+          arg_list: self._arguments,
+          result_type: @_rettc,
+          exc_list: self._exceptions
           })
       end
 
@@ -91,9 +91,9 @@ module R2CORBA
 
       def send_deferred
         self._send_deferred({
-          :arg_list => self._arguments,
-          :result_type => @_rettc,
-          :exc_list => self._exceptions
+          arg_list: self._arguments,
+          result_type: @_rettc,
+          exc_list: self._exceptions
           })
       end
 

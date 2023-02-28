@@ -14,9 +14,9 @@ require 'lib/assert.rb'
 include TestUtil::Assertions
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'file://server'
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'file://server'
 }
 
 ARGV.options do |opts|

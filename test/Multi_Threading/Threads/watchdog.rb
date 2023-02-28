@@ -3,9 +3,9 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'watchdog.ior'
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'watchdog.ior'
 }
 
 ARGV.options do |opts|

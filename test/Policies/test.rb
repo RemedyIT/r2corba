@@ -14,8 +14,8 @@ require 'lib/assert.rb'
 include TestUtil::Assertions
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0
+  use_implement: false,
+  orb_debuglevel: 0
 }
 
 ARGV.options do |opts|
