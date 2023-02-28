@@ -61,7 +61,7 @@ class Test_impl < POA::Test
   def basic_op1(p1, p2)
     p3 = p2 * 5
     p2 = p2 * 3
-    retval = p1.nil?() ? nil : p1 * 3
+    retval = p1.nil? ? nil : p1 * 3
     [retval, p2, p3]
   end
 
@@ -235,7 +235,7 @@ class Test_impl < POA::Test
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant Test_impl
 
@@ -251,7 +251,7 @@ poa_man.activate
 
 test_srv = Test_impl.new(orb)
 
-test_obj = test_srv._this()
+test_obj = test_srv._this
 
 ior = orb.object_to_string(test_obj)
 
@@ -261,7 +261,7 @@ File.open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

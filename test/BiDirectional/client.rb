@@ -96,7 +96,7 @@ begin
 
   puts 'child_poa created'
 
-  policies.each { |pol| pol.destroy() }
+  policies.each { |pol| pol.destroy }
 
   puts 'policies destroyed'
 
@@ -110,7 +110,7 @@ begin
 
   callback_i = MyCallback.new(orb)
 
-  callback_ref = callback_i._this()
+  callback_ref = callback_i._this
 
   # Send the calback object to the server
   simple_srv.callback_object(callback_ref)
@@ -120,12 +120,12 @@ begin
 
   assert "unexpected result = #{r}", r == 0
 
-  orb.run()
+  orb.run
 
   root_poa.destroy(1, 1)
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

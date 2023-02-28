@@ -55,7 +55,7 @@ obj = orb.string_to_object("corbaloc:iiop:1.2@localhost:#{OPTIONS[:serverport]}/
 
 hello_obj = Test::Hello._narrow(obj)
 
-the_string = hello_obj.get_string()
+the_string = hello_obj.get_string
 
 puts "servant Hello returned <#{the_string}>"
 
@@ -63,10 +63,10 @@ obj = orb.string_to_object("corbaloc:iiop:1.2@localhost:#{OPTIONS[:serverport]}/
 
 hello_obj = Test::Hello._narrow(obj)
 
-the_string = hello_obj.get_string()
+the_string = hello_obj.get_string
 
 puts "servant Hello2 returned <#{the_string}>"
 
-hello_obj.shutdown()
+hello_obj.shutdown
 
-orb.destroy()
+orb.destroy

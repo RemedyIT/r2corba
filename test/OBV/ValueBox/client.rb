@@ -189,13 +189,13 @@ module Test
     retval = nil
     retval, p2_out, p3_out = test.seq_op1(p1, p2)
 
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_sequence_invocations:2 failed', (p2_out[i] == e * 3)
     end
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_sequence_invocations:2 failed', (p3_out[i] == e * 5)
     end
-    p1.value().each_with_index do |e, i|
+    p1.value.each_with_index do |e, i|
       assert 'boxed_sequence_invocations:2 failed', (retval[i] == e)
     end
 
@@ -204,10 +204,10 @@ module Test
     p3_out = nil
     p2_out, p3_out = test.seq_op2(p1.value, p2.value)
 
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_sequence_invocations:3 failed', (p2_out[i] == e * 3)
     end
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_sequence_invocations:3 failed', (p3_out[i] == e * 5)
     end
   end
@@ -312,13 +312,13 @@ module Test
     retval = nil
     retval, p2_out, p3_out = test.array_op1(p1, p2)
 
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:2 failed', (p2_out[i] == e * 3)
     end
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:2 failed', (p3_out[i] == e * 3)
     end
-    p1.value().each_with_index do |e, i|
+    p1.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:2 failed', (retval[i] == e)
     end
 
@@ -327,10 +327,10 @@ module Test
     p3_out = nil
     p2_out, p3_out = test.array_op2(p1.value, p2.value)
 
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:3 failed', (p2_out[i] == e * 3)
     end
-    p1.value().each_with_index do |e, i|
+    p1.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:3 failed', (p3_out[i] == e)
     end
 
@@ -345,13 +345,13 @@ module Test
     retval = nil
     retval, p2_out, p3_out = test.array_op3(p1, p2)
 
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:5 failed', (p2_out[i] == '1inout string')
     end
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:5 failed', (p3_out[i] == '1inout string')
     end
-    p1.value().each_with_index do |e, i|
+    p1.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:5 failed', (retval[i] == e)
     end
 
@@ -360,10 +360,10 @@ module Test
     p3_out = nil
     p2_out, p3_out = test.array_op4(p1.value, p2.value)
 
-    p2.value().each_with_index do |e, i|
+    p2.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:6 failed', (p2_out[i] == '1inout string')
     end
-    p1.value().each_with_index do |e, i|
+    p1.value.each_with_index do |e, i|
       assert 'boxed_array_invocations:6 failed', (p3_out[i] == e)
     end
   end
@@ -488,10 +488,10 @@ begin
 
   # shutdown test service
 
-  test.shutdown()
+  test.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

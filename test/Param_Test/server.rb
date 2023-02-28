@@ -256,7 +256,7 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant Hello
 
@@ -285,7 +285,7 @@ File.open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

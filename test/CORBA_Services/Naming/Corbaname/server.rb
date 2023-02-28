@@ -65,7 +65,7 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant MyHello
 
@@ -104,7 +104,7 @@ poa_man.activate
 # create and activate servant
 hello_srv = MyHello.new(orb)
 
-hello_obj = hello_srv._this()
+hello_obj = hello_srv._this
 
 # register object reference with Naming service
 name = full_name
@@ -123,7 +123,7 @@ File.open(OPTIONS[:iorfile], 'w') { |io|
 # initialize signal handling
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

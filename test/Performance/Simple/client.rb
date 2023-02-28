@@ -74,16 +74,16 @@ begin
 
   STDERR.puts "*** Avg turnaround time per invocation = #{'%.2f' % (t_diff / 10)} msec"
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
   assert_not 'ERROR: Object is reported nil!', CORBA::is_nil(hello_obj)
 
-  hello_obj._free_ref()
+  hello_obj._free_ref
 
   assert 'ERROR: Object is reported non-nil!', CORBA::is_nil(hello_obj)
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

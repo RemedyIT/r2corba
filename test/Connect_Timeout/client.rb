@@ -65,11 +65,11 @@ def test_timeout(object)
 
     assert_not 'Nil Test::Hello reference', CORBA::is_nil(hello)
 
-    the_string = hello.get_string()
+    the_string = hello.get_string
 
     puts "string returned <#{the_string}>"
 
-    hello.shutdown()
+    hello.shutdown
   rescue CORBA::Exception
     # Get the elampsed time
     el = Time.now - profile_timer
@@ -101,9 +101,9 @@ begin
   policy_current.set_policy_overrides(policy_list,
                                         CORBA::ADD_OVERRIDE)
 
-  policy_list.each { |p| p.destroy() }
+  policy_list.each { |p| p.destroy }
 
   test_timeout(tmp)
 ensure
-  orb.destroy()
+  orb.destroy
 end

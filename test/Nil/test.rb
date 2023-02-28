@@ -76,5 +76,5 @@ begin
   assert 'Not nil returned for RootPOA.the_parent', CORBA.is_nil(rootpoa.the_parent) && rootpoa.the_parent.nil?
 
 ensure
-  orb.destroy()
+  orb.destroy
 end

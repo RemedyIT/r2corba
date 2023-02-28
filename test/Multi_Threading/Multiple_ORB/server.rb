@@ -59,7 +59,7 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant MyHello
 
@@ -67,7 +67,7 @@ orb_trds = []
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb_trds.each { |t| t[:orb].shutdown() }
+  orb_trds.each { |t| t[:orb].shutdown }
 end
 
 if Signal.list.has_key?('USR2')

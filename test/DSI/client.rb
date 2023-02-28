@@ -60,6 +60,6 @@ the_string, the_length = hello_obj.echo('Hello world!')
 
 puts "string returned <#{the_string}>; length = #{the_length}"
 
-hello_obj.shutdown()
+hello_obj.shutdown
 
-orb.destroy()
+orb.destroy

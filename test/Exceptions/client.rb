@@ -102,16 +102,16 @@ begin
 
   assert 'ERROR', 99 == hello_obj.myResult
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
   assert_not 'ERROR: Object is reported nil!', CORBA::is_nil(hello_obj)
 
-  hello_obj._free_ref()
+  hello_obj._free_ref
 
   assert 'ERROR: Object is reported non-nil!', CORBA::is_nil(hello_obj)
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

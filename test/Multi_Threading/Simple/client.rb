@@ -77,16 +77,16 @@ begin
     clt_trds.each { |t| t.join }
   end
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
   assert_not 'ERROR: Object is reported nil!', CORBA::is_nil(hello_obj)
 
-  hello_obj._free_ref()
+  hello_obj._free_ref
 
   assert 'ERROR: Object is reported non-nil!', CORBA::is_nil(hello_obj)
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

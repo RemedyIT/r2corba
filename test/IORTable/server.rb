@@ -65,7 +65,7 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant MyHello
 
@@ -99,7 +99,7 @@ iortbl = IORTable::Table._narrow(obj)
 
 hello_srv = MyHello.new(orb, 'Hello')
 
-hello_obj = hello_srv._this()
+hello_obj = hello_srv._this
 
 hello_ior = orb.object_to_string(hello_obj)
 
@@ -107,7 +107,7 @@ iortbl.bind('Hello', hello_ior)
 
 hello_srv = MyHello.new(orb, 'Hello2')
 
-hello_obj = hello_srv._this()
+hello_obj = hello_srv._this
 
 hello_ior = orb.object_to_string(hello_obj)
 
@@ -119,7 +119,7 @@ File.open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

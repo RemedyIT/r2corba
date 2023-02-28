@@ -80,7 +80,7 @@ begin
 
   ## string test
 
-  str = hello_obj.get_string()
+  str = hello_obj.get_string
 
   msg = hello_obj.message
 
@@ -267,10 +267,10 @@ begin
     reslen != resoutstr.size || resinoutstr != instr || resoutstr != (instr + inoutstr)
   end
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

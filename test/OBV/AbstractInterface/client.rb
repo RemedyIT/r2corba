@@ -137,7 +137,7 @@ begin
     StringNodeFactory.get_factory(orb)
     TreeControllerFactory.get_factory(orb)
 
-    package = passer.pass_state()
+    package = passer.pass_state
     if CORBA::is_nil(package)
       STDERR.puts "ERROR: passer.pass_state returned nil 'out' arg (#{package})"
     end
@@ -146,7 +146,7 @@ begin
   end
 
   if OPTIONS[:test] != TEST_STATE
-    package = passer.pass_ops()
+    package = passer.pass_ops
     if CORBA::is_nil(package)
       STDERR.puts "ERROR: passer.pass_ops returned nil 'out' arg (#{package})"
     end
@@ -161,7 +161,7 @@ begin
   end
 
   if OPTIONS[:test] == TEST_ALL
-    package = passer.pass_nil()
+    package = passer.pass_nil
     unless CORBA::is_nil(package)
       STDERR.puts "ERROR: passer.pass_state did NOT return nil 'out' arg (#{package})"
     end
@@ -169,10 +169,10 @@ begin
 
   # shutdown passer service
 
-  passer.shutdown()
+  passer.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

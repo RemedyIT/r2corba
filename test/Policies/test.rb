@@ -57,7 +57,7 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 end # of servant MyHello
 
@@ -138,5 +138,5 @@ begin
          obj._get_policy_overrides([BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE, Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE]).size == 1
 
 ensure
-  orb.destroy()
+  orb.destroy
 end

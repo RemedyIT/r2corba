@@ -56,14 +56,14 @@ hello_obj = Test::Hello._narrow(obj)
 
 hello_2_obj = Test::Hello_2._narrow(obj)
 
-the_string = hello_obj.get_string()
+the_string = hello_obj.get_string
 
 puts "string returned from Test::Hello <#{the_string}>"
 
-the_string = hello_2_obj.get_string_2()
+the_string = hello_2_obj.get_string_2
 
 puts "string returned from Test::Hello_2 <#{the_string}>"
 
-hello_obj.shutdown()
+hello_obj.shutdown
 
-orb.destroy()
+orb.destroy

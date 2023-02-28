@@ -76,7 +76,7 @@ begin
 
     assert 'incorrect repository id returned (2)', id == Test::Hello._tc.id
 
-    the_string = hello_obj.get_string()
+    the_string = hello_obj.get_string
 
     puts "string returned <#{the_string}>"
 
@@ -102,10 +102,10 @@ begin
     hello2_obj = Test::Hello._narrow(obj)
   end
 
-  hello2_obj.shutdown()
+  hello2_obj.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

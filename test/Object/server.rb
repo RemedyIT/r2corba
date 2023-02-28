@@ -58,7 +58,7 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 
   ## overrides for standard CORBA::Object methods
@@ -67,7 +67,7 @@ class MyHello < POA::Test::Hello
     # create second servant and
     hello_srv = MyHello2.new(@orb)
     # activate and return object ref
-    hello_srv._this()
+    hello_srv._this
   end
 end # of servant MyHello
 
@@ -81,7 +81,7 @@ class MyHello2 < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 
   ## overrides for standard CORBA::Object methods
@@ -105,7 +105,7 @@ poa_man.activate
 
 hello_srv = MyHello.new(orb)
 
-hello_obj = hello_srv._this()
+hello_obj = hello_srv._this
 
 hello_ior = orb.object_to_string(hello_obj)
 
@@ -115,7 +115,7 @@ File.open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

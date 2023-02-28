@@ -66,50 +66,50 @@ begin
 
   STDERR.puts '* get start balance'
 
-  balance = account.get_balance();
+  balance = account.get_balance;
 
-  balance.print_it()
+  balance.print_it
 
-  account.print_it()
+  account.print_it
 
   STDERR.puts '* local deposit'
 
   balance.deposit(10.5)
 
-  balance.print_it()
+  balance.print_it
 
-  account.print_it()
+  account.print_it
 
   STDERR.puts '* remote deposit'
 
   account.deposit(10.77)
 
-  balance.print_it()
+  balance.print_it
 
-  account.print_it()
+  account.print_it
 
   STDERR.puts '* remote withdrawal'
 
   account.withdraw(3.33)
 
-  balance.print_it()
+  balance.print_it
 
-  account.print_it()
+  account.print_it
 
   STDERR.puts '* update balance'
 
-  balance = account.get_balance();
+  balance = account.get_balance;
 
-  balance.print_it()
+  balance.print_it
 
-  account.print_it()
+  account.print_it
 
   # shutdown Account service
 
-  account.shutdown()
+  account.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

@@ -73,16 +73,16 @@ class Simple_Server_i < POA::Simple_Server
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 
   def call_client()
     if @flag
       @iter_num.times do
-        @callback.callback_method()
+        @callback.callback_method
       end
 
-      @callback.shutdown()
+      @callback.shutdown
       @flag = false
 
       return 1
@@ -122,7 +122,7 @@ child_poa = root_poa.create_POA('childPOA', poa_man, policies)
 
 puts 'child_poa created'
 
-policies.each { |pol| pol.destroy() }
+policies.each { |pol| pol.destroy }
 
 puts 'policies destroyed'
 
@@ -144,7 +144,7 @@ File.open(OPTIONS[:iorfile], 'w') { |io|
 
 Signal.trap('INT') do
   puts 'SIGINT - shutting down ORB...'
-  orb.shutdown()
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')
@@ -153,13 +153,13 @@ end
 
 retval = 0
 while retval == 0
-  pending = orb.work_pending()
+  pending = orb.work_pending
 
   if pending
-    orb.perform_work()
+    orb.perform_work
   end
 
-  retval = simple_srv.call_client()
+  retval = simple_srv.call_client
 end
 
 puts 'event loop finished'

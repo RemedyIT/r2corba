@@ -70,14 +70,14 @@ begin
   # narrow object ref and call
   hello_obj = Test::Hello._narrow(obj)
 
-  the_string = hello_obj.get_string()
+  the_string = hello_obj.get_string
 
   puts "string returned <#{the_string}>"
 
-  hello_obj.shutdown()
+  hello_obj.shutdown
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end
