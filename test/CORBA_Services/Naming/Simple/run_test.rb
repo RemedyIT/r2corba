@@ -10,8 +10,8 @@
 #--------------------------------------------------------------------
 
 OPTIONS = {
-  :debug_opt => '',
-  :use_implement => '--use-implement'
+  debug_opt: '',
+  use_implement: '--use-implement'
 }
 
 require 'optparse'

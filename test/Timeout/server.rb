@@ -12,10 +12,10 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'server.ior',
-  :iter_num => 10
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'server.ior',
+  iter_num: 10
 }
 
 ARGV.options do |opts|

@@ -363,9 +363,9 @@ module R2CORBA
         @map.synchronize do
           raise CosNaming::NamingContext::AlreadyBound.new if @map.has_key?(key_)
           @map[key_] = {
-            :name => full_name,
-            :type => type,
-            :object => obj
+            name: full_name,
+            type: type,
+            object: obj
           }
         end
       end
@@ -380,9 +380,9 @@ module R2CORBA
             raise CosNaming::NamingContext::NotFound.new(why, [])
           end
           @map[key_] = {
-            :name => full_name,
-            :type => type,
-            :object => obj
+            name: full_name,
+            type: type,
+            object: obj
           }
         end
       end

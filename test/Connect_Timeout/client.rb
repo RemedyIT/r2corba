@@ -14,9 +14,9 @@ require 'lib/assert.rb'
 include TestUtil::Assertions
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :ior => 'corbaloc:iiop:192.3.47.5/10007/RandomObject'
+  use_implement: false,
+  orb_debuglevel: 0,
+  ior: 'corbaloc:iiop:192.3.47.5/10007/RandomObject'
 }
 
 ARGV.options do |opts|

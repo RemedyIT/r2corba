@@ -12,7 +12,7 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false
+  use_implement: false
 }
 
 ORB_ARG = []

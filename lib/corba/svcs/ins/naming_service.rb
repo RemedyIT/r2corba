@@ -18,11 +18,11 @@ module R2CORBA
     class Service
       # default options
       OPTIONS = {
-        :iorfile => 'ins.ior',
-        :debug => 0,
-        :threads => 5,
-        :orbprop => {},
-        :port => 0
+        iorfile: 'ins.ior',
+        debug: 0,
+        threads: 5,
+        orbprop: {},
+        port: 0
       }
 
       def initialize(options = {})

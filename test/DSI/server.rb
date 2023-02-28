@@ -12,9 +12,9 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'server.ior'
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'server.ior'
 }
 
 ARGV.options do |opts|
@@ -51,8 +51,8 @@ class MyHello < PortableServer::DynamicImplementation
 
   OPTABLE = {
     'echo' => {
-        :result_type => CORBA._tc_string,
-        :arg_list => [
+        result_type: CORBA._tc_string,
+        arg_list: [
         ['message', CORBA::ARG_IN, CORBA._tc_string],
         ['msglen', CORBA::ARG_OUT, CORBA._tc_long]] }
   }

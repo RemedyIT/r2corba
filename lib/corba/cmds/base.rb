@@ -21,7 +21,7 @@ module R2CORBA
     end
 
     @@options = {
-      :verbose => false
+      verbose: false
     }
 
     def self.register(cmdid, cmdhandler)

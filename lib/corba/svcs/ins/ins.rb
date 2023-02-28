@@ -181,14 +181,14 @@ module R2CORBA
             report 'INS - starting daemon mode'
 
             daemon_opt = {
-              :app_name => 'rins',
-              :ARGV => ['start'],
-              :dir_mode => :normal,
-              :dir => @options[:piddir],
-              :multiple => true,
-              :log_dir => @options[:logdir] || @options[:piddir],
-              :log_output => true,
-              :stop_proc => Proc.new do
+              app_name: 'rins',
+              ARGV: ['start'],
+              dir_mode: :normal,
+              dir: @options[:piddir],
+              multiple: true,
+              log_dir: @options[:logdir] || @options[:piddir],
+              log_output: true,
+              stop_proc: Proc.new do
                 report 'INS - shutting down'
                 ins_svc.shutdown
               end
@@ -252,11 +252,11 @@ module R2CORBA
           report 'INS - stopping service'
           if @options[:daemon]
             daemon_opt = {
-              :app_name => 'rins',
-              :ARGV => ['stop'],
-              :dir_mode => :normal,
-              :dir => @options[:piddir],
-              :multiple => true,
+              app_name: 'rins',
+              ARGV: ['stop'],
+              dir_mode: :normal,
+              dir: @options[:piddir],
+              multiple: true,
             }
 
             Daemons.run_proc('ins.rb', daemon_opt) {}
@@ -279,14 +279,14 @@ module R2CORBA
             report 'INS - restarting daemon mode'
 
             daemon_opt = {
-              :app_name => 'rins',
-              :ARGV => ['restart'],
-              :dir_mode => :normal,
-              :dir => @options[:piddir],
-              :multiple => true,
-              :log_dir => @options[:logdir] || @options[:piddir],
-              :log_output => true,
-              :stop_proc => Proc.new do
+              app_name: 'rins',
+              ARGV: ['restart'],
+              dir_mode: :normal,
+              dir: @options[:piddir],
+              multiple: true,
+              log_dir: @options[:logdir] || @options[:piddir],
+              log_output: true,
+              stop_proc: Proc.new do
                 report 'INS - shutting down'
                 ins_svc.shutdown
               end
@@ -310,11 +310,11 @@ module R2CORBA
         def status
           report 'INS - retrieving service status'
           daemon_opt = {
-            :app_name => 'rins',
-            :ARGV => ['status'],
-            :dir_mode => :normal,
-            :dir => @options[:piddir],
-            :multiple => true,
+            app_name: 'rins',
+            ARGV: ['status'],
+            dir_mode: :normal,
+            dir: @options[:piddir],
+            multiple: true,
           }
 
           Daemons.run_proc('ins.rb', daemon_opt) {}
@@ -351,13 +351,13 @@ module R2CORBA
     end
 
     OPTIONS = {
-      :piddir => Dir.getwd,
-      :iorfile => 'ins.ior',
-      :debug => 0,
-      :logdir => nil,
-      :threads => 5,
-      :orbprop => {},
-      :port => 0,
+      piddir: Dir.getwd,
+      iorfile: 'ins.ior',
+      debug: 0,
+      logdir: nil,
+      threads: 5,
+      orbprop: {},
+      port: 0,
     }
 
     COMMANDS = [
