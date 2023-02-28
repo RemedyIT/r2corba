@@ -97,7 +97,7 @@ hello_ior = orb.object_to_string(hello_obj)
 
 orb.ior_map.map_ior('Hello2', hello_ior)
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write hello_ior
 }
 

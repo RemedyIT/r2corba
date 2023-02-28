@@ -89,7 +89,7 @@ hello_obj = hello_srv._this()
 
 hello_ior = orb.object_to_string(hello_obj)
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write hello_ior
 }
 

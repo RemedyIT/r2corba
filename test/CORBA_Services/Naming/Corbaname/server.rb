@@ -116,7 +116,7 @@ sn = nc.to_string(name)             # stringify name
 corbaname = nc.to_url(ins_url, sn)  # corbaname url
 
 # write corbaname to file
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write corbaname
 }
 
