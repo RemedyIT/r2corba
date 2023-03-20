@@ -130,7 +130,7 @@ else # !JRUBY_VERSION
       cur_dir = Dir.getwd
       Dir.chdir File.expand_path(get_config('aceroot'))
       begin
-        sh("perl bin/mwc.pl -type gnuautobuild TAO4Ruby.mwc -workers #{R2CORBA::Config.cpu_cores}")
+        sh("perl bin/mwc.pl -type gnuace TAO4Ruby.mwc -workers #{R2CORBA::Config.cpu_cores}")
       ensure
         Dir.chdir cur_dir
       end
