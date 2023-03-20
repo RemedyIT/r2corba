@@ -12,7 +12,7 @@
 module R2CORBA
 
   module CORBA
-    def CORBA.implement(idlfile, params={}, genbits = IDL::CLIENT_STUB, &block)
+    def CORBA.implement(idlfile, params = {}, genbits = IDL::CLIENT_STUB, &block)
       IDL.implement(idlfile, params, genbits, &block)
     end
   end

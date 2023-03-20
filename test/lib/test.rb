@@ -21,7 +21,7 @@ module TestUtil
   end
 
   def self.is_win32?
-    (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw32/) ? true : false
+    (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw/) ? true : false
   end
 
   RBVersion = RUBY_VERSION.split('.').collect {|x| x.to_i}
@@ -106,7 +106,7 @@ if defined?(JRUBY_VERSION)
           stat_ptr = FFI::MemoryPointer.new(:int, 1)
           tmp_pid = _wait(stat_ptr, pid, 0)
           if tmp_pid == pid
-            return [pid, stat_ptr.get_int()]
+            return [pid, stat_ptr.get_int]
           else
             return [pid, 0]
           end
@@ -160,7 +160,7 @@ if defined?(JRUBY_VERSION)
           begin
             tmp, status = ::Process.waitpid2(pid, ::Process::WNOHANG)
             if tmp == pid and status.success? != nil
-              return [pid, status.success?() ? 0 : status.exitstatus ]
+              return [pid, status.success? ? 0 : status.exitstatus]
             end
             return [nil, 0]
           rescue Errno::ECHILD
@@ -185,10 +185,11 @@ if defined?(JRUBY_VERSION)
         end
       end
     end
+
     def initialize(cmd_, arg_)
       @pid = nil
       @exitstatus = nil
-      @trd = Thread.start() do
+      @trd = Thread.start do
         exit_status = 0
         @pid = Exec.run(cmd_, arg_)
         if @pid
@@ -237,6 +238,7 @@ if defined?(JRUBY_VERSION)
     end
 
     def is_running?; @exitstatus.nil?; end
+
     def has_error? ; @trd.status.nil? or (!self.is_running? and self.exitstatus != 0) ;end
 
     def stop
@@ -264,7 +266,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
 
     protected
       # Used by Process.create
-      ProcessInfo = Struct.new("ProcessInfo",
+      ProcessInfo = Struct.new('ProcessInfo',
           :process_handle,
           :thread_handle,
           :process_id,
@@ -305,7 +307,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
         )
 
         unless bool
-           raise ProcessError, "CreateProcess() failed: ", get_last_error
+           raise ProcessError, 'CreateProcess() failed: ', get_last_error
         end
 
         ProcessInfo.new(
@@ -324,7 +326,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
         else
           CloseHandle(pi_.process_handle) unless pi_.process_handle == INVALID_HANDLE_VALUE
           pi_.process_handle = INVALID_HANDLE_VALUE
-          raise ProcessError, "GetExitCodeProcess failed: ", get_last_error
+          raise ProcessError, 'GetExitCodeProcess failed: ', get_last_error
         end
       end
 
@@ -395,6 +397,7 @@ elsif is_win32? && TestUtil::RBVersion[0] < 2 && TestUtil::RBVersion[1] < 9
       def exitstatus; @exitstatus; end
 
       def is_running?; @exitstatus.nil?; end
+
       def has_error?; !@exitstatus.nil? and (@exitstatus != 0); end
 
       def stop
@@ -457,6 +460,7 @@ else # !win32
     end
 
     def is_running?; @exitstatus.nil?; end
+
     def has_error?; !@status.nil? and (@status.success? == false); end
 
     def stop
@@ -472,7 +476,7 @@ end
   class Test
     def initialize
       @proc = nil
-      @cmd = ""
+      @cmd = ''
     end
 
     def run(cmd_, arg_)
@@ -487,14 +491,16 @@ end
     end
 
     def pid; @proc.pid; end
+
     def is_running?; @proc.is_running?; end
+
     def exit_status; @proc.exitstatus; end
 
-    def wait(timeout, check_exit=true)
+    def wait(timeout, check_exit = true)
       t = Time.now
       begin
         if @proc.check_status
-          if (Time.now() - t) >= timeout.to_f
+          if (Time.now - t) >= timeout.to_f
             STDERR.puts "ERROR: KILLING #{@cmd}"
             @proc.kill
             return 255
@@ -523,9 +529,9 @@ end
 
   def TestUtil.wait_for_file(filename, timeout)
     t = Time.now
-    while !File.readable?(filename) do
+    while !File.readable?(filename)
       sleep(0.1)
-      if (Time.now() - t) >= timeout.to_f
+      if (Time.now - t) >= timeout.to_f
         STDERR.puts "ERROR: could not find file '#{filename}'"
         return false
       end

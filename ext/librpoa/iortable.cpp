@@ -65,7 +65,7 @@ public:
     r2tao_call_thread_safe (R2taoLocator::thread_safe_unregister, this);
   }
 
-  virtual char * locate (const char * object_key);
+  char * locate (const char * object_key) override;
 
 private:
   VALUE     rb_locator_;
@@ -78,11 +78,10 @@ private:
     ThreadSafeArg (R2taoLocator* loc,
                    const char * obj_key)
       : locator_(loc),
-        object_key_(obj_key),
-        exception_ (false) {}
+        object_key_(obj_key) {}
     R2taoLocator* locator_;
     const char * object_key_;
-    bool exception_;
+    bool exception_ {};
   };
 
   static void* thread_safe_invoke (void * arg);

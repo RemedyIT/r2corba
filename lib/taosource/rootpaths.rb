@@ -12,7 +12,7 @@
 
 module TAOGem
 
-  ENV['ACE_ROOT'] = File.expand_path(File.join(File.dirname(__FILE__), '..', '..' , 'src', 'ACE_wrappers'))
+  ENV['ACE_ROOT'] = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'src', 'ACE_wrappers'))
   ENV['TAO_ROOT'] = File.join(ENV['ACE_ROOT'], 'TAO')
   ENV['MPC_ROOT'] = File.join(ENV['ACE_ROOT'], 'MPC')
 

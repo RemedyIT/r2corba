@@ -35,11 +35,11 @@ require 'rubygems/package'
 
 # unpack TAO source archive
 src_root = File.expand_path(File.join(File.dirname(__FILE__), 'src'))
-src_pkg = Dir[File.join(src_root, "ACE+TAO-src*.tar.gz")].first
+src_pkg = Dir[File.join(src_root, 'ACE+TAO-src*.tar.gz')].first
 curdir = Dir.getwd
 begin
   Dir.chdir src_root
-  puts "Unpacking source archive. Please wait, this could take a while..."
+  puts 'Unpacking source archive. Please wait, this could take a while...'
   # following code has been nicked from RubyGems
   File.open src_pkg, 'rb' do |io|
     Zlib::GzipReader.wrap io do |gzio|

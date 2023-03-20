@@ -36,7 +36,7 @@ end
 if defined?(JRUBY_VERSION)
 
   unless system("ruby -S rake -- configure --jacorb-home=#{File.expand_path('ext')}")
-    $stderr.puts "Failed to configure R2CORBA"
+    $stderr.puts 'Failed to configure R2CORBA'
     exit(1)
   end
 
@@ -141,9 +141,9 @@ else
 
   end
 
-  puts "Running rake -- configure --without-tao"
-  unless system("rake -- configure --without-tao")
-    puts "Failed to configure R2CORBA."
+  puts 'Running rake -- configure --without-tao'
+  unless system('rake -- configure --without-tao')
+    puts 'Failed to configure R2CORBA.'
     exit(1)
   end
 end

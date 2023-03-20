@@ -19,6 +19,7 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/DynamicAny/DynamicAny.h"
+#include <cstring>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -304,7 +305,7 @@ R2TAO_ArrayAny_Impl_T<T>::R2TAO_ArrayAny_Impl_T (CORBA::TypeCode_ptr tc,
 }
 
 template<typename T>
-R2TAO_ArrayAny_Impl_T<T>::~R2TAO_ArrayAny_Impl_T (void)
+R2TAO_ArrayAny_Impl_T<T>::~R2TAO_ArrayAny_Impl_T ()
 {
   this->free_value ();
 }
@@ -315,7 +316,7 @@ void R2TAO_ArrayAny_Impl_T<T>::insert (CORBA::Any &any,
                                        T * const val,
                                        CORBA::ULong len)
 {
-  R2TAO_ArrayAny_Impl_T<T> *new_impl = 0;
+  R2TAO_ArrayAny_Impl_T<T> *new_impl = nullptr;
   ACE_NEW (new_impl,
            R2TAO_ArrayAny_Impl_T<T> (tc,
                                      val,
@@ -397,15 +398,15 @@ const void *R2TAO_ArrayAny_Impl_T<T>::value () const
 }
 
 template<typename T>
-void R2TAO_ArrayAny_Impl_T<T>::free_value (void)
+void R2TAO_ArrayAny_Impl_T<T>::free_value ()
 {
-  if (this->value_ != 0)
+  if (this->value_)
   {
     delete [] reinterpret_cast<T*> (this->value_);
   }
 
   ::CORBA::release (this->type_);
-  this->value_ = 0;
+  this->value_ = nullptr;
 }
 
 //-------------------------------------------------------------------
@@ -439,7 +440,7 @@ R2TAO_Value::~R2TAO_Value ()
   this->rbCIHolder_ = Qnil;
 }
 
-CORBA::ValueBase* R2TAO_Value::_copy_value (void)
+CORBA::ValueBase* R2TAO_Value::_copy_value ()
 {
   return 0; // noop
 }
@@ -500,12 +501,11 @@ void R2TAO_Value::init ()
                            "Ruby marshaling succeeded for value %@ for %C\n",
                            this->rbValue_,
                            this->val_tc_->id ()));
-
   }
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::ctor "
-                         "created Value wrapper %@ for %s %s\n",
+                         "created Value wrapper %@ for %C %C\n",
                          this, this->val_tc_->id (),
                          this->is_truncatable_ ? "(truncatable)" : ""));
 }
@@ -572,7 +572,7 @@ class CI_Guard
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                         "marshaling value %@ for %s %s\n",
+                         "marshaling value %@ for %s %C\n",
                          this,
                          this->val_tc_->id (),
                          ci.chunking_ ? "(chunked)" : ""));
@@ -589,7 +589,7 @@ class CI_Guard
 
     if (TAO_debug_level > 10)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                           "marshaling chunk %@ for value %@ for %s\n",
+                           "marshaling chunk %@ for value %@ for %C\n",
                            p,
                            this,
                            this->val_tc_->id ()));
@@ -599,7 +599,7 @@ class CI_Guard
     {
       if (TAO_debug_level > 10)
         ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                             "marshaling chunk element %u for value %@ for %s\n",
+                             "marshaling chunk element %u for value %@ for %C\n",
                              e,
                              this,
                              this->val_tc_->id ()));
@@ -608,7 +608,7 @@ class CI_Guard
       {
         // should not ever happen
         ACE_DEBUG ((LM_ERROR, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                              "chunk element %u for value %@ for %s is INVALID (%C is null)\n",
+                              "chunk element %u for value %@ for %C is INVALID (%C is null)\n",
                               e,
                               this,
                               this->val_tc_->id (),
@@ -627,7 +627,7 @@ class CI_Guard
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_marshal_v: "
-                         "succeeded marshaling value %@ for %s\n",
+                         "succeeded marshaling value %@ for %C\n",
                          this,
                          this->val_tc_->id ()));
 
@@ -636,7 +636,7 @@ class CI_Guard
 
 bool R2TAO_Value::add_chunk ()
 {
-  Chunk* new_chunk = 0;
+  Chunk* new_chunk = nullptr;
   ACE_NEW_NORETURN (new_chunk, Chunk());
   if (new_chunk != 0)
   {
@@ -652,7 +652,7 @@ bool R2TAO_Value::add_chunk ()
 
     if (TAO_debug_level > 10)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::add_chunk: "
-                           "added chunk %@ for value %@ for %s\n",
+                           "added chunk %@ for value %@ for %C\n",
                            new_chunk,
                            this,
                            this->val_tc_->id ()));
@@ -672,7 +672,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
     if (TAO_debug_level > 10)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::add_chunk: "
-                           "added chunk %@ element %u for value %@ for %s\n",
+                           "added chunk %@ element %u for value %@ for %C\n",
                            this->last_chunk_,
                            last_ix,
                            this,
@@ -688,7 +688,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 {
   static R2TAO_RBFuncall FN_unmarshal ("do_unmarshal", false);
 
-  if (!this->for_unmarshal_)   return false;
+  if (!this->for_unmarshal_) return false;
 
   // setup chunking info
   TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_, 1);
@@ -697,7 +697,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_unmarshal_v: "
-                         "unmarshaling value %@ for %s\n",
+                         "unmarshaling value %@ for %C\n",
                          this->rbValue_,
                          this->val_tc_->id ()));
 
@@ -710,7 +710,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
   if (TAO_debug_level > 10)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_unmarshal_v: "
-                         "invoking Ruby unmarshaling for value %@ for %s\n",
+                         "invoking Ruby unmarshaling for value %@ for %C\n",
                          this->rbValue_,
                          this->val_tc_->id ()));
 
@@ -723,7 +723,7 @@ bool R2TAO_Value::add_chunk_element (CORBA::Any_var& elem)
 
   if (TAO_debug_level > 10)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_Value::_tao_unmarshal_v: "
-                         "succeeded unmarshaling value %@ for %s %s\n",
+                         "succeeded unmarshaling value %@ for %C %C\n",
                          this->rbValue_,
                          this->val_tc_->id (),
                          this->requires_truncation_ ? "(with truncation)" : ""));
@@ -845,7 +845,7 @@ VALUE r2tao_Value_pre_unmarshal(VALUE self, VALUE rstrm)
 
   if (TAO_debug_level > 10)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2CORBA::CORBA::ValueBase::pre_unmarshal: "
-                         "unmarshaling value state for %@ %s\n",
+                         "unmarshaling value state for %@ %C\n",
                          self,
                          val->requires_truncation () ? "with truncation" : ""));
 
@@ -897,7 +897,7 @@ R2TAO_ValueFactory::R2TAO_ValueFactory (VALUE rbValueFactory)
   r2tao_register_object (this->rbValueFactory_);
 }
 
-R2TAO_ValueFactory::~R2TAO_ValueFactory (void)
+R2TAO_ValueFactory::~R2TAO_ValueFactory ()
 {
   r2tao_unregister_object (this->rbValueFactory_);
 }
@@ -907,17 +907,17 @@ R2TAO_ValueFactory* R2TAO_ValueFactory::_downcast ( ::CORBA::ValueFactoryBase * 
   return dynamic_cast <R2TAO_ValueFactory*> (vfb);
 }
 
-::CORBA::ValueBase * R2TAO_ValueFactory::create_for_unmarshal (void)
+::CORBA::ValueBase * R2TAO_ValueFactory::create_for_unmarshal ()
 {
   // create new Ruby Value
   VALUE rval = fn_create_default_.invoke (this->rbValueFactory_);
   if (fn_create_default_.has_caught_exception ())
   {
     rb_eval_string ("STDERR.puts $!.to_s+\"\\n\"+$!.backtrace.join(\"\\n\")");
-    return 0;
+    return nullptr;
   }
 
-  R2TAO_Value *ret_val = 0;
+  R2TAO_Value *ret_val = nullptr;
   ACE_NEW_THROW_EX (
       ret_val,
       R2TAO_Value (rval, true),
@@ -926,14 +926,14 @@ R2TAO_ValueFactory* R2TAO_ValueFactory::_downcast ( ::CORBA::ValueFactoryBase * 
 
   if (TAO_debug_level > 9)
     ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - R2TAO_ValueFactory::create_for_unmarshal: "
-                         "created value wrapper %@ for %s\n",
+                         "created value wrapper %@ for %C\n",
                          ret_val,
                          this->tao_repository_id ()));
 
   return ret_val;
 }
 
-::CORBA::AbstractBase_ptr R2TAO_ValueFactory::create_for_unmarshal_abstract (void)
+::CORBA::AbstractBase_ptr R2TAO_ValueFactory::create_for_unmarshal_abstract ()
 {
   // create new Ruby Value
   VALUE rval = fn_create_default_.invoke (this->rbValueFactory_);
@@ -946,7 +946,7 @@ R2TAO_ValueFactory* R2TAO_ValueFactory::_downcast ( ::CORBA::ValueFactoryBase * 
   // create without 'abs_tc' below since this object will not be
   // used for marshaling but only for unmarshaling
   // through a call to _tao_unmarshal_v()
-  R2TAO_AbstractValue *ret_val = 0;
+  R2TAO_AbstractValue *ret_val = nullptr;
   ACE_NEW_THROW_EX (
       ret_val,
       R2TAO_AbstractValue (rval),
@@ -956,7 +956,7 @@ R2TAO_ValueFactory* R2TAO_ValueFactory::_downcast ( ::CORBA::ValueFactoryBase * 
 }
 
 // TAO-specific extensions
-const char* R2TAO_ValueFactory::tao_repository_id (void)
+const char* R2TAO_ValueFactory::tao_repository_id ()
 {
   static ID value_id_ID = rb_intern ("value_id");
 
@@ -977,7 +977,7 @@ VALUE r2tao_VFB_register_value_factory(VALUE /*self*/, VALUE id, VALUE rfact)
 
     if (TAO_debug_level > 5)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - ValueFactoryBase::register_value_factory:: "
-                           "registering factory for %s\n",
+                           "registering factory for %C\n",
                            RSTRING_PTR (id)));
 
     CORBA::ValueFactory factory = new R2TAO_ValueFactory (rfact);
@@ -1002,7 +1002,7 @@ VALUE r2tao_VFB_unregister_value_factory(VALUE /*self*/, VALUE id)
 
     if (TAO_debug_level > 5)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - ORB::unregister_value_factory:: "
-                           "unregistering factory for %s\n",
+                           "unregistering factory for %C\n",
                            RSTRING_PTR (id)));
 
     TAO_ORB_Core_instance ()->orb ()->unregister_value_factory (
@@ -1023,7 +1023,7 @@ VALUE r2tao_VFB_lookup_value_factory(VALUE /*self*/, VALUE id)
 
     if (TAO_debug_level > 5)
       ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - ORB::lookup_value_factory:: "
-                           "looking up factory for %s\n",
+                           "looking up factory for %C\n",
                            RSTRING_PTR (id)));
 
     CORBA::ValueFactory factory =
@@ -1106,17 +1106,17 @@ CORBA::Boolean R2TAO_AbstractValue::_tao_match_formal_type (ptrdiff_t p) const
   return this->R2TAO_Value::_tao_match_formal_type (p);
 }
 
-void R2TAO_AbstractValue::_add_ref (void)
+void R2TAO_AbstractValue::_add_ref ()
 {
   this->::CORBA::DefaultValueRefCountBase::_add_ref ();
 }
 
-void R2TAO_AbstractValue::_remove_ref (void)
+void R2TAO_AbstractValue::_remove_ref ()
 {
   this->::CORBA::DefaultValueRefCountBase::_remove_ref ();
 }
 
-::CORBA::ValueBase *R2TAO_AbstractValue::_tao_to_value (void)
+::CORBA::ValueBase *R2TAO_AbstractValue::_tao_to_value ()
 {
   return this;
 }
@@ -1169,7 +1169,7 @@ TAO::Objref_Traits<R2TAO_AbstractValue>::release (
 }
 
 R2TAO_AbstractValue_ptr
-TAO::Objref_Traits<R2TAO_AbstractValue>::nil (void)
+TAO::Objref_Traits<R2TAO_AbstractValue>::nil ()
 {
   return 0;
 }
@@ -1237,11 +1237,11 @@ void R2TAO_AbstractObject::_tao_release (R2TAO_AbstractObject_ptr obj)
   ::CORBA::release (obj);
 }
 
-void R2TAO_AbstractObject::_add_ref (void)
+void R2TAO_AbstractObject::_add_ref ()
 {
   this->::CORBA::Object::_add_ref();
 }
-void R2TAO_AbstractObject::_remove_ref (void)
+void R2TAO_AbstractObject::_remove_ref ()
 {
   this->::CORBA::Object::_remove_ref();
 }
@@ -1249,8 +1249,7 @@ void R2TAO_AbstractObject::_remove_ref (void)
 ::CORBA::Boolean R2TAO_AbstractObject::_is_a (const char *type_id)
 {
   return this->::CORBA::AbstractBase::_is_a (type_id) ||
-         ACE_OS::strcmp (type_id,
-             "IDL:omg.org/CORBA/Object:1.0") == 0 ||
+         std::strcmp (type_id, "IDL:omg.org/CORBA/Object:1.0") == 0 ||
          this->::CORBA::Object::_is_a (type_id);
 }
 
@@ -1312,7 +1311,7 @@ TAO::Objref_Traits<R2TAO_AbstractObject>::release (
 }
 
 R2TAO_AbstractObject_ptr
-TAO::Objref_Traits<R2TAO_AbstractObject>::nil (void)
+TAO::Objref_Traits<R2TAO_AbstractObject>::nil ()
 {
   return 0;
 }
@@ -1386,7 +1385,7 @@ VALUE r2tao_OStream_write_any (VALUE self, VALUE rval)
                               "NIL value not allowed\n"));
       throw CORBA::MARSHAL ();
     }
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1402,7 +1401,7 @@ VALUE r2tao_OStream_write_boolean (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1419,7 +1418,7 @@ VALUE r2tao_OStream_write_char (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1441,7 +1440,7 @@ VALUE r2tao_OStream_write_wchar (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1458,7 +1457,7 @@ VALUE r2tao_OStream_write_octet (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1475,7 +1474,7 @@ VALUE r2tao_OStream_write_short (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1492,7 +1491,7 @@ VALUE r2tao_OStream_write_ushort (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1509,7 +1508,7 @@ VALUE r2tao_OStream_write_long (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1526,7 +1525,7 @@ VALUE r2tao_OStream_write_ulong (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1543,7 +1542,7 @@ VALUE r2tao_OStream_write_longlong (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1560,7 +1559,7 @@ VALUE r2tao_OStream_write_ulonglong (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1577,7 +1576,7 @@ VALUE r2tao_OStream_write_float (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1594,7 +1593,7 @@ VALUE r2tao_OStream_write_double (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1611,7 +1610,7 @@ VALUE r2tao_OStream_write_longdouble (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1629,7 +1628,7 @@ VALUE r2tao_OStream_write_Object (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1652,7 +1651,7 @@ VALUE r2tao_OStream_write_Abstract (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1679,7 +1678,7 @@ VALUE r2tao_OStream_write_Value (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1706,7 +1705,7 @@ VALUE r2tao_OStream_write_TypeCode (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1735,7 +1734,7 @@ VALUE r2tao_OStream_write_string (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1759,7 +1758,7 @@ VALUE r2tao_OStream_write_wstring (VALUE self, VALUE rval)
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1790,7 +1789,7 @@ VALUE r2tao_OStream_write_any_array (VALUE self, VALUE rval, VALUE offset, VALUE
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1803,11 +1802,11 @@ VALUE r2tao_OStream_write_any_array (VALUE self, VALUE rval, VALUE offset, VALUE
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Any* any_array = 0;
+      CORBA::Any* any_array = nullptr;
       ACE_NEW_THROW_EX (any_array,
                         CORBA::Any[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Any> any_array_safe (any_array);
+      std::unique_ptr<CORBA::Any[]> any_array_safe (any_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -1829,7 +1828,7 @@ VALUE r2tao_OStream_write_boolean_array (VALUE self, VALUE rval, VALUE offset, V
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1842,11 +1841,11 @@ VALUE r2tao_OStream_write_boolean_array (VALUE self, VALUE rval, VALUE offset, V
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Boolean* native_array = 0;
+      CORBA::Boolean* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Boolean[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Boolean> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Boolean[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -1868,7 +1867,7 @@ VALUE r2tao_OStream_write_char_array (VALUE self, VALUE rval, VALUE offset, VALU
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1881,11 +1880,11 @@ VALUE r2tao_OStream_write_char_array (VALUE self, VALUE rval, VALUE offset, VALU
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Char* native_array = 0;
+      CORBA::Char* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Char[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Char> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Char[]> native_array_safe (native_array);
       char* s = RSTRING_PTR (rval);
       for (CORBA::ULong l=0; l<len ;++l)
       {
@@ -1907,7 +1906,7 @@ VALUE r2tao_OStream_write_wchar_array (VALUE self, VALUE rval, VALUE offset, VAL
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1920,11 +1919,11 @@ VALUE r2tao_OStream_write_wchar_array (VALUE self, VALUE rval, VALUE offset, VAL
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::WChar* native_array = 0;
+      CORBA::WChar* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::WChar[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::WChar> native_array_safe (native_array);
+      std::unique_ptr<CORBA::WChar[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -1946,7 +1945,7 @@ VALUE r2tao_OStream_write_octet_array (VALUE self, VALUE rval, VALUE offset, VAL
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1959,11 +1958,11 @@ VALUE r2tao_OStream_write_octet_array (VALUE self, VALUE rval, VALUE offset, VAL
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Octet* native_array = 0;
+      CORBA::Octet* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Octet[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Octet> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Octet[]> native_array_safe (native_array);
       unsigned char* s = (unsigned char*)RSTRING_PTR (rval);
       for (CORBA::ULong l=0; l<len ;++l)
       {
@@ -1985,7 +1984,7 @@ VALUE r2tao_OStream_write_short_array (VALUE self, VALUE rval, VALUE offset, VAL
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -1998,11 +1997,11 @@ VALUE r2tao_OStream_write_short_array (VALUE self, VALUE rval, VALUE offset, VAL
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Short* native_array = 0;
+      CORBA::Short* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Short[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Short> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Short[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2024,7 +2023,7 @@ VALUE r2tao_OStream_write_ushort_array (VALUE self, VALUE rval, VALUE offset, VA
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2037,11 +2036,11 @@ VALUE r2tao_OStream_write_ushort_array (VALUE self, VALUE rval, VALUE offset, VA
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::UShort* native_array = 0;
+      CORBA::UShort* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::UShort[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::UShort> native_array_safe (native_array);
+      std::unique_ptr<CORBA::UShort[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2063,7 +2062,7 @@ VALUE r2tao_OStream_write_long_array (VALUE self, VALUE rval, VALUE offset, VALU
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2076,11 +2075,11 @@ VALUE r2tao_OStream_write_long_array (VALUE self, VALUE rval, VALUE offset, VALU
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Long* native_array = 0;
+      CORBA::Long* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Long[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Long> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Long[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2102,7 +2101,7 @@ VALUE r2tao_OStream_write_ulong_array (VALUE self, VALUE rval, VALUE offset, VAL
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2115,11 +2114,11 @@ VALUE r2tao_OStream_write_ulong_array (VALUE self, VALUE rval, VALUE offset, VAL
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::ULong* native_array = 0;
+      CORBA::ULong* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::ULong[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::ULong> native_array_safe (native_array);
+      std::unique_ptr<CORBA::ULong[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2141,7 +2140,7 @@ VALUE r2tao_OStream_write_longlong_array (VALUE self, VALUE rval, VALUE offset, 
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2154,11 +2153,11 @@ VALUE r2tao_OStream_write_longlong_array (VALUE self, VALUE rval, VALUE offset, 
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::LongLong* native_array = 0;
+      CORBA::LongLong* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::LongLong[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::LongLong> native_array_safe (native_array);
+      std::unique_ptr<CORBA::LongLong[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2180,7 +2179,7 @@ VALUE r2tao_OStream_write_ulonglong_array (VALUE self, VALUE rval, VALUE offset,
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2193,11 +2192,11 @@ VALUE r2tao_OStream_write_ulonglong_array (VALUE self, VALUE rval, VALUE offset,
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::ULongLong* native_array = 0;
+      CORBA::ULongLong* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::ULongLong[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::ULongLong> native_array_safe (native_array);
+      std::unique_ptr<CORBA::ULongLong[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2219,7 +2218,7 @@ VALUE r2tao_OStream_write_float_array (VALUE self, VALUE rval, VALUE offset, VAL
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2232,11 +2231,11 @@ VALUE r2tao_OStream_write_float_array (VALUE self, VALUE rval, VALUE offset, VAL
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Float* native_array = 0;
+      CORBA::Float* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Float[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Float> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Float[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2258,7 +2257,7 @@ VALUE r2tao_OStream_write_double_array (VALUE self, VALUE rval, VALUE offset, VA
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2271,11 +2270,11 @@ VALUE r2tao_OStream_write_double_array (VALUE self, VALUE rval, VALUE offset, VA
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::Double* native_array = 0;
+      CORBA::Double* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::Double[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::Double> native_array_safe (native_array);
+      std::unique_ptr<CORBA::Double[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2297,7 +2296,7 @@ VALUE r2tao_OStream_write_longdouble_array (VALUE self, VALUE rval, VALUE offset
 {
   R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
   R2TAO_TRY {
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2310,11 +2309,11 @@ VALUE r2tao_OStream_write_longdouble_array (VALUE self, VALUE rval, VALUE offset
     CORBA::ULong len = ((offs + alen) <= asz) ? alen : (offs < asz ? (asz - offs) : 0);
     if (len > 0)
     {
-      CORBA::LongDouble* native_array = 0;
+      CORBA::LongDouble* native_array = nullptr;
       ACE_NEW_THROW_EX (native_array,
                         CORBA::LongDouble[len],
                         CORBA::NO_MEMORY());
-      ACE_Auto_Ptr<CORBA::LongDouble> native_array_safe (native_array);
+      std::unique_ptr<CORBA::LongDouble[]> native_array_safe (native_array);
       for (CORBA::ULong l=0; l<len ;++l)
       {
         VALUE rel = rb_ary_entry (rval, offs+l);
@@ -2343,7 +2342,7 @@ VALUE r2tao_OStream_write_construct (VALUE self, VALUE rval, VALUE rtc)
   R2TAO_TRY {
     CORBA::TypeCode_ptr tc_ = r2corba_TypeCode_r2t (rtc);
 
-    CORBA::Any* any = 0;
+    CORBA::Any* any = nullptr;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY());
@@ -2609,7 +2608,7 @@ VALUE r2tao_IStream_read_string (VALUE self)
 {
   VALUE ret = Qnil;
   TAO_InputCDR &strm = *r2tao_InputStream_r2t(self);
-  CORBA::Char* val = 0;
+  CORBA::Char* val = nullptr;
   R2TAO_TRY {
     strm >> val;
   } R2TAO_CATCH;
@@ -2621,7 +2620,7 @@ VALUE r2tao_IStream_read_wstring (VALUE self)
 {
   VALUE ret = Qnil;
   TAO_InputCDR &strm = *r2tao_InputStream_r2t(self);
-  CORBA::WChar* val = 0;
+  CORBA::WChar* val = nullptr;
   R2TAO_TRY {
     strm >> val;
   } R2TAO_CATCH;
@@ -2923,7 +2922,7 @@ VALUE r2tao_IStream_read_construct (VALUE self, VALUE rtc)
     CORBA::TypeCode_ptr tc_ = r2corba_TypeCode_r2t (rtc);
 
     CORBA::Any any_;
-    TAO::Unknown_IDL_Type *impl = 0;
+    TAO::Unknown_IDL_Type *impl = nullptr;
     ACE_NEW_RETURN (impl,
                     TAO::Unknown_IDL_Type (tc_),
                     false);

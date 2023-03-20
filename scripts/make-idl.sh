@@ -1,3 +1,4 @@
+#!/bin/sh
 ./ridlc --ignore-pidl --output lib/corba/idl/r2c_orb.rb --namespace=R2CORBA --include=lib/idl --stubs-only --expand-includes --search-includepath --no-libinit --interface-as-class=TypeCode orb.idl
 ./ridlc --output lib/corba/idl/POAC.rb --namespace=R2CORBA --include=lib/idl --stubs-only --expand-includes --search-includepath --no-libinit PortableServer.pidl
 ./ridlc --output lib/corba/idl/MessagingC.rb --namespace=R2CORBA --include=lib/idl --stubs-only --expand-includes --search-includepath --no-libinit Messaging.pidl

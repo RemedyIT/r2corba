@@ -12,7 +12,7 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false
+  use_implement: false
 }
 
 ORB_ARG = []
@@ -36,19 +36,19 @@ ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |dlvl| ORB_ARG << "-ORBDebugLevel" << dlvl }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |dlvl| ORB_ARG << '-ORBDebugLevel' << dlvl }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -63,26 +63,29 @@ end
 
 class Top < POA::Diamond::Top
   def shape
-    "a point."
+    'a point.'
   end
 end
 
 class Left < POA::Diamond::Left
   def shape
-    "the left line"
+    'the left line'
   end
+
   def color
-    "black"
+    'black'
   end
 end
 
 class Right < POA::Diamond::Right
   def shape
-    "the right line"
+    'the right line'
   end
+
   def color
-    "red"
+    'red'
   end
+
   def width
     0
   end
@@ -90,17 +93,21 @@ end
 
 class Buttom < POA::Diamond::Buttom
   def shape
-    "a diamond"
+    'a diamond'
   end
+
   def color
-    "translucent"
+    'translucent'
   end
+
   def name
-    "Jubilee"
+    'Jubilee'
   end
+
   def width
     100
   end
+
   def area(unit)
     case unit
       when Diamond::Buttom::MM
@@ -125,7 +132,7 @@ class Collocation_Test
   end
 
   def init(args = [])
-    @orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+    @orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
     obj = @orb.resolve_initial_references('RootPOA')
 

@@ -12,35 +12,35 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :listenport => 9999,
-  :iorfile => 'server.ior'
+  use_implement: false,
+  orb_debuglevel: 0,
+  listenport: 9999,
+  iorfile: 'server.ior'
 }
 
 ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--o IORFILE",
-            "Set IOR filename.",
+    opts.on('--o IORFILE',
+            'Set IOR filename.',
             "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--p PORT",
-            "Set endpoint port.",
-            "Default: 3456") { |v| OPTIONS[:listenport] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--p PORT',
+            'Set endpoint port.',
+            'Default: 3456') { |v| OPTIONS[:listenport] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -52,7 +52,7 @@ else
   require 'TestS.rb'
 end
 
-begin STDERR.puts 'Not supported on this platform'; open(OPTIONS[:iorfile], 'w') {|io|io.write ''}; exit(0); end unless defined?(IORTable)
+begin STDERR.puts 'Not supported on this platform'; File.open(OPTIONS[:iorfile], 'w') {|io|io.write ''}; exit(0); end unless defined?(IORTable)
 
 class MyHello < POA::Test::Hello
   def initialize(orb, id)
@@ -65,9 +65,9 @@ class MyHello < POA::Test::Hello
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
-end #of servant MyHello
+end # of servant MyHello
 
 class MyLocator
   include IORTable::Locator
@@ -83,7 +83,7 @@ class MyLocator
   end
 end
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel], "-ORBListenEndpoints", "iiop://localhost:#{OPTIONS[:listenport]}"], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel], '-ORBListenEndpoints', "iiop://localhost:#{OPTIONS[:listenport]}"], 'myORB')
 
 obj = orb.resolve_initial_references('RootPOA')
 
@@ -97,29 +97,29 @@ obj = orb.resolve_initial_references('IORTable')
 
 iortbl = IORTable::Table._narrow(obj)
 
-hello_srv = MyHello.new(orb, "Hello")
+hello_srv = MyHello.new(orb, 'Hello')
 
-hello_obj = hello_srv._this()
-
-hello_ior = orb.object_to_string(hello_obj)
-
-iortbl.bind("Hello", hello_ior)
-
-hello_srv = MyHello.new(orb, "Hello2")
-
-hello_obj = hello_srv._this()
+hello_obj = hello_srv._this
 
 hello_ior = orb.object_to_string(hello_obj)
 
-iortbl.set_locator(MyLocator.new("Hello2", hello_ior))
+iortbl.bind('Hello', hello_ior)
 
-open(OPTIONS[:iorfile], 'w') { |io|
+hello_srv = MyHello.new(orb, 'Hello2')
+
+hello_obj = hello_srv._this
+
+hello_ior = orb.object_to_string(hello_obj)
+
+iortbl.set_locator(MyLocator.new('Hello2', hello_ior))
+
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write hello_ior
 }
 
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
-  orb.shutdown()
+  puts 'SIGINT - shutting down ORB...'
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

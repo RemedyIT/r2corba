@@ -19,16 +19,17 @@ else
   RB_CONFIG = Config::CONFIG
 end
 
-is_win32 = (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw32/) ? true : false
+is_win32 = (RB_CONFIG['target_os'] =~ /win32/ || RB_CONFIG['target_os'] =~ /mingw/) ? true : false
 
 root_path = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-has_local_ridl = File.directory?(File.join(root_path, 'ridl'))
+ENV['RIDL_ROOT'] ||= File.expand_path(File.join(root_path, 'ridl'))
+has_local_ridl = File.directory?(ENV['RIDL_ROOT'])
 
 if defined?(JRUBY_VERSION)
   ENV['JACORB_HOME'] ||= File.expand_path(File.join(root_path, 'jacorb'))
   incdirs = [
-      has_local_ridl ? File.expand_path(File.join(root_path, 'ridl', 'lib')) : nil,
+      has_local_ridl ? File.expand_path(File.join(ENV['RIDL_ROOT'], 'lib')) : nil,
       File.expand_path(File.join(root_path, 'lib')),
       File.expand_path(File.join(root_path, 'ext')),
       File.expand_path(File.join(ENV['JACORB_HOME'], 'lib')),
@@ -40,7 +41,7 @@ else
   ace_root = ENV['ACE_ROOT'] || File.expand_path(File.join(root_path, 'ACE', 'ACE_wrappers'))
   ## setup the right environment for running tests
   incdirs = [
-      has_local_ridl ? File.expand_path(File.join(root_path, 'ridl', 'lib')) : nil,
+      has_local_ridl ? File.expand_path(File.join(ENV['RIDL_ROOT'], 'lib')) : nil,
       File.expand_path(File.join(root_path, 'lib')),
       File.expand_path(File.join(root_path, 'ext')),
       ENV['RUBYLIB'],
@@ -73,10 +74,10 @@ end
 
 module TestFinder
   OPTIONS = {
-    :exclude => nil,
-    :runonly => nil,
-    :listonly => false,
-    :debug => !ENV['R2CORBA_DEBUG'].nil?
+    exclude: nil,
+    runonly: nil,
+    listonly: false,
+    debug: !ENV['R2CORBA_DEBUG'].nil?
     }
 
   ROOT = File.expand_path(File.dirname(__FILE__))
@@ -126,7 +127,7 @@ module TestFinder
           puts dir
         end
       else
-        Dir.glob(File.join(path, "*")) {|psub| self.process_directory(psub)}
+        Dir.glob(File.join(path, '*')) {|psub| self.process_directory(psub)}
       end
     end
   end
@@ -136,25 +137,25 @@ module TestFinder
     script_name = File.basename($0)
     opts.banner = "Usage: #{script_name} #{/r2corba/ =~ script_name ? 'test ' : nil}[options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-x MATCH", "--exclude=MATCH",
-            "Do not run tests matching MATCH.",
-            "Default: nil") { |v| (OPTIONS[:exclude] ||= []) << v.to_s }
-    opts.on("-r MATCH", "--run=MATCH",
-            "Only run tests matching MATCH.",
-            "Default: nil (run all)") { |v| (OPTIONS[:runonly] ||= []) << v.to_s }
+    opts.on('-x MATCH', '--exclude=MATCH',
+            'Do not run tests matching MATCH.',
+            'Default: nil') { |v| (OPTIONS[:exclude] ||= []) << v.to_s }
+    opts.on('-r MATCH', '--run=MATCH',
+            'Only run tests matching MATCH.',
+            'Default: nil (run all)') { |v| (OPTIONS[:runonly] ||= []) << v.to_s }
     opts.on('-l', '--list',
             'List tests, do not run.',
-            "Default: off") { OPTIONS[:listonly] = true }
-    opts.on("-d",
-            "Run with debugging output.",
+            'Default: off') { OPTIONS[:listonly] = true }
+    opts.on('-d',
+            'Run with debugging output.',
             "Default: ENV['R2CORBA_DEBUG'].nil? ? false : true") { OPTIONS[:debug] = true }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!(argv)
 
@@ -170,7 +171,7 @@ module TestFinder
     end
 
     if OPTIONS[:runonly].nil?
-      Dir.glob(File.join(TestFinder::ROOT, "*")) do |p|
+      Dir.glob(File.join(TestFinder::ROOT, '*')) do |p|
         TestFinder.process_directory(p)
       end
     else

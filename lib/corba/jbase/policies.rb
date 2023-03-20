@@ -53,7 +53,7 @@ module R2CORBA
           end
           jpolicies.collect {|jpol| Policy._wrap_native(jpol) }
         end
-      end #of operation get_policy_overrides
+      end # of operation get_policy_overrides
 
       def _set_policy_overrides(policies, set_add)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
@@ -91,7 +91,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_policy_type
+      end # of attribute get_policy_type
 
       def copy()
         begin
@@ -99,7 +99,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation copy
+      end # of operation copy
 
       def destroy()
         begin
@@ -108,7 +108,7 @@ module R2CORBA
           CORBA::Exception.native2r($!)
         end
         @objref_ = nil
-      end #of operation destroy
+      end # of operation destroy
     end # Policy
 
     module PolicyManager
@@ -121,7 +121,7 @@ module R2CORBA
           CORBA::Exception.native2r($!)
         end
         jpolicies.collect {|jpol| Policy._wrap_native(jpol) }
-      end #of operation get_policy_overrides
+      end # of operation get_policy_overrides
 
       def set_policy_overrides(policies, set_add)
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.size)
@@ -131,7 +131,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation set_policy_overrides
+      end # of operation set_policy_overrides
     end # Policy
 
   end # CORBA
@@ -147,7 +147,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_thread_policy
+      end # of operation create_thread_policy
 
       def create_lifespan_policy(value)
         begin
@@ -157,7 +157,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_lifespan_policy
+      end # of operation create_lifespan_policy
 
       def create_id_uniqueness_policy(value)
         begin
@@ -167,7 +167,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_id_uniqueness_policy
+      end # of operation create_id_uniqueness_policy
 
       def create_id_assignment_policy(value)
         begin
@@ -177,7 +177,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_id_assignment_policy
+      end # of operation create_id_assignment_policy
 
       def create_implicit_activation_policy(value)
         begin
@@ -187,7 +187,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_implicit_activation_policy
+      end # of operation create_implicit_activation_policy
 
       def create_servant_retention_policy(value)
         begin
@@ -197,7 +197,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_servant_retention_policy
+      end # of operation create_servant_retention_policy
 
       def create_request_processing_policy(value)
         begin
@@ -207,7 +207,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of operation create_request_processing_policy
+      end # of operation create_request_processing_policy
     end # POA
 
     module ThreadPolicy  ## interface
@@ -217,8 +217,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface ThreadPolicy
+      end # of attribute get_value
+    end # of interface ThreadPolicy
 
     module LifespanPolicy  ## interface
       def value()
@@ -227,8 +227,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface LifespanPolicy
+      end # of attribute get_value
+    end # of interface LifespanPolicy
 
     module IdUniquenessPolicy  ## interface
       def value()
@@ -237,8 +237,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface IdUniquenessPolicy
+      end # of attribute get_value
+    end # of interface IdUniquenessPolicy
 
     module IdAssignmentPolicy  ## interface
       def value()
@@ -247,8 +247,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface IdAssignmentPolicy
+      end # of attribute get_value
+    end # of interface IdAssignmentPolicy
 
     module ImplicitActivationPolicy  ## interface
       def value()
@@ -257,8 +257,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface ImplicitActivationPolicy
+      end # of attribute get_value
+    end # of interface ImplicitActivationPolicy
 
     module ServantRetentionPolicy  ## interface
       def value()
@@ -267,8 +267,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface RequestProcessingPolicy
+      end # of attribute get_value
+    end # of interface RequestProcessingPolicy
 
     module RequestProcessingPolicy  ## interface
       def value()
@@ -277,8 +277,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface RequestProcessingPolicy
+      end # of attribute get_value
+    end # of interface RequestProcessingPolicy
 
   end # PortableServer
 
@@ -291,8 +291,8 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-      end #of attribute get_value
-    end #of interface BidirectionalPolicy
+      end # of attribute get_value
+    end # of interface BidirectionalPolicy
 
   end # BiDirPolicy
 

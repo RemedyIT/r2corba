@@ -14,17 +14,17 @@ module R2CORBA
 
     module Request
 
-      def add_in_arg(tc, val, nm='')
+      def add_in_arg(tc, val, nm = '')
         self._arguments << [nm, CORBA::ARG_IN, tc, val]
         self._arguments.size
       end
 
-      def add_out_arg(tc, nm='')
+      def add_out_arg(tc, nm = '')
         self._arguments << [nm, CORBA::ARG_OUT, tc]
         self._arguments.size
       end
 
-      def add_inout_arg(tc, val, nm='')
+      def add_inout_arg(tc, val, nm = '')
         self._arguments << [nm, CORBA::ARG_INOUT, tc, val]
         self._arguments.size
       end
@@ -79,9 +79,9 @@ module R2CORBA
 
       def invoke
         self._invoke({
-          :arg_list => self._arguments,
-          :result_type => @_rettc,
-          :exc_list => self._exceptions
+          arg_list: self._arguments,
+          result_type: @_rettc,
+          exc_list: self._exceptions
           })
       end
 
@@ -91,9 +91,9 @@ module R2CORBA
 
       def send_deferred
         self._send_deferred({
-          :arg_list => self._arguments,
-          :result_type => @_rettc,
-          :exc_list => self._exceptions
+          arg_list: self._arguments,
+          result_type: @_rettc,
+          exc_list: self._exceptions
           })
       end
 

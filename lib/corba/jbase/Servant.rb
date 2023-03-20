@@ -44,25 +44,25 @@ module R2CORBA
             begin
               case rsrvreq.srvreq_.operation()
               when '_is_a'
-                rsrvreq.describe({:arg_list => [['', CORBA::ARG_IN, CORBA._tc_string]], :result_type => CORBA._tc_boolean})
+                rsrvreq.describe({arg_list: [['', CORBA::ARG_IN, CORBA._tc_string]], result_type: CORBA._tc_boolean})
                 rc = self._is_a(*rsrvreq.arguments)
                 jany = rsrvreq.orb_.create_any()
                 jany.insert_boolean(rc == true)
                 jsrvreq.set_result(jany)
               when '_non_existent'
-                rsrvreq.describe({:arg_list => [], :result_type => CORBA._tc_boolean})
+                rsrvreq.describe({arg_list: [], result_type: CORBA._tc_boolean})
                 rc = self._non_existent(*rsrvreq.arguments)
                 jany = rsrvreq.orb_.create_any()
                 jany.insert_boolean(rc == true)
                 jsrvreq.set_result(jany)
               when '_repository_id'
-                rsrvreq.describe({:arg_list => [], :result_type => CORBA._tc_string})
+                rsrvreq.describe({arg_list: [], result_type: CORBA._tc_string})
                 rc = self._repository_id(*rsrvreq.arguments)
                 jany = rsrvreq.orb_.create_any()
                 jany.insert_string(rc)
                 jsrvreq.set_result(jany)
               when '_component'
-                rsrvreq.describe({:arg_list => [], :result_type => CORBA._tc_Object})
+                rsrvreq.describe({arg_list: [], result_type: CORBA._tc_Object})
                 rc = self._get_component(*rsrvreq.arguments)
                 jany = rsrvreq.orb_.create_any()
                 jany.insert_Object(rc)

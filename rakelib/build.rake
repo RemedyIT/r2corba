@@ -44,7 +44,7 @@ CLOBBER.include orb_pidlc
 file File.join(r2c_idlc_root, 'r2c_orb.rb') => [R2CORBA::BUILD_CFG, orb_pidlc] do |t|
   cmd = R2CORBA::Config.ridlc
   cmd << " --ignore-pidl --output #{t.name} --namespace=R2CORBA --include=#{stdidl_root}" <<
-         " --stubs-only --expand-includes --search-includepath --no-libinit --interface-as-class=TypeCode orb.idl"
+         ' --stubs-only --expand-includes --search-includepath --no-libinit --interface-as-class=TypeCode orb.idl'
   sh(cmd)
 end
 Rake::Task['r2corba:build_idl'].enhance [File.join(r2c_idlc_root, 'r2c_orb.rb')]

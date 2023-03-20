@@ -18,14 +18,17 @@ module BalancedAccount_support
     self.total_withdrawn = 0.0
     super()
   end
+
   def deposit(amount)
     self.amount += amount
     self.total_deposited += amount
   end
+
   def withdraw(amount)
     self.amount -= amount
     self.total_withdrawn += amount
   end
+
   def get_balance
     self
   end

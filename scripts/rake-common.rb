@@ -36,7 +36,7 @@ module R2CORBA
     @@ace_root ||= File.expand_path(ENV['ACE_ROOT'] || (File.directory?(File.join(pkg_root, 'ACE', 'ACE')) ? File.join(pkg_root, 'ACE', 'ACE') : File.join(pkg_root, 'ACE', 'ACE_wrappers')))
   end
 
-  if RUBY_PLATFORM =~ /mingw32/
+  if RUBY_PLATFORM =~ /mingw/
     SYS_DLL = []
     except_dll = (RUBY_PLATFORM =~ /x64/) ? 'libgcc_s_sjlj-1.dll' : 'libgcc_s_dw2-1.dll'
     ENV['PATH'].split(';').each do |p|
@@ -67,7 +67,7 @@ module R2CORBA
     # create MANIFEST list with included files
     unless @@manifest
       @@manifest = []
-      if defined?(JRUBY_VERSION) || RUBY_PLATFORM =~ /mingw32/
+      if defined?(JRUBY_VERSION) || RUBY_PLATFORM =~ /mingw/
         @@manifest.concat Dir.glob(File.join('bin', '*.[^r]*'))
         if defined?(JRUBY_VERSION)
           @@manifest.concat(Dir.glob(File.join('jacorb', 'lib', '*.jar')).select do |fnm|
@@ -95,7 +95,7 @@ module R2CORBA
 
   def self.define_spec(name, version, &block)
     @@gemspec = Gem::Specification.new(name, version)
-    @@gemspec.required_rubygems_version = Gem::Requirement.new(">= 0") if @@gemspec.respond_to? :required_rubygems_version=
+    @@gemspec.required_rubygems_version = Gem::Requirement.new('>= 0') if @@gemspec.respond_to? :required_rubygems_version=
     block.call(@@gemspec)
     @@gemspec
   end

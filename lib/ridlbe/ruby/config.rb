@@ -14,14 +14,17 @@ module IDL
 
   class StrOStream
     def initialize()
-      @str = ""
+      @str = ''
     end
+
     def clear
-      @str = ""
+      @str = ''
     end
+
     def to_s
       @str
     end
+
     def <<(s)
       @str << s
     end
@@ -43,6 +46,7 @@ module IDL
       end
       opts
     end
+
     def RIDL.parse0(src, params)
       params = merge_params(params)
       IDL.verbose_level = params[:verbose]
@@ -53,12 +57,13 @@ module IDL
       IDL::Ruby.process_input(parser, params, s)
       s
     end
+
     def RIDL.parse(src, params)
       s = parse0(src, params)
       s.to_s
     end
     public
-    def RIDL.eval(src, params={})
+    def RIDL.eval(src, params = {})
       params[:idl_eval] = true
       params[:expand_includes] = true
       params[:client_stubs] = true if params[:client_stubs].nil?
@@ -67,16 +72,18 @@ module IDL
       Kernel.eval(s.to_s, ::TOPLEVEL_BINDING)
       s = nil
     end
+
     def RIDL.fparse(fname, params = {})
       params[:client_stubs] = true if params[:client_stubs].nil?
       params[:stubs_only] ||= false
-      f = File.open(fname, "r")
+      f = File.open(fname, 'r')
       self.parse(f, params)
     ensure
       f.close
     end
+
     def RIDL.feval(fname, params = {})
-      File.open(fname, "r") { |io| self.eval(io, params) }
+      File.open(fname, 'r') { |io| self.eval(io, params) }
     end
   end # module RIDL
 
@@ -108,7 +115,7 @@ module IDL
         # ruby specific option switches
 
         unless ridl_params[:preprocess]   # same switch defined for IDL preprocessing mode
-          optlist.for_switch "--output=FILE", :type => String,
+          optlist.for_switch '--output=FILE', :type => String,
               :description => ['Specifies filename to generate output in.',
                                'Default: File.basename(idlfile, \'.idl\')+<postfix>+<ext>'] do |swcfg|
             swcfg.on_exec do |arg, params|
@@ -119,23 +126,23 @@ module IDL
         end
 
         optlist.for_switch '-o PATH', :type => String,
-            :description => ["Specifies output directory.",
-                             "Default: ./"] do |swcfg|
+            :description => ['Specifies output directory.',
+                             'Default: ./'] do |swcfg|
           swcfg.on_exec do |arg, params|
             params[:outputdir] = arg
           end
         end
         optlist.for_switch '--stubs-only',
-            :description => ["Only generate client stubs, no servant code.",
-                             "Default: off"] do |swcfg|
+            :description => ['Only generate client stubs, no servant code.',
+                             'Default: off'] do |swcfg|
           swcfg.on_exec do |arg, params|
             params[:client_stubs] = true
             params[:stubs_only] = true
           end
         end
         optlist.for_switch '--no-stubs',
-            :description => ["Do not generate client stubs, only servant code.",
-                             "Default: off"] do |swcfg|
+            :description => ['Do not generate client stubs, only servant code.',
+                             'Default: off'] do |swcfg|
           swcfg.on_exec do |arg, params|
             params[:client_stubs] = false
             params[:stubs_only] = false
@@ -159,29 +166,29 @@ module IDL
         end
 
         optlist.for_switch '--skel-directory=PATH', :type => String,
-            :description => ["Specifies output directory for servant files.",
-                             "Default: outputdir or ./"] do |swcfg|
+            :description => ['Specifies output directory for servant files.',
+                             'Default: outputdir or ./'] do |swcfg|
           swcfg.on_exec do |arg, params|
             params[:skel_outputdir] = arg
           end
         end
         optlist.for_switch '--expand-includes',
-            :description => ["Generate code for included IDL inline.",
-                             "Default: off"] do |swcfg|
+            :description => ['Generate code for included IDL inline.',
+                             'Default: off'] do |swcfg|
           swcfg.on_exec do |arg, params|
             params[:expand_includes] = true
           end
         end
         optlist.for_switch '--no-libinit',
-            :description => ["Do not generate library initialization code as preamble.",
-                             "Default: on"] do |swcfg|
+            :description => ['Do not generate library initialization code as preamble.',
+                             'Default: on'] do |swcfg|
           swcfg.on_exec do |arg, params|
             params[:libinit] = false
           end
         end
         optlist.for_switch '--interface-as-class=INTF', :type => String,
-            :description => ["Generate a Ruby class for interface INTF instead of a module in client stubs.",
-                             "Default: module"] do |swcfg|
+            :description => ['Generate a Ruby class for interface INTF instead of a module in client stubs.',
+                             'Default: module'] do |swcfg|
           swcfg.on_exec do |arg, params|
             params[:class_interfaces] << arg
           end

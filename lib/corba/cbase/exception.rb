@@ -39,13 +39,14 @@ module R2CORBA
         exklass = CORBA.const_defined?(exklass) ? CORBA.const_get(exklass) : nil
         if exklass.nil? || !(CORBA::SystemException > exklass)
           Kernel.raise InternalError,
-                "Unknown SystemException raised: " +
+                'Unknown SystemException raised: ' +
                 id.to_s + ' [' + reason.to_s + ']'
         else
           Kernel.raise exklass.new(reason, minor, completed)
         end
       end
-      def initialize(reason="", minor=0, completed=nil)
+
+      def initialize(reason = '', minor = 0, completed = nil)
         super(reason)
         @minor = minor
         @completed = completed
@@ -53,6 +54,7 @@ module R2CORBA
       end
       attr_accessor :ids
       def _ids; @ids; end
+
       def _interface_repository_id
         self.class::Id
       end

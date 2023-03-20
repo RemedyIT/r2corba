@@ -1,7 +1,7 @@
-{<img src="https://badge.fury.io/rb/r2corba.svg" alt="Gem Version" />}[https://rubygems.org/gems/r2corba]
-{<img src="https://www.codefactor.io/repository/github/remedyit/r2corba/badge" alt="CodeFactor" />}[https://www.codefactor.io/repository/github/remedyit/r2corba]
-{<img src="https://github.com/RemedyIT/r2corba/workflows/linux/badge.svg" alt="Linux CI" />}[https://github.com/RemedyIT/r2corba/actions?query=workflow%3Alinux]
-{<img src="https://github.com/RemedyIT/r2corba/workflows/windows/badge.svg" alt="Windows CI" />}[https://github.com/RemedyIT/r2corba/actions?query=workflow%3Awindows]
+{rdoc-image:https://badge.fury.io/rb/r2corba.svg}[https://rubygems.org/gems/r2corba]
+{rdoc-image:https://www.codefactor.io/repository/github/remedyit/r2corba/badge}[https://www.codefactor.io/repository/github/remedyit/r2corba]
+{rdoc-image:https://github.com/RemedyIT/r2corba/workflows/linux/badge.svg}[https://github.com/RemedyIT/r2corba/actions?query=workflow%3Alinux]
+{rdoc-image:https://github.com/RemedyIT/r2corba/workflows/windows/badge.svg}[https://github.com/RemedyIT/r2corba/actions?query=workflow%3Awindows]
 
 = R2CORBA
 
@@ -40,7 +40,7 @@ If you find a bug, please report it at the R2CORBA project's {issue tracker}[htt
 
 == License
 
-R2CORBA is Copyright (c) 2007-2021 Remedy IT Expertise BV, The Netherlands.
+R2CORBA is Copyright (c) 2007-2023 Remedy IT Expertise BV, The Netherlands.
 
 It is free software, and may be redistributed under the terms specified in the link:LICENSE file.
 

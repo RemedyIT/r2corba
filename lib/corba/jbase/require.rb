@@ -50,18 +50,22 @@ module R2CORBA
       module Portable
         include_package 'org.omg.CORBA.portable'
       end
+
       module V2_3
         include_package 'org.omg.CORBA_2_3'
         module Portable
           include_package 'org.omg.CORBA.portable'
         end
       end
+
       module V2_5
         include_package 'org.omg.CORBA_2_5'
       end
+
       module V3_0
         include_package 'org.omg.CORBA_3_0'
       end
+
       module Jacorb
         module Util
           java_import org.jacorb.util.Version

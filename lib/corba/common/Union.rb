@@ -19,16 +19,20 @@ module R2CORBA
           @discriminator = nil
           @value = nil
         end
+
         def _is_at_default?
           @discriminator == :default
         end
+
         def _value_tc
           ix = self.class._tc.label_index(@discriminator)
           self.class._tc.member_type(ix)
         end
+
         def _disc
           @discriminator
         end
+
         def _disc=(val)
           m_cur = self.class._tc.label_member(@discriminator) unless @discriminator.nil?
           m_new = self.class._tc.label_member(val)
@@ -39,6 +43,7 @@ module R2CORBA
           @discriminator = val
           disc_
         end
+
         def _value
           @value
         end

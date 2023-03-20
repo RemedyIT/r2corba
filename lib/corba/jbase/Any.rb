@@ -15,12 +15,14 @@ module R2CORBA
       module Dynamic
         include_package 'org.omg.DynamicAny'
       end
+
       module Reflect
         java_import java.lang.reflect.Array
       end
     end
+
     class Any
-      def to_java(jorb=nil, jany=nil)
+      def to_java(jorb = nil, jany = nil)
         rtc = self._tc
         rval = self._value.nil? ? self._value : rtc.validate(self._value)
         restc = rtc.resolved_tc
@@ -102,7 +104,7 @@ module R2CORBA
             return jany
           else
             dynFactory = CORBA::Native::Dynamic::DynAnyFactoryHelper.narrow(
-                          (jorb || CORBA::ORB._orb).resolve_initial_references("DynAnyFactory"))
+                          (jorb || CORBA::ORB._orb).resolve_initial_references('DynAnyFactory'))
             jdynany = dynFactory.create_dyn_any_from_type_code(rtc.tc_)
             begin
               unless rval.nil?
@@ -152,7 +154,7 @@ module R2CORBA
         end
       end # to_java
 
-      def Any.from_java(jany, jorb=nil, rtc=nil)
+      def Any.from_java(jany, jorb = nil, rtc = nil)
         rtc ||= CORBA::TypeCode.from_native(jany.type)
         rval = nil
         begin
@@ -224,7 +226,7 @@ module R2CORBA
             end
           else
             dynFactory = CORBA::Native::Dynamic::DynAnyFactoryHelper.narrow(
-                          (jorb || CORBA::ORB._orb).resolve_initial_references("DynAnyFactory"))
+                          (jorb || CORBA::ORB._orb).resolve_initial_references('DynAnyFactory'))
             jdynany = dynFactory.create_dyn_any(jany)
             begin
               restc = rtc.resolved_tc

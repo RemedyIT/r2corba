@@ -12,35 +12,35 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'server.ior',
-  :iter_num => 10
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'server.ior',
+  iter_num: 10
 }
 
 ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--o IORFILE",
-            "Set IOR filename.",
+    opts.on('--o IORFILE',
+            'Set IOR filename.',
             "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
-    opts.on("--i ITERATIONS",
-            "Set number of iterations.",
-            "Default: 10", Integer) { |v| OPTIONS[:iter_num] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
+    opts.on('--i ITERATIONS',
+            'Set number of iterations.',
+            'Default: 10', Integer) { |v| OPTIONS[:iter_num] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -73,16 +73,16 @@ class Simple_Server_i < POA::Simple_Server
   end
 
   def shutdown()
-    @orb.shutdown()
+    @orb.shutdown
   end
 
   def call_client()
     if @flag
       @iter_num.times do
-        @callback.callback_method()
+        @callback.callback_method
       end
 
-      @callback.shutdown()
+      @callback.shutdown
       @flag = false
 
       return 1
@@ -92,19 +92,19 @@ class Simple_Server_i < POA::Simple_Server
     return 0
   end
 
-end #of servant Simple_Server_i
+end # of servant Simple_Server_i
 
 if defined?(JRUBY_VERSION)
   ## JacORB needs explicit activation of this option
   props = {
-    "org.omg.PortableInterceptor.ORBInitializerClass.bidir_init" =>
-               "org.jacorb.orb.giop.BiDirConnectionInitializer"
+    'org.omg.PortableInterceptor.ORBInitializerClass.bidir_init' =>
+               'org.jacorb.orb.giop.BiDirConnectionInitializer'
   }
 else
   props = {}
 end
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB', props)
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB', props)
 
 obj = orb.resolve_initial_references('RootPOA')
 
@@ -122,7 +122,7 @@ child_poa = root_poa.create_POA('childPOA', poa_man, policies)
 
 puts 'child_poa created'
 
-policies.each { |pol| pol.destroy() }
+policies.each { |pol| pol.destroy }
 
 puts 'policies destroyed'
 
@@ -138,13 +138,13 @@ ior = orb.object_to_string(obj)
 
 puts "Activated as <#{ior}>"
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write ior
 }
 
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
-  orb.shutdown()
+  puts 'SIGINT - shutting down ORB...'
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')
@@ -153,13 +153,13 @@ end
 
 retval = 0
 while retval == 0
-  pending = orb.work_pending()
+  pending = orb.work_pending
 
   if pending
-    orb.perform_work()
+    orb.perform_work
   end
 
-  retval = simple_srv.call_client()
+  retval = simple_srv.call_client
 end
 
 puts 'event loop finished'

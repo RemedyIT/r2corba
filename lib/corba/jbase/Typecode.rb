@@ -9,7 +9,7 @@
 #
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
-require "corba/jbase/Any.rb"
+require 'corba/jbase/Any.rb'
 require 'bigdecimal'
 
 module R2CORBA
@@ -449,6 +449,7 @@ module R2CORBA
             super(id)
           end
         end
+
         # because creating the native tc involves creating Any's we postpone until actually needed
         def tc_
           @tc_ ||= begin
@@ -504,7 +505,7 @@ module R2CORBA
       def TypeCode.get_primitive_tc(kind)
         case kind
         when CORBA::TK_OBJREF
-          TypeCode::ObjectRef.new("IDL:omg.org/CORBA/Object:1.0", "Object", CORBA::Object).freeze
+          TypeCode::ObjectRef.new('IDL:omg.org/CORBA/Object:1.0', 'Object', CORBA::Object).freeze
         else
           TypeCode._wrap_native(CORBA::ORB._orb.get_primitive_tc(CORBA::Native::TCKind.from_int(kind.to_i)))
         end

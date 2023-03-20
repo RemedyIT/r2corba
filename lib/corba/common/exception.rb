@@ -13,7 +13,7 @@
 module R2CORBA
   module CORBA
     COMPLETED_YES, COMPLETED_NO, COMPLETED_MAYBE = (0..2).to_a
-    COMPLETED_TXT = ["YES", "NO", "MAYBE"].freeze
+    COMPLETED_TXT = ['YES', 'NO', 'MAYBE'].freeze
     class Exception < StandardError
     end
 
@@ -29,6 +29,7 @@ module R2CORBA
       def reason
         self.message
       end
+
       def to_s
         "CORBA::#{self.class::Name}(#{super}) [minor=#{@minor};completed=#{COMPLETED_TXT[@completed.to_i]}]"
       end

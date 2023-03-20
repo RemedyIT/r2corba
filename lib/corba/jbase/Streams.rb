@@ -92,6 +92,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_boolean()
           begin
             self.stream_.read_boolean()
@@ -99,6 +100,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_boolean_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:boolean)
           begin
@@ -108,6 +110,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i]}
         end
+
         def read_char()
           begin
             self.stream_.read_char().chr
@@ -115,6 +118,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_char_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:char)
           begin
@@ -124,6 +128,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i].chr }
         end
+
         def read_wchar()
           begin
             self.stream_.read_wchar()
@@ -131,6 +136,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_wchar_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:char)
           begin
@@ -140,6 +146,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_octet(value)
           begin
             [self.stream_.read_octet()].pack('c').unpack('C').first
@@ -147,6 +154,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_octet_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:byte)
           begin
@@ -157,6 +165,7 @@ module R2CORBA
           jarr = jarr.pack('c*').unpack('C*')
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_short()
           begin
             self.stream_.read_short()
@@ -164,6 +173,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_short_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:short)
           begin
@@ -173,6 +183,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_ushort()
           begin
             [self.stream_.read_ushort()].pack('s').unpack('S').first
@@ -180,6 +191,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_ushort_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:short)
           begin
@@ -190,6 +202,7 @@ module R2CORBA
           jarr = jarr.pack('s*').unpack('S*')
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_long()
           begin
             self.stream_.read_long()
@@ -197,6 +210,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_long_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:int)
           begin
@@ -206,6 +220,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_ulong()
           begin
             [self.stream_.read_ulong()].pack('l').unpack('L').first
@@ -213,6 +228,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_ulong_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:int)
           begin
@@ -223,6 +239,7 @@ module R2CORBA
           jarr = jarr.pack('l*').unpack('L*')
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_longlong()
           begin
             self.stream_.read_longlong()
@@ -230,6 +247,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_longlong_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:long)
           begin
@@ -239,6 +257,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_ulonglong()
           begin
             [self.stream_.read_ulonglong()].pack('q').unpack('Q').first
@@ -246,6 +265,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_ulonglong_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:long)
           begin
@@ -256,6 +276,7 @@ module R2CORBA
           jarr = jarr.pack('q*').unpack('Q*')
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_float()
           begin
             self.stream_.read_float()
@@ -263,6 +284,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_float_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:float)
           begin
@@ -272,6 +294,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_double()
           begin
             self.stream_.read_double()
@@ -279,6 +302,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_double_array(arr, offset, length)
           jarr = Array.new(arr.size).to_java(:double)
           begin
@@ -288,6 +312,7 @@ module R2CORBA
           end
           arr.fill(offset, length) {|i| jarr[i] }
         end
+
         def read_string()
           begin
             self.stream_.read_string()
@@ -295,6 +320,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_wstring()
           begin
             self.stream_.read_wstring()
@@ -302,6 +328,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_Object()
           begin
             CORBA::Object._wrap_native(self.stream_().read_Object())
@@ -309,6 +336,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_TypeCode()
           begin
             CORBA::TypeCode._wrap_native(self.stream_().read_TypeCode())
@@ -316,6 +344,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_fixed()
           begin
             java.math.BigDecimal.new(self.stream_.read_fixed().toString())
@@ -323,6 +352,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_construct(tc)
           begin
             jany = self.stream_.orb().create_any()
@@ -332,6 +362,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def read_Abstract()
           begin
             obj = self.stream_.read_abstract_interface()
@@ -341,6 +372,7 @@ module R2CORBA
           obj = CORBA::Object._wrap_native(obj) if obj.is_a?(CORBA::Native::Object)
           obj
         end
+
         def read_value()
           begin
             self.stream_.read_value()
@@ -436,6 +468,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_boolean(value)
           begin
             self.stream_.write_boolean(value)
@@ -443,6 +476,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_boolean_array(value, offset, length)
           begin
             self.stream_.write_boolean_array(value.to_java(:boolean), offset, length)
@@ -450,6 +484,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_char(value)
           begin
             self.stream_.write_char(value[0])
@@ -457,6 +492,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_char_array(value, offset, length)
           begin
             self.stream_.write_char_array(value.collect{|c| c[0]}.to_java(:char), offset, length)
@@ -464,9 +500,11 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_wchar(value)
           self.stream_.write_wchar(value)
         end
+
         def write_wchar_array(value, offset, length)
           begin
             self.stream_.write_wchar_array(value.to_java(:char), offset, length)
@@ -474,6 +512,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_octet(value)
           begin
             self.stream_.write_octet([value].pack('C').unpack('c').first)
@@ -481,6 +520,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_octet_array(value, offset, length)
           begin
             self.stream_.write_octet_array(value.pack('C*').unpack('c*').to_java(:byte), offset, length)
@@ -488,6 +528,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_short(value)
           begin
             self.stream_.write_short(value)
@@ -495,6 +536,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_short_array(value, offset, length)
           begin
             self.stream_.write_short_array(value.to_java(:short), offset, length)
@@ -502,6 +544,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_ushort(value)
           begin
             self.stream_.write_ushort([value].pack('S').unpack('s').first)
@@ -509,6 +552,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_ushort_array(value, offset, length)
           begin
             self.stream_.write_ushort_array(value.pack('S*').unpack('s*').to_java(:short), offset, length)
@@ -516,6 +560,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_long(value)
           begin
             self.stream_.write_long(value)
@@ -523,6 +568,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_long_array(value, offset, length)
           begin
             self.stream_.write_long_array(value.to_java(:int), offset, length)
@@ -530,6 +576,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_ulong(value)
           begin
             self.stream_.write_ulong([value].pack('L').unpack('l').first)
@@ -537,6 +584,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_ulong_array(value, offset, length)
           begin
             self.stream_.write_ulong_array(value.pack('L*').unpack('l*').to_java(:int), offset, length)
@@ -544,6 +592,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_longlong(value)
           begin
             self.stream_.write_longlong(value)
@@ -551,6 +600,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_longlong_array(value, offset, length)
           begin
             self.stream_.write_longlong_array(value.to_java(:long), offset, length)
@@ -558,6 +608,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_ulonglong(value)
           begin
             self.stream_.write_ulonglong([value].pack('Q').unpack('q').first)
@@ -565,6 +616,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_ulonglong_array(value, offset, length)
           begin
             self.stream_.write_ulonglong_array(value.pack('Q*').unpack('q*').to_java(:long), offset, length)
@@ -572,6 +624,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_float(value)
           begin
             self.stream_.write_float(value)
@@ -579,6 +632,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_float_array(value, offset, length)
           begin
             self.stream_.write_float_array(value.to_java(:float), offset, length)
@@ -586,6 +640,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_double(value)
           begin
             self.stream_.write_double(value)
@@ -593,6 +648,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_double_array(value, offset, length)
           begin
             self.stream_.write_double_array(value.to_java(:double), offset, length)
@@ -600,6 +656,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_string(value)
           begin
             self.stream_.write_string(value)
@@ -607,6 +664,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_wstring(value)
           begin
             self.stream_.write_wstring(value.inject('') {|s, b| s << b.chr})
@@ -614,6 +672,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_fixed(value)
           begin
             self.stream_.write_fixed(java.math.BigDecimal.new(value.to_s))
@@ -621,6 +680,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_Object(value)
           begin
             self.stream_.write_Object(value.objref_)
@@ -628,6 +688,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_TypeCode(value)
           begin
             self.stream_.write_TypeCode(value.tc_)
@@ -635,6 +696,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_construct(value, tc)
           begin
             CORBA::Any.to_any(value, tc).to_java(self.stream_().orb()).write_value(self.stream_)
@@ -642,6 +704,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_Abstract(value)
           begin
             self.stream_().write_abstract_interface(value.is_a?(CORBA::Object) ? value.objref_ : value)
@@ -649,6 +712,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
+
         def write_value(value)
           begin
             self.stream_.write_value(value)

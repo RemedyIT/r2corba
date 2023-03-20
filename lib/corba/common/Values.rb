@@ -42,6 +42,7 @@ module R2CORBA
         def marshal(os)
           raise CORBA::NO_IMPLEMENT
         end
+
         def unmarshal(is)
           raise CORBA::NO_IMPLEMENT
         end
@@ -78,10 +79,10 @@ module R2CORBA
     VM_TRUNCATABLE = 3
 
     VT_MODIFIERS = {
-      :none => VM_NONE,
-      :abstract => VM_ABSTRACT,
-      :truncatable => VM_TRUNCATABLE,
-      :custom => VM_CUSTOM
+      none: VM_NONE,
+      abstract: VM_ABSTRACT,
+      truncatable: VM_TRUNCATABLE,
+      custom: VM_CUSTOM
     }.freeze
 
     PRIVATE_MEMBER = 0

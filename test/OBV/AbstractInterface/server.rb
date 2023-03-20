@@ -12,31 +12,31 @@
 require 'optparse'
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'server.ior'
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'server.ior'
 }
 
 ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--o IORFILE",
-            "Set IOR filename.",
+    opts.on('--o IORFILE',
+            'Set IOR filename.',
             "Default: 'server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -55,6 +55,7 @@ class Foo_i < POA::Foo
     end
     raise BadInput.new('expected "base_op"')
   end
+
   def foo_op (inarg)
     if inarg == 'foo_op'
       return 'good'
@@ -84,17 +85,17 @@ class Passer_i < POA::Passer
 
     # Create the root node.
     sn = StringNode.new
-    sn.name = "RootNode"
+    sn.name = 'RootNode'
     tc.root = sn
 
     # Create the left leaf.
     l_dummy = StringNode.new
-    l_dummy.name = "LeftNode"
+    l_dummy.name = 'LeftNode'
     sn.left = l_dummy
 
     # Create the right leaf.
     r_dummy = StringNode.new
-    r_dummy.name = "RightNode"
+    r_dummy.name = 'RightNode'
     sn.right = r_dummy
 
     [tc]
@@ -105,11 +106,11 @@ class Passer_i < POA::Passer
   end
 
   def shutdown ()
-    @orb.shutdown()
+    @orb.shutdown
   end
-end #of servant Passer_i
+end # of servant Passer_i
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 # make sure valuetype factories are registered
 BaseNodeFactory.get_factory(orb)
@@ -126,17 +127,17 @@ poa_man.activate
 
 passer = Passer_i.new(orb, root_poa)
 
-obj = passer._this()
+obj = passer._this
 
 ior = orb.object_to_string(obj)
 
-open(OPTIONS[:iorfile], 'w') { |io|
+File.open(OPTIONS[:iorfile], 'w') { |io|
   io.write ior
 }
 
 Signal.trap('INT') do
-  puts "SIGINT - shutting down ORB..."
-  orb.shutdown()
+  puts 'SIGINT - shutting down ORB...'
+  orb.shutdown
 end
 
 if Signal.list.has_key?('USR2')

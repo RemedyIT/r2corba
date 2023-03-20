@@ -113,7 +113,6 @@ private:
       objreg->clear_registry ();
     }
   }
-
 };
 
 VALUE R2TAO_ObjectRegistry::registry_anchor_ = Qnil;
@@ -231,7 +230,7 @@ private:
     ~TSSManager ()
     {
       delete gvl_indicator_;
-      gvl_indicator_ = 0;
+      gvl_indicator_ = nullptr;
     }
 
     static void set_indicator (bool val)
@@ -340,10 +339,6 @@ R2TAO_RBFuncall::R2TAO_RBFuncall (const char* fn, bool throw_on_ex)
 : fn_id_ (rb_intern (fn)),
   throw_on_ex_ (throw_on_ex),
   ex_caught_ (false)
-{
-}
-
-R2TAO_RBFuncall::~R2TAO_RBFuncall ()
 {
 }
 

@@ -16,7 +16,7 @@ module R2CORBA
 
   module Ext
 
-    if RUBY_PLATFORM =~ /mingw32/
+    if RUBY_PLATFORM =~ /mingw/
 
       mpc_os_block = <<OS_DEP__
   libs += #{File.basename(RB_CONFIG['LIBRUBY'], '.a').sub(/^lib/, '')}
@@ -139,39 +139,6 @@ THE_END
       File.join('ext', 'librpol', 'rpol.mpc')
     end
 
-    if Config.is_win32
-
-      EXTLOAD_MPC = <<THE_END__
-project {
-  Source_Files {
-    extload.c
-  }
-  dynamicflags = EXTLOAD_BUILD_DLL
-  sharedname = extload
-  libout = .
-  dllout = .
-  verbatim(gnuace, macros, 1) {
-    override SOEXT := #{RB_CONFIG['DLEXT']}
-  }
-  postbuild  = <%cp%> lib<%sharedname%>.so ..<%slash%>libr2taow.so
-  postbuild += <%cp%> lib<%sharedname%>.so ..<%slash%>librpoaw.so
-  postbuild += <%cp%> lib<%sharedname%>.so ..<%slash%>librpolw.so
-  postclean  = <%rm%> ..<%slash%>libr2taow.so
-  postclean += <%rm%> ..<%slash%>librpoaw.so
-  postclean += <%rm%> ..<%slash%>librpolw.so
-}
-THE_END__
-
-      def self.extload_mpc_file
-        File.join('ext', 'extload', 'extload.mpc')
-      end
-
-      def self.extload_makefile
-        File.join('ext', 'extload', 'GNUmakefile')
-      end
-
-    end
-
     def self.get_latest_ace_version
       print 'Latest ACE release is '
       _version = nil
@@ -208,7 +175,7 @@ THE_END__
       # First follow all http redirects
       url = URI(follow_url(_url))
       Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
-       _fout = File.open(_fnm, "wb")
+       _fout = File.open(_fnm, 'wb')
         begin
           http.request_get(url) do |resp|
             _sndlen =  resp.content_length
@@ -233,11 +200,7 @@ THE_END__
     end
 
     def self.ext_shlibs
-      (if Config.is_win32
-        %w{libr2taow librpoaw librpolw}
-      else
-        %w{libr2tao librpoa librpol}
-      end).collect {|lib| File.join('ext', lib + '.so') }
+      %w{libr2tao librpoa librpol}.collect {|lib| File.join('ext', lib + '.so') }
     end
 
   end

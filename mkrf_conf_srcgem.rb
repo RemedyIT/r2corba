@@ -82,7 +82,7 @@ else
     RB_CONFIG = ::Config
   end unless defined? RB_CONFIG
   RB_CONFIG::MAKEFILE_CONFIG['TRY_LINK'] = "$(CXX) #{RB_CONFIG::MAKEFILE_CONFIG['OUTFLAG']}conftest#{$EXEEXT} $(INCFLAGS) $(CPPFLAGS) " \
-      "$(CFLAGS) $(src) $(LIBPATH) $(LDFLAGS) $(ARCH_FLAG) $(LOCAL_LIBS) $(LIBS)"
+      '$(CFLAGS) $(src) $(LIBPATH) $(LDFLAGS) $(ARCH_FLAG) $(LOCAL_LIBS) $(LIBS)'
   require 'mkmf'
   if defined?(MakeMakefile)
     MakeMakefile::COMMON_HEADERS.clear
@@ -138,7 +138,7 @@ __EOT
     end
     inst = Gem::DependencyInstaller.new
     begin
-      inst.install "taosource", ">= 7.0.0"
+      inst.install 'taosource', '>= 7.0.0'
     rescue
       $stderr.puts 'Failed to install taosource gem.'
       exit(1)

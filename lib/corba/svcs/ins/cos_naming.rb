@@ -23,6 +23,7 @@ module CosNaming
     def to_key
       "#{self.r_id}|#{self.kind}"
     end
+
     # convert NameComponent to stringified format according to spec
     def to_string
       s = ''
@@ -31,6 +32,7 @@ module CosNaming
       s << self.kind.gsub(/([\/\.\\])/, '\\\1') unless self.kind.to_s.empty?
       s
     end
+
     # convert stringified name back to NameComponent
     def self.from_string(snc)
       raise CosNaming::NamingContext::InvalidName.new if snc.empty?
@@ -110,6 +112,7 @@ module R2CORBA
             super
             @map_ = {}
           end
+
           def size()
             rc = 0
             synchronize do
@@ -117,6 +120,7 @@ module R2CORBA
             end
             return rc
           end
+
           def has_key?(key)
             rc = false
             synchronize do
@@ -124,6 +128,7 @@ module R2CORBA
             end
             return rc
           end
+
           def [](key)
             rc = nil
             synchronize do
@@ -131,12 +136,14 @@ module R2CORBA
             end
             return rc
           end
+
           def []=(key, value)
             synchronize do
               @map_[key] = value
             end
             value
           end
+
           def delete(key)
             rc = nil
             synchronize do
@@ -144,6 +151,7 @@ module R2CORBA
             end
             return rc
           end
+
           def values
             rc = nil
             synchronize do
@@ -151,6 +159,7 @@ module R2CORBA
             end
             return rc
           end
+
           def each(&block)
             synchronize do
               @map_.each &block
@@ -354,9 +363,9 @@ module R2CORBA
         @map.synchronize do
           raise CosNaming::NamingContext::AlreadyBound.new if @map.has_key?(key_)
           @map[key_] = {
-            :name => full_name,
-            :type => type,
-            :object => obj
+            name: full_name,
+            type: type,
+            object: obj
           }
         end
       end
@@ -371,9 +380,9 @@ module R2CORBA
             raise CosNaming::NamingContext::NotFound.new(why, [])
           end
           @map[key_] = {
-            :name => full_name,
-            :type => type,
-            :object => obj
+            name: full_name,
+            type: type,
+            object: obj
           }
         end
       end
@@ -417,7 +426,7 @@ module R2CORBA
         end
       end
 
-    end #of NamingContext servant
+    end # of NamingContext servant
 
   end
 end

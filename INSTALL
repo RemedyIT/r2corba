@@ -4,12 +4,12 @@ Requirements
 Windows 7/8 (not tested on Vista), Linux (kernel version 2.4+; tested on
 openSuSE 11.3 - 13.2 and Fedora 13-21).
 
-Ruby MRI 2.0 or newer
+Ruby MRI 2.4 or newer
   Download from http://www.ruby-lang.org (source packages) or
   https://rubyinstaller.org/downloads (Windows binaries) if not available as
   a standard package on your platform.
 
-ACE+TAO 7.0.0
+ACE+TAO 7.0.11
   Download latest micro release from https://github.com/DOCGroup/ACE_TAO/releases
   (select a source only package containing ACE+TAO)
 
@@ -111,6 +111,9 @@ for the ACE+TAO libraries from the extension build process.
 This can be used on a system which already has a compatible ACE+TAO version installed
 (needs to find the ACE+TAO dlls in the dynamic library search path for the platform
  as well as the include files in the regular includes location).
+
+ridl is expected in the ridl subdirectory. This can be overruled using the RIDL_ROOT
+environment variable.
 
 NOTE: Please be aware the rake tasks still need an accessible ACE/TAO installation.
 

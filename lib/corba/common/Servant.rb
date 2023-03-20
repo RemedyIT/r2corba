@@ -17,7 +17,7 @@ module R2CORBA
     class Servant
 
       module Intf
-        Id  = "IDL:omg.org/CORBA/Object:1.0".freeze
+        Id  = 'IDL:omg.org/CORBA/Object:1.0'.freeze
         Ids = [ Id ].freeze
         Operations = {}.freeze
       end
@@ -82,9 +82,9 @@ module R2CORBA
         end
         self.const_set(:TRUNCATABLE_IDS, vt::TRUNCATABLE_IDS)
         self.const_set(:VT_TC, vt._tc)
-        #@@tc_vt_ = vt._tc
+        # @@tc_vt_ = vt._tc
         def self._tc
-          #@@tc_vt_
+          # @@tc_vt_
           self.const_get(:VT_TC)
         end
         include vt::Intf
@@ -93,7 +93,7 @@ module R2CORBA
 
     class DynamicImplementation < Servant
       def invoke(request)
-        if self.class.const_defined?("OPTABLE") && self.class::OPTABLE.has_key?(request.operation)
+        if self.class.const_defined?('OPTABLE') && self.class::OPTABLE.has_key?(request.operation)
           request.describe(self.class::OPTABLE[request.operation])
           return self.__send__(request.operation, *request.arguments) { request }
         else

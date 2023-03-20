@@ -70,7 +70,7 @@ class R2TAO_EXPORT R2TAO_RBFuncall
 public:
   R2TAO_RBFuncall (ID fnid, bool throw_on_ex=true);
   R2TAO_RBFuncall (const char* fn, bool throw_on_ex=true);
-  ~R2TAO_RBFuncall ();
+  ~R2TAO_RBFuncall () = default;
 
   VALUE invoke (VALUE rcvr, VALUE args);
   VALUE invoke (VALUE rcvr, int argc, VALUE *args);
@@ -83,7 +83,7 @@ public:
 protected:
   struct FuncArgs
   {
-    virtual ~FuncArgs () {}
+    virtual ~FuncArgs () = default;
     virtual VALUE rb_invoke (ID fnid) const = 0;
   };
 
@@ -93,9 +93,9 @@ protected:
   {
     FuncArgArray (VALUE rcvr, VALUE args)
      : receiver_ (rcvr), args_ (args) {}
-    virtual ~FuncArgArray () {}
+    ~FuncArgArray () override = default;
 
-    virtual VALUE rb_invoke (ID fnid) const;
+    VALUE rb_invoke (ID fnid) const override;
 
     VALUE receiver_;
     VALUE args_;
@@ -105,12 +105,12 @@ protected:
   {
     FuncArgList (VALUE rcvr, int argc, VALUE* args)
      : receiver_ (rcvr), argc_ (argc), args_ (args) {}
-    virtual ~FuncArgList () {}
+    ~FuncArgList () override = default;
 
-    virtual VALUE rb_invoke (ID fnid) const;
+    VALUE rb_invoke (ID fnid) const override;
 
     VALUE receiver_;
-    int argc_;
+    int const argc_;
     VALUE* args_;
   };
 

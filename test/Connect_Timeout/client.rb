@@ -14,31 +14,31 @@ require 'lib/assert.rb'
 include TestUtil::Assertions
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :ior => 'corbaloc:iiop:192.3.47.5/10007/RandomObject'
+  use_implement: false,
+  orb_debuglevel: 0,
+  ior: 'corbaloc:iiop:192.3.47.5/10007/RandomObject'
 }
 
 ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IOR",
-            "Set IOR.",
+    opts.on('--k IOR',
+            'Set IOR.',
             "Default: 'corbaloc:iiop:192.3.47/10007/RandomObject'") { |v| OPTIONS[:ior] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -63,13 +63,13 @@ def test_timeout(object)
     # First connection happens here..
     hello = Test::Hello._narrow(object)
 
-    assert_not "Nil Test::Hello reference", CORBA::is_nil(hello)
+    assert_not 'Nil Test::Hello reference', CORBA::is_nil(hello)
 
-    the_string = hello.get_string()
+    the_string = hello.get_string
 
     puts "string returned <#{the_string}>"
 
-    hello.shutdown()
+    hello.shutdown
   rescue CORBA::Exception
     # Get the elampsed time
     el = Time.now - profile_timer
@@ -85,12 +85,12 @@ def test_timeout(object)
 end
 
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
   tmp = orb.string_to_object(OPTIONS[:ior])
 
-  object = orb.resolve_initial_references("PolicyCurrent")
+  object = orb.resolve_initial_references('PolicyCurrent')
 
   policy_current = CORBA::PolicyCurrent::_narrow(object)
 
@@ -101,9 +101,9 @@ begin
   policy_current.set_policy_overrides(policy_list,
                                         CORBA::ADD_OVERRIDE)
 
-  policy_list.each { |p| p.destroy() }
+  policy_list.each { |p| p.destroy }
 
   test_timeout(tmp)
 ensure
-  orb.destroy()
+  orb.destroy
 end

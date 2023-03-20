@@ -14,31 +14,31 @@ require 'lib/assert.rb'
 include TestUtil::Assertions
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'file://server'
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'file://server'
 }
 
 ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set IOR base.",
+    opts.on('--k IORFILE',
+            'Set IOR base.',
             "Default: 'file://server'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0") { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0') { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -50,7 +50,7 @@ else
   require 'TestC.rb'
 end
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB')
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB')
 
 begin
 
@@ -61,14 +61,14 @@ begin
       hello_obj = Test::Hello._narrow(obj)
 
       10.times do
-        the_string = hello_obj.get_string()
+        the_string = hello_obj.get_string
 
         puts "[thread \##{sid}] string returned <#{the_string}>"
 
         Thread.pass
       end
 
-      hello_obj.shutdown()
+      hello_obj.shutdown
    end
   end
 
@@ -76,6 +76,6 @@ begin
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

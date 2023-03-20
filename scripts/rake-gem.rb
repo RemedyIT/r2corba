@@ -7,7 +7,7 @@ task :define_gemspec do
     gem.summary = %Q{CORBA language mapping implementation for Ruby}
     gem.description = %Q{OMG CORBA v. 3.3 compliant CORBA language mapping implementation for Ruby. Depends on ridl gem for providing native Ruby IDL compiler. }
     gem.email = 'mcorino@remedy.nl'
-    gem.homepage = "https://www.remedy.nl/opensource/r2corba.html"
+    gem.homepage = 'https://www.remedy.nl/opensource/r2corba.html'
     gem.authors = ['Martin Corino', 'Johnny Willemsen']
     gem.files = R2CORBA.manifest
     gem.extensions = ['Rakefile']
@@ -21,15 +21,15 @@ task :define_gemspec do
       gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'GPL-2.0']
     else
-      gem.platform = Gem::Platform::CURRENT if RUBY_PLATFORM =~ /mingw32/
+      gem.platform = Gem::Platform::CURRENT if RUBY_PLATFORM =~ /mingw/
       gem.required_ruby_version = '>= 2.0'
       gem.licenses = ['Nonstandard', 'DOC', 'GPL-2.0']
       gem.require_paths << 'ext'
     end
     gem.add_dependency 'ridl', '>= 2.8'
     gem.metadata = {
-      "bug_tracker_uri"   => "https://github.com/RemedyIT/r2corba/issues",
-      "source_code_uri"   => "https://github.com/RemedyIT/r2corba"
+      'bug_tracker_uri'   => 'https://github.com/RemedyIT/r2corba/issues',
+      'source_code_uri'   => 'https://github.com/RemedyIT/r2corba'
     }
   end
 end
@@ -40,7 +40,7 @@ end
 
 namespace :r2corba do
   task :prepare do
-    if RUBY_PLATFORM =~ /mingw32/
+    if RUBY_PLATFORM =~ /mingw/
       # copy required dlls to gem install folder
       ext_inst_dir = File.join(R2CORBA.pkg_root, 'ext')
       R2CORBA.ext_dlls.each do |dll_path|
@@ -63,7 +63,7 @@ THE_END__
     end
   end
   task :clean do
-    if RUBY_PLATFORM =~ /mingw32/
+    if RUBY_PLATFORM =~ /mingw/
       # clean up copied dlls
       ext_inst_dir = File.join(R2CORBA.pkg_root, 'ext')
       R2CORBA.ext_dlls.each do |dll_path|

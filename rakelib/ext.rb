@@ -84,7 +84,7 @@ module R2CORBA
 
     def self.ace_config
       case RUBY_PLATFORM
-        when /mingw32/
+        when /mingw/
           %Q{
 #define ACE_DISABLE_WIN32_ERROR_WINDOWS
 #include "ace/config-win32.h"
@@ -110,7 +110,7 @@ module R2CORBA
 
     def self.platform_macros
       case RUBY_PLATFORM
-        when /mingw32/
+        when /mingw/
           (is_win64 ? %Q{
 TCPU:=generic
 buildbits=64

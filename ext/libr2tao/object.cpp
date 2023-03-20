@@ -20,6 +20,7 @@
 #include "exception.h"
 #include "orb.h"
 #include <memory>
+#include <cstring>
 
 R2TAO_EXPORT VALUE r2corba_cObject = 0;
 R2TAO_EXPORT VALUE r2tao_cObject = 0;
@@ -160,11 +161,8 @@ r2tao_Init_Object()
 VALUE
 r2tao_t2r(VALUE klass, CORBA::Object_ptr obj)
 {
-  VALUE ret;
-  CORBA::Object_ptr o;
-
-  o = CORBA::Object::_duplicate (obj);
-  ret = Data_Wrap_Struct(klass, 0, _object_free, o);
+  CORBA::Object_ptr o = CORBA::Object::_duplicate (obj);
+  VALUE ret = Data_Wrap_Struct(klass, 0, _object_free, o);
 
   return ret;
 }
@@ -205,7 +203,6 @@ _object_free(void *ptr)
   CORBA::release (static_cast<CORBA::Object_ptr> (ptr));
 }
 
-
 static void
 _request_free(void *ptr)
 {
@@ -215,11 +212,8 @@ _request_free(void *ptr)
 VALUE
 r2tao_Request_t2r(CORBA::Request_ptr req)
 {
-  VALUE ret;
-  CORBA::Request_ptr o;
-
-  o = CORBA::Request::_duplicate (req);
-  ret = Data_Wrap_Struct(r2tao_cRequest, 0, _request_free, o);
+  CORBA::Request_ptr o = CORBA::Request::_duplicate (req);
+  VALUE ret = Data_Wrap_Struct(r2tao_cRequest, 0, _request_free, o);
 
   return ret;
 }
@@ -238,7 +232,6 @@ r2tao_Request_r2t(VALUE obj)
 //  CORBA::Object methods
 //
 //===================================================================
-
 VALUE
 r2tao_Object_orb(VALUE self)
 {
@@ -371,11 +364,10 @@ rCORBA_Object_non_existent(VALUE self)
 VALUE
 rCORBA_Object_is_equivalent(VALUE self, VALUE _other)
 {
-  CORBA::Object_ptr other, obj;
   VALUE ret = Qnil;
 
-  obj = r2tao_Object_r2t (self);
-  other = r2tao_Object_r2t (_other);
+  CORBA::Object_ptr obj = r2tao_Object_r2t (self);
+  CORBA::Object_ptr other = r2tao_Object_r2t (_other);
 
   R2TAO_TRY
   {
@@ -389,10 +381,10 @@ rCORBA_Object_is_equivalent(VALUE self, VALUE _other)
 VALUE
 rCORBA_Object_hash(VALUE self, VALUE _max)
 {
-  CORBA::ULong ret=0, max;
+  CORBA::ULong ret = 0;
   CORBA::Object_ptr obj = r2tao_Object_r2t (self);
 
-  max = NUM2ULONG(_max);
+  CORBA::ULong max = NUM2ULONG(_max);
   R2TAO_TRY
   {
     ret = obj->_hash(max);
@@ -431,15 +423,14 @@ ri_CORBA_Object_hash(VALUE self)
 VALUE
 rCORBA_Object_is_a(VALUE self, VALUE type_id)
 {
-  CORBA::Object_ptr obj;
   VALUE ret = Qnil;
 
-  obj = r2tao_Object_r2t (self);
+  CORBA::Object_ptr obj = r2tao_Object_r2t (self);
   Check_Type(type_id, T_STRING);
 
   R2TAO_TRY
   {
-    int f = obj->_is_a (RSTRING_PTR (type_id));
+    int const f = obj->_is_a (RSTRING_PTR (type_id));
     //::printf ("rCORBA_Object_is_a: %s -> %d\n", RSTRING_PTR (type_id), f);
     ret = f ? Qtrue: Qfalse;
   }
@@ -451,10 +442,9 @@ rCORBA_Object_is_a(VALUE self, VALUE type_id)
 VALUE
 rCORBA_Object_request(VALUE self, VALUE op_name)
 {
-  CORBA::Object_ptr obj;
   CORBA::Request_var req;
 
-  obj = r2tao_Object_r2t (self);
+  CORBA::Object_ptr obj = r2tao_Object_r2t (self);
   Check_Type(op_name, T_STRING);
 
   R2TAO_TRY
@@ -506,7 +496,7 @@ static VALUE _r2tao_set_request_arguments(CORBA::Request_ptr _req, VALUE arg_lis
           ++ret_val;
 
         if (TAO_debug_level > 9)
-          ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - set_request_arguments: IN_ARG/INOUT_ARG - arg_name=%s\n",
+          ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - set_request_arguments: IN_ARG/INOUT_ARG - arg_name=%C\n",
                       _arg_name));
 
         // assign value to Any
@@ -520,7 +510,7 @@ static VALUE _r2tao_set_request_arguments(CORBA::Request_ptr _req, VALUE arg_lis
             _req->add_out_arg (_arg_name) : _req->add_out_arg ();
 
         if (TAO_debug_level > 9)
-          ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - set_request_arguments: OUT_ARG - arg_name=%s\n",
+          ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - set_request_arguments: OUT_ARG - arg_name=%C\n",
                       _arg_name));
 
         // assign type info to Any
@@ -559,9 +549,7 @@ class R2TAO_Request_BlockedRegionCaller
 {
 public:
   R2TAO_Request_BlockedRegionCaller (CORBA::Request_ptr req)
-    : req_ (req),
-      exception_ (false),
-      corba_ex_ (0) {}
+    : req_ (req) {}
   virtual ~R2TAO_Request_BlockedRegionCaller () noexcept(false);
 
   VALUE call ();
@@ -574,8 +562,8 @@ protected:
   virtual VALUE do_exec () = 0;
 
   CORBA::Request_ptr req_;
-  bool exception_;
-  CORBA::Exception* corba_ex_;
+  bool exception_ {false};
+  CORBA::Exception* corba_ex_ {};
 };
 
 R2TAO_Request_BlockedRegionCaller::~R2TAO_Request_BlockedRegionCaller() noexcept(false)
@@ -628,10 +616,10 @@ class R2TAO_Request_BlockedInvoke : public R2TAO_Request_BlockedRegionCaller
 public:
   R2TAO_Request_BlockedInvoke (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedInvoke () {}
+  ~R2TAO_Request_BlockedInvoke () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedInvoke::do_exec ()
@@ -645,10 +633,10 @@ class R2TAO_Request_BlockedSendOneway : public R2TAO_Request_BlockedRegionCaller
 public:
   R2TAO_Request_BlockedSendOneway (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedSendOneway () {}
+  ~R2TAO_Request_BlockedSendOneway () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedSendOneway::do_exec ()
@@ -662,10 +650,10 @@ class R2TAO_Request_BlockedSendDeferred : public R2TAO_Request_BlockedRegionCall
 public:
   R2TAO_Request_BlockedSendDeferred (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedSendDeferred () {}
+  ~R2TAO_Request_BlockedSendDeferred () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedSendDeferred::do_exec ()
@@ -679,10 +667,10 @@ class R2TAO_Request_BlockedGetResponse : public R2TAO_Request_BlockedRegionCalle
 public:
   R2TAO_Request_BlockedGetResponse (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedGetResponse () {}
+  ~R2TAO_Request_BlockedGetResponse () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedGetResponse::do_exec ()
@@ -696,10 +684,10 @@ class R2TAO_Request_BlockedPollResponse : public R2TAO_Request_BlockedRegionCall
 public:
   R2TAO_Request_BlockedPollResponse (CORBA::Request_ptr req)
     : R2TAO_Request_BlockedRegionCaller (req) {}
-  virtual ~R2TAO_Request_BlockedPollResponse () {}
+  ~R2TAO_Request_BlockedPollResponse () override = default;
 
 protected:
-  virtual VALUE do_exec ();
+  VALUE do_exec () override;
 };
 
 VALUE R2TAO_Request_BlockedPollResponse::do_exec ()
@@ -766,18 +754,14 @@ static VALUE _r2tao_invoke_request(CORBA::Request_ptr _req,
         ACE_DEBUG ((LM_INFO, "R2TAO (%P|%t) - invoke_request(%C): user exception from remote twoway\n", _req->operation ()));
 
       CORBA::Any& _excany = user_ex.exception ();
-
-      CORBA::ULong exc_len = _req->exceptions ()->count ();
-      for (CORBA::ULong x=0; x<exc_len ;++x)
+      CORBA::ULong const exc_len = _req->exceptions ()->count ();
+      for (CORBA::ULong x=0; x < exc_len ;++x)
       {
         CORBA::TypeCode_var _xtc = _req->exceptions ()->item (x);
-        if (ACE_OS::strcmp (_xtc->id (),
-                            _excany._tao_get_typecode ()->id ()) == 0)
+        if (std::strcmp (_xtc->id (), _excany._tao_get_typecode ()->id ()) == 0)
         {
           VALUE x_rtc = r2corba_TypeCode_t2r (_xtc.in ());
-          VALUE rexc = r2tao_Any2Ruby (_excany,
-                                       _xtc.in (),
-                                       x_rtc, x_rtc);
+          VALUE rexc = r2tao_Any2Ruby (_excany, _xtc.in (), x_rtc, x_rtc);
           _raise = true;
           return rexc;
         }
@@ -1098,10 +1082,10 @@ VALUE rCORBA_Request_arguments(VALUE self, VALUE arg_list)
   CORBA::Request_ptr _req =  r2tao_Request_r2t(self);
   if (arg_list != Qnil)
     Check_Type (arg_list, T_ARRAY);
-  CORBA::ULong rarg_len = (CORBA::ULong )RARRAY_LEN (arg_list);
+  CORBA::ULong const rarg_len = (CORBA::ULong )RARRAY_LEN (arg_list);
   R2TAO_TRY
   {
-    CORBA::ULong arg_len = _req->arguments ()->count ();
+    CORBA::ULong const arg_len = _req->arguments ()->count ();
     if (arg_len != rarg_len)
     {
       throw CORBA::BAD_PARAM();

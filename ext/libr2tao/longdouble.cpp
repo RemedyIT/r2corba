@@ -32,9 +32,7 @@ static VALUE r2tao_LongDouble_size(VALUE self);
 
 void r2tao_init_LongDouble()
 {
-  VALUE k;
-
-  k = r2tao_cLongDouble =
+  VALUE k = r2tao_cLongDouble =
     rb_define_class_under (r2tao_nsCORBA, "LongDouble", rb_cObject);
   rb_define_alloc_func (r2tao_cLongDouble, ld_alloc);
   rb_define_method(k, "initialize", RUBY_METHOD_FUNC(r2tao_LongDouble_initialize), -1);
@@ -53,11 +51,9 @@ void r2tao_init_LongDouble()
 
 static VALUE ld_alloc(VALUE klass)
 {
-  VALUE obj;
-
   ACE_CDR::LongDouble* ld = new ACE_CDR::LongDouble;
   ACE_CDR_LONG_DOUBLE_ASSIGNMENT ((*ld), 0.0);
-  obj = Data_Wrap_Struct(klass, 0, ld_free, ld);
+  VALUE obj = Data_Wrap_Struct(klass, 0, ld_free, ld);
   return obj;
 }
 
@@ -95,7 +91,7 @@ VALUE r2tao_LongDouble_initialize(int _argc, VALUE *_argv, VALUE self)
 
   if (rb_obj_is_kind_of(v0, rb_cString) == Qtrue)
   {
-    char* endp = 0;
+    char* endp = nullptr;
 #if defined (NONNATIVE_LONGDOUBLE) && defined (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE)
     NATIVE_LONGDOUBLE _ld = ::strtod (RSTRING_PTR (v0), &endp);
 #else
@@ -128,7 +124,7 @@ VALUE r2tao_LongDouble_to_s(int _argc, VALUE *_argv, VALUE self)
   VALUE prec = Qnil;
   rb_scan_args(_argc, _argv, "01", &prec);
 
-  int lprec = (prec == Qnil ? 0 : NUM2LONG (prec));
+  int const lprec = (prec == Qnil ? 0 : NUM2LONG (prec));
 
   R2TAO_TRY
   {

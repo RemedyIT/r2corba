@@ -27,6 +27,7 @@ module R2CORBA
         def initialize(nobj)
           @objref_ = nobj
         end
+
         def _free_ref
           self._release
         end
@@ -69,17 +70,17 @@ module R2CORBA
         self
       end
 
-      #ret InterfaceDef
+      # ret InterfaceDef
       def _get_interface()
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #ret boolean
+      # ret boolean
       def _is_nil?()
         self.objref_.nil? || (self.objref_.respond_to?(:_is_nil) && self.objref_._is_nil)
       end
 
-      #ret ::CORBA::Object
+      # ret ::CORBA::Object
       def _duplicate()
         return nil if self._is_nil?()
         begin
@@ -151,32 +152,32 @@ module R2CORBA
         end
       end
 
-      #def PolicyType policy_type
+      # def PolicyType policy_type
       # ret Policy
       def _get_policy(policy_type)
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #PolicyList policies
-      #SetOverrideType set_add
-      #ret ::CORBA::Object
-      def _set_policy_overrides(policies, set_add )
+      # PolicyList policies
+      # SetOverrideType set_add
+      # ret ::CORBA::Object
+      def _set_policy_overrides(policies, set_add)
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #int[] types
-      #ret PolicyList
+      # int[] types
+      # ret PolicyList
       def _get_policy_overrides(types)
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #PolicyList inconsistent_policies
-      #ret bool
+      # PolicyList inconsistent_policies
+      # ret bool
       def _validate_connection(inconsistent_policies)
         raise ::CORBA::NO_IMPLEMENT
       end
 
-      #ret ::CORBA::Object
+      # ret ::CORBA::Object
       def _get_component()
         raise CORBA::INV_OBJREF.new if self._is_nil?()
         begin

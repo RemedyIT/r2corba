@@ -12,31 +12,31 @@ require 'lib/assert.rb'
 include TestUtil::Assertions
 
 OPTIONS = {
-  :use_implement => false,
-  :orb_debuglevel => 0,
-  :iorfile => 'file://server.ior'
+  use_implement: false,
+  orb_debuglevel: 0,
+  iorfile: 'file://server.ior'
 }
 
 ARGV.options do |opts|
     script_name = File.basename($0)
     opts.banner = "Usage: ruby #{script_name} [options]"
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("--k IORFILE",
-            "Set IOR.",
+    opts.on('--k IORFILE',
+            'Set IOR.',
             "Default: 'file://server.ior'") { |v| OPTIONS[:iorfile] = v }
-    opts.on("--d LVL",
-            "Set ORBDebugLevel value.",
-            "Default: 0", Integer) { |v| OPTIONS[:orb_debuglevel] = v }
-    opts.on("--use-implement",
-            "Load IDL through CORBA.implement() instead of precompiled code.",
-            "Default: off") { |v| OPTIONS[:use_implement] = v }
+    opts.on('--d LVL',
+            'Set ORBDebugLevel value.',
+            'Default: 0', Integer) { |v| OPTIONS[:orb_debuglevel] = v }
+    opts.on('--use-implement',
+            'Load IDL through CORBA.implement() instead of precompiled code.',
+            'Default: off') { |v| OPTIONS[:use_implement] = v }
 
-    opts.separator ""
+    opts.separator ''
 
-    opts.on("-h", "--help",
-            "Show this help message.") { puts opts; exit }
+    opts.on('-h', '--help',
+            'Show this help message.') { puts opts; exit }
 
     opts.parse!
 end
@@ -64,19 +64,19 @@ class MyCallback < POA::Callback
     end
   end
 
-end #of servant Callback
+end # of servant Callback
 
 if defined?(JRUBY_VERSION)
   ## JacORB needs explicit activation of this option
   props = {
-    "org.omg.PortableInterceptor.ORBInitializerClass.bidir_init" =>
-               "org.jacorb.orb.giop.BiDirConnectionInitializer"
+    'org.omg.PortableInterceptor.ORBInitializerClass.bidir_init' =>
+               'org.jacorb.orb.giop.BiDirConnectionInitializer'
   }
 else
   props = {}
 end
 
-orb = CORBA.ORB_init(["-ORBDebugLevel", OPTIONS[:orb_debuglevel]], 'myORB', props)
+orb = CORBA.ORB_init(['-ORBDebugLevel', OPTIONS[:orb_debuglevel]], 'myORB', props)
 
 begin
 
@@ -96,7 +96,7 @@ begin
 
   puts 'child_poa created'
 
-  policies.each { |pol| pol.destroy() }
+  policies.each { |pol| pol.destroy }
 
   puts 'policies destroyed'
 
@@ -110,7 +110,7 @@ begin
 
   callback_i = MyCallback.new(orb)
 
-  callback_ref = callback_i._this()
+  callback_ref = callback_i._this
 
   # Send the calback object to the server
   simple_srv.callback_object(callback_ref)
@@ -120,12 +120,12 @@ begin
 
   assert "unexpected result = #{r}", r == 0
 
-  orb.run()
+  orb.run
 
   root_poa.destroy(1, 1)
 
 ensure
 
-  orb.destroy()
+  orb.destroy
 
 end

@@ -19,7 +19,7 @@ module R2CORBA
             return val._tc
           when ::NilClass
             return CORBA._tc_null
-          when ::Bignum
+          when BIGNUM_KLASS
             return CORBA._tc_longlong
           when ::Integer
             return CORBA._tc_long
@@ -58,7 +58,7 @@ module R2CORBA
         end
       end
 
-      def Any.to_any(o, tc=nil)
+      def Any.to_any(o, tc = nil)
         if tc.nil?
           tc = self.typecode_for_value(o)
           if tc.is_a?(CORBA::TypeCode)
@@ -72,6 +72,7 @@ module R2CORBA
       def _tc
         @__tc
       end
+
       def _value
         @__value
       end
