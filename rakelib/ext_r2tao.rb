@@ -142,7 +142,7 @@ THE_END
     def self.get_latest_ace_version
       print 'Latest ACE release is '
       _version = nil
-      open('https://raw.githubusercontent.com/DOCGroup/ACE_TAO/master/ACE/ace/Version.h') do |f|
+      URI.open('https://raw.githubusercontent.com/DOCGroup/ACE_TAO/master/ACE/ace/Version.h') do |f|
         f.each_line do |ln|
           if /define\s+ACE_VERSION\s+\"(.*)\"/ =~ ln
             _version = $1
