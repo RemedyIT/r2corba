@@ -12,7 +12,7 @@
 
 module IDL
   class StrOStream
-    def initialize()
+    def initialize
       @str = ''
     end
 

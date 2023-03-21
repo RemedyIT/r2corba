@@ -16,7 +16,7 @@ module R2CORBA
         def self.included(klass)
           klass.class_eval do
 
-            def init()
+            def init
               init_corba_portable_stub()
             end
 
@@ -35,7 +35,7 @@ module R2CORBA
         Ids = [ Id ].freeze
 
         protected
-        def init_corba_portable_stub()
+        def init_corba_portable_stub
           @ids ||= ['IDL:omg.org/CORBA/Object:1.0']
         end
 
@@ -68,7 +68,7 @@ module R2CORBA
           _ids.include?(str) || super(str)
         end
 
-        def inspect()
+        def inspect
           s = ''
           s << self.class.name.to_s << "\n" <<
                "type_id: \n" <<

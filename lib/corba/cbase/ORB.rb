@@ -160,7 +160,7 @@ module R2CORBA
           end
         end
 
-        def empty?()
+        def empty?
           f = false
           synchronize do
             f = @q_.empty?

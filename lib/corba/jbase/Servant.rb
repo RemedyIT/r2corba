@@ -30,7 +30,7 @@ module R2CORBA
           @rsrv
         end
 
-        def detach_rbServant()
+        def detach_rbServant
           @rsrv = nil
         end
 
@@ -139,7 +139,7 @@ module R2CORBA
           end
         end
 
-        def _non_existent()
+        def _non_existent
           if @rsrv.nil?
             return true
           elsif @rsrv.respond_to?(:_non_existent)
@@ -149,7 +149,7 @@ module R2CORBA
           end
         end
 
-        def _get_component()
+        def _get_component
           if @rsrv.nil?
             return nil
           elsif @rsrv.respond_to?(:_get_component)
@@ -214,7 +214,7 @@ module R2CORBA
         @srvref_ ||= PortableServer::DSI::Servant.new_instance(self)
       end
 
-      def _default_POA()
+      def _default_POA
         begin
           return PortableServer::POA._narrow(CORBA::Object._wrap_native(self.srvref_._default_POA()))
         rescue ::NativeException
@@ -222,7 +222,7 @@ module R2CORBA
         end
       end
 
-      def _this()
+      def _this
         unless @srvref_.nil?
           begin
             return CORBA::Object._wrap_native(self.srvref_._this_object())

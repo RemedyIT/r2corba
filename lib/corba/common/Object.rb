@@ -73,17 +73,17 @@ module R2CORBA
       end
 
       # ret InterfaceDef
-      def _get_interface()
+      def _get_interface
         raise ::CORBA::NO_IMPLEMENT
       end
 
       # ret boolean
-      def _is_nil?()
+      def _is_nil?
         self.objref_.nil? || (self.objref_.respond_to?(:_is_nil) && self.objref_._is_nil)
       end
 
       # ret ::CORBA::Object
-      def _duplicate()
+      def _duplicate
         return nil if self._is_nil?()
 
         begin
@@ -94,7 +94,7 @@ module R2CORBA
       end
 
       # ret void
-      def _release()
+      def _release
         self.objref_._release unless self.objref_.nil?
         @objref_ = nil
       end
@@ -112,7 +112,7 @@ module R2CORBA
       end
 
       # ret boolean
-      def _non_existent?()
+      def _non_existent?
         raise CORBA::INV_OBJREF.new if self._is_nil?()
 
         begin
@@ -147,7 +147,7 @@ module R2CORBA
       end
 
       # ret ::String
-      def _repository_id()
+      def _repository_id
         raise CORBA::INV_OBJREF.new if self._is_nil?()
         ## if this object ref has already been narrowed
         return self._interface_repository_id if self.respond_to?(:_interface_repository_id)
@@ -186,7 +186,7 @@ module R2CORBA
       end
 
       # ret ::CORBA::Object
-      def _get_component()
+      def _get_component
         raise CORBA::INV_OBJREF.new if self._is_nil?()
 
         begin
@@ -197,7 +197,7 @@ module R2CORBA
       end
 
       # ret CORBA::ORB
-      def _get_orb()
+      def _get_orb
         raise CORBA::INV_OBJREF.new if self._is_nil?()
 
         begin

@@ -88,7 +88,7 @@ module R2CORBA
 
       #-------------------  "Policy Operations"
 
-      def policy_type()
+      def policy_type
         begin
           self.objref_.policy_type()
         rescue ::NativeException
@@ -96,7 +96,7 @@ module R2CORBA
         end
       end # of attribute get_policy_type
 
-      def copy()
+      def copy
         begin
           Policy._wrap_native(self.objref_.copy())
         rescue ::NativeException
@@ -104,7 +104,7 @@ module R2CORBA
         end
       end # of operation copy
 
-      def destroy()
+      def destroy
         begin
           self.objref_.destroy()
         rescue ::NativeException
@@ -212,7 +212,7 @@ module R2CORBA
     end # POA
 
     module ThreadPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException
@@ -222,7 +222,7 @@ module R2CORBA
     end # of interface ThreadPolicy
 
     module LifespanPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException
@@ -232,7 +232,7 @@ module R2CORBA
     end # of interface LifespanPolicy
 
     module IdUniquenessPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException
@@ -242,7 +242,7 @@ module R2CORBA
     end # of interface IdUniquenessPolicy
 
     module IdAssignmentPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException
@@ -252,7 +252,7 @@ module R2CORBA
     end # of interface IdAssignmentPolicy
 
     module ImplicitActivationPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException
@@ -262,7 +262,7 @@ module R2CORBA
     end # of interface ImplicitActivationPolicy
 
     module ServantRetentionPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException
@@ -272,7 +272,7 @@ module R2CORBA
     end # of interface RequestProcessingPolicy
 
     module RequestProcessingPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException
@@ -284,7 +284,7 @@ module R2CORBA
 
   module BiDirPolicy
     module BidirectionalPolicy  ## interface
-      def value()
+      def value
         begin
           self.objref_.value().value()
         rescue ::NativeException

@@ -115,7 +115,7 @@ module R2CORBA
             @map_ = {}
           end
 
-          def size()
+          def size
             rc = 0
             synchronize do
               rc = @map_.size
@@ -272,7 +272,7 @@ module R2CORBA
         end
       end
 
-      def new_context()
+      def new_context
         poa = self._default_POA
         naming_srv = NamingContext.new(@orb)
         naming_srv.oid = poa.activate_object(naming_srv)
@@ -287,7 +287,7 @@ module R2CORBA
         nc
       end
 
-      def destroy()
+      def destroy
         raise CosNaming::NamingContext::NotEmpty.new if @map.size > 0
         return if self.oid.nil? ## no oid for root context
 

@@ -42,7 +42,7 @@ module R2CORBA
         end
       end # of operation destroy
 
-      def the_name()
+      def the_name
         begin
           self.objref_.the_name()
         rescue ::NativeException
@@ -50,7 +50,7 @@ module R2CORBA
         end
       end # of attribute get_the_name
 
-      def the_POAManager()
+      def the_POAManager
         begin
           PortableServer::POAManager._narrow(CORBA::Object._wrap_native(self.objref_.the_POAManager()))
         rescue ::NativeException
@@ -58,7 +58,7 @@ module R2CORBA
         end
       end # of attribute get_the_POAManager
 
-      def the_parent()
+      def the_parent
         begin
           PortableServer::POA._narrow(CORBA::Object._wrap_native(self.objref_.the_parent()))
         rescue ::NativeException
@@ -66,7 +66,7 @@ module R2CORBA
         end
       end # of attribute get_the_parent
 
-      def the_children()
+      def the_children
         begin
           self.objref_.the_children().collect { |c| PortableServer::POA._narrow(CORBA::Object._wrap_native(c)) }
         rescue ::NativeException
@@ -185,7 +185,7 @@ module R2CORBA
     end # POA
 
     module POAManager
-      def activate()
+      def activate
         begin
           self.objref_.activate()
         rescue ::NativeException
@@ -217,7 +217,7 @@ module R2CORBA
         end
       end # deactivate
 
-      def get_state()
+      def get_state
         begin
           self.objref_.get_state().value()
         rescue ::NativeException

@@ -86,7 +86,7 @@ module R2CORBA
           v
         end
 
-        def read_any()
+        def read_any
           begin
             self.stream_.read_any()
           rescue ::NativeException
@@ -94,7 +94,7 @@ module R2CORBA
           end
         end
 
-        def read_boolean()
+        def read_boolean
           begin
             self.stream_.read_boolean()
           rescue ::NativeException
@@ -112,7 +112,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_char()
+        def read_char
           begin
             self.stream_.read_char().chr
           rescue ::NativeException
@@ -130,7 +130,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i].chr }
         end
 
-        def read_wchar()
+        def read_wchar
           begin
             self.stream_.read_wchar()
           rescue ::NativeException
@@ -167,7 +167,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_short()
+        def read_short
           begin
             self.stream_.read_short()
           rescue ::NativeException
@@ -185,7 +185,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_ushort()
+        def read_ushort
           begin
             [self.stream_.read_ushort()].pack('s').unpack('S').first
           rescue ::NativeException
@@ -204,7 +204,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_long()
+        def read_long
           begin
             self.stream_.read_long()
           rescue ::NativeException
@@ -222,7 +222,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_ulong()
+        def read_ulong
           begin
             [self.stream_.read_ulong()].pack('l').unpack('L').first
           rescue ::NativeException
@@ -241,7 +241,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_longlong()
+        def read_longlong
           begin
             self.stream_.read_longlong()
           rescue ::NativeException
@@ -259,7 +259,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_ulonglong()
+        def read_ulonglong
           begin
             [self.stream_.read_ulonglong()].pack('q').unpack('Q').first
           rescue ::NativeException
@@ -278,7 +278,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_float()
+        def read_float
           begin
             self.stream_.read_float()
           rescue ::NativeException
@@ -296,7 +296,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_double()
+        def read_double
           begin
             self.stream_.read_double()
           rescue ::NativeException
@@ -314,7 +314,7 @@ module R2CORBA
           arr.fill(offset, length) { |i| jarr[i] }
         end
 
-        def read_string()
+        def read_string
           begin
             self.stream_.read_string()
           rescue ::NativeException
@@ -322,7 +322,7 @@ module R2CORBA
           end
         end
 
-        def read_wstring()
+        def read_wstring
           begin
             self.stream_.read_wstring()
           rescue ::NativeException
@@ -330,7 +330,7 @@ module R2CORBA
           end
         end
 
-        def read_Object()
+        def read_Object
           begin
             CORBA::Object._wrap_native(self.stream_().read_Object())
           rescue ::NativeException
@@ -338,7 +338,7 @@ module R2CORBA
           end
         end
 
-        def read_TypeCode()
+        def read_TypeCode
           begin
             CORBA::TypeCode._wrap_native(self.stream_().read_TypeCode())
           rescue ::NativeException
@@ -346,7 +346,7 @@ module R2CORBA
           end
         end
 
-        def read_fixed()
+        def read_fixed
           begin
             java.math.BigDecimal.new(self.stream_.read_fixed().toString())
           rescue ::NativeException
@@ -364,7 +364,7 @@ module R2CORBA
           end
         end
 
-        def read_Abstract()
+        def read_Abstract
           begin
             obj = self.stream_.read_abstract_interface()
           rescue ::NativeException
@@ -374,7 +374,7 @@ module R2CORBA
           obj
         end
 
-        def read_value()
+        def read_value
           begin
             self.stream_.read_value()
           rescue ::NativeException

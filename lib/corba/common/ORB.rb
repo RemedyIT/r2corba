@@ -95,7 +95,7 @@ module R2CORBA
       end
 
       # ret Context
-      def get_default_context()
+      def get_default_context
         raise CORBA::NO_IMPLEMENT
       end
 
@@ -112,12 +112,12 @@ module R2CORBA
       end
 
       # ret boolean
-      def poll_next_response()
+      def poll_next_response
         raise CORBA::NO_IMPLEMENT
       end
 
       # ret Request
-      def get_next_response()
+      def get_next_response
         raise CORBA::NO_IMPLEMENT
       end
 
@@ -130,7 +130,7 @@ module R2CORBA
       end
 
       # ret [::String, ...]
-      def list_initial_services()
+      def list_initial_services
         self.orb_.list_initial_services()
       end
 
@@ -284,7 +284,7 @@ module R2CORBA
 =end
 
       # ret boolean
-      def work_pending()
+      def work_pending
         begin
           self.orb_.work_pending()
         rescue ::NativeException
@@ -293,7 +293,7 @@ module R2CORBA
       end
 
       # ret void
-      def perform_work()
+      def perform_work
         begin
           self.orb_.perform_work()
         rescue ::NativeException
@@ -302,7 +302,7 @@ module R2CORBA
       end
 
       # ret void
-      def run()
+      def run
         begin
           self.orb_.run()
         rescue ::NativeException
@@ -321,7 +321,7 @@ module R2CORBA
       end
 
       # ret void
-      def destroy()
+      def destroy
         begin
           self.orb_.destroy()
         rescue ::NativeException
