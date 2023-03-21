@@ -10,5 +10,5 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 
-require 'corba/naming.rb'
+require 'corba/naming'
 require 'corba/idl/CosNamingS'

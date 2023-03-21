@@ -10,8 +10,8 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 
-require 'corba/common/Servant.rb'
-require 'corba/idl/POAC.rb'
+require 'corba/common/Servant'
+require 'corba/idl/POAC'
 require 'corba/idl/IORTableC'
 
 begin

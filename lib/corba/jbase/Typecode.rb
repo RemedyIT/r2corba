@@ -9,7 +9,7 @@
 #
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
-require 'corba/jbase/Any.rb'
+require 'corba/jbase/Any'
 require 'bigdecimal'
 
 module R2CORBA

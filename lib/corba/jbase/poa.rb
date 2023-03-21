@@ -18,10 +18,10 @@ module R2CORBA
   end
 end
 
-require 'corba/common/Servant.rb'
-require 'corba/idl/POAC.rb'
-require 'corba/jbase/Servant.rb'
-require 'corba/jbase/ServerRequest.rb'
+require 'corba/common/Servant'
+require 'corba/idl/POAC'
+require 'corba/jbase/Servant'
+require 'corba/jbase/ServerRequest'
 
 module R2CORBA
   module PortableServer
