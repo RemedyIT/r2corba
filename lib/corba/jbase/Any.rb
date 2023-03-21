@@ -70,7 +70,7 @@ module R2CORBA
             when TK_STRING
               jany.insert_string(rval)
             when TK_WSTRING
-              jany.insert_wstring(rval.inject('') {|s, b| s << b.chr})
+              jany.insert_wstring(rval.inject('') { |s, b| s << b.chr })
             when TK_VALUE
               jany.insert_Value(rval, rtc.tc_)
             when TK_VALUE_BOX
@@ -114,15 +114,15 @@ module R2CORBA
                   jdynany.set_as_ulong(rval)
                 when TK_ARRAY
                   jelems = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Any.java_class, rval.size)
-                  rval.each_with_index {|e, i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
+                  rval.each_with_index { |e, i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
                   jdynany.set_elements(jelems)
                 when TK_SEQUENCE
                   jelems = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Any.java_class, rval.size)
-                  rval.each_with_index {|e, i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
+                  rval.each_with_index { |e, i| jelems[i] = Any.to_any(e, restc.content_type).to_java(jorb) }
                   jdynany.set_elements(jelems)
                 when TK_STRUCT, TK_EXCEPT
                   jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Dynamic::NameValuePair.java_class, restc.members.size)
-                  rtc.members.each_with_index {|(mn, mt), i| jmembers[i] = CORBA::Native::Dynamic::NameValuePair.new(mn, Any.to_any(rval.__send__(mn.intern), mt).to_java(jorb)) }
+                  rtc.members.each_with_index { |(mn, mt), i| jmembers[i] = CORBA::Native::Dynamic::NameValuePair.new(mn, Any.to_any(rval.__send__(mn.intern), mt).to_java(jorb)) }
                   jdynany.set_members(jmembers)
                 when TK_UNION
                   if rval._is_at_default?
@@ -235,13 +235,13 @@ module R2CORBA
                 rval = jdynany.get_as_ulong()
               when TK_ARRAY
                 rval = rtc.get_type.new
-                jdynany.get_elements().each {|e| rval << Any.from_java(e, jorb, restc.content_type) }
+                jdynany.get_elements().each { |e| rval << Any.from_java(e, jorb, restc.content_type) }
               when TK_SEQUENCE
                 rval = rtc.get_type.new
-                jdynany.get_elements().each {|e| rval << Any.from_java(e, jorb, restc.content_type) }
+                jdynany.get_elements().each { |e| rval << Any.from_java(e, jorb, restc.content_type) }
               when TK_STRUCT, TK_EXCEPT
                 rval = rtc.get_type.new
-                jdynany.get_members().each_with_index {|nvp, i| rval.__send__("#{nvp.id}=".intern, Any.from_java(nvp.value, jorb, restc.member_type(i))) }
+                jdynany.get_members().each_with_index { |nvp, i| rval.__send__("#{nvp.id}=".intern, Any.from_java(nvp.value, jorb, restc.member_type(i))) }
               when TK_UNION
                 rval = rtc.get_type.new
                 if jdynany.get_discriminator().type().kind().value() == CORBA::TK_OCTET

@@ -73,7 +73,7 @@ module R2CORBA
             end
           rescue CORBA::UserException => ex_
             STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}" if $VERBOSE
-            if rsrvreq.exc_list_.nil? || rsrvreq.exc_list_.any? {|extc| extc.id == ex_.class._tc.id }
+            if rsrvreq.exc_list_.nil? || rsrvreq.exc_list_.any? { |extc| extc.id == ex_.class._tc.id }
               jsrvreq.set_exception(CORBA::Any.to_any(ex_).to_java(self._orb()))
             else
               STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}" unless $VERBOSE
@@ -106,7 +106,7 @@ module R2CORBA
             return [].to_java(:string)
           elsif @rsrv.respond_to?(:_ids)
             return @rsrv._ids.to_java(:string)
-          elsif @rsrv.class.constants.any? {|c| c.to_sym == :Ids }
+          elsif @rsrv.class.constants.any? { |c| c.to_sym == :Ids }
             return @rsrv.class::Ids.to_java(:string)
           elsif @rsrv.respond_to?(:_primary_interface)
             return [@rsrv._primary_interface(oid, poa)].to_java(:string)

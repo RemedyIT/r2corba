@@ -52,7 +52,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          jpolicies.collect {|jpol| Policy._wrap_native(jpol) }
+          jpolicies.collect { |jpol| Policy._wrap_native(jpol) }
         end
       end # of operation get_policy_overrides
 
@@ -60,7 +60,7 @@ module R2CORBA
         raise CORBA::INV_OBJREF.new if self._is_nil?()
 
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.size)
-        policies.each_with_index {|e, i| jpolicies[i] = e.objref_ }
+        policies.each_with_index { |e, i| jpolicies[i] = e.objref_ }
         begin
           obj = self.objref_._set_policy_override(jpolicies, Native::SetOverrideType.from_int(set_add))
         rescue ::NativeException
@@ -123,12 +123,12 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-        jpolicies.collect {|jpol| Policy._wrap_native(jpol) }
+        jpolicies.collect { |jpol| Policy._wrap_native(jpol) }
       end # of operation get_policy_overrides
 
       def set_policy_overrides(policies, set_add)
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.size)
-        policies.each_with_index {|e, i| jpolicies[i] = e.objref_ }
+        policies.each_with_index { |e, i| jpolicies[i] = e.objref_ }
         begin
           self.objref_.set_policy_overrides(jpolicies, Native::SetOverrideType.from_int(set_add))
         rescue ::NativeException

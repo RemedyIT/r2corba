@@ -814,7 +814,7 @@ module R2CORBA
                 @@tc_#{tc.name} ||= TypeCode.typecode_for_id('#{tc.id}')
               end
               def initialize(*param_)
-                #{tc.members.collect {|n, t| "@#{n}"}.join(', ')} = param_
+                #{tc.members.collect { |n, t| "@#{n}" }.join(', ')} = param_
               end
             end
             #{tc.name}
@@ -894,7 +894,7 @@ module R2CORBA
                 @@tc_#{tc.name} ||= TypeCode.typecode_for_id('#{tc.id}')
               end
               def initialize(*param_)
-                #{tc.members.collect {|n, t| "@#{n}"}.join(',')} = param_
+                #{tc.members.collect { |n, t| "@#{n}" }.join(',')} = param_
               end
             end
             #{tc.name}
@@ -1156,7 +1156,7 @@ module R2CORBA
 
     def CORBA._tc_CompletionStatus
       @@tc_CompletionStatus ||= TypeCode::Enum.new('IDL:omg.org/CORBA/CompletionStatus:1.0', 'CompletionStatus',
-                                                   CORBA::COMPLETED_TXT.collect {|t| "COMPLETED_#{t}"})
+                                                   CORBA::COMPLETED_TXT.collect { |t| "COMPLETED_#{t}" })
     end
 
     class LongDouble

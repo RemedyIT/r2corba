@@ -109,7 +109,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i]}
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_char()
@@ -127,7 +127,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i].chr }
+          arr.fill(offset, length) { |i| jarr[i].chr }
         end
 
         def read_wchar()
@@ -145,7 +145,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_octet(value)
@@ -164,7 +164,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
           jarr = jarr.pack('c*').unpack('C*')
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_short()
@@ -182,7 +182,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_ushort()
@@ -201,7 +201,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
           jarr = jarr.pack('s*').unpack('S*')
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_long()
@@ -219,7 +219,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_ulong()
@@ -238,7 +238,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
           jarr = jarr.pack('l*').unpack('L*')
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_longlong()
@@ -256,7 +256,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_ulonglong()
@@ -275,7 +275,7 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
           jarr = jarr.pack('q*').unpack('Q*')
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_float()
@@ -293,7 +293,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_double()
@@ -311,7 +311,7 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          arr.fill(offset, length) {|i| jarr[i] }
+          arr.fill(offset, length) { |i| jarr[i] }
         end
 
         def read_string()
@@ -497,7 +497,7 @@ module R2CORBA
 
         def write_char_array(value, offset, length)
           begin
-            self.stream_.write_char_array(value.collect{|c| c[0]}.to_java(:char), offset, length)
+            self.stream_.write_char_array(value.collect{ |c| c[0] }.to_java(:char), offset, length)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -669,7 +669,7 @@ module R2CORBA
 
         def write_wstring(value)
           begin
-            self.stream_.write_wstring(value.inject('') {|s, b| s << b.chr})
+            self.stream_.write_wstring(value.inject('') { |s, b| s << b.chr })
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end

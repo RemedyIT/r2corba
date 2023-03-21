@@ -15,11 +15,11 @@ require 'java'
 module R2CORBA
   if ENV['JACORB_HOME'] &&
       (File.exist?(File.join(ENV['JACORB_HOME'], 'lib', 'jacorb.jar')) ||
-       Dir[File.join(ENV['JACORB_HOME'], 'lib', 'jacorb-*.jar')].any? {|p| p =~ /\/jacorb\-\d\.\d\.jar\Z/})
+       Dir[File.join(ENV['JACORB_HOME'], 'lib', 'jacorb-*.jar')].any? { |p| p =~ /\/jacorb\-\d\.\d\.jar\Z/ })
     JACORB_HOME = ENV['JACORB_HOME']
   else
     # find jacorb.jar in library search path
-    JACORB_HOME = File.dirname(($:.find { |path| Dir[File.join(path, 'jacorb-*.jar')].any? {|p| p =~ /\/jacorb(\.jar|\-\d\.\d\.jar)\Z/} }).to_s)
+    JACORB_HOME = File.dirname(($:.find { |path| Dir[File.join(path, 'jacorb-*.jar')].any? { |p| p =~ /\/jacorb(\.jar|\-\d\.\d\.jar)\Z/ } }).to_s)
   end
 
   $LOAD_PATH << File.join(JACORB_HOME, 'lib')

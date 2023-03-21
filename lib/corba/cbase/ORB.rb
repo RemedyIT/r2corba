@@ -55,9 +55,9 @@ module R2CORBA
           raise ArgumentError, "Invalid argument #{prop.class}; expected Hash" unless prop.nil? || Hash === prop
 
           unless prop.nil?()
-            prop.inject(argv) {|a, (k, v)| a << k; a << v; a}
+            prop.inject(argv) { |a, (k, v)| a << k; a << v; a }
           end
-          @@cached_orb = CORBA::Native::ORB.init(argv.collect {|a| a.to_s }.concat(@@_default_args), orb_id.nil?() ? nil : orb_id.to_s)
+          @@cached_orb = CORBA::Native::ORB.init(argv.collect { |a| a.to_s }.concat(@@_default_args), orb_id.nil?() ? nil : orb_id.to_s)
         end
         unless n_orb.nil?() || @@vf_queue.empty?()
           @@vf_queue.process_all { |vfklass| vfklass._check_factory }

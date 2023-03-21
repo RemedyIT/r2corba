@@ -319,7 +319,7 @@ module R2CORBA
             @type = type_
             @members = []
             members_.each { |n, tc| add_member(n, tc) }
-            n_members = @members.collect {|n, tc| [n.to_s(), tc.tc_] }
+            n_members = @members.collect { |n, tc| [n.to_s(), tc.tc_] }
             @tc_ = _create_tc(id, name, n_members)
             super(id)
           end
@@ -416,13 +416,13 @@ module R2CORBA
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
             @range = (0..@tc_.member_count).freeze
-            @members = @range.to_a.collect {|i| @tc_.member_name(i) }
+            @members = @range.to_a.collect { |i| @tc_.member_name(i) }
             super(@tc_.id)
           else
             id, name, members_ = args
             raise CORBA::BAD_PARAM unless members_.is_a? ::Array
 
-            @members = members_.collect {|m| m.to_s}
+            @members = members_.collect { |m| m.to_s }
             @range = (0...@members.size).freeze
             begin
               @tc_ = CORBA::Native::TypeCode.create_tc(TK_ENUM, id.to_s, name.to_s, @members)

@@ -373,7 +373,7 @@ module R2CORBA
             @members = []
             members_.each { |n, tc| add_member(n, tc) }
             jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::StructMember.java_class, @members.size)
-            @members.each_with_index {|(mn, mtc), i| jmembers[i] = CORBA::Native::StructMember.new(mn.to_s, mtc.tc_, nil) }
+            @members.each_with_index { |(mn, mtc), i| jmembers[i] = CORBA::Native::StructMember.new(mn.to_s, mtc.tc_, nil) }
             @tc_ = _create_tc(id, name, jmembers)
             super(id)
           end
@@ -397,14 +397,14 @@ module R2CORBA
           raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected', 0, CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
 
           ex = get_type.new
-          members.each {|mname, mtc| ex.__send__("#{mname}=".to_sym, jex.__send__(mname.to_sym)) }
+          members.each { |mname, mtc| ex.__send__("#{mname}=".to_sym, jex.__send__(mname.to_sym)) }
           ex
         end
 
         def is_compatible?(jex)
           raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected', 0, CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
 
-          members.all? {|mname, mtc| jex.respond_to?(mname.to_sym) }
+          members.all? { |mname, mtc| jex.respond_to?(mname.to_sym) }
         end
 
         protected
@@ -462,7 +462,7 @@ module R2CORBA
         def tc_
           @tc_ ||= begin
             jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::UnionMember.java_class, @members.size)
-            @members.each_with_index {|(ml, mn, mt), i|
+            @members.each_with_index { |(ml, mn, mt), i|
               if ml == :default
                 # label octet:0 means default label
                 jmembers[i] = CORBA::Native::UnionMember.new(mn, Any.to_any(0, CORBA._tc_octet).to_java, mt.tc_, nil)
@@ -492,13 +492,13 @@ module R2CORBA
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
             @range = (0..@tc_.member_count).freeze
-            @members = @range.to_a.collect {|i| @tc_.member_name(i) }
+            @members = @range.to_a.collect { |i| @tc_.member_name(i) }
             super(@tc_.id)
           else
             id, name, members_ = args
             raise CORBA::BAD_PARAM unless members_.is_a? ::Array
 
-            @members = members_.collect {|m| m.to_s}
+            @members = members_.collect { |m| m.to_s }
             @range = (0...@members.size).freeze
             begin
               @tc_ = CORBA::ORB._orb.create_enum_tc(id.to_s, name.to_s, @members.to_java(:string))

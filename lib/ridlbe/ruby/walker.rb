@@ -457,7 +457,7 @@ module IDL
           else
             println()
             initializers.each do |init|
-              printiln("def #{init.rubyname}(#{init.params().collect {|p| p.rubyname}.join(',')})")
+              printiln("def #{init.rubyname}(#{init.params().collect { |p| p.rubyname }.join(',')})")
               nest {
                 printiln("raise RuntimeError, 'unimplemented local operation called'")
               }

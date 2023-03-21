@@ -68,7 +68,7 @@ module R2CORBA
 
       def the_children()
         begin
-          self.objref_.the_children().collect {|c| PortableServer::POA._narrow(CORBA::Object._wrap_native(c)) }
+          self.objref_.the_children().collect { |c| PortableServer::POA._narrow(CORBA::Object._wrap_native(c)) }
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -167,7 +167,7 @@ module R2CORBA
 
         CORBA::PolicyList._tc.validate(policies) unless policies.nil? || policies.empty?
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.nil? ? 0 : policies.size)
-        policies.each_with_index {|p, i| jpolicies[i] = p.objref_ } unless policies.nil?
+        policies.each_with_index { |p, i| jpolicies[i] = p.objref_ } unless policies.nil?
         begin
           PortableServer::POA._narrow(CORBA::Object._wrap_native(self.objref_.create_POA(adapter_name, a_POAManager.objref_, jpolicies)))
         rescue ::NativeException
