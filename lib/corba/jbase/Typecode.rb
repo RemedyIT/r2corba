@@ -52,7 +52,6 @@ module R2CORBA
     end
 
     class TypeCode
-
       def TypeCode.native_kind(ntc)
         ntc.kind.value
       end
@@ -74,7 +73,6 @@ module R2CORBA
       end
 
       class Recursive < CORBA::TypeCode
-
         def initialize(id)
           begin
             @tc_ = CORBA::ORB._orb.create_recursive_tc(id)
@@ -82,11 +80,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Recursive
 
       class String < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -98,11 +94,9 @@ module R2CORBA
             end
           end
         end
-
       end # String
 
       class WString < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -114,11 +108,9 @@ module R2CORBA
             end
           end
         end
-
       end # WString
 
       class Fixed < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -131,11 +123,9 @@ module R2CORBA
             end
           end
         end
-
       end # Fixed
 
       class Sequence < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -150,11 +140,9 @@ module R2CORBA
             end
           end
         end
-
       end
 
       class Array < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -176,19 +164,15 @@ module R2CORBA
             end
           end
         end
-
       end # Array
 
       class IdentifiedTypeCode < CORBA::TypeCode
-
         def initialize(id)
           CORBA::TypeCode.register_id_type(id.to_s, self)
         end
-
       end # IdentifiedTypeCode
 
       class Alias < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -207,11 +191,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # Alias
 
       class Valuetype < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -261,11 +243,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Valuetype
 
       class Eventtype < Valuetype
-
         protected
 
         def _create_tc(id, name, modifier, base, jmembers)
@@ -282,11 +262,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Eventtype
 
       class Valuebox < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -305,11 +283,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # Valuebox
 
       class ObjectRef < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -326,11 +302,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # ObjectRef
 
       class AbstractInterface < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -347,11 +321,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # AbstractInterface
 
       class Struct < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -388,11 +360,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Struct
 
       class Except < Struct
-
         def from_java(jex)
           raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected', 0, CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
 
@@ -416,11 +386,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Except
 
       class Union < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -483,11 +451,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Union
 
       class Enum < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -508,7 +474,6 @@ module R2CORBA
             super(id)
           end
         end
-
       end # Enum
 
       def TypeCode.get_primitive_tc(kind)
@@ -522,7 +487,6 @@ module R2CORBA
 
       # final initialization
       self._init
-
     end # TypeCode
   end ## module CORBA
 end ## module R2CORBA

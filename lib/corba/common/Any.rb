@@ -12,7 +12,6 @@
 module R2CORBA
   module CORBA
     class Any
-
       def Any.typecode_for_value(val)
         case val
           when CORBA::Any
@@ -86,7 +85,6 @@ module R2CORBA
         @__tc = tc
         @__value = o
       end
-
     end # Any
   end # CORBA
 end # R2CORBA

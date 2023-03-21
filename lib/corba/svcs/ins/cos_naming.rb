@@ -104,7 +104,6 @@ module R2CORBA
     # Naming context servant class
     #
     class NamingContext < POA::CosNaming::NamingContextExt
-
       # Map type to store bindings.
       # Use synchronized version for multithreading capable implementations.
       #
@@ -439,7 +438,6 @@ module R2CORBA
           @map[key_][:object]
         end
       end
-
     end # of NamingContext servant
   end
 end

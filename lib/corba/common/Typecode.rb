@@ -394,7 +394,6 @@ module R2CORBA
       end
 
       class Recursive < CORBA::TypeCode
-
         def initialize(id)
           raise 'overload required'
         end
@@ -427,7 +426,6 @@ module R2CORBA
       end # Recursive
 
       class String < CORBA::TypeCode
-
         def initialize(*args)
           raise 'overload required'
         end
@@ -453,7 +451,6 @@ module R2CORBA
       end # String
 
       class WString < CORBA::TypeCode
-
         def initialize(*args)
           raise 'overload required'
         end
@@ -500,7 +497,6 @@ module R2CORBA
       end # WString
 
       class Fixed < CORBA::TypeCode
-
         def initialize(*args)
           raise 'overload required'
         end
@@ -523,7 +519,6 @@ module R2CORBA
       end # Fixed
 
       class Sequence < CORBA::TypeCode
-
         def initialize(*args)
           raise 'overload required'
         end
@@ -581,7 +576,6 @@ module R2CORBA
       end
 
       class Array < CORBA::TypeCode
-
         def initialize(*args)
           raise 'overload required'
         end
@@ -609,7 +603,6 @@ module R2CORBA
       end # Array
 
       class IdentifiedTypeCode < CORBA::TypeCode
-
         def initialize(id)
           CORBA::TypeCode.register_id_type(id.to_s, self)
         end
@@ -1103,7 +1096,6 @@ module R2CORBA
 
         BadKind._tc
       end
-
     end # TypeCode
 
     # define typecode constants for primitive types

@@ -268,7 +268,6 @@ module R2CORBA
         end
         return rval
       end # from_java
-
     end # Any
   end # CORBA
 end # R2CORBA
