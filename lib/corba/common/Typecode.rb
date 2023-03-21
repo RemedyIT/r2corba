@@ -971,7 +971,7 @@ module R2CORBA
           # raise CORBA::MARSHAL.new(
           #  "invalid discriminator value (#{val._disc.to_s}) for union #{name}",
           #  1, CORBA::COMPLETED_NO) unless @labels.has_key?(val._disc)
-          if @labels.has_key?(val._disc)  # no need to check for implicit defaults
+          if @labels.has_key?(val._disc) # no need to check for implicit defaults
             if needs_conversion(val)
               vorg = val
               val = vorg.class.new

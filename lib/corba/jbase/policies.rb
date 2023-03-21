@@ -211,7 +211,7 @@ module R2CORBA
       end # of operation create_request_processing_policy
     end # POA
 
-    module ThreadPolicy  ## interface
+    module ThreadPolicy ## interface
       def value
         begin
           self.objref_.value.value
@@ -221,7 +221,7 @@ module R2CORBA
       end # of attribute get_value
     end # of interface ThreadPolicy
 
-    module LifespanPolicy  ## interface
+    module LifespanPolicy ## interface
       def value
         begin
           self.objref_.value.value
@@ -231,7 +231,7 @@ module R2CORBA
       end # of attribute get_value
     end # of interface LifespanPolicy
 
-    module IdUniquenessPolicy  ## interface
+    module IdUniquenessPolicy ## interface
       def value
         begin
           self.objref_.value.value
@@ -241,7 +241,7 @@ module R2CORBA
       end # of attribute get_value
     end # of interface IdUniquenessPolicy
 
-    module IdAssignmentPolicy  ## interface
+    module IdAssignmentPolicy ## interface
       def value
         begin
           self.objref_.value.value
@@ -251,7 +251,7 @@ module R2CORBA
       end # of attribute get_value
     end # of interface IdAssignmentPolicy
 
-    module ImplicitActivationPolicy  ## interface
+    module ImplicitActivationPolicy ## interface
       def value
         begin
           self.objref_.value.value
@@ -261,7 +261,7 @@ module R2CORBA
       end # of attribute get_value
     end # of interface ImplicitActivationPolicy
 
-    module ServantRetentionPolicy  ## interface
+    module ServantRetentionPolicy ## interface
       def value
         begin
           self.objref_.value.value
@@ -271,7 +271,7 @@ module R2CORBA
       end # of attribute get_value
     end # of interface RequestProcessingPolicy
 
-    module RequestProcessingPolicy  ## interface
+    module RequestProcessingPolicy ## interface
       def value
         begin
           self.objref_.value.value
@@ -283,7 +283,7 @@ module R2CORBA
   end # PortableServer
 
   module BiDirPolicy
-    module BidirectionalPolicy  ## interface
+    module BidirectionalPolicy ## interface
       def value
         begin
           self.objref_.value.value

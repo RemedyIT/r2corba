@@ -113,7 +113,7 @@ module IDL
 
         # ruby specific option switches
 
-        unless ridl_params[:preprocess]   # same switch defined for IDL preprocessing mode
+        unless ridl_params[:preprocess] # same switch defined for IDL preprocessing mode
           optlist.for_switch '--output=FILE', :type => String,
               :description => ['Specifies filename to generate output in.',
                                'Default: File.basename(idlfile, \'.idl\')+<postfix>+<ext>'] do |swcfg|
