@@ -69,7 +69,7 @@ module R2CORBA
 
         def self._check_factory
           f = self._lookup_value_factory(self.value_id)
-          self._register_value_factory(self.value_id(), self.new) if f.nil?
+          self._register_value_factory(self.value_id, self.new) if f.nil?
         end
 
       end # ValueFactoryBase

@@ -22,10 +22,10 @@ module R2CORBA
       # ::String logical_type_id
       # ret boolean
       def _is_a?(logical_type_id)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
         ## JacORB's LocalObjects throw NO_IMPLEMENT on _is_a?() and _ids() is also not always defined
         return true if self.objref_.is_a?(CORBA::Native::LocalObject) &&
-                        (!self.objref_.respond_to?(:_ids) || self.objref_._ids().include?(logical_type_id))
+                        (!self.objref_.respond_to?(:_ids) || self.objref_._ids.include?(logical_type_id))
 
         begin
           self.objref_._is_a(logical_type_id)
@@ -36,7 +36,7 @@ module R2CORBA
 
       # ret ::String
       def _repository_id
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
         ## if this object ref has already been narrowed
         return self._interface_repository_id if self.respond_to?(:_interface_repository_id)
 
@@ -50,7 +50,7 @@ module R2CORBA
       unless CORBA::Native::Portable::ObjectImpl.public_instance_methods.include?(:_get_component)
         # ret ::CORBA::Object
         def _get_component
-          raise CORBA::INV_OBJREF.new if self._is_nil?()
+          raise CORBA::INV_OBJREF.new if self._is_nil?
 
           ## ask the remote side
           ## have to do this ourselves since JacORB does not support this remote method on Object

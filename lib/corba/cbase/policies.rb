@@ -34,7 +34,7 @@ module R2CORBA
 
     module Object
       def _get_policy(policy_type)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           pol = self.objref_._get_policy(policy_type)
@@ -45,7 +45,7 @@ module R2CORBA
       end
 
       def _set_policy_overrides(policies, set_add)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           CORBA::Object._wrap_native(self.objref_._set_policy_overrides(policies, set_add))
@@ -55,7 +55,7 @@ module R2CORBA
       end
 
       def _get_policy_overrides(types)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           self.objref_._get_policy_overrides(types)
@@ -65,7 +65,7 @@ module R2CORBA
       end
 
       def _validate_connection(inconsistent_policies)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           self.objref_._validate_connection(inconsistent_policies)

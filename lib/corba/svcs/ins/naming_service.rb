@@ -76,7 +76,7 @@ module R2CORBA
         #
         @naming_srv = INS::NamingContext.new(@orb)
 
-        naming_obj = @naming_srv._this()
+        naming_obj = @naming_srv._this
 
         naming_ior = @orb.object_to_string(naming_obj)
 

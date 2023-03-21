@@ -282,7 +282,7 @@ module R2CORBA
       def bind_new_context(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
 
-        nc = self.new_context()
+        nc = self.new_context
         self.bind_context(n, nc)
         nc
       end

@@ -29,7 +29,7 @@ module R2CORBA
       def self._wrap_native(ntc)
         raise ArgumentError, 'Expected org.omg.CORBA.TypeCode' unless ntc.nil? || ntc.is_a?(Native::TypeCode)
 
-        ntc.nil?() ? ntc : @@wrapper_klass.new(ntc)
+        ntc.nil? ? ntc : @@wrapper_klass.new(ntc)
       end
 
       def TypeCode._tc
@@ -209,7 +209,7 @@ module R2CORBA
 
       def id
         begin
-          self.tc_.id()
+          self.tc_.id
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -217,7 +217,7 @@ module R2CORBA
 
       def name
         begin
-          self.tc_.name()
+          self.tc_.name
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -225,7 +225,7 @@ module R2CORBA
 
       def member_count
         begin
-          self.tc_.member_count()
+          self.tc_.member_count
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -257,7 +257,7 @@ module R2CORBA
 
       def default_index
         begin
-          self.tc_.default_index()
+          self.tc_.default_index
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -265,7 +265,7 @@ module R2CORBA
 
       def length
         begin
-          self.tc_.length()
+          self.tc_.length
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -277,7 +277,7 @@ module R2CORBA
 
       def fixed_digits
         begin
-          self.tc_.fixed_digits()
+          self.tc_.fixed_digits
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -285,7 +285,7 @@ module R2CORBA
 
       def fixed_scale
         begin
-          self.tc_.fixed_scale()
+          self.tc_.fixed_scale
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -301,7 +301,7 @@ module R2CORBA
 
       def type_modifier
         begin
-          self.tc_.type_modifier()
+          self.tc_.type_modifier
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -1123,11 +1123,11 @@ module R2CORBA
     end
 
     def CORBA._tc_string
-      @@tc_string ||= TypeCode::String.new()
+      @@tc_string ||= TypeCode::String.new
     end
 
     def CORBA._tc_wstring
-      @@tc_wstring ||= TypeCode::WString.new()
+      @@tc_wstring ||= TypeCode::WString.new
     end
 
     # define special typecode constants

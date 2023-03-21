@@ -30,7 +30,7 @@ module R2CORBA
       def self._wrap_native(norb)
         raise ArgumentError, 'Expected org.omg.CORBA.ORB' unless norb.nil? || norb.is_a?(Native::ORB)
 
-        norb.nil?() ? norb : @@wrapper_klass.new(norb)
+        norb.nil? ? norb : @@wrapper_klass.new(norb)
       end
 
       ## init() or init(orb_id, prop = {}) or init(argv, orb_id, prop={}) or init(argv, prop={})
@@ -131,7 +131,7 @@ module R2CORBA
 
       # ret [::String, ...]
       def list_initial_services
-        self.orb_.list_initial_services()
+        self.orb_.list_initial_services
       end
 
 =begin
@@ -286,7 +286,7 @@ module R2CORBA
       # ret boolean
       def work_pending
         begin
-          self.orb_.work_pending()
+          self.orb_.work_pending
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -295,7 +295,7 @@ module R2CORBA
       # ret void
       def perform_work
         begin
-          self.orb_.perform_work()
+          self.orb_.perform_work
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -304,7 +304,7 @@ module R2CORBA
       # ret void
       def run
         begin
-          self.orb_.run()
+          self.orb_.run
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -323,7 +323,7 @@ module R2CORBA
       # ret void
       def destroy
         begin
-          self.orb_.destroy()
+          self.orb_.destroy
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -348,19 +348,19 @@ module R2CORBA
       # ValueFactory factory
       # ret ValueFactory
       def register_value_factory(id, factory)
-        self.orb_().register_value_factory(id, factory)
+        self.orb_.register_value_factory(id, factory)
       end
 
       # RepositoryId id
       # ret void
       def unregister_value_factory(id)
-        self.orb_().unregister_value_factory(id)
+        self.orb_.unregister_value_factory(id)
       end
 
       # RepositoryId id
       # ret ValueFactory
       def lookup_value_factory(id)
-        self.orb_().lookup_value_factory(id)
+        self.orb_.lookup_value_factory(id)
       end
     end # ORB
   end # CORBA

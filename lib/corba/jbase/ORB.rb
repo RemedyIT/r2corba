@@ -85,7 +85,7 @@ module R2CORBA
             rescue ::NativeException
               CORBA::Exception.native2r($!)
             end
-          end).join()
+          end).join
         else
           # need to start a shutdown *with* waiting in a thread because JacORB
           # occasionally fails with a comm error when #shutdown(false) is called

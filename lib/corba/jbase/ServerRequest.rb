@@ -70,7 +70,7 @@ module R2CORBA
 
         unless @arg_
           @arg_ = []
-          @nvlist_.count().times do |i|
+          @nvlist_.count.times do |i|
             jnv = @nvlist_.item(i)
             @arg_ << CORBA::Any.from_java(jnv.value, self.orb_, @arg_list_[i][2]) if [CORBA::ARG_IN, CORBA::ARG_INOUT].include?(jnv.flags)
             @arg_out_ += 1 if [CORBA::ARG_OUT, CORBA::ARG_INOUT].include?(jnv.flags)
@@ -96,7 +96,7 @@ module R2CORBA
 
         jnv = @nvlist_.item(key)
         rtc = @arg_list_[key][2]
-        CORBA::Any.to_any(val, rtc).to_java(self.orb_, jnv.value())
+        CORBA::Any.to_any(val, rtc).to_java(self.orb_, jnv.value)
         @arg_[key] = val
       end
 
@@ -104,7 +104,7 @@ module R2CORBA
       def arg_index_from_name(arg_name)
         unless @arg_index_
           @arg_index_ = {}
-          @nvlist_.count().times do |i|
+          @nvlist_.count.times do |i|
             jnv = @nvlist_.item(i)
             @arg_index_[jnv.name] = i
           end

@@ -17,14 +17,14 @@ module R2CORBA
           klass.class_eval do
 
             def init
-              init_corba_portable_stub()
+              init_corba_portable_stub
             end
 
             def self.create_stub(obj)
               raise CORBA::INV_OBJREF.new unless obj.is_a?(CORBA::Object)
 
               obj.extend(self) unless obj.is_a?(self)
-              obj.init()
+              obj.init
               return obj
             end
 

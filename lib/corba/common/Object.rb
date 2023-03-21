@@ -15,7 +15,7 @@ module R2CORBA
       if obj.nil?
         return true
       elsif obj.is_a?(R2CORBA::CORBA::Object) || obj.respond_to?(:_is_nil?)
-        return obj._is_nil?()
+        return obj._is_nil?
       end
 
       false
@@ -84,7 +84,7 @@ module R2CORBA
 
       # ret ::CORBA::Object
       def _duplicate
-        return nil if self._is_nil?()
+        return nil if self._is_nil?
 
         begin
           self._wrap_native(self.objref_._duplicate)
@@ -102,7 +102,7 @@ module R2CORBA
       # ::String logical_type_id
       # ret boolean
       def _is_a?(logical_type_id)
-        return false if self._is_nil?()
+        return false if self._is_nil?
 
         begin
           self.objref_._is_a(logical_type_id)
@@ -113,7 +113,7 @@ module R2CORBA
 
       # ret boolean
       def _non_existent?
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           self.objref_._non_existent
@@ -125,7 +125,7 @@ module R2CORBA
       # ::CORBA::Object other_object
       # ret boolean
       def _is_equivalent?(other_object)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           self.objref_._is_equivalent(other_object)
@@ -137,7 +137,7 @@ module R2CORBA
       # Integer(ulong) maximum
       # ret unsigned long
       def _hash(maximum)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           self.objref_._hash(maximum)
@@ -148,13 +148,13 @@ module R2CORBA
 
       # ret ::String
       def _repository_id
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
         ## if this object ref has already been narrowed
         return self._interface_repository_id if self.respond_to?(:_interface_repository_id)
 
         ## ask the remote side
         begin
-          self.objref_._repository_id()
+          self.objref_._repository_id
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -187,10 +187,10 @@ module R2CORBA
 
       # ret ::CORBA::Object
       def _get_component
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
-          CORBA::Object._wrap_native(self.objref_._get_component())
+          CORBA::Object._wrap_native(self.objref_._get_component)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -198,7 +198,7 @@ module R2CORBA
 
       # ret CORBA::ORB
       def _get_orb
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           CORBA::ORB._wrap_native(self.objref_._get_orb)
@@ -208,7 +208,7 @@ module R2CORBA
       end
 
       def _request(operation)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
 
         begin
           self.objref_._request(operation.to_s)

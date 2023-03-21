@@ -18,51 +18,51 @@ module R2CORBA
           tc = tc.resolved_tc # takes care of recursive typecodes
           v = case tc.kind
           when TK_ANY
-            read_any()
+            read_any
           when TK_BOOLEAN
-            read_boolean()
+            read_boolean
           when TK_SHORT
-            read_short()
+            read_short
           when TK_LONG
-            read_long()
+            read_long
           when TK_USHORT
-            read_ushort()
+            read_ushort
           when TK_WCHAR
-            read_wchar()
+            read_wchar
           when TK_ULONG
-            read_ulong()
+            read_ulong
           when TK_LONGLONG
-            read_longlong()
+            read_longlong
           when TK_ULONGLONG
-            read_ulonglong()
+            read_ulonglong
           when TK_OCTET
-            read_octet()
+            read_octet
           when TK_FLOAT
-            read_float()
+            read_float
           when TK_DOUBLE
-            read_double()
+            read_double
           when TK_LONGDOUBLE
             raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
-            read_fixed()
+            read_fixed
           when TK_CHAR
-            read_char()
+            read_char
           when TK_STRING
-            read_string()
+            read_string
           when TK_WSTRING
-            read_wstring()
+            read_wstring
           when TK_OBJREF
-            read_Object()
+            read_Object
           when TK_TYPECODE
-            read_TypeCode()
+            read_TypeCode
           when TK_ARRAY, TK_SEQUENCE,
                TK_ENUM, TK_STRUCT, TK_EXCEPT, TK_UNION,
                TK_PRINCIPAL
             read_construct(tc)
           when TK_ABSTRACT_INTERFACE
-            read_Abstract()
+            read_Abstract
           when TK_VALUE, TK_VALUE_BOX, TK_EVENT
-            read_Value()
+            read_Value
             ## TODO: TK_NATIVE
           end
           v

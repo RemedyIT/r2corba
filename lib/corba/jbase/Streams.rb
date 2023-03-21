@@ -34,51 +34,51 @@ module R2CORBA
           tc = tc.resolved_tc # takes care of recursive typecodes
           v = case tc.kind
           when TK_ANY
-            read_any()
+            read_any
           when TK_BOOLEAN
-            read_boolean()
+            read_boolean
           when TK_SHORT
-            read_short()
+            read_short
           when TK_LONG
-            read_long()
+            read_long
           when TK_USHORT
-            read_ushort()
+            read_ushort
           when TK_WCHAR
-            read_wchar()
+            read_wchar
           when TK_ULONG
-            read_ulong()
+            read_ulong
           when TK_LONGLONG
-            read_longlong()
+            read_longlong
           when TK_ULONGLONG
-            read_ulonglong()
+            read_ulonglong
           when TK_OCTET
-            read_octet()
+            read_octet
           when TK_FLOAT
-            read_float()
+            read_float
           when TK_DOUBLE
-            read_double()
+            read_double
           when TK_LONGDOUBLE
             raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
-            read_fixed()
+            read_fixed
           when TK_CHAR
-            read_char()
+            read_char
           when TK_STRING
-            read_string()
+            read_string
           when TK_WSTRING
-            read_wstring()
+            read_wstring
           when TK_OBJREF
-            read_Object()
+            read_Object
           when TK_TYPECODE
-            read_TypeCode()
+            read_TypeCode
           when TK_ARRAY, TK_SEQUENCE,
                TK_ENUM, TK_STRUCT, TK_EXCEPT, TK_UNION,
                TK_PRINCIPAL
             read_construct(tc)
           when TK_ABSTRACT_INTERFACE
-            read_Abstract()
+            read_Abstract
           when TK_VALUE
-            read_value()
+            read_value
           when TK_VALUE_BOX
             read_valuebox(tc.get_type.boxedvalue_helper)
             ## TODO: TK_NATIVE
@@ -88,7 +88,7 @@ module R2CORBA
 
         def read_any
           begin
-            self.stream_.read_any()
+            self.stream_.read_any
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -96,7 +96,7 @@ module R2CORBA
 
         def read_boolean
           begin
-            self.stream_.read_boolean()
+            self.stream_.read_boolean
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -114,7 +114,7 @@ module R2CORBA
 
         def read_char
           begin
-            self.stream_.read_char().chr
+            self.stream_.read_char.chr
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -132,7 +132,7 @@ module R2CORBA
 
         def read_wchar
           begin
-            self.stream_.read_wchar()
+            self.stream_.read_wchar
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -150,7 +150,7 @@ module R2CORBA
 
         def read_octet(value)
           begin
-            [self.stream_.read_octet()].pack('c').unpack('C').first
+            [self.stream_.read_octet].pack('c').unpack('C').first
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -169,7 +169,7 @@ module R2CORBA
 
         def read_short
           begin
-            self.stream_.read_short()
+            self.stream_.read_short
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -187,7 +187,7 @@ module R2CORBA
 
         def read_ushort
           begin
-            [self.stream_.read_ushort()].pack('s').unpack('S').first
+            [self.stream_.read_ushort].pack('s').unpack('S').first
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -206,7 +206,7 @@ module R2CORBA
 
         def read_long
           begin
-            self.stream_.read_long()
+            self.stream_.read_long
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -224,7 +224,7 @@ module R2CORBA
 
         def read_ulong
           begin
-            [self.stream_.read_ulong()].pack('l').unpack('L').first
+            [self.stream_.read_ulong].pack('l').unpack('L').first
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -243,7 +243,7 @@ module R2CORBA
 
         def read_longlong
           begin
-            self.stream_.read_longlong()
+            self.stream_.read_longlong
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -261,7 +261,7 @@ module R2CORBA
 
         def read_ulonglong
           begin
-            [self.stream_.read_ulonglong()].pack('q').unpack('Q').first
+            [self.stream_.read_ulonglong].pack('q').unpack('Q').first
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -280,7 +280,7 @@ module R2CORBA
 
         def read_float
           begin
-            self.stream_.read_float()
+            self.stream_.read_float
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -298,7 +298,7 @@ module R2CORBA
 
         def read_double
           begin
-            self.stream_.read_double()
+            self.stream_.read_double
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -316,7 +316,7 @@ module R2CORBA
 
         def read_string
           begin
-            self.stream_.read_string()
+            self.stream_.read_string
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -324,7 +324,7 @@ module R2CORBA
 
         def read_wstring
           begin
-            self.stream_.read_wstring()
+            self.stream_.read_wstring
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -332,7 +332,7 @@ module R2CORBA
 
         def read_Object
           begin
-            CORBA::Object._wrap_native(self.stream_().read_Object())
+            CORBA::Object._wrap_native(self.stream_.read_Object)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -340,7 +340,7 @@ module R2CORBA
 
         def read_TypeCode
           begin
-            CORBA::TypeCode._wrap_native(self.stream_().read_TypeCode())
+            CORBA::TypeCode._wrap_native(self.stream_.read_TypeCode)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -348,7 +348,7 @@ module R2CORBA
 
         def read_fixed
           begin
-            java.math.BigDecimal.new(self.stream_.read_fixed().toString())
+            java.math.BigDecimal.new(self.stream_.read_fixed.toString)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -356,9 +356,9 @@ module R2CORBA
 
         def read_construct(tc)
           begin
-            jany = self.stream_.orb().create_any()
+            jany = self.stream_.orb.create_any
             jany.read_value(self.stream_, tc.tc_)
-            CORBA::Any.from_java(jany, self.stream_.orb(), tc)
+            CORBA::Any.from_java(jany, self.stream_.orb, tc)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -366,7 +366,7 @@ module R2CORBA
 
         def read_Abstract
           begin
-            obj = self.stream_.read_abstract_interface()
+            obj = self.stream_.read_abstract_interface
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -376,7 +376,7 @@ module R2CORBA
 
         def read_value
           begin
-            self.stream_.read_value()
+            self.stream_.read_value
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -458,7 +458,7 @@ module R2CORBA
           when TK_VALUE
             write_value(value)
           when TK_VALUE_BOX
-            write_valuebox(value, tc.get_type().boxedvalue_helper())
+            write_valuebox(value, tc.get_type.boxedvalue_helper)
             ## TODO: TK_NATIVE
           end
         end
@@ -701,7 +701,7 @@ module R2CORBA
 
         def write_construct(value, tc)
           begin
-            CORBA::Any.to_any(value, tc).to_java(self.stream_().orb()).write_value(self.stream_)
+            CORBA::Any.to_any(value, tc).to_java(self.stream_.orb).write_value(self.stream_)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -709,7 +709,7 @@ module R2CORBA
 
         def write_Abstract(value)
           begin
-            self.stream_().write_abstract_interface(value.is_a?(CORBA::Object) ? value.objref_ : value)
+            self.stream_.write_abstract_interface(value.is_a?(CORBA::Object) ? value.objref_ : value)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end

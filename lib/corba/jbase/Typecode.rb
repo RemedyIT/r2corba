@@ -521,7 +521,7 @@ module R2CORBA
       end
 
       # final initialization
-      self._init()
+      self._init
 
     end # TypeCode
   end ## module CORBA

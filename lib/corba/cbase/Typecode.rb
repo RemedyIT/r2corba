@@ -319,7 +319,7 @@ module R2CORBA
             @type = type_
             @members = []
             members_.each { |n, tc| add_member(n, tc) }
-            n_members = @members.collect { |n, tc| [n.to_s(), tc.tc_] }
+            n_members = @members.collect { |n, tc| [n.to_s, tc.tc_] }
             @tc_ = _create_tc(id, name, n_members)
             super(id)
           end
@@ -440,7 +440,7 @@ module R2CORBA
       end
 
       # final initialization
-      self._init()
+      self._init
 
     end # TypeCode
   end ## module CORBA

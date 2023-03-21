@@ -25,12 +25,12 @@ module R2CORBA
       def self._wrap_native(nreq, target)
         raise ArgumentError, 'Expected org.omg.CORBA.Request' unless nreq.nil? || nreq.is_a?(Native::Request)
 
-        nreq.nil?() ? nreq : @@wrapper_klass.new(nreq, target)
+        nreq.nil? ? nreq : @@wrapper_klass.new(nreq, target)
       end
 
       def operation
         begin
-          self.req_.operation()
+          self.req_.operation
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -154,7 +154,7 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-        jex = self.req_.env().exception()
+        jex = self.req_.env.exception
         unless jex.nil?
           STDERR.puts "#{jex}\n#{jex.backtrace.join("\n")}" if $VERBOSE
           if jex.is_a?(CORBA::Native::SystemException)
@@ -162,7 +162,7 @@ module R2CORBA
           elsif jex.is_a?(CORBA::Native::UnknownUserException)
             CORBA::UserException._raise(jex)
           else
-            raise CORBA::UNKNOWN.new(jex.getMessage(), 0, CORBA::COMPLETED_MAYBE)
+            raise CORBA::UNKNOWN.new(jex.getMessage, 0, CORBA::COMPLETED_MAYBE)
           end
         end
         self.result
