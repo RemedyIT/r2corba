@@ -435,6 +435,5 @@ module R2CORBA
       self._init()
 
     end # TypeCode
-
   end ## module CORBA
 end ## module R2CORBA

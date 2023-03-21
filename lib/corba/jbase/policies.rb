@@ -11,9 +11,7 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   module CORBA
-
     module ORB
       def create_policy(type, val)
         raise CORBA::BAD_PARAM.new('Any expected', 0, CORBA::COMPLETED_NO) unless CORBA::Any === val
@@ -133,11 +131,9 @@ module R2CORBA
         end
       end # of operation set_policy_overrides
     end # Policy
-
   end # CORBA
 
   module PortableServer
-
     module POA
       def create_thread_policy(value)
         begin
@@ -279,11 +275,9 @@ module R2CORBA
         end
       end # of attribute get_value
     end # of interface RequestProcessingPolicy
-
   end # PortableServer
 
   module BiDirPolicy
-
     module BidirectionalPolicy  ## interface
       def value()
         begin
@@ -293,7 +287,5 @@ module R2CORBA
         end
       end # of attribute get_value
     end # of interface BidirectionalPolicy
-
   end # BiDirPolicy
-
 end # R2CORBA

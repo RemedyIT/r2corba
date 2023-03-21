@@ -168,7 +168,6 @@ module R2CORBA
           end
         end
       end
-
     end # Portable
   end # CORBA
 end # R2CORBA

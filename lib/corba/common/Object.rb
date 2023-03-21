@@ -11,7 +11,6 @@
 #--------------------------------------------------------------------
 module R2CORBA
   module CORBA
-
     def CORBA.is_nil(obj)
       if obj.nil?
         return true
@@ -205,7 +204,6 @@ module R2CORBA
           CORBA::Exception.native2r($!)
         end
       end
-
     end # Object
   end # CORBA
 end # R2CORBA

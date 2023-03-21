@@ -11,9 +11,7 @@
 #--------------------------------------------------------------------
 module R2CORBA
   module CORBA
-
     module Request
-
       def add_in_arg(tc, val, nm = '')
         self._arguments << [nm, CORBA::ARG_IN, tc, val]
         self._arguments.size
@@ -126,8 +124,6 @@ module R2CORBA
       def _exceptions
         @_excl ||= []
       end
-
     end
-
   end # CORBA
 end # R2CORBA

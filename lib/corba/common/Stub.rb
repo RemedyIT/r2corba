@@ -13,7 +13,6 @@ module R2CORBA
   module CORBA
     module Portable
       module Stub
-
         def self.included(klass)
           klass.class_eval do
 

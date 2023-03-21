@@ -1142,6 +1142,5 @@ module R2CORBA
         CORBA._tc_longdouble
       end
     end
-
   end ## module CORBA
 end ## module R2CORBA

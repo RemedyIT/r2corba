@@ -19,9 +19,7 @@ rescue LoadError
 end
 
 module R2CORBA
-
   module CORBA
-
     module ORB
       def create_policy(type, val)
         raise CORBA::BAD_PARAM.new('Any expected', 0, CORBA::COMPLETED_NO) unless CORBA::Any === val
@@ -71,7 +69,5 @@ module R2CORBA
         end
       end
     end # Object
-
   end # CORBA
-
 end # R2CORBA

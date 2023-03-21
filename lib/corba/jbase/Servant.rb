@@ -11,11 +11,8 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   module PortableServer
-
     module DSI
-
       class Servant < PortableServer::Native::DynamicImplementation
         def self.new_instance(rsrv)
           srv = PortableServer::DSI::Servant.new
@@ -209,7 +206,6 @@ module R2CORBA
           end
         end
       end # Servant
-
     end # DSI
 
     class Servant
@@ -241,7 +237,5 @@ module R2CORBA
         end
       end
     end # Servant
-
   end # PortableServer
-
 end # R2CORBA

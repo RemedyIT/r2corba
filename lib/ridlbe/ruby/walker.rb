@@ -1584,5 +1584,4 @@ module IDL
 
     def visit_typedef(node); end
   end ## RubyServantWriter
-
 end ## module IDL

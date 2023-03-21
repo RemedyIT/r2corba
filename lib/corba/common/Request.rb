@@ -11,9 +11,7 @@
 #--------------------------------------------------------------------
 module R2CORBA
   module CORBA
-
     module Request
     end
-
   end # CORBA
 end # R2CORBA

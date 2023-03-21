@@ -11,9 +11,7 @@
 #--------------------------------------------------------------------
 module R2CORBA
   module CORBA
-
     module Object
-
       # ret InterfaceDef
       def _get_interface()
         raise ::CORBA::NO_IMPLEMENT
@@ -92,7 +90,6 @@ module R2CORBA
           CORBA::Exception.native2r($!)
         end
       end
-
     end # Object
   end # CORBA
 end # R2CORBA

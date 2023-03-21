@@ -12,7 +12,6 @@
 
 module R2CORBA
   module CORBA
-
     def CORBA.ORB_init(*args)
       # actual CORBA wrapper implementation implements
       # the ORB.init method
@@ -362,6 +361,5 @@ module R2CORBA
         self.orb_().lookup_value_factory(id)
       end
     end # ORB
-
   end # CORBA
 end # R2CORBA

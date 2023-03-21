@@ -31,7 +31,6 @@ module R2CORBA
           return nil
         end
       end
-
     end # Stub
   end # CORBA
 end # R2CORBA

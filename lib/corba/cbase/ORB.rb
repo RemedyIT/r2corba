@@ -13,9 +13,7 @@ require 'monitor'
 
 module R2CORBA
   module CORBA
-
     module ORB
-
       class << self
         protected
         def _singleton_orb_init
@@ -180,7 +178,6 @@ module R2CORBA
       def ior_map
         @iormap ||= R2CORBA::IORMap.new(self)
       end
-
     end # ORB
 
 =begin

@@ -14,7 +14,6 @@ require 'bigdecimal'
 
 module R2CORBA
   module CORBA
-
     # define typecode kind constants
     ['tk_null',
       'tk_void',
@@ -515,6 +514,5 @@ module R2CORBA
       self._init()
 
     end # TypeCode
-
   end ## module CORBA
 end ## module R2CORBA

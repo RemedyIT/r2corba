@@ -11,9 +11,7 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   module PortableServer
-
     class Servant
 
       module Intf
@@ -101,7 +99,5 @@ module R2CORBA
         end
       end
     end
-
   end
-
 end

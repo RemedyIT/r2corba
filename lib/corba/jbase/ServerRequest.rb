@@ -11,9 +11,7 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   module CORBA
-
     module ServerRequest
       @@wrapper_klass = Class.new do
         include CORBA::ServerRequest
@@ -119,9 +117,6 @@ module R2CORBA
         end
         jnvlist
       end
-
     end # ServerRequest
-
   end # CORBA
-
 end # R2CORBA

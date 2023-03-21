@@ -62,7 +62,6 @@ end
 
 module R2CORBA
   module INS
-
     ##
     # Binding iterator servant class
     #
@@ -427,6 +426,5 @@ module R2CORBA
       end
 
     end # of NamingContext servant
-
   end
 end

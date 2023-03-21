@@ -11,7 +11,6 @@
 #--------------------------------------------------------------------
 module R2CORBA
   module CORBA
-
     module Request
       @@wrapper_klass = Class.new do
         include CORBA::Request
@@ -218,8 +217,6 @@ module R2CORBA
           return *rc
         end
       end
-
     end
-
   end # CORBA
 end # R2CORBA
