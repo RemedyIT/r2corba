@@ -252,8 +252,7 @@ module IDL
 
     public
 
-    def declare_valuetype(node)
-    end
+    def declare_valuetype(node); end
 
     def enter_valuetype(node)
       println()
@@ -867,8 +866,7 @@ module IDL
       '(' + s + ')'
     end
 
-    def declare_struct(node)
-    end
+    def declare_struct(node); end
 
     def enter_struct(node)
       println()
@@ -931,8 +929,7 @@ module IDL
       leave_struct(node)
     end
 
-    def declare_union(node)
-    end
+    def declare_union(node); end
 
     def enter_union(node)
       println()
@@ -1243,8 +1240,7 @@ module IDL
       end
     end
 
-    def declare_valuetype(node)
-    end
+    def declare_valuetype(node); end
 
     def enter_valuetype(node)
       println
@@ -1265,11 +1261,9 @@ module IDL
       printiln("end #of servant #{node.rubyname}")
     end
 
-    def visit_valuebox(node)
-    end
+    def visit_valuebox(node); end
 
-    def visit_const(node)
-    end
+    def visit_const(node); end
 
     def visit_operation(node)
       _parm = node.params
@@ -1568,38 +1562,27 @@ module IDL
       '(' + s + ')'
     end
 
-    def declare_struct(node)
-    end
+    def declare_struct(node); end
 
-    def enter_struct(node)
-    end
+    def enter_struct(node); end
 
-    def leave_struct(node)
-    end
+    def leave_struct(node); end
 
-    def enter_exception(node)
-    end
+    def enter_exception(node); end
 
-    def leave_exception(node)
-    end
+    def leave_exception(node); end
 
-    def declare_union(node)
-    end
+    def declare_union(node); end
 
-    def enter_union(node)
-    end
+    def enter_union(node); end
 
-    def leave_union(node)
-    end
+    def leave_union(node); end
 
-    def visit_enum(node)
-    end
+    def visit_enum(node); end
 
-    def visit_enumerator(node)
-    end
+    def visit_enumerator(node); end
 
-    def visit_typedef(node)
-    end
+    def visit_typedef(node); end
   end ## RubyServantWriter
 
 end ## module IDL
