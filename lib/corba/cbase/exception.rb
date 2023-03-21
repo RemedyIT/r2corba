@@ -13,7 +13,6 @@
 # import all java CORBA exceptions into the R2CORBA::CORBA namespace
 module R2CORBA
   module CORBA
-
     class Exception
       def self.native2r(nex)
         raise nex
@@ -59,7 +58,6 @@ module R2CORBA
         self.class::Id
       end
     end
-
   end # CORBA
 end # R2CORBA
 

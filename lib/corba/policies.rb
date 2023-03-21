@@ -10,8 +10,8 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 
-require 'corba.rb'
-require 'corba/poa.rb'
+require 'corba'
+require 'corba/poa'
 require 'corba/idl/BiDirPolicyC'
 require 'corba/idl/MessagingC'
 require "corba/#{defined?(JRUBY_VERSION) ? 'jbase' : 'cbase'}/policies.rb"

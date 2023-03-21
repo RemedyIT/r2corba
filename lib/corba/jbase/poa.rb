@@ -18,10 +18,10 @@ module R2CORBA
   end
 end
 
-require 'corba/common/Servant.rb'
-require 'corba/idl/POAC.rb'
-require 'corba/jbase/Servant.rb'
-require 'corba/jbase/ServerRequest.rb'
+require 'corba/common/Servant'
+require 'corba/idl/POAC'
+require 'corba/jbase/Servant'
+require 'corba/jbase/ServerRequest'
 
 module R2CORBA
   module PortableServer
@@ -42,33 +42,33 @@ module R2CORBA
         end
       end # of operation destroy
 
-      def the_name()
+      def the_name
         begin
-          self.objref_.the_name()
+          self.objref_.the_name
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_the_name
 
-      def the_POAManager()
+      def the_POAManager
         begin
-          PortableServer::POAManager._narrow(CORBA::Object._wrap_native(self.objref_.the_POAManager()))
+          PortableServer::POAManager._narrow(CORBA::Object._wrap_native(self.objref_.the_POAManager))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_the_POAManager
 
-      def the_parent()
+      def the_parent
         begin
-          PortableServer::POA._narrow(CORBA::Object._wrap_native(self.objref_.the_parent()))
+          PortableServer::POA._narrow(CORBA::Object._wrap_native(self.objref_.the_parent))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_the_parent
 
-      def the_children()
+      def the_children
         begin
-          self.objref_.the_children().collect {|c| PortableServer::POA._narrow(CORBA::Object._wrap_native(c)) }
+          self.objref_.the_children.collect { |c| PortableServer::POA._narrow(CORBA::Object._wrap_native(c)) }
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -164,9 +164,10 @@ module R2CORBA
 
       def create_POA(adapter_name, a_POAManager, policies)
         raise CORBA::BAD_PARAM.new('expected POAManager', 0, CORBA::COMPLETED_NO) unless a_POAManager.is_a?(PortableServer::POAManager)
+
         CORBA::PolicyList._tc.validate(policies) unless policies.nil? || policies.empty?
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.nil? ? 0 : policies.size)
-        policies.each_with_index {|p, i| jpolicies[i] = p.objref_ } unless policies.nil?
+        policies.each_with_index { |p, i| jpolicies[i] = p.objref_ } unless policies.nil?
         begin
           PortableServer::POA._narrow(CORBA::Object._wrap_native(self.objref_.create_POA(adapter_name, a_POAManager.objref_, jpolicies)))
         rescue ::NativeException
@@ -184,9 +185,9 @@ module R2CORBA
     end # POA
 
     module POAManager
-      def activate()
+      def activate
         begin
-          self.objref_.activate()
+          self.objref_.activate
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -216,9 +217,9 @@ module R2CORBA
         end
       end # deactivate
 
-      def get_state()
+      def get_state
         begin
-          self.objref_.get_state().value()
+          self.objref_.get_state.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end

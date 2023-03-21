@@ -18,15 +18,15 @@ module IDL
       @nest = 0
     end
 
-    def print(str);       @output << str; end
+    def print(str); @output << str; end
 
     def println(str = '');  @output << str << "\n"; end
 
-    def printi(str = '');   @output << indent() << str; end
+    def printi(str = '');   @output << indent << str; end
 
-    def printiln(str = ''); @output << indent() << str << "\n"; end
+    def printiln(str = ''); @output << indent << str << "\n"; end
 
-    def indent()
+    def indent
       @indent * @nest
     end
 
@@ -65,18 +65,18 @@ module IDL
 #
 })
       println("require 'corba'") if @params[:libinit]
-      println()
+      println
       enter_module(parser.root_namespace) unless parser.root_namespace.nil?
       idleval = @params[:idl_eval] || false
-      if !idleval
+      unless idleval
         printiln("CORBA.implement('#{@params[:idlfile]}', {}, CORBA::IDL::CLIENT_STUB) {")
-        println()
+        println
       end
     end
 
     def post_visit(parser)
       idleval = @params[:idl_eval] || false
-      if !idleval
+      unless idleval
         printiln("} ## end of '#{@params[:idlfile]}'")
       end
       leave_module(parser.root_namespace) unless parser.root_namespace.nil?
@@ -85,31 +85,31 @@ module IDL
 
     def visit_include(node)
       printiln(format("require '%s'", node.filename.sub(/\.[^\.]*$/, @params[:stub_pfx])))
-      println()
+      println
     end
 
     def enter_include(node)
       printiln('## include')
       printiln("CORBA.implement('#{node.filename}', {}, CORBA::IDL::CLIENT_STUB) {")
-      println()
+      println
     end
 
     def leave_include(node)
-      println()
+      println
       printiln("} ## end of include '#{node.filename}'")
-      println()
+      println
     end
 
     def enter_module(node)
       printiln('module ' + node.rubyname)
-      println()
+      println
       @nest += 1
     end
 
     def leave_module(node)
       @nest -= 1
       printiln("end #of module #{node.rubyname}")
-      println()
+      println
     end
 
     def declare_interface(node)
@@ -137,14 +137,14 @@ module IDL
         else
           printiln("module #{node.rubyname}  ## interface")
         end
-        println()
+        println
         @nest += 1
 
         if node.bases.size > 0
           node.bases.each do |n|
             printiln("include #{n.scoped_rubyname}")
           end
-          println()
+          println
         end
 
         printiln(format("Id = '%s'.freeze", node.repository_id))
@@ -252,11 +252,10 @@ module IDL
 
     public
 
-    def declare_valuetype(node)
-    end
+    def declare_valuetype(node); end
 
     def enter_valuetype(node)
-      println()
+      println
       name = node.rubyname
       unless node.is_abstract?
         printiln("class #{name}")
@@ -277,7 +276,7 @@ module IDL
 
       unless node.is_abstract?
         trunc_ids = node.truncatable_ids
-        println()
+        println
         printi('TRUNCATABLE_IDS = [')
         print("'#{trunc_ids.shift}'")
         unless trunc_ids.empty?
@@ -291,19 +290,19 @@ module IDL
         println(' ].freeze')
       end
 
-      println()
+      println
       printiln(format('def %s._tc', node.rubyname))
       nest {
         printi("@@tc_#{node.rubyname} ||= ")
         print_valuetype_typecode(node)
-        println()
+        println
       }
       printiln('end')
       printiln('self._tc  # register typecode')
     end
 
     def leave_valuetype(node)
-      println()
+      println
       printiln('module Intf')
       nest {
         intfs_ = node.interfaces
@@ -327,7 +326,7 @@ module IDL
           end
         end
 
-        if node.has_concrete_base?() || !bases_.empty?() || !intfs_.empty?()
+        if node.has_concrete_base? || !bases_.empty? || !intfs_.empty?
           println
         end
 
@@ -347,7 +346,7 @@ module IDL
               end
             end
           end
-          println() if has_type
+          println if has_type
         end
 
         unless node.is_abstract?
@@ -360,7 +359,7 @@ module IDL
               has_type = true
             end
           end
-          println() if has_type
+          println if has_type
           has_type = false
           state_members_.each do |m|
             unless m.visibility == :public
@@ -372,10 +371,10 @@ module IDL
               has_type = true
             end
           end
-          println() if has_type
+          println if has_type
 
           printiln('public')
-          println()
+          println
 
           unless node.is_custom?
             printiln('def self.marshal(vt, __os__)')
@@ -393,7 +392,7 @@ module IDL
               end
             }
             printiln('end')
-            println()
+            println
 
             printiln('def self.unmarshal(vt, __is__)')
             nest {
@@ -410,21 +409,21 @@ module IDL
               end
             }
             printiln('end')
-            println()
+            println
 
             printiln('def marshal(os)')
             nest {
               printiln("#{node.scoped_rubyname}::Intf.marshal(self, os)")
             }
             printiln('end')
-            println()
+            println
 
             printiln('def unmarshal(is)')
             nest {
               printiln("#{node.scoped_rubyname}::Intf.unmarshal(self, is)")
             }
             printiln('end')
-            println()
+            println
           end
         end
       }
@@ -456,9 +455,9 @@ module IDL
               printiln('end')
             end
           else
-            println()
+            println
             initializers.each do |init|
-              printiln("def #{init.rubyname}(#{init.params().collect {|p| p.rubyname}.join(',')})")
+              printiln("def #{init.rubyname}(#{init.params.collect { |p| p.rubyname }.join(',')})")
               nest {
                 printiln("raise RuntimeError, 'unimplemented local operation called'")
               }
@@ -476,9 +475,9 @@ module IDL
       printiln("class #{name}")
       nest {
         printiln('include CORBA::Portable::BoxedValueBase')
-        println()
+        println
         printiln("TRUNCATABLE_IDS = [ '#{node.repository_id}' ].freeze")
-        println()
+        println
         printiln(format('def %s._tc', node.rubyname))
         nest {
           printiln(format("@@tc_%s ||= CORBA::TypeCode::Valuebox.new('%s'.freeze, '%s',",
@@ -506,7 +505,7 @@ module IDL
       _out = node.out_params
       _intf = node.enclosure
 
-      println()
+      println
       printi("def #{node.rubyname}(")
       print(_in.collect{ |p| p.rubyname }.join(', '))
       if node.oneway
@@ -568,7 +567,7 @@ module IDL
             newln = ','
           end
 
-          if not node.oneway
+          unless node.oneway
             println(newln)
             nest { printi(":result_type => #{get_typecode(node.idltype)}") }
             newln = ','
@@ -592,7 +591,7 @@ module IDL
 
           println('})')
 
-          if not node.oneway
+          unless node.oneway
             returns_void = (node.idltype.is_a? Type::Void)
             size = _out.size
             size += 1 unless returns_void
@@ -606,7 +605,7 @@ module IDL
 
     def visit_attribute(node, from_valuetype = false)
       _intf = node.enclosure
-      println()
+      println
       printiln("def #{node.rubyname}()")
       nest do
         if _intf.is_a?(IDL::AST::Valuetype) or from_valuetype
@@ -642,7 +641,7 @@ module IDL
         end
       end
       printiln("end #of attribute #{node.name} getter")
-      if not node.readonly
+      unless node.readonly
         printiln("def #{node.rubyname}=(val)")
         nest do
           if _intf.is_a?(IDL::AST::Valuetype) or from_valuetype
@@ -719,7 +718,7 @@ module IDL
 
       when Type::ScopedName
         scoped_type = _type.node.idltype
-        if scoped_type.is_a?(IDL::Type::Interface) && scoped_type.node.is_forward?()
+        if scoped_type.is_a?(IDL::Type::Interface) && scoped_type.node.is_forward?
           node = scoped_type.node
           "(CORBA::TypeCode.typecode_for_id('#{node.repository_id}') || " +
             "CORBA::TypeCode::ObjectRef.new('#{node.repository_id}', '#{node.rubyname}', #{node.scoped_rubyname}))"
@@ -867,11 +866,10 @@ module IDL
       '(' + s + ')'
     end
 
-    def declare_struct(node)
-    end
+    def declare_struct(node); end
 
     def enter_struct(node)
-      println()
+      println
       name = node.rubyname
       printiln("class #{name} < CORBA::Portable::Struct")
       @nest += 1
@@ -879,7 +877,7 @@ module IDL
 
     def leave_struct(node)
       tc_ = if node.is_a? IDL::AST::Exception then 'Except' else 'Struct' end
-      println()
+      println
       printiln(format('def %s._tc', node.rubyname))
       struct_members_ = node.members
       nest {
@@ -912,7 +910,7 @@ module IDL
           end
         }
         printiln('end')
-        println()
+        println
       end
 
       name = node.rubyname
@@ -921,7 +919,7 @@ module IDL
     end
 
     def enter_exception(node)
-      println()
+      println
       name = node.rubyname
       printiln("class #{name} < CORBA::UserException")
       @nest += 1
@@ -931,18 +929,17 @@ module IDL
       leave_struct(node)
     end
 
-    def declare_union(node)
-    end
+    def declare_union(node); end
 
     def enter_union(node)
-      println()
+      println
       name = node.rubyname
       printiln("class #{name} < CORBA::Portable::Union")
       @nest += 1
     end
 
     def leave_union(node)
-      println()
+      println
       printiln(format('def %s._tc', node.rubyname))
       nest {
         printiln(format("@@tc_%s ||= CORBA::TypeCode::Union.new('%s'.freeze, '%s',",
@@ -1136,15 +1133,15 @@ module IDL
 })
       idleval = @params[:idl_eval] || false
       println("require 'corba/poa.rb'") if @params[:libinit]
-      if !@params[:expand_includes]
+      unless @params[:expand_includes]
         println("require '" + @params[:idlfile].sub(/\.[^\.]*$/, @params[:stub_pfx]) + "'")
       end
-      println()
+      println
       printiln('module POA')
       @nest += 1
-      if !idleval
+      unless idleval
         printiln("CORBA.implement('#{@params[:idlfile]}', {}, CORBA::IDL::SERVANT_INTF) {")
-        println()
+        println
       end
       ## register explicit (*not* IDL derived) rootnamespace used for client stubs
       @stub_root = "#{parser.root_namespace.rubyname}::" unless parser.root_namespace.nil?
@@ -1152,7 +1149,7 @@ module IDL
 
     def post_visit(parser)
       idleval = @params[:idl_eval] || false
-      if !idleval
+      unless idleval
         printiln("} ## end of '#{@params[:idlfile]}'")
       end
       @nest -= 1
@@ -1162,31 +1159,31 @@ module IDL
 
     def visit_include(node)
       printiln(format("require '%s'", node.filename.sub(/\.[^\.]*$/, @params[:srv_pfx])))
-      println()
+      println
     end
 
     def enter_include(node)
       printiln('## include')
       printiln("CORBA.implement('#{node.filename}', {}, CORBA::IDL::SERVANT_INTF) {")
-      println()
+      println
     end
 
     def leave_include(node)
-      println()
+      println
       printiln("} ## end of include '#{node.filename}'")
-      println()
+      println
     end
 
     def enter_module(node)
       printiln('module ' + node.rubyname)
-      println()
+      println
       @nest += 1
     end
 
     def leave_module(node)
       @nest -= 1
       printiln("end #of module #{node.rubyname}")
-      println()
+      println
     end
 
     def declare_interface(node)
@@ -1194,10 +1191,10 @@ module IDL
     end
 
     def enter_interface(node)
-      if !node.is_local?
+      unless node.is_local?
         println
         printiln("class #{node.rubyname} < PortableServer::Servant ## servant")
-        println()
+        println
         @nest += 1
 
         printiln('module Intf')
@@ -1209,20 +1206,20 @@ module IDL
         end
         println(' ]')
         printiln('Operations = {}')
-        println()
+        println
       end
     end
 
     def leave_interface(node)
-      if !node.is_local?
+      unless node.is_local?
         name = node.rubyname
 
         @nest -= 1
         printiln('end #of Intf')
 
-        println()
+        println
         printiln('Id = Intf::Id')
-        println()
+        println
 
         if node.bases.size > 0
           node.bases.each do |n|
@@ -1231,10 +1228,10 @@ module IDL
         else
           printiln('include_interface(PortableServer::Servant::Intf)')
         end
-        println()
+        println
 
         printiln('include Intf')
-        println()
+        println
 
         printiln("def _this; #{@stub_root}#{node.scoped_rubyname}._narrow(super); end")
 
@@ -1243,8 +1240,7 @@ module IDL
       end
     end
 
-    def declare_valuetype(node)
-    end
+    def declare_valuetype(node); end
 
     def enter_valuetype(node)
       println
@@ -1265,11 +1261,9 @@ module IDL
       printiln("end #of servant #{node.rubyname}")
     end
 
-    def visit_valuebox(node)
-    end
+    def visit_valuebox(node); end
 
-    def visit_const(node)
-    end
+    def visit_const(node); end
 
     def visit_operation(node)
       _parm = node.params
@@ -1301,7 +1295,7 @@ module IDL
         newln = ','
       end
 
-      if not node.oneway
+      unless node.oneway
         println(newln)
         nest { printi(":result_type => #{get_typecode(node.idltype)}") }
         newln = ','
@@ -1329,7 +1323,7 @@ module IDL
         nest { printi(":op_sym => :#{node.rubyname}") }
       end
       println('})')
-      println()
+      println
 
       printi("def #{node.rubyname}(")
       print(_in.collect{ |p| p.rubyname }.join(', '))
@@ -1344,7 +1338,7 @@ module IDL
         printiln('         1, ::CORBA::COMPLETED_NO)')
       }
       printiln('end')
-      println()
+      println
     end
 
     def visit_attribute(node)
@@ -1372,7 +1366,7 @@ module IDL
           printiln(":op_sym => :#{node.rubyname} })")
         }
       }
-      println()
+      println
 
       printiln("def #{node.rubyname}()")
       nest {
@@ -1381,9 +1375,9 @@ module IDL
         printiln('         1, ::CORBA::COMPLETED_NO)')
       }
       printiln("end #of attribute get_#{node.name}")
-      println()
+      println
 
-      if not node.readonly
+      unless node.readonly
         printiln("Operations.store(:_set_#{node.name}, {")
         nest {
           nest {
@@ -1407,7 +1401,7 @@ module IDL
             printiln(":op_sym => :#{node.rubyname}= })")
           }
         }
-        println()
+        println
 
         printiln("def #{node.rubyname}=(val)")
         nest {
@@ -1416,7 +1410,7 @@ module IDL
           printiln('         1, ::CORBA::COMPLETED_NO)')
         }
         printiln("end #of attribute set_#{node.name}")
-        println()
+        println
       end
     end
 
@@ -1568,38 +1562,26 @@ module IDL
       '(' + s + ')'
     end
 
-    def declare_struct(node)
-    end
+    def declare_struct(node); end
 
-    def enter_struct(node)
-    end
+    def enter_struct(node); end
 
-    def leave_struct(node)
-    end
+    def leave_struct(node); end
 
-    def enter_exception(node)
-    end
+    def enter_exception(node); end
 
-    def leave_exception(node)
-    end
+    def leave_exception(node); end
 
-    def declare_union(node)
-    end
+    def declare_union(node); end
 
-    def enter_union(node)
-    end
+    def enter_union(node); end
 
-    def leave_union(node)
-    end
+    def leave_union(node); end
 
-    def visit_enum(node)
-    end
+    def visit_enum(node); end
 
-    def visit_enumerator(node)
-    end
+    def visit_enumerator(node); end
 
-    def visit_typedef(node)
-    end
+    def visit_typedef(node); end
   end ## RubyServantWriter
-
 end ## module IDL

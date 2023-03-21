@@ -101,7 +101,7 @@ module R2CORBA
         def stop
           report 'INS - stopping service'
 
-          rc, pid = self.check_pidfile()
+          rc, pid = self.check_pidfile
 
           if pid
             report 'INS - signalling service'
@@ -117,7 +117,7 @@ module R2CORBA
         def status
           report 'INS - retrieving service status'
 
-          rc, pid = self.check_pidfile()
+          rc, pid = self.check_pidfile
 
           if pid
             if rc
@@ -261,7 +261,7 @@ module R2CORBA
 
             Daemons.run_proc('ins.rb', daemon_opt) {}
           else
-            rc, pid = self.check_pidfile()
+            rc, pid = self.check_pidfile
 
             if pid
               report 'INS - signalling service'
@@ -384,7 +384,7 @@ module R2CORBA
 
     def INS.parse_arg
       script_name = File.basename($0, '.bat')
-      if not script_name =~ /rins/
+      unless script_name =~ /rins/
         script_name = 'ruby ' + $0
       end
 
@@ -511,7 +511,7 @@ module R2CORBA
     end
 
     def INS.run
-      self.parse_arg()
+      self.parse_arg
 
       Controller.new(OPTIONS).send(self.command)
     end

@@ -12,9 +12,7 @@
 
 module R2CORBA
   module CORBA
-
     module ORB
-
       class << self
         protected
         def _singleton_orb_init
@@ -39,21 +37,24 @@ module R2CORBA
           a1, a2, a3 = args
           if Array === a1
             raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 3
+
             argv = a1
             orb_id = (Hash === a2 ? nil : a2)
             prop = (Hash === a2 ? a2 : a3)
           elsif args.size == 1 || Hash === a2
             raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 2
+
             orb_id = a1
             prop = a2
           else
             argv = args
           end
           raise ArgumentError, "Invalid argument #{prop.class}; expected Hash" unless prop.nil? || Hash === prop
+
           jprop = Java::JavaUtil::Properties.new
           jprop.setProperty('ORBid', orb_id) if orb_id
           prop.each { |k, v| jprop.setProperty(k.to_s, v.to_s) } if prop
-          @@cached_orb = CORBA::Native::ORB.init(argv.collect {|a| a.to_s }.to_java(:string), jprop)
+          @@cached_orb = CORBA::Native::ORB.init(argv.collect { |a| a.to_s }.to_java(:string), jprop)
         end
         @@wrapper_klass.new(n_orb)
       end
@@ -84,7 +85,7 @@ module R2CORBA
             rescue ::NativeException
               CORBA::Exception.native2r($!)
             end
-          end).join()
+          end).join
         else
           # need to start a shutdown *with* waiting in a thread because JacORB
           # occasionally fails with a comm error when #shutdown(false) is called
@@ -104,8 +105,6 @@ module R2CORBA
       def ior_map
         @iormap ||= R2CORBA::IORMap.new(self)
       end
-
     end
-
   end # CORBA
 end # R2CORBA

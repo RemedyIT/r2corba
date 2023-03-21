@@ -10,8 +10,8 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 
-require 'corba/idl/IDL.rb'
-require 'corba/idl/r2c_orb.rb'
+require 'corba/idl/IDL'
+require 'corba/idl/r2c_orb'
 
 ## fake Ruby into believing 'orb.rb' has already been loaded
 ## which is what the IDL compiler will generate for

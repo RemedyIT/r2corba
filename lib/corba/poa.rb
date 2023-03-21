@@ -10,5 +10,5 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 
-require 'corba.rb'
+require 'corba'
 require "corba/#{defined?(JRUBY_VERSION) ? 'jbase' : 'cbase'}/poa.rb"
