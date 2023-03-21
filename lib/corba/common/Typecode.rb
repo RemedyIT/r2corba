@@ -441,7 +441,7 @@ module R2CORBA
           val = ::String === val ? val : val.to_str
           raise ::CORBA::MARSHAL.new(
             "string size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless self.empty? || val.size <= self.length
+            1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           val
         end
 
@@ -474,7 +474,7 @@ module R2CORBA
           end
           raise ::CORBA::MARSHAL.new(
             "widestring size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless self.empty? || val.size <= self.length
+            1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           raise ::CORBA::MARSHAL.new(
             'invalid widestring element(s)',
             1, ::CORBA::COMPLETED_NO) if val.any? { |el| !(UShortRange === (el.respond_to?(:to_int) ? el.to_int : el)) }
@@ -548,7 +548,7 @@ module R2CORBA
           end
           raise ::CORBA::MARSHAL.new(
             "sequence size exceeds bound: #{self.length.to_s}",
-            1, ::CORBA::COMPLETED_NO) unless self.empty? || val.size <= self.length
+            1, ::CORBA::COMPLETED_NO) unless self.length == 0 || val.size <= self.length
           if ::Array === val
             if val.any? { |e| self.content_type.needs_conversion(e) }
               val.collect { |e| self.content_type.validate(e) }

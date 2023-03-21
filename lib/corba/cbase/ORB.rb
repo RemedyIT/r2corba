@@ -226,7 +226,7 @@ module R2CORBA
      def CORBA.handle_signal(signum)
        if @@sigreg.has_key?(signum)
          if @@sigreg[signum].respond_to?(:call)
-           if @@sigreg[signum].respond_to?(:parameters) && !@@sigreg[signum].parameters.empty?
+           if @@sigreg[signum].respond_to?(:parameters) && @@sigreg[signum].parameters.size > 0
              @@sigreg[signum].call(signum)
            else
              @@sigreg[signum].call
