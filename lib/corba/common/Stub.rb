@@ -32,7 +32,7 @@ module R2CORBA
         end
 
         Id  = 'IDL:omg.org/CORBA/Object:1.0'.freeze
-        Ids = [ Id ].freeze
+        Ids = [Id].freeze
 
         protected
         def init_corba_portable_stub

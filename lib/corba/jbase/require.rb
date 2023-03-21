@@ -80,7 +80,7 @@ module R2CORBA
   end
 end
 
-[ 'exception',
+['exception',
   'Object',
   'ORB',
   'Request',

@@ -1099,14 +1099,14 @@ module R2CORBA
     end # TypeCode
 
     # define typecode constants for primitive types
-    [ 'null', 'void',
+    ['null', 'void',
       'short', 'long', 'ushort', 'ulong', 'longlong', 'ulonglong',
       'float', 'double', 'longdouble',
       'boolean',
       'char', 'octet',
       'wchar',
       'any',
-    ].each do |tck|
+].each do |tck|
       CORBA.module_eval %Q{
         def CORBA._tc_#{tck}
           @@tc_#{tck} ||= TypeCode.get_primitive_tc(CORBA::TK_#{tck.upcase})

@@ -15,7 +15,7 @@ module R2CORBA
     class Servant
       module Intf
         Id  = 'IDL:omg.org/CORBA/Object:1.0'.freeze
-        Ids = [ Id ].freeze
+        Ids = [Id].freeze
         Operations = {}.freeze
       end
 

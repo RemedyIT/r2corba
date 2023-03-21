@@ -16,7 +16,7 @@ module R2CORBA
   BIGNUM_KLASS = (1.class == ::Integer ? ::Integer : ::Bignum)
 end
 
-[ 'version',
+['version',
   'const',
   'IDL',
   'exception',
