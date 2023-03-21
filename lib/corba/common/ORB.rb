@@ -29,6 +29,7 @@ module R2CORBA
 
       def self._wrap_native(norb)
         raise ArgumentError, 'Expected org.omg.CORBA.ORB' unless norb.nil? || norb.is_a?(Native::ORB)
+
         norb.nil?() ? norb : @@wrapper_klass.new(norb)
       end
 
@@ -63,6 +64,7 @@ module R2CORBA
       # ret ::String
       def object_to_string(obj)
         raise CORBA::BAD_PARAM.new('CORBA::Object required', 0, CORBA::COMPLETED_NO) unless obj.is_a?(CORBA::Object)
+
         begin
           self.orb_.object_to_string(obj.objref_)
         rescue ::NativeException

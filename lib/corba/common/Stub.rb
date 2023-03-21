@@ -22,6 +22,7 @@ module R2CORBA
 
             def self.create_stub(obj)
               raise CORBA::INV_OBJREF.new unless obj.is_a?(CORBA::Object)
+
               obj.extend(self) unless obj.is_a?(self)
               obj.init()
               return obj
@@ -48,6 +49,7 @@ module R2CORBA
         def _narrow!(klass)
           raise CORBA::OBJECT_NOT_EXIST.new('Nil object narrowed!') if self._is_nil?
           raise(TypeError, "invalid object narrowed: #{self.class}") unless self.is_a?(CORBA::Stub) && self._is_a?(klass::Id)
+
           self.extend klass
           _append_ids(*klass::Ids)
           return self
@@ -56,6 +58,7 @@ module R2CORBA
         def _unchecked_narrow!(klass)
           raise CORBA::OBJECT_NOT_EXIST.new('Nil object narrowed!') if self._is_nil?
           raise(TypeError, "invalid object narrowed: #{self.class}") unless self.is_a?(CORBA::Stub)
+
           self.extend klass
           _append_ids(*klass::Ids)
           return self

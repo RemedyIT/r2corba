@@ -15,6 +15,7 @@ module R2CORBA
     module ORB
       def create_policy(type, val)
         raise CORBA::BAD_PARAM.new('Any expected', 0, CORBA::COMPLETED_NO) unless CORBA::Any === val
+
         begin
           Policy._wrap_native(self.orb_.create_policy(type.to_i, val.to_java(self.orb_)))
         rescue ::NativeException
@@ -26,6 +27,7 @@ module R2CORBA
     module Object
       def _get_policy(policy_type)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
+
         begin
           pol = Policy._wrap_native(self.objref_._get_policy(policy_type))
         rescue ::NativeException
@@ -36,6 +38,7 @@ module R2CORBA
 
       def _get_policy_overrides(ts)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
+
         ## currently JacORB does not support #_get_policy_overrides so we emulate it in that case
         unless self.objref_.respond_to?(:_get_policy_overrides)
           begin
@@ -55,6 +58,7 @@ module R2CORBA
 
       def _set_policy_overrides(policies, set_add)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
+
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.size)
         policies.each_with_index {|e, i| jpolicies[i] = e.objref_ }
         begin
@@ -78,6 +82,7 @@ module R2CORBA
     module Policy
       def self._wrap_native(jpol)
         raise ArgumentError, 'Expected org.omg.CORBA.Policy' unless jpol.nil? || jpol.is_a?(Native::Policy)
+
         Policy._narrow(CORBA::Object._wrap_native(jpol))
       end
 

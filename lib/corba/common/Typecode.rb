@@ -28,6 +28,7 @@ module R2CORBA
 
       def self._wrap_native(ntc)
         raise ArgumentError, 'Expected org.omg.CORBA.TypeCode' unless ntc.nil? || ntc.is_a?(Native::TypeCode)
+
         ntc.nil?() ? ntc : @@wrapper_klass.new(ntc)
       end
 
@@ -188,6 +189,7 @@ module R2CORBA
 
       def equal?(tc)
         raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
+
         begin
           self.tc_.equal(tc.tc_)
         rescue ::NativeException
@@ -197,6 +199,7 @@ module R2CORBA
 
       def equivalent?(tc)
         raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
+
         begin
           self.tc_.equivalent(tc.tc_)
         rescue ::NativeException
@@ -435,6 +438,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val) unless ::String === val || val.respond_to?(:to_str)
           val = ::String === val ? val : val.to_str
           raise ::CORBA::MARSHAL.new(
@@ -460,6 +464,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val) unless ::Array === val || val.respond_to?(:to_str) || val.respond_to?(:to_ary)
           val = if ::Array === val
             val
@@ -506,6 +511,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val) unless ::BigDecimal === val || val.respond_to?(:to_str)
           val = ::BigDecimal === val ? val : BigDecimal(val.to_str)
           val
@@ -528,6 +534,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val) unless val.respond_to?(:to_str) || val.respond_to?(:to_ary)
           val = if self.content_type.kind == TK_OCTET || self.content_type.kind == TK_CHAR
             if val.respond_to?(:to_str)
@@ -585,6 +592,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val)
           raise ::CORBA::MARSHAL.new(
             "array size exceeds bound: #{self.length.to_s}",
@@ -637,6 +645,7 @@ module R2CORBA
 
         def add_member(name, tc, access)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
+
           @members << [name, tc, access]
         end
 
@@ -674,6 +683,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val)
           if needs_conversion(val)
             vorg = val
@@ -687,6 +697,7 @@ module R2CORBA
 
         def needs_conversion(val)
           return false if val.nil?
+
           @members.any? { |name, tc| tc.needs_conversion(val.__send__(name.intern)) }
         end
 
@@ -696,11 +707,13 @@ module R2CORBA
 
         def member_name(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index][0]
         end
 
         def member_type(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index][1]
         end
 
@@ -741,6 +754,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           if CORBA::Portable::BoxedValueBase === val
             super(val)
             val.value = self.content_type.validate(val.value)
@@ -752,6 +766,7 @@ module R2CORBA
 
         def needs_conversion(val)
           return false if val.nil?
+
           if CORBA::Portable::BoxedValueBase === val
             self.content_type.needs_conversion(val.value)
           else
@@ -788,6 +803,7 @@ module R2CORBA
 
         def add_member(name, tc)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
+
           @members << [name, tc]
         end
 
@@ -816,6 +832,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val)
           if needs_conversion(val)
             vorg = val
@@ -837,11 +854,13 @@ module R2CORBA
 
         def member_name(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index][0]
         end
 
         def member_type(index)
           raise ::CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index][1]
         end
 
@@ -914,6 +933,7 @@ module R2CORBA
 
         def add_member(label, name, tc)
           raise ArgumentError, 'expected CORBA::TypeCode' unless tc.is_a?(CORBA::TypeCode)
+
           @switchtype.validate(label) unless label == :default
           @labels[label] = @members.size
           @members << [label, name.to_s, tc]
@@ -952,6 +972,7 @@ module R2CORBA
 
         def validate(val)
           return val if val.nil?
+
           super(val)
           @switchtype.validate(val._disc) unless val._disc == :default
           # raise CORBA::MARSHAL.new(
@@ -980,16 +1001,19 @@ module R2CORBA
 
         def member_name(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index][1]
         end
 
         def member_type(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index][2]
         end
 
         def member_label(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index][0]
         end
 
@@ -1011,6 +1035,7 @@ module R2CORBA
 
         def label_member(val)
           return nil unless (lbl_ix = label_index(val))
+
           member_name(lbl_ix)
         end
 
@@ -1049,6 +1074,7 @@ module R2CORBA
 
         def member_name(index)
           raise CORBA::TypeCode::Bounds.new if (index < 0) || (index >= @members.size)
+
           @members[index]
         end
       end # Enum

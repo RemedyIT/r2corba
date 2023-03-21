@@ -67,6 +67,7 @@ module R2CORBA
         unless fpath.nil?
           return fpath
         end
+
         raise "Cannot open IDL file '#{fname}'"
       end
 

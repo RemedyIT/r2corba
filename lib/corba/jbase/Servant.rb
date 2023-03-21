@@ -37,6 +37,7 @@ module R2CORBA
         def invoke(jsrvreq)
           begin
             raise CORBA::NO_IMPLEMENT.new('', 0, CORBA::COMPLETED_NO) unless @rsrv
+
             rsrvreq = CORBA::ServerRequest._wrap_native(jsrvreq, self._orb())
             begin
               case rsrvreq.srvreq_.operation()
@@ -230,6 +231,7 @@ module R2CORBA
           end
         end
         raise CORBA::BAD_INV_ORDER.new('no ORB initialized', 0, CORBA::COMPLETED_NO) if CORBA::ORB._orb.nil?
+
         begin
           return CORBA::Object._wrap_native(self.srvref_._this_object(CORBA::ORB._orb))
         rescue ::NativeException

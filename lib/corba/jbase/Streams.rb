@@ -26,6 +26,7 @@ module R2CORBA
           if jobj.nil? || !jobj.is_a?(Native::V2_3::Portable::InputStream)
             raise ArgumentError, 'Expected org.omg.CORBA.portable.InputStream'
           end
+
           @@wrapper_klass.new(jobj)
         end
 
@@ -403,6 +404,7 @@ module R2CORBA
           if jobj.nil? || !jobj.is_a?(Native::V2_3::Portable::OutputStream)
             raise ArgumentError, 'Expected org.omg.CORBA.portable.OutputStream'
           end
+
           @@wrapper_klass.new(jobj)
         end
 

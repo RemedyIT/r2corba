@@ -23,6 +23,7 @@ module R2CORBA
     module ORB
       def create_policy(type, val)
         raise CORBA::BAD_PARAM.new('Any expected', 0, CORBA::COMPLETED_NO) unless CORBA::Any === val
+
         begin
           self.orb_.create_policy(type.to_i, val)
         rescue ::NativeException
@@ -34,6 +35,7 @@ module R2CORBA
     module Object
       def _get_policy(policy_type)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
+
         begin
           pol = self.objref_._get_policy(policy_type)
         rescue ::NativeException
@@ -44,6 +46,7 @@ module R2CORBA
 
       def _set_policy_overrides(policies, set_add)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
+
         begin
           CORBA::Object._wrap_native(self.objref_._set_policy_overrides(policies, set_add))
         rescue ::NativeException
@@ -53,6 +56,7 @@ module R2CORBA
 
       def _get_policy_overrides(types)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
+
         begin
           self.objref_._get_policy_overrides(types)
         rescue ::NativeException
@@ -62,6 +66,7 @@ module R2CORBA
 
       def _validate_connection(inconsistent_policies)
         raise CORBA::INV_OBJREF.new if self._is_nil?()
+
         begin
           self.objref_._validate_connection(inconsistent_policies)
         rescue ::NativeException

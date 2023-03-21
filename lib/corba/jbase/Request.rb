@@ -24,6 +24,7 @@ module R2CORBA
 
       def self._wrap_native(nreq, target)
         raise ArgumentError, 'Expected org.omg.CORBA.Request' unless nreq.nil? || nreq.is_a?(Native::Request)
+
         nreq.nil?() ? nreq : @@wrapper_klass.new(nreq, target)
       end
 
@@ -80,6 +81,7 @@ module R2CORBA
       def arguments=(*args)
         if args.size == 1
           raise ArgumentError, 'invalid argument list' unless ::Array === args.first && args.first.all? {|a| ::Array === a }
+
           args = args.first
         else
           raise ArgumentError, 'invalid argument list' unless args.all? {|a| ::Array === a }

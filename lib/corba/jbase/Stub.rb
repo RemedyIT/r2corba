@@ -20,6 +20,7 @@ module R2CORBA
       # Handle IDL generated invocation
       def _invoke(operation, param = {})
         raise ArgumentError, 'expected Hash' unless ::Hash === param
+
         req = self._request(operation)
         req.arguments = param[:arg_list] if param.has_key?(:arg_list)
         req.exceptions = param[:exc_list] if param.has_key?(:exc_list)

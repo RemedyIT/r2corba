@@ -63,6 +63,7 @@ module R2CORBA
     class SystemException
       def self._raise(jex)
         raise ArgumentError unless (NativeException === jex and jex.cause.is_a?(Native::SystemException)) or jex.is_a?(Native::SystemException)
+
         java_ex = jex.is_a?(Native::SystemException) ? jex : jex.cause
         exname = java_ex.class.name.split('::').last
         exklass = CORBA.const_get(exname.to_sym)

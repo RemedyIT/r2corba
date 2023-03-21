@@ -99,6 +99,7 @@ module R2CORBA
           else
             element_tc, bound = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless element_tc.is_a?(CORBA::TypeCode)
+
             begin
               @tc_ = CORBA::Native::TypeCode.create_tc(TK_SEQUENCE, bound.to_i, element_tc.tc_)
             rescue ::NativeException
@@ -118,6 +119,7 @@ module R2CORBA
             content_tc = args.shift
             length = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless content_tc.is_a?(CORBA::TypeCode)
+
             if length.size > 1
               this_len = length.shift
               content_tc = self.class.new(content_tc, *length)
@@ -152,6 +154,7 @@ module R2CORBA
           else
             id, name, orig_tc, type = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless orig_tc.is_a?(CORBA::TypeCode)
+
             begin
               @tc_ = CORBA::Native::TypeCode.create_tc(TK_ALIAS, id.to_s, name.to_s, orig_tc.tc_)
             rescue ::NativeException
@@ -179,6 +182,7 @@ module R2CORBA
             id, name, modifier, base, members_, type_ = args
             raise ArgumentError, 'expected CORBA::Typecode' unless base.nil? || base.is_a?(CORBA::TypeCode)
             raise ArgumentError, 'expected members Array' unless members_.is_a?(::Array) || type_.nil?
+
             if type_.nil? && !members_.is_a?(::Array)
               type_ = members_
               members_ = []
@@ -236,6 +240,7 @@ module R2CORBA
           else
             id, name, boxed_tc, type = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless boxed_tc.is_a?(CORBA::TypeCode)
+
             begin
               @tc_ = CORBA::Native::TypeCode.create_tc(TK_VALUE_BOX, id.to_s, name.to_s, boxed_tc.tc_)
             rescue ::NativeException
@@ -306,6 +311,7 @@ module R2CORBA
           else
             id, name, members_, type_ = args
             raise ArgumentError, 'expected members Array' unless members_.is_a?(::Array) || type_.nil?
+
             if type_.nil? && !members_.is_a?(::Array)
               type_ = members_
               members_ = []
@@ -369,6 +375,7 @@ module R2CORBA
             id, name, switchtype_, members_, type_, implicit_default_ = args
             raise ::CORBA::BAD_PARAM unless members_.is_a? ::Array
             raise ::CORBA::BAD_PARAM unless switchtype_.is_a?(CORBA::TypeCode)
+
             @type = type_
             @implicit_default = implicit_default_
             @switchtype = switchtype_.resolved_tc
@@ -414,6 +421,7 @@ module R2CORBA
           else
             id, name, members_ = args
             raise CORBA::BAD_PARAM unless members_.is_a? ::Array
+
             @members = members_.collect {|m| m.to_s}
             @range = (0...@members.size).freeze
             begin
