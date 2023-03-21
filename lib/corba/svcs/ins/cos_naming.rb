@@ -207,7 +207,7 @@ module R2CORBA
       # CosNaming::NamingContext methods
       #
       def bind(n, obj)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         if n.size > 1
           nc = find_context(n)
@@ -218,7 +218,7 @@ module R2CORBA
       end
 
       def rebind(n, obj)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         if n.size > 1
           nc = find_context(n)
@@ -229,7 +229,7 @@ module R2CORBA
       end
 
       def bind_context(n, nc_new)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         if n.size > 1
           nc = find_context(n)
@@ -240,7 +240,7 @@ module R2CORBA
       end
 
       def rebind_context(n, nc_new)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         if n.size > 1
           nc = find_context(n)
@@ -251,13 +251,13 @@ module R2CORBA
       end
 
       def resolve(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         find_object(n)
       end
 
       def unbind(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         if n.size > 1
           nc = find_context(n)
@@ -279,7 +279,7 @@ module R2CORBA
       end
 
       def bind_new_context(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         nc = self.new_context
         self.bind_context(n, nc)
@@ -287,7 +287,7 @@ module R2CORBA
       end
 
       def destroy
-        raise CosNaming::NamingContext::NotEmpty.new if @map.size > 0
+        raise CosNaming::NamingContext::NotEmpty.new if !@map.empty?
         return if self.oid.nil? ## no oid for root context
 
         poa = self._default_POA
@@ -316,7 +316,7 @@ module R2CORBA
       # CosNaming::NamingContextExt methods
       #
       def to_string(n)
-        raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+        raise CosNaming::NamingContext::InvalidName.new if n.empty?
 
         n.collect { |nc| nc.to_string }.join('/')
       end
