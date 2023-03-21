@@ -61,10 +61,10 @@ module R2CORBA
             f = p + '/' + fname
             File.file?(f) && File.readable?(f)
           end
-          fp += '/' + fname if !fp.nil?
+          fp += '/' + fname unless fp.nil?
           fp
         end
-        if not fpath.nil?
+        unless fpath.nil?
           return fpath
         end
         raise "Cannot open IDL file '#{fname}'"

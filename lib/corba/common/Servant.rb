@@ -44,21 +44,21 @@ module R2CORBA
       end
 
       def Servant.include_srv(srv)
-        if !self.const_defined?('Id')
+        unless self.const_defined?('Id')
           if self.superclass == R2CORBA::PortableServer::Servant || !self.constants.include?('Id')
             self.const_set('Id', srv::Id.dup.freeze)
           else
             self.const_set('Id', self::Id.dup.freeze)
           end
         end
-        if !self.const_defined?('Ids')
+        unless self.const_defined?('Ids')
           if self.superclass == R2CORBA::PortableServer::Servant || !self.constants.include?('Ids')
             self.const_set('Ids', [])
           else
             self.const_set('Ids', self::Ids.dup)
           end
         end
-        if !self.const_defined?('Operations')
+        unless self.const_defined?('Operations')
           if self.superclass == R2CORBA::PortableServer::Servant || !self.constants.include?('Operations')
             self.const_set('Operations', {})
           else

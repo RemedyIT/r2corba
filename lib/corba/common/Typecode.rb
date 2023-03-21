@@ -1032,7 +1032,7 @@ module R2CORBA
         end
 
         def validate(val)
-          super(val) if !val.respond_to?(:to_int)
+          super(val) unless val.respond_to?(:to_int)
           raise CORBA::MARSHAL.new(
             "value (#{val}) out of range (#{@range}) for enum: #{name}",
             1, CORBA::COMPLETED_NO) unless @range === (::Integer === val ? val : val.to_int)

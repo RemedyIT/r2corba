@@ -257,7 +257,7 @@ module R2CORBA
         else
           @map.synchronize do
             raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Missing_node,
-                                                         n) if !@map.has_key?(n.first.r_id)
+                                                         n) unless @map.has_key?(n.first.r_id)
             @map.delete(n.last.r_id)
           end
         end
@@ -294,7 +294,7 @@ module R2CORBA
           how_many -= 1
         end
         bi_obj = nil
-        if !reglist.empty?
+        unless reglist.empty?
           bi = INS::NamingContext.alloc_iterator(reglist)
           poa = self._default_POA
           bi.oid = poa.activate_object(bi)
@@ -400,7 +400,7 @@ module R2CORBA
           key_ = n.first.to_key
           @map.synchronize do
             raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Missing_node,
-                                                         n) if !@map.has_key?(key_)
+                                                         n) unless @map.has_key?(key_)
             @map[key_][:object]
           end
         end
@@ -417,7 +417,7 @@ module R2CORBA
         key_ = n.first.to_key
         @map.synchronize do
           raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Missing_node,
-                                                       n) if !@map.has_key?(key_)
+                                                       n) unless @map.has_key?(key_)
           raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Not_context,
                                                        n) if @map[key_][:type] != CosNaming::Ncontext
           n.shift

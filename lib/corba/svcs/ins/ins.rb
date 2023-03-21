@@ -384,7 +384,7 @@ module R2CORBA
 
     def INS.parse_arg
       script_name = File.basename($0, '.bat')
-      if not script_name =~ /rins/
+      unless script_name =~ /rins/
         script_name = 'ruby ' + $0
       end
 

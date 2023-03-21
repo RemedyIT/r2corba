@@ -68,7 +68,7 @@ module IDL
       println()
       enter_module(parser.root_namespace) unless parser.root_namespace.nil?
       idleval = @params[:idl_eval] || false
-      if !idleval
+      unless idleval
         printiln("CORBA.implement('#{@params[:idlfile]}', {}, CORBA::IDL::CLIENT_STUB) {")
         println()
       end
@@ -76,7 +76,7 @@ module IDL
 
     def post_visit(parser)
       idleval = @params[:idl_eval] || false
-      if !idleval
+      unless idleval
         printiln("} ## end of '#{@params[:idlfile]}'")
       end
       leave_module(parser.root_namespace) unless parser.root_namespace.nil?
@@ -567,7 +567,7 @@ module IDL
             newln = ','
           end
 
-          if not node.oneway
+          unless node.oneway
             println(newln)
             nest { printi(":result_type => #{get_typecode(node.idltype)}") }
             newln = ','
@@ -591,7 +591,7 @@ module IDL
 
           println('})')
 
-          if not node.oneway
+          unless node.oneway
             returns_void = (node.idltype.is_a? Type::Void)
             size = _out.size
             size += 1 unless returns_void
@@ -641,7 +641,7 @@ module IDL
         end
       end
       printiln("end #of attribute #{node.name} getter")
-      if not node.readonly
+      unless node.readonly
         printiln("def #{node.rubyname}=(val)")
         nest do
           if _intf.is_a?(IDL::AST::Valuetype) or from_valuetype
@@ -1133,13 +1133,13 @@ module IDL
 })
       idleval = @params[:idl_eval] || false
       println("require 'corba/poa.rb'") if @params[:libinit]
-      if !@params[:expand_includes]
+      unless @params[:expand_includes]
         println("require '" + @params[:idlfile].sub(/\.[^\.]*$/, @params[:stub_pfx]) + "'")
       end
       println()
       printiln('module POA')
       @nest += 1
-      if !idleval
+      unless idleval
         printiln("CORBA.implement('#{@params[:idlfile]}', {}, CORBA::IDL::SERVANT_INTF) {")
         println()
       end
@@ -1149,7 +1149,7 @@ module IDL
 
     def post_visit(parser)
       idleval = @params[:idl_eval] || false
-      if !idleval
+      unless idleval
         printiln("} ## end of '#{@params[:idlfile]}'")
       end
       @nest -= 1
@@ -1191,7 +1191,7 @@ module IDL
     end
 
     def enter_interface(node)
-      if !node.is_local?
+      unless node.is_local?
         println
         printiln("class #{node.rubyname} < PortableServer::Servant ## servant")
         println()
@@ -1211,7 +1211,7 @@ module IDL
     end
 
     def leave_interface(node)
-      if !node.is_local?
+      unless node.is_local?
         name = node.rubyname
 
         @nest -= 1
@@ -1295,7 +1295,7 @@ module IDL
         newln = ','
       end
 
-      if not node.oneway
+      unless node.oneway
         println(newln)
         nest { printi(":result_type => #{get_typecode(node.idltype)}") }
         newln = ','
@@ -1377,7 +1377,7 @@ module IDL
       printiln("end #of attribute get_#{node.name}")
       println()
 
-      if not node.readonly
+      unless node.readonly
         printiln("Operations.store(:_set_#{node.name}, {")
         nest {
           nest {
