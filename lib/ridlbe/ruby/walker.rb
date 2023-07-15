@@ -842,6 +842,8 @@ module IDL
         s = '-' + expression_to_s(op[0])
       when Expression::Operation::UnaryNot
         s = '~' + expression_to_s(op[0])
+      when Expression::Operation::Xor
+        s = expression_to_s(op[0]) + ' ^ ' + expression_to_s(op[1])
       when Expression::Operation::Or
         s = expression_to_s(op[0]) + ' | ' + expression_to_s(op[1])
       when Expression::Operation::And
@@ -1538,6 +1540,8 @@ module IDL
         s = '-' + expression_to_s(op[0])
       when Expression::UnaryNot
         s = '~' + expression_to_s(op[0])
+      when Expression::Xor
+        s = expression_to_s(op[0]) + ' ^ ' + expression_to_s(op[1])
       when Expression::Or
         s = expression_to_s(op[0]) + ' | ' + expression_to_s(op[1])
       when Expression::And
