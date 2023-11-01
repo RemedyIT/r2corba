@@ -85,14 +85,14 @@ private:
 
   static VALUE c_signums;
   static int c_nsig;
-  static ACE_Auto_Ptr<ACE_SIGACTION> c_sa;
+  static std::unique_ptr<ACE_SIGACTION> c_sa;
 
   static void init_ ();
 
   CORBA::ORB_var  m_orb;
   bool m_signal_reactor;
   ACE_Sig_Handler m_sig_handler;
-  ACE_Auto_Ptr<Signal> m_signal;
+  std::unique_ptr<Signal> m_signal;
   bool m_signal_caught;
 #if defined (WIN32)
   R2CSigGuard*    m_prev_guard;
@@ -867,7 +867,7 @@ VALUE rCORBA_ORB_lookup_value_factory(VALUE /*self*/, VALUE id)
 
 VALUE R2CSigGuard::c_signums = Qnil;
 int R2CSigGuard::c_nsig = 0;
-ACE_Auto_Ptr<ACE_SIGACTION> R2CSigGuard::c_sa;
+std::unique_ptr<ACE_SIGACTION> R2CSigGuard::c_sa;
 
 void R2CSigGuard::init_ ()
 {
