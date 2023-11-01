@@ -11,14 +11,12 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   # from Ruby 2.4 Fixnum and Bignum are deprecated
   FIXNUM_KLASS = (1.class == ::Integer ? ::Integer : ::Fixnum)
   BIGNUM_KLASS = (1.class == ::Integer ? ::Integer : ::Bignum)
-
 end
 
-[ 'version',
+['version',
   'const',
   'IDL',
   'exception',

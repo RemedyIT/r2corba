@@ -11,11 +11,8 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   module PortableServer
-
     module DSI
-
       class Servant < PortableServer::Native::DynamicImplementation
         def self.new_instance(rsrv)
           srv = PortableServer::DSI::Servant.new
@@ -33,38 +30,39 @@ module R2CORBA
           @rsrv
         end
 
-        def detach_rbServant()
+        def detach_rbServant
           @rsrv = nil
         end
 
         def invoke(jsrvreq)
           begin
             raise CORBA::NO_IMPLEMENT.new('', 0, CORBA::COMPLETED_NO) unless @rsrv
-            rsrvreq = CORBA::ServerRequest._wrap_native(jsrvreq, self._orb())
+
+            rsrvreq = CORBA::ServerRequest._wrap_native(jsrvreq, self._orb)
             begin
-              case rsrvreq.srvreq_.operation()
+              case rsrvreq.srvreq_.operation
               when '_is_a'
                 rsrvreq.describe({arg_list: [['', CORBA::ARG_IN, CORBA._tc_string]], result_type: CORBA._tc_boolean})
                 rc = self._is_a(*rsrvreq.arguments)
-                jany = rsrvreq.orb_.create_any()
+                jany = rsrvreq.orb_.create_any
                 jany.insert_boolean(rc == true)
                 jsrvreq.set_result(jany)
               when '_non_existent'
                 rsrvreq.describe({arg_list: [], result_type: CORBA._tc_boolean})
                 rc = self._non_existent(*rsrvreq.arguments)
-                jany = rsrvreq.orb_.create_any()
+                jany = rsrvreq.orb_.create_any
                 jany.insert_boolean(rc == true)
                 jsrvreq.set_result(jany)
               when '_repository_id'
                 rsrvreq.describe({arg_list: [], result_type: CORBA._tc_string})
                 rc = self._repository_id(*rsrvreq.arguments)
-                jany = rsrvreq.orb_.create_any()
+                jany = rsrvreq.orb_.create_any
                 jany.insert_string(rc)
                 jsrvreq.set_result(jany)
               when '_component'
                 rsrvreq.describe({arg_list: [], result_type: CORBA._tc_Object})
                 rc = self._get_component(*rsrvreq.arguments)
-                jany = rsrvreq.orb_.create_any()
+                jany = rsrvreq.orb_.create_any
                 jany.insert_Object(rc)
                 jsrvreq.set_result(jany)
               else
@@ -75,14 +73,14 @@ module R2CORBA
             end
           rescue CORBA::UserException => ex_
             STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}" if $VERBOSE
-            if rsrvreq.exc_list_.nil? || rsrvreq.exc_list_.any? {|extc| extc.id == ex_.class._tc.id }
-              jsrvreq.set_exception(CORBA::Any.to_any(ex_).to_java(self._orb()))
+            if rsrvreq.exc_list_.nil? || rsrvreq.exc_list_.any? { |extc| extc.id == ex_.class._tc.id }
+              jsrvreq.set_exception(CORBA::Any.to_any(ex_).to_java(self._orb))
             else
               STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}" unless $VERBOSE
               if jsrvreq.respond_to?(:setSystemException) # JacORB special
                 jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}", 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
               else
-                jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
+                jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb))
               end
             end
           rescue CORBA::SystemException => ex_
@@ -91,14 +89,14 @@ module R2CORBA
               jex_klass = CORBA::Native.const_get(ex_.class::Name)
               jsrvreq.setSystemException(jex_klass.new(ex_.reason, ex_.minor, CORBA::Native::CompletionStatus.from_int(ex_.completed)))
             else
-              jsrvreq.set_exception(CORBA::Any.to_any(ex_).to_java(self._orb()))
+              jsrvreq.set_exception(CORBA::Any.to_any(ex_).to_java(self._orb))
             end
           rescue Exception => ex_
             STDERR.puts "#{ex_}\n#{ex_.backtrace.join("\n")}"
             if jsrvreq.respond_to?(:setSystemException) # JacORB special
               jsrvreq.setSystemException(CORBA::Native::UNKNOWN.new("#{ex_}", 0, CORBA::Native::CompletionStatus.from_int(CORBA::COMPLETED_MAYBE)))
             else
-              jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb()))
+              jsrvreq.set_exception(CORBA::Any.to_any(CORBA::UNKNOWN.new("#{ex_}", 0, CORBA::COMPLETED_MAYBE)).to_java(self._orb))
             end
           end
         end
@@ -108,7 +106,7 @@ module R2CORBA
             return [].to_java(:string)
           elsif @rsrv.respond_to?(:_ids)
             return @rsrv._ids.to_java(:string)
-          elsif @rsrv.class.constants.any? {|c| c.to_sym == :Ids }
+          elsif @rsrv.class.constants.any? { |c| c.to_sym == :Ids }
             return @rsrv.class::Ids.to_java(:string)
           elsif @rsrv.respond_to?(:_primary_interface)
             return [@rsrv._primary_interface(oid, poa)].to_java(:string)
@@ -141,7 +139,7 @@ module R2CORBA
           end
         end
 
-        def _non_existent()
+        def _non_existent
           if @rsrv.nil?
             return true
           elsif @rsrv.respond_to?(:_non_existent)
@@ -151,7 +149,7 @@ module R2CORBA
           end
         end
 
-        def _get_component()
+        def _get_component
           if @rsrv.nil?
             return nil
           elsif @rsrv.respond_to?(:_get_component)
@@ -163,7 +161,7 @@ module R2CORBA
         end
         protected
         def invoke_SI(rsrvreq)
-          opsym = rsrvreq.srvreq_.operation().to_sym
+          opsym = rsrvreq.srvreq_.operation.to_sym
           opsig = @rsrv.get_operation_signature(opsym)
           # explicitly define empty (but not nil) exceptionlist if not yet specified
           opsig[:exc_list] = [] if (Hash === opsig) && !opsig.has_key?(:exc_list)
@@ -174,17 +172,17 @@ module R2CORBA
           unless rsrvreq.result_type_.nil?
             result_value = (rsrvreq.arg_out_ > 0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
             if rsrvreq.arg_out_ > 0
-              rsrvreq.nvlist_.count().times do |i|
+              rsrvreq.nvlist_.count.times do |i|
                 jnv = rsrvreq.nvlist_.item(i)
                 if [CORBA::ARG_OUT, CORBA::ARG_INOUT].include?(jnv.flags)
                   rval = results.shift
                   rtc = rsrvreq.arg_list_[i][2]
-                  CORBA::Any.to_any(rval, rtc).to_java(self._orb(), jnv.value())
+                  CORBA::Any.to_any(rval, rtc).to_java(self._orb, jnv.value)
                 end
               end
             end
             unless rsrvreq.result_type_.kind == CORBA::TK_VOID
-              rsrvreq.srvreq_.set_result(CORBA::Any.to_any(result_value, rsrvreq.result_type_).to_java(self._orb()))
+              rsrvreq.srvreq_.set_result(CORBA::Any.to_any(result_value, rsrvreq.result_type_).to_java(self._orb))
             end
           end
         end
@@ -194,22 +192,21 @@ module R2CORBA
           unless rsrvreq.result_type_.nil?
             result_value = (rsrvreq.arg_out_ > 0 ? results.shift : results) unless rsrvreq.result_type_.kind == CORBA::TK_VOID
             if rsrvreq.arg_out_ > 0
-              rsrvreq.nvlist_.count().times do |i|
+              rsrvreq.nvlist_.count.times do |i|
                 jnv = rsrvreq.nvlist_.item(i)
                 if [CORBA::ARG_OUT, CORBA::ARG_INOUT].include?(jnv.flags)
                   rval = results.shift
                   rtc = rsrvreq.arg_list_[i][2]
-                  CORBA::Any.to_any(rval, rtc).to_java(self._orb(), jnv.value())
+                  CORBA::Any.to_any(rval, rtc).to_java(self._orb, jnv.value)
                 end
               end
             end
             unless rsrvreq.result_type_.kind == CORBA::TK_VOID
-              rsrvreq.srvreq_.set_result(CORBA::Any.to_any(result_value, rsrvreq.result_type_).to_java(self._orb()))
+              rsrvreq.srvreq_.set_result(CORBA::Any.to_any(result_value, rsrvreq.result_type_).to_java(self._orb))
             end
           end
         end
       end # Servant
-
     end # DSI
 
     class Servant
@@ -217,23 +214,24 @@ module R2CORBA
         @srvref_ ||= PortableServer::DSI::Servant.new_instance(self)
       end
 
-      def _default_POA()
+      def _default_POA
         begin
-          return PortableServer::POA._narrow(CORBA::Object._wrap_native(self.srvref_._default_POA()))
+          return PortableServer::POA._narrow(CORBA::Object._wrap_native(self.srvref_._default_POA))
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end
 
-      def _this()
+      def _this
         unless @srvref_.nil?
           begin
-            return CORBA::Object._wrap_native(self.srvref_._this_object())
+            return CORBA::Object._wrap_native(self.srvref_._this_object)
           rescue NativeException
             # not in call context or not associated with ORB yet
           end
         end
         raise CORBA::BAD_INV_ORDER.new('no ORB initialized', 0, CORBA::COMPLETED_NO) if CORBA::ORB._orb.nil?
+
         begin
           return CORBA::Object._wrap_native(self.srvref_._this_object(CORBA::ORB._orb))
         rescue ::NativeException
@@ -241,7 +239,5 @@ module R2CORBA
         end
       end
     end # Servant
-
   end # PortableServer
-
 end # R2CORBA

@@ -9,12 +9,11 @@
 #
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
-require 'corba/jbase/Any.rb'
+require 'corba/jbase/Any'
 require 'bigdecimal'
 
 module R2CORBA
   module CORBA
-
     # define typecode kind constants
     ['tk_null',
       'tk_void',
@@ -53,7 +52,6 @@ module R2CORBA
     end
 
     class TypeCode
-
       def TypeCode.native_kind(ntc)
         ntc.kind.value
       end
@@ -75,7 +73,6 @@ module R2CORBA
       end
 
       class Recursive < CORBA::TypeCode
-
         def initialize(id)
           begin
             @tc_ = CORBA::ORB._orb.create_recursive_tc(id)
@@ -83,11 +80,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Recursive
 
       class String < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -99,11 +94,9 @@ module R2CORBA
             end
           end
         end
-
       end # String
 
       class WString < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -115,11 +108,9 @@ module R2CORBA
             end
           end
         end
-
       end # WString
 
       class Fixed < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -132,17 +123,16 @@ module R2CORBA
             end
           end
         end
-
       end # Fixed
 
       class Sequence < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
           else
             element_tc, bound = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless element_tc.is_a?(CORBA::TypeCode)
+
             begin
               @tc_ = CORBA::ORB._orb.create_sequence_tc(bound.to_i, element_tc.tc_)
             rescue ::NativeException
@@ -150,11 +140,9 @@ module R2CORBA
             end
           end
         end
-
       end
 
       class Array < CORBA::TypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -162,6 +150,7 @@ module R2CORBA
             content_tc = args.shift
             length = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless content_tc.is_a?(CORBA::TypeCode)
+
             if length.size > 1
               this_len = length.shift
               content_tc = self.class.new(content_tc, *length)
@@ -175,19 +164,15 @@ module R2CORBA
             end
           end
         end
-
       end # Array
 
       class IdentifiedTypeCode < CORBA::TypeCode
-
         def initialize(id)
           CORBA::TypeCode.register_id_type(id.to_s, self)
         end
-
       end # IdentifiedTypeCode
 
       class Alias < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -196,6 +181,7 @@ module R2CORBA
           else
             id, name, orig_tc, type = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless orig_tc.is_a?(CORBA::TypeCode)
+
             begin
               @tc_ = CORBA::ORB._orb.create_alias_tc(id.to_s, name.to_s, orig_tc.tc_)
             rescue ::NativeException
@@ -205,11 +191,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # Alias
 
       class Valuetype < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -223,6 +207,7 @@ module R2CORBA
             id, name, modifier, base, members_, type_ = args
             raise ArgumentError, 'expected CORBA::Typecode' unless base.nil? || base.is_a?(CORBA::TypeCode)
             raise ArgumentError, 'expected members Array' unless members_.is_a?(::Array) || type_.nil?
+
             if type_.nil? && !members_.is_a?(::Array)
               type_ = members_
               members_ = []
@@ -258,11 +243,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Valuetype
 
       class Eventtype < Valuetype
-
         protected
 
         def _create_tc(id, name, modifier, base, jmembers)
@@ -279,11 +262,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Eventtype
 
       class Valuebox < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -292,6 +273,7 @@ module R2CORBA
           else
             id, name, boxed_tc, type = args
             raise ArgumentError, 'expected CORBA::TypeCode' unless boxed_tc.is_a?(CORBA::TypeCode)
+
             begin
               @tc_ = CORBA::ORB._orb.create_value_box_tc(id.to_s, name.to_s, boxed_tc.tc_)
             rescue ::NativeException
@@ -301,11 +283,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # Valuebox
 
       class ObjectRef < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -322,11 +302,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # ObjectRef
 
       class AbstractInterface < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -343,11 +321,9 @@ module R2CORBA
             super(id)
           end
         end
-
       end # AbstractInterface
 
       class Struct < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -360,6 +336,7 @@ module R2CORBA
           else
             id, name, members_, type_ = args
             raise ArgumentError, 'expected members Array' unless members_.is_a?(::Array) || type_.nil?
+
             if type_.nil? && !members_.is_a?(::Array)
               type_ = members_
               members_ = []
@@ -368,7 +345,7 @@ module R2CORBA
             @members = []
             members_.each { |n, tc| add_member(n, tc) }
             jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::StructMember.java_class, @members.size)
-            @members.each_with_index {|(mn, mtc), i| jmembers[i] = CORBA::Native::StructMember.new(mn.to_s, mtc.tc_, nil) }
+            @members.each_with_index { |(mn, mtc), i| jmembers[i] = CORBA::Native::StructMember.new(mn.to_s, mtc.tc_, nil) }
             @tc_ = _create_tc(id, name, jmembers)
             super(id)
           end
@@ -383,21 +360,21 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Struct
 
       class Except < Struct
-
         def from_java(jex)
           raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected', 0, CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
+
           ex = get_type.new
-          members.each {|mname, mtc| ex.__send__("#{mname}=".to_sym, jex.__send__(mname.to_sym)) }
+          members.each { |mname, mtc| ex.__send__("#{mname}=".to_sym, jex.__send__(mname.to_sym)) }
           ex
         end
 
         def is_compatible?(jex)
           raise CORBA::BAD_PARAM.new('org.om.CORBA.UserException expected', 0, CORBA::COMPLETED_NO) unless jex.is_a?(CORBA::Native::UserException)
-          members.all? {|mname, mtc| jex.respond_to?(mname.to_sym) }
+
+          members.all? { |mname, mtc| jex.respond_to?(mname.to_sym) }
         end
 
         protected
@@ -409,11 +386,9 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Except
 
       class Union < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
@@ -436,6 +411,7 @@ module R2CORBA
             id, name, switchtype_, members_, type_, implicit_default_ = args
             raise ::CORBA::BAD_PARAM unless members_.is_a? ::Array
             raise ::CORBA::BAD_PARAM unless switchtype_.is_a?(CORBA::TypeCode)
+
             @type = type_
             @implicit_default = implicit_default_
             @switchtype = switchtype_.resolved_tc
@@ -454,7 +430,7 @@ module R2CORBA
         def tc_
           @tc_ ||= begin
             jmembers = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::UnionMember.java_class, @members.size)
-            @members.each_with_index {|(ml, mn, mt), i|
+            @members.each_with_index { |(ml, mn, mt), i|
               if ml == :default
                 # label octet:0 means default label
                 jmembers[i] = CORBA::Native::UnionMember.new(mn, Any.to_any(0, CORBA._tc_octet).to_java, mt.tc_, nil)
@@ -475,21 +451,20 @@ module R2CORBA
             CORBA::Exception.native2r($!)
           end
         end
-
       end # Union
 
       class Enum < IdentifiedTypeCode
-
         def initialize(*args)
           if CORBA::Native::TypeCode === args.first
             @tc_ = args.first
             @range = (0..@tc_.member_count).freeze
-            @members = @range.to_a.collect {|i| @tc_.member_name(i) }
+            @members = @range.to_a.collect { |i| @tc_.member_name(i) }
             super(@tc_.id)
           else
             id, name, members_ = args
             raise CORBA::BAD_PARAM unless members_.is_a? ::Array
-            @members = members_.collect {|m| m.to_s}
+
+            @members = members_.collect { |m| m.to_s }
             @range = (0...@members.size).freeze
             begin
               @tc_ = CORBA::ORB._orb.create_enum_tc(id.to_s, name.to_s, @members.to_java(:string))
@@ -499,7 +474,6 @@ module R2CORBA
             super(id)
           end
         end
-
       end # Enum
 
       def TypeCode.get_primitive_tc(kind)
@@ -512,9 +486,7 @@ module R2CORBA
       end
 
       # final initialization
-      self._init()
-
+      self._init
     end # TypeCode
-
   end ## module CORBA
 end ## module R2CORBA

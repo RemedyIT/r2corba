@@ -10,6 +10,6 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 
-require 'corba/require.rb'
+require 'corba/require'
 
 include R2CORBA

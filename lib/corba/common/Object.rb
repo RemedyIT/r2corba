@@ -11,13 +11,13 @@
 #--------------------------------------------------------------------
 module R2CORBA
   module CORBA
-
     def CORBA.is_nil(obj)
       if obj.nil?
         return true
       elsif obj.is_a?(R2CORBA::CORBA::Object) || obj.respond_to?(:_is_nil?)
-        return obj._is_nil?()
+        return obj._is_nil?
       end
+
       false
     end
 
@@ -39,11 +39,13 @@ module R2CORBA
 
       def self._wrap_native(nobj)
         raise ArgumentError, 'Expected org.omg.CORBA.Object' unless nobj.nil? || nobj.is_a?(Native::Object)
+
         (nobj.nil? || (nobj.respond_to?(:_is_nil) && nobj._is_nil)) ? nil : @@wrapper_klass.new(nobj)
       end
 
       def self._narrow(obj)
         raise CORBA::BAD_PARAM.new('not an object reference', 0, CORBA::COMPLETED_NO) unless obj.nil? || obj.is_a?(CORBA::Object) || obj.is_a?(Native::Object)
+
         obj = self._wrap_native(obj) if obj.is_a?(Native::Object)
         obj
       end
@@ -71,18 +73,19 @@ module R2CORBA
       end
 
       # ret InterfaceDef
-      def _get_interface()
+      def _get_interface
         raise ::CORBA::NO_IMPLEMENT
       end
 
       # ret boolean
-      def _is_nil?()
+      def _is_nil?
         self.objref_.nil? || (self.objref_.respond_to?(:_is_nil) && self.objref_._is_nil)
       end
 
       # ret ::CORBA::Object
-      def _duplicate()
-        return nil if self._is_nil?()
+      def _duplicate
+        return nil if self._is_nil?
+
         begin
           self._wrap_native(self.objref_._duplicate)
         rescue ::NativeException
@@ -91,7 +94,7 @@ module R2CORBA
       end
 
       # ret void
-      def _release()
+      def _release
         self.objref_._release unless self.objref_.nil?
         @objref_ = nil
       end
@@ -99,7 +102,8 @@ module R2CORBA
       # ::String logical_type_id
       # ret boolean
       def _is_a?(logical_type_id)
-        return false if self._is_nil?()
+        return false if self._is_nil?
+
         begin
           self.objref_._is_a(logical_type_id)
         rescue ::NativeException
@@ -108,8 +112,9 @@ module R2CORBA
       end
 
       # ret boolean
-      def _non_existent?()
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+      def _non_existent?
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         begin
           self.objref_._non_existent
         rescue ::NativeException
@@ -120,7 +125,8 @@ module R2CORBA
       # ::CORBA::Object other_object
       # ret boolean
       def _is_equivalent?(other_object)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         begin
           self.objref_._is_equivalent(other_object)
         rescue ::NativeException
@@ -131,7 +137,8 @@ module R2CORBA
       # Integer(ulong) maximum
       # ret unsigned long
       def _hash(maximum)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         begin
           self.objref_._hash(maximum)
         rescue ::NativeException
@@ -140,13 +147,14 @@ module R2CORBA
       end
 
       # ret ::String
-      def _repository_id()
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+      def _repository_id
+        raise CORBA::INV_OBJREF.new if self._is_nil?
         ## if this object ref has already been narrowed
         return self._interface_repository_id if self.respond_to?(:_interface_repository_id)
+
         ## ask the remote side
         begin
-          self.objref_._repository_id()
+          self.objref_._repository_id
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -178,18 +186,20 @@ module R2CORBA
       end
 
       # ret ::CORBA::Object
-      def _get_component()
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+      def _get_component
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         begin
-          CORBA::Object._wrap_native(self.objref_._get_component())
+          CORBA::Object._wrap_native(self.objref_._get_component)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end
 
       # ret CORBA::ORB
-      def _get_orb()
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+      def _get_orb
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         begin
           CORBA::ORB._wrap_native(self.objref_._get_orb)
         rescue ::NativeException
@@ -198,14 +208,14 @@ module R2CORBA
       end
 
       def _request(operation)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         begin
           self.objref_._request(operation.to_s)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end
-
     end # Object
   end # CORBA
 end # R2CORBA

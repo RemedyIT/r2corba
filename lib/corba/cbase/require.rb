@@ -26,7 +26,7 @@ rescue LoadError
   raise
 end
 
-[ 'exception',
+['exception',
   'ORB',
   'Request',
   'Typecode',

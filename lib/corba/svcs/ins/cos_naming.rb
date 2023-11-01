@@ -36,6 +36,7 @@ module CosNaming
     # convert stringified name back to NameComponent
     def self.from_string(snc)
       raise CosNaming::NamingContext::InvalidName.new if snc.empty?
+
       esc_ = false
       id_ = ''
       off_ = 0
@@ -46,6 +47,7 @@ module CosNaming
         when '.'
           unless esc_
             raise CosNaming::NamingContext::InvalidName.new if off_ > 0
+
             id_ = snc[0, i].gsub(/\\(\.|\\)/, '\1')
             off_ = i + 1
           end
@@ -62,7 +64,6 @@ end
 
 module R2CORBA
   module INS
-
     ##
     # Binding iterator servant class
     #
@@ -81,6 +82,7 @@ module R2CORBA
 
       def next_n(how_many)
         raise CORBA::BAD_PARAM.new if how_many < 1
+
         bindings = []
         while how_many > 0 and !@rl.empty?
           reg = @rl.shift
@@ -102,7 +104,6 @@ module R2CORBA
     # Naming context servant class
     #
     class NamingContext < POA::CosNaming::NamingContextExt
-
       # Map type to store bindings.
       # Use synchronized version for multithreading capable implementations.
       #
@@ -113,7 +114,7 @@ module R2CORBA
             @map_ = {}
           end
 
-          def size()
+          def size
             rc = 0
             synchronize do
               rc = @map_.size
@@ -207,6 +208,7 @@ module R2CORBA
       #
       def bind(n, obj)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+
         if n.size > 1
           nc = find_context(n)
           nc.bind(n, obj)
@@ -217,6 +219,7 @@ module R2CORBA
 
       def rebind(n, obj)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+
         if n.size > 1
           nc = find_context(n)
           nc.rebind(n, obj)
@@ -227,6 +230,7 @@ module R2CORBA
 
       def bind_context(n, nc_new)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+
         if n.size > 1
           nc = find_context(n)
           nc.bind_context(n, nc_new)
@@ -237,6 +241,7 @@ module R2CORBA
 
       def rebind_context(n, nc_new)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+
         if n.size > 1
           nc = find_context(n)
           nc.rebind_context(n, nc_new)
@@ -247,24 +252,26 @@ module R2CORBA
 
       def resolve(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+
         find_object(n)
       end
 
       def unbind(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+
         if n.size > 1
           nc = find_context(n)
           nc.unbind(n)
         else
           @map.synchronize do
             raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Missing_node,
-                                                         n) if !@map.has_key?(n.first.r_id)
+                                                         n) unless @map.has_key?(n.first.r_id)
             @map.delete(n.last.r_id)
           end
         end
       end
 
-      def new_context()
+      def new_context
         poa = self._default_POA
         naming_srv = NamingContext.new(@orb)
         naming_srv.oid = poa.activate_object(naming_srv)
@@ -273,14 +280,16 @@ module R2CORBA
 
       def bind_new_context(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
-        nc = self.new_context()
+
+        nc = self.new_context
         self.bind_context(n, nc)
         nc
       end
 
-      def destroy()
+      def destroy
         raise CosNaming::NamingContext::NotEmpty.new if @map.size > 0
         return if self.oid.nil? ## no oid for root context
+
         poa = self._default_POA
         poa.deactivate_object(self.oid)
         @orb = nil
@@ -295,7 +304,7 @@ module R2CORBA
           how_many -= 1
         end
         bi_obj = nil
-        if !reglist.empty?
+        unless reglist.empty?
           bi = INS::NamingContext.alloc_iterator(reglist)
           poa = self._default_POA
           bi.oid = poa.activate_object(bi)
@@ -308,11 +317,13 @@ module R2CORBA
       #
       def to_string(n)
         raise CosNaming::NamingContext::InvalidName.new if n.size < 1
+
         n.collect { |nc| nc.to_string }.join('/')
       end
 
       def to_name(sn)
         raise CosNaming::NamingContext::InvalidName.new if sn.to_s.empty?
+
         snc_arr = []
         off_ = 0
         esc_ = false
@@ -336,6 +347,7 @@ module R2CORBA
 
       def to_url(addr, sn)
         raise CosNaming::NamingContext::InvalidName.new if addr.to_s.empty? or sn.to_s.empty?
+
         url = 'corbaname:' + addr + '#'
         sn.scan(/./) do |ch|
           if /[a-zA-Z0-9;\/:\?@=+\$,\-_\.!~*\'\(\)]/ =~ ch
@@ -362,6 +374,7 @@ module R2CORBA
         key_ = name.to_key
         @map.synchronize do
           raise CosNaming::NamingContext::AlreadyBound.new if @map.has_key?(key_)
+
           @map[key_] = {
             name: full_name,
             type: type,
@@ -401,7 +414,7 @@ module R2CORBA
           key_ = n.first.to_key
           @map.synchronize do
             raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Missing_node,
-                                                         n) if !@map.has_key?(key_)
+                                                         n) unless @map.has_key?(key_)
             @map[key_][:object]
           end
         end
@@ -418,15 +431,13 @@ module R2CORBA
         key_ = n.first.to_key
         @map.synchronize do
           raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Missing_node,
-                                                       n) if !@map.has_key?(key_)
+                                                       n) unless @map.has_key?(key_)
           raise CosNaming::NamingContext::NotFound.new(CosNaming::NamingContext::Not_context,
                                                        n) if @map[key_][:type] != CosNaming::Ncontext
           n.shift
           @map[key_][:object]
         end
       end
-
     end # of NamingContext servant
-
   end
 end

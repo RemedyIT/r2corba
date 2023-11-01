@@ -41,7 +41,7 @@ module R2CORBA
           java_ex = jex.is_a?(Native::UserException) ? jex : jex.cause
           exname = java_ex.class.name.split('::').last
           tcs = CORBA::TypeCode.typecodes_for_name(exname) || []
-          extc = tcs.detect {|tc| tc.is_a?(TypeCode::Except) && tc.is_compatible?(java_ex)}
+          extc = tcs.detect { |tc| tc.is_a?(TypeCode::Except) && tc.is_compatible?(java_ex) }
           if extc
             ex = extc.from_java(java_ex)
             ex.set_backtrace(jex.backtrace) if NativeException === jex
@@ -63,6 +63,7 @@ module R2CORBA
     class SystemException
       def self._raise(jex)
         raise ArgumentError unless (NativeException === jex and jex.cause.is_a?(Native::SystemException)) or jex.is_a?(Native::SystemException)
+
         java_ex = jex.is_a?(Native::SystemException) ? jex : jex.cause
         exname = java_ex.class.name.split('::').last
         exklass = CORBA.const_get(exname.to_sym)

@@ -14,7 +14,6 @@ require 'optparse'
 
 module R2CORBA
   module Commands
-
     @@commands = Hash.new do |hash, key|
       $stderr.puts "Unknown command #{key} specified."
       exit(1)

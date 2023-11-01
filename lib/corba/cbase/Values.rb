@@ -56,7 +56,6 @@ module R2CORBA
 
     module Portable
       class ValueFactoryBase
-
         def self.inherited(value_factory_base)
           # value_factory_base is the <valuetype>Factory base class
           # generated from IDL
@@ -69,9 +68,8 @@ module R2CORBA
 
         def self._check_factory
           f = self._lookup_value_factory(self.value_id)
-          self._register_value_factory(self.value_id(), self.new) if f.nil?
+          self._register_value_factory(self.value_id, self.new) if f.nil?
         end
-
       end # ValueFactoryBase
 
       module CustomValueBase
@@ -124,7 +122,6 @@ module R2CORBA
           end
         end
       end
-
     end # Portable
   end # CORBA
 end # R2CORBA

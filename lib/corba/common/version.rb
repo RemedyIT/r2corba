@@ -11,11 +11,9 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   R2CORBA_MAJOR = 1
   R2CORBA_MINOR = 7
   R2CORBA_RELEASE = 1
 
   R2CORBA_VERSION = "#{R2CORBA_MAJOR}.#{R2CORBA_MINOR}.#{R2CORBA_RELEASE}".freeze
-
 end

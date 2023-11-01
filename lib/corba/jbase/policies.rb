@@ -11,12 +11,11 @@
 #--------------------------------------------------------------------
 
 module R2CORBA
-
   module CORBA
-
     module ORB
       def create_policy(type, val)
         raise CORBA::BAD_PARAM.new('Any expected', 0, CORBA::COMPLETED_NO) unless CORBA::Any === val
+
         begin
           Policy._wrap_native(self.orb_.create_policy(type.to_i, val.to_java(self.orb_)))
         rescue ::NativeException
@@ -27,7 +26,8 @@ module R2CORBA
 
     module Object
       def _get_policy(policy_type)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         begin
           pol = Policy._wrap_native(self.objref_._get_policy(policy_type))
         rescue ::NativeException
@@ -37,7 +37,8 @@ module R2CORBA
       end
 
       def _get_policy_overrides(ts)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         ## currently JacORB does not support #_get_policy_overrides so we emulate it in that case
         unless self.objref_.respond_to?(:_get_policy_overrides)
           begin
@@ -51,14 +52,15 @@ module R2CORBA
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
-          jpolicies.collect {|jpol| Policy._wrap_native(jpol) }
+          jpolicies.collect { |jpol| Policy._wrap_native(jpol) }
         end
       end # of operation get_policy_overrides
 
       def _set_policy_overrides(policies, set_add)
-        raise CORBA::INV_OBJREF.new if self._is_nil?()
+        raise CORBA::INV_OBJREF.new if self._is_nil?
+
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.size)
-        policies.each_with_index {|e, i| jpolicies[i] = e.objref_ }
+        policies.each_with_index { |e, i| jpolicies[i] = e.objref_ }
         begin
           obj = self.objref_._set_policy_override(jpolicies, Native::SetOverrideType.from_int(set_add))
         rescue ::NativeException
@@ -80,30 +82,31 @@ module R2CORBA
     module Policy
       def self._wrap_native(jpol)
         raise ArgumentError, 'Expected org.omg.CORBA.Policy' unless jpol.nil? || jpol.is_a?(Native::Policy)
+
         Policy._narrow(CORBA::Object._wrap_native(jpol))
       end
 
       #-------------------  "Policy Operations"
 
-      def policy_type()
+      def policy_type
         begin
-          self.objref_.policy_type()
+          self.objref_.policy_type
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_policy_type
 
-      def copy()
+      def copy
         begin
-          Policy._wrap_native(self.objref_.copy())
+          Policy._wrap_native(self.objref_.copy)
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of operation copy
 
-      def destroy()
+      def destroy
         begin
-          self.objref_.destroy()
+          self.objref_.destroy
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
@@ -120,12 +123,12 @@ module R2CORBA
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
-        jpolicies.collect {|jpol| Policy._wrap_native(jpol) }
+        jpolicies.collect { |jpol| Policy._wrap_native(jpol) }
       end # of operation get_policy_overrides
 
       def set_policy_overrides(policies, set_add)
         jpolicies = CORBA::Native::Reflect::Array.newInstance(CORBA::Native::Policy.java_class, policies.size)
-        policies.each_with_index {|e, i| jpolicies[i] = e.objref_ }
+        policies.each_with_index { |e, i| jpolicies[i] = e.objref_ }
         begin
           self.objref_.set_policy_overrides(jpolicies, Native::SetOverrideType.from_int(set_add))
         rescue ::NativeException
@@ -133,11 +136,9 @@ module R2CORBA
         end
       end # of operation set_policy_overrides
     end # Policy
-
   end # CORBA
 
   module PortableServer
-
     module POA
       def create_thread_policy(value)
         begin
@@ -210,90 +211,86 @@ module R2CORBA
       end # of operation create_request_processing_policy
     end # POA
 
-    module ThreadPolicy  ## interface
-      def value()
+    module ThreadPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface ThreadPolicy
 
-    module LifespanPolicy  ## interface
-      def value()
+    module LifespanPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface LifespanPolicy
 
-    module IdUniquenessPolicy  ## interface
-      def value()
+    module IdUniquenessPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface IdUniquenessPolicy
 
-    module IdAssignmentPolicy  ## interface
-      def value()
+    module IdAssignmentPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface IdAssignmentPolicy
 
-    module ImplicitActivationPolicy  ## interface
-      def value()
+    module ImplicitActivationPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface ImplicitActivationPolicy
 
-    module ServantRetentionPolicy  ## interface
-      def value()
+    module ServantRetentionPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface RequestProcessingPolicy
 
-    module RequestProcessingPolicy  ## interface
-      def value()
+    module RequestProcessingPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface RequestProcessingPolicy
-
   end # PortableServer
 
   module BiDirPolicy
-
-    module BidirectionalPolicy  ## interface
-      def value()
+    module BidirectionalPolicy ## interface
+      def value
         begin
-          self.objref_.value().value()
+          self.objref_.value.value
         rescue ::NativeException
           CORBA::Exception.native2r($!)
         end
       end # of attribute get_value
     end # of interface BidirectionalPolicy
-
   end # BiDirPolicy
-
 end # R2CORBA
