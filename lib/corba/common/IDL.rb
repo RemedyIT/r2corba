@@ -21,9 +21,7 @@ ENV['RIDL_BE_SELECT'] = 'ruby'
 require 'ridl/ridl'
 
 module R2CORBA
-
   module CORBA
-
     module IDL
       CLIENT_STUB = 1
       SERVANT_INTF = 2
@@ -63,12 +61,13 @@ module R2CORBA
             f = p + '/' + fname
             File.file?(f) && File.readable?(f)
           end
-          fp += '/' + fname if !fp.nil?
+          fp += '/' + fname unless fp.nil?
           fp
         end
-        if not fpath.nil?
+        unless fpath.nil?
           return fpath
         end
+
         raise "Cannot open IDL file '#{fname}'"
       end
 
@@ -92,9 +91,6 @@ module R2CORBA
           end
         end
       end
-
     end
-
   end
-
 end

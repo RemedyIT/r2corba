@@ -13,9 +13,7 @@ require 'monitor'
 
 module R2CORBA
   module CORBA
-
     module ORB
-
       class << self
         protected
         def _singleton_orb_init
@@ -42,23 +40,26 @@ module R2CORBA
           a1, a2, a3 = args
           if Array === a1
             raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 3
+
             argv = a1
             orb_id = (Hash === a2 ? nil : a2)
             prop = (Hash === a2 ? a2 : a3)
           elsif args.size == 1 || Hash === a2
             raise ArgumentError, "Incorrect nr. of arguments; #{args.size}" if args.size > 2
+
             orb_id = a1
             prop = a2
           else
             argv = args
           end
           raise ArgumentError, "Invalid argument #{prop.class}; expected Hash" unless prop.nil? || Hash === prop
-          unless prop.nil?()
-            prop.inject(argv) {|a, (k, v)| a << k; a << v; a}
+
+          unless prop.nil?
+            prop.inject(argv) { |a, (k, v)| a << k; a << v; a }
           end
-          @@cached_orb = CORBA::Native::ORB.init(argv.collect {|a| a.to_s }.concat(@@_default_args), orb_id.nil?() ? nil : orb_id.to_s)
+          @@cached_orb = CORBA::Native::ORB.init(argv.collect { |a| a.to_s }.concat(@@_default_args), orb_id.nil? ? nil : orb_id.to_s)
         end
-        unless n_orb.nil?() || @@vf_queue.empty?()
+        unless n_orb.nil? || @@vf_queue.empty?
           @@vf_queue.process_all { |vfklass| vfklass._check_factory }
         end
         @@wrapper_klass.new(n_orb)
@@ -98,6 +99,7 @@ module R2CORBA
         else
           @running ||= true
           raise CORBA::BAD_INV_ORDER.new('ORB has been shutdown', 0, CORBA::COMPLETED_NO) if @shutdown
+
           while (timeout.nil? or timeout > 0) and !@shutdown
             to = timeout || 0.05
             f, to = self.work_pending(to)
@@ -158,7 +160,7 @@ module R2CORBA
           end
         end
 
-        def empty?()
+        def empty?
           f = false
           synchronize do
             f = @q_.empty?
@@ -180,7 +182,6 @@ module R2CORBA
       def ior_map
         @iormap ||= R2CORBA::IORMap.new(self)
       end
-
     end # ORB
 
 =begin

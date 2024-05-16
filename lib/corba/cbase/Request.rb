@@ -11,9 +11,7 @@
 #--------------------------------------------------------------------
 module R2CORBA
   module CORBA
-
     module Request
-
       def add_in_arg(tc, val, nm = '')
         self._arguments << [nm, CORBA::ARG_IN, tc, val]
         self._arguments.size
@@ -35,10 +33,11 @@ module R2CORBA
 
       def arguments=(*args)
         if args.size == 1
-          raise ArgumentError, 'invalid argument list' unless ::Array === args.first && args.first.all? {|a| ::Array === a }
+          raise ArgumentError, 'invalid argument list' unless ::Array === args.first && args.first.all? { |a| ::Array === a }
+
           args = args.first
         else
-          raise ArgumentError, 'invalid argument list' unless args.all? {|a| ::Array === a }
+          raise ArgumentError, 'invalid argument list' unless args.all? { |a| ::Array === a }
         end
         # clear current arguments
         self._arguments.clear
@@ -74,6 +73,7 @@ module R2CORBA
 
       def return_value
         return nil if @_rettc.nil? || @_rettc.kind == CORBA::TK_VOID || @_rettc.kind == CORBA::TK_NULL
+
         self._return_value(@_rettc)
       end
 
@@ -126,8 +126,6 @@ module R2CORBA
       def _exceptions
         @_excl ||= []
       end
-
     end
-
   end # CORBA
 end # R2CORBA

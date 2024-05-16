@@ -78,21 +78,21 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: checkout r2corba
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout ACE_TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/ACE_TAO
         path: ${{ env.DOC_ROOT }}
         ref: Latest_ACE8TAO4_Micro
     - name: checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
         ref: Latest_ACE8TAO4_Micro
     - name: checkout ridl
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
@@ -106,7 +106,7 @@ jobs:
         sudo apt-get --yes update
         sudo apt-get --yes install ${{ matrix.PackageDeps }}
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: cpp, ruby
       if: matrix.feature == 'CodeQL'
@@ -123,7 +123,7 @@ jobs:
         rake test
       shell: pwsh
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
       if: matrix.feature == 'CodeQL'
   jacorb:
     strategy:
@@ -154,16 +154,16 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - uses: actions/setup-java@v3
+    - uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.java-version }}
         java-package: ${{ matrix.java-package }}
         architecture: 'x64'
         distribution: 'zulu'
     - name: checkout r2corba
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout ridl
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}

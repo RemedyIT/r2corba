@@ -87,6 +87,5 @@ module R2CORBA
 
     PRIVATE_MEMBER = 0
     PUBLIC_MEMBER = 1
-
   end # CORBA
 end # R2CORBA

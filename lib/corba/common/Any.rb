@@ -12,7 +12,6 @@
 module R2CORBA
   module CORBA
     class Any
-
       def Any.typecode_for_value(val)
         case val
           when CORBA::Any
@@ -64,6 +63,7 @@ module R2CORBA
           if tc.is_a?(CORBA::TypeCode)
             return new(o, tc)
           end
+
           raise CORBA::MARSHAL.new('missing TypeCode', 0, CORBA::COMPLETED_NO)
         end
         return new(o, tc)
@@ -85,7 +85,6 @@ module R2CORBA
         @__tc = tc
         @__value = o
       end
-
     end # Any
   end # CORBA
 end # R2CORBA

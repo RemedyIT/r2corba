@@ -13,18 +13,18 @@ module R2CORBA
   module CORBA
     module Portable
       module Stub
-
         def self.included(klass)
           klass.class_eval do
 
-            def init()
-              init_corba_portable_stub()
+            def init
+              init_corba_portable_stub
             end
 
             def self.create_stub(obj)
               raise CORBA::INV_OBJREF.new unless obj.is_a?(CORBA::Object)
+
               obj.extend(self) unless obj.is_a?(self)
-              obj.init()
+              obj.init
               return obj
             end
 
@@ -32,10 +32,10 @@ module R2CORBA
         end
 
         Id  = 'IDL:omg.org/CORBA/Object:1.0'.freeze
-        Ids = [ Id ].freeze
+        Ids = [Id].freeze
 
         protected
-        def init_corba_portable_stub()
+        def init_corba_portable_stub
           @ids ||= ['IDL:omg.org/CORBA/Object:1.0']
         end
 
@@ -49,6 +49,7 @@ module R2CORBA
         def _narrow!(klass)
           raise CORBA::OBJECT_NOT_EXIST.new('Nil object narrowed!') if self._is_nil?
           raise(TypeError, "invalid object narrowed: #{self.class}") unless self.is_a?(CORBA::Stub) && self._is_a?(klass::Id)
+
           self.extend klass
           _append_ids(*klass::Ids)
           return self
@@ -57,6 +58,7 @@ module R2CORBA
         def _unchecked_narrow!(klass)
           raise CORBA::OBJECT_NOT_EXIST.new('Nil object narrowed!') if self._is_nil?
           raise(TypeError, "invalid object narrowed: #{self.class}") unless self.is_a?(CORBA::Stub)
+
           self.extend klass
           _append_ids(*klass::Ids)
           return self
@@ -66,7 +68,7 @@ module R2CORBA
           _ids.include?(str) || super(str)
         end
 
-        def inspect()
+        def inspect
           s = ''
           s << self.class.name.to_s << "\n" <<
                "type_id: \n" <<

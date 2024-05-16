@@ -11,9 +11,8 @@
 #--------------------------------------------------------------------
 
 module IDL
-
   class StrOStream
-    def initialize()
+    def initialize
       @str = ''
     end
 
@@ -114,7 +113,7 @@ module IDL
 
         # ruby specific option switches
 
-        unless ridl_params[:preprocess]   # same switch defined for IDL preprocessing mode
+        unless ridl_params[:preprocess] # same switch defined for IDL preprocessing mode
           optlist.for_switch '--output=FILE', :type => String,
               :description => ['Specifies filename to generate output in.',
                                'Default: File.basename(idlfile, \'.idl\')+<postfix>+<ext>'] do |swcfg|
@@ -260,7 +259,6 @@ module IDL
     end
 
     module LeafMixin
-
       RESERVED_RUBY_CONST = %w(Array Bignum Binding Class Continuation Dir Exception FalseClass File
           Fixnum Float Hash Integer IO MatchData Method Module NilClass Numeric Object Proc Process
           Range Regexp String Struct Symbol Thread ThreadGroup Time TrueClass UnboundMethod Comparable
@@ -319,7 +317,6 @@ module IDL
     end
 
     module ScannerMixin
-
       RUBYKW = %w(__FILE__ and def end in or self unless __LINE__ begin defined? ensure module redo
           super until BEGIN break do false next rescue then when END case else for nil retry true while
           alias class elsif if not return undef yield).collect! { |w| w.to_sym }
@@ -328,13 +325,10 @@ module IDL
         # prefix Ruby keywords with 'r_'
         RUBYKW.include?(ident.to_sym) ? 'r_' + ident : ident
       end
-
     end # module ScannerMixin
 
     IDL::Scanner.class_eval do
       include ScannerMixin
     end
-
   end # module Ruby
-
 end # module IDL
