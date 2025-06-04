@@ -148,17 +148,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             ruby: 'jruby'
             jacorb_version: '3.1'
             java-version: '8'
             java-package: 'jdk'
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             ruby: 'jruby'
             jacorb_version: '3.2'
             java-version: '8'
             java-package: 'jdk'
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             ruby: 'jruby'
             jacorb_version: '3.9'
             java-version: '8'
