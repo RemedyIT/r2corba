@@ -26,12 +26,12 @@ jobs:
         include:
           - CC: gcc-7
             CXX: g++-7
-            PackageDeps: g++-7
+            PackageDeps: g++-9
             os: ubuntu-22.04
             ruby: '2.5'
           - CC: gcc-8
             CXX: g++-8
-            PackageDeps: g++-8
+            PackageDeps: g++-9
             os: ubuntu-22.04
             ruby: '2.6'
           - CC: gcc-9
