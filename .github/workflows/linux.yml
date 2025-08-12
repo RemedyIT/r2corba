@@ -131,17 +131,17 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04
-            ruby: 'jruby'
+            ruby: 'jruby-9.4.13.0'
             jacorb_version: '3.1'
             java-version: '8'
             java-package: 'jdk'
           - os: ubuntu-22.04
-            ruby: 'jruby'
+            ruby: 'jruby-9.4.13.0'
             jacorb_version: '3.2'
             java-version: '8'
             java-package: 'jdk'
           - os: ubuntu-22.04
-            ruby: 'jruby'
+            ruby: 'jruby-9.4.13.0'
             jacorb_version: '3.9'
             java-version: '8'
             java-package: 'jdk'
