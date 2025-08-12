@@ -24,13 +24,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - CC: gcc-7
-            CXX: g++-7
+          - CC: gcc-9
+            CXX: g++-9
             PackageDeps: g++-9
             os: ubuntu-22.04
             ruby: '2.5'
-          - CC: gcc-8
-            CXX: g++-8
+          - CC: gcc-9
+            CXX: g++-9
             PackageDeps: g++-9
             os: ubuntu-22.04
             ruby: '2.6'
