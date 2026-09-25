@@ -49,6 +49,10 @@ jobs:
       with:
         repository: RemedyIT/ridl
         path: ${{ env.RIDL_ROOT }}
+    - name: Setup Visual Studio 2022
+      uses: step-security/msvc-dev-cmd@v1
+      with:
+        vsversion: '2022'
     - name: Run ridk exec rake configure
       run: |
         ridk exec rake configure
