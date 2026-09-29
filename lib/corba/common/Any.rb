@@ -29,7 +29,7 @@ module R2CORBA
             integral = integral.sub(/\A[+-]/, '')
             integral_digits = integral.sub(/\A0+/, '').length
             fraction = (fraction || '').sub(/0+\z/, '')
-            scale = [fraction.length, 1].max
+            scale = fraction.length
             digits = [integral_digits + scale, scale, 1].max
             if digits > 31
               raise CORBA::DATA_CONVERSION.new(
