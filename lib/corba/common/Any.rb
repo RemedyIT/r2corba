@@ -25,6 +25,12 @@ module R2CORBA
           when ::Float
             return CORBA._tc_double
           when ::BigDecimal
+            unless val.finite?
+              raise CORBA::DATA_CONVERSION.new(
+                'BigDecimal value must be finite',
+                1,
+                CORBA::COMPLETED_NO)
+            end
             integral, fraction = val.to_s('F').split('.', 2)
             integral = integral.sub(/\A[+-]/, '')
             integral_digits = integral.sub(/\A0+/, '').length
