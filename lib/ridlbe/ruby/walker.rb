@@ -716,6 +716,9 @@ module IDL
           'CORBA._tc_wstring'
         end
 
+      when Type::Fixed
+        format('CORBA::TypeCode::Fixed.new(%d, %d)', _type.digits, _type.scale)
+
       when Type::ScopedName
         scoped_type = _type.node.idltype
         if scoped_type.is_a?(IDL::Type::Interface) && scoped_type.node.is_forward?
@@ -821,7 +824,8 @@ module IDL
           end
         end).compact
         s = "[#{v.join(',')}]"
-      # when Type::Fixed
+      when Type::Fixed
+        s = "BigDecimal(#{v.to_s.inspect})"
       # when Type::Any
       # when Type::Object
       when Type::ScopedName
@@ -1075,6 +1079,18 @@ module IDL
             printiln(format("def %s._tc; @@tc_%s ||= CORBA::TypeCode::Alias.new('%s', '%s', CORBA::_tc_wstring, self); end",
                             node.rubyname, node.rubyname, node.repository_id, node.rubyname))
           end
+        }
+        printiln(format('end # typedef %s', node.rubyname))
+
+      when Type::Fixed
+        printiln(format('class %s', node.rubyname))
+        nest {
+          printiln(format('def %s._tc', node.rubyname))
+          nest {
+            printiln(format("@@tc_%s ||= CORBA::TypeCode::Alias.new('%s', '%s',", node.rubyname, node.repository_id, node.rubyname))
+            nest { printiln(format('%s, self)', get_typecode(t))) }
+          }
+          printiln('end')
         }
         printiln(format('end # typedef %s', node.rubyname))
 
@@ -1447,6 +1463,9 @@ module IDL
           'CORBA._tc_wstring'
         end
 
+      when Type::Fixed
+        format('CORBA::TypeCode::Fixed.new(%d, %d)', _type.digits, _type.scale)
+
       when Type::ScopedName
         @stub_root + _type.node.scoped_rubyname + '._tc'
 
@@ -1519,7 +1538,8 @@ module IDL
         s = "'#{v.to_s}'"
       when Type::WString
         s = "[#{v.join(',')}]"
-      # when Type::Fixed
+      when Type::Fixed
+        s = "BigDecimal(#{v.to_s.inspect})"
       # when Type::Any
       # when Type::Object
       when Type::ScopedName

@@ -24,6 +24,12 @@ module R2CORBA
             return CORBA._tc_long
           when ::Float
             return CORBA._tc_double
+          when ::BigDecimal
+            integral = val.to_s('F').split('.', 2).first.sub(/\A[+-]/, '')
+            integral_digits = integral.sub(/\A0+/, '').length
+            scale = [val.scale, 1].max
+            digits = [integral_digits + scale, scale, 1].max
+            return CORBA::TypeCode::Fixed.new(digits, scale)
           when ::TrueClass, ::FalseClass
             return CORBA._tc_boolean
           when ::String

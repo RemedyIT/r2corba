@@ -3,6 +3,9 @@ Current version: 1.5.1
 
 Changes since version 1.4.1:
 
+o   Added IDL fixed-point support for generated Ruby stubs and servants,
+    including native TAO CDR marshalling.
+
 o   Added support for MRI Ruby 2.1.x & 2.2.x (32 & 64 bits)
 
 o   Added support for TAO <= 2.3.1

@@ -27,11 +27,11 @@ module R2CORBA
         rval = self._value.nil? ? self._value : rtc.validate(self._value)
         restc = rtc.resolved_tc
         begin
-          if [TK_VALUE, TK_VALUE_BOX, TK_ABSTRACT_INTERFACE].include?(restc.kind) ||
+          if [TK_FIXED, TK_VALUE, TK_VALUE_BOX, TK_ABSTRACT_INTERFACE].include?(restc.kind) ||
              (!rval.nil? && [TK_NULL, TK_ANY, TK_BOOLEAN, TK_SHORT, TK_LONG, TK_USHORT,
                             TK_WCHAR, TK_ULONG, TK_LONGLONG, TK_ULONGLONG, TK_OCTET,
                             TK_FLOAT, TK_DOUBLE, TK_LONGDOUBLE, TK_CHAR, TK_STRING, TK_WSTRING,
-                            TK_VALUE, TK_VALUE_BOX, TK_TYPECODE, TK_OBJREF, TK_PRINCIPAL].include?(restc.kind))
+                            TK_FIXED, TK_VALUE, TK_VALUE_BOX, TK_TYPECODE, TK_OBJREF, TK_PRINCIPAL].include?(restc.kind))
             jorb ||= CORBA::ORB._orb
             jany ||= jorb.create_any
             case restc.kind
@@ -64,7 +64,7 @@ module R2CORBA
             when TK_LONGDOUBLE
               raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
             when TK_FIXED
-              jany.insert_fixed(java.math.BigDecimal.new(rval.to_s))
+              jany.insert_fixed(java.math.BigDecimal.new(rval.nil? ? '0' : restc.cdr_value(rval)), restc.tc_)
             when TK_CHAR
               jany.insert_char(rval[0])
             when TK_STRING
@@ -161,6 +161,7 @@ module R2CORBA
           if [TK_NULL, TK_VOID, TK_ANY, TK_BOOLEAN, TK_SHORT, TK_LONG, TK_USHORT,
               TK_WCHAR, TK_ULONG, TK_LONGLONG, TK_ULONGLONG, TK_OCTET,
               TK_FLOAT, TK_DOUBLE, TK_LONGDOUBLE, TK_CHAR, TK_STRING, TK_WSTRING,
+              TK_FIXED,
               TK_VALUE, TK_VALUE_BOX, TK_TYPECODE, TK_OBJREF,
               TK_ABSTRACT_INTERFACE, TK_PRINCIPAL].include?(rtc.resolved_tc.kind)
             case rtc.resolved_tc.kind

@@ -60,7 +60,7 @@ module R2CORBA
           when TK_LONGDOUBLE
             raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
-            read_fixed
+            read_fixed(tc)
           when TK_CHAR
             read_char
           when TK_STRING
@@ -346,9 +346,9 @@ module R2CORBA
           end
         end
 
-        def read_fixed
+        def read_fixed(tc)
           begin
-            java.math.BigDecimal.new(self.stream_.read_fixed.toString)
+            java.math.BigDecimal.new(self.stream_.read_fixed(tc.fixed_digits, tc.fixed_scale).toString)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
@@ -438,7 +438,7 @@ module R2CORBA
           when TK_LONGDOUBLE
             raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
-            write_fixed(value)
+            write_fixed(tc.cdr_value(value), tc)
           when TK_CHAR
             write_char(value)
           when TK_STRING
@@ -675,9 +675,9 @@ module R2CORBA
           end
         end
 
-        def write_fixed(value)
+        def write_fixed(value, tc)
           begin
-            self.stream_.write_fixed(java.math.BigDecimal.new(value.to_s))
+            self.stream_.write_fixed(java.math.BigDecimal.new(value), tc.fixed_digits, tc.fixed_scale)
           rescue ::NativeException
             CORBA::Exception.native2r($!)
           end
