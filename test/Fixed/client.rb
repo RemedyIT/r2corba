@@ -47,6 +47,11 @@ begin
   max_whole_value = BigDecimal('9999999999999999999999999999999')
   assert('maximum 31-digit whole fixed Any round trip failed',
          fixed_obj.echo_any(max_whole_value) == max_whole_value)
+  [BigDecimal('Infinity'), BigDecimal('NaN')].each do |non_finite_value|
+    assert_except('non-finite fixed Any value was accepted', CORBA::DATA_CONVERSION) do
+      fixed_obj.echo_any(non_finite_value)
+    end
+  end
   assert_except('fixed Any precision overflow was accepted', CORBA::DATA_CONVERSION) do
     fixed_obj.echo_any(BigDecimal('1234567890123456789012345678901'))
   end
