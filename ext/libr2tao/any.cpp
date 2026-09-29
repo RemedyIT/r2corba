@@ -512,13 +512,16 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
     }
     case CORBA::tk_fixed:
     {
-      DynamicAny::DynAny_var da = r2tao_CreateDynAny4tc (_tc);
-      DynamicAny::DynFixed_var df = DynamicAny::DynFixed::_narrow (da.in ());
-      VALUE fixed_string = rval;
-      if (!NIL_P (rval) && !RB_TYPE_P (rval, T_STRING))
-        fixed_string = rb_funcall (rval, rb_intern ("to_s"), 1, rb_str_new_cstr ("F"));
-      StringValue (fixed_string);
-      std::string fixed_value = NIL_P (rval) ? "0" : StringValueCStr (fixed_string);
+      const char *value_string = "0";
+      if (!NIL_P (rval))
+      {
+        VALUE fixed_string = rval;
+        if (!RB_TYPE_P (rval, T_STRING))
+          fixed_string = rb_funcall (rval, rb_intern ("to_s"), 1, rb_str_new_cstr ("F"));
+        StringValue (fixed_string);
+        value_string = StringValueCStr (fixed_string);
+      }
+      std::string fixed_value (value_string);
       const CORBA::UShort scale = _tc->fixed_scale ();
       const std::string::size_type point = fixed_value.find ('.');
       if (point != std::string::npos)
@@ -540,6 +543,8 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
         fixed_value.append (".");
         fixed_value.append (scale, '0');
       }
+      DynamicAny::DynAny_var da = r2tao_CreateDynAny4tc (_tc);
+      DynamicAny::DynFixed_var df = DynamicAny::DynFixed::_narrow (da.in ());
       if (!df->set_value (fixed_value.c_str ()))
         throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
       CORBA::Any_var av = da->to_any ();

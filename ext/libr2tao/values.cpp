@@ -2622,7 +2622,7 @@ VALUE r2tao_IStream_read_fixed (VALUE self, VALUE rtc)
     bool found_sign = false;
     while (count < 16 && !found_sign)
     {
-      if (!strm.read_1 (&octets[count]))
+      if (!strm.read_octet (octets[count]))
         throw CORBA::MARSHAL ();
       const unsigned int low = octets[count] & 0xf;
       found_sign = low == ACE_CDR::Fixed::POSITIVE || low == ACE_CDR::Fixed::NEGATIVE;
@@ -2632,6 +2632,8 @@ VALUE r2tao_IStream_read_fixed (VALUE self, VALUE rtc)
       throw CORBA::MARSHAL ();
 
     ACE_CDR::Fixed fixed = ACE_CDR::Fixed::from_octets (octets, count, tc->fixed_scale ());
+    if (fixed.fixed_digits () > tc->fixed_digits ())
+      throw CORBA::MARSHAL ();
     char buffer[ACE_CDR::Fixed::MAX_STRING_SIZE];
     if (!fixed.to_string (buffer, sizeof (buffer)))
       throw CORBA::MARSHAL ();

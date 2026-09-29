@@ -30,11 +30,14 @@ begin
   fixed_obj = Test::FixedValues._narrow(obj)
 
   value = BigDecimal('123.456')
-  assert('fixed constant is incorrect', Test::fixed_constant == BigDecimal('1.234'))
+  assert('fixed constant is incorrect', Test::Fixed_Constant == BigDecimal('1.234'))
   assert('fixed round trip failed', fixed_obj.echo_fixed(value) == value)
   assert('fixed Any round trip failed', fixed_obj.echo_any(value) == value)
   integer_value = BigDecimal('123')
   assert('integer fixed Any round trip failed', fixed_obj.echo_any(integer_value) == integer_value)
+  assert_except('fixed Any precision overflow was accepted', CORBA::DATA_CONVERSION) do
+    fixed_obj.echo_any(BigDecimal('1234567890123456789012345678901'))
+  end
   assert_except('fixed scale overflow was accepted', CORBA::DATA_CONVERSION) do
     fixed_obj.echo_fixed(BigDecimal('1.2345'))
   end

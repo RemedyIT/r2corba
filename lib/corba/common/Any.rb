@@ -25,10 +25,18 @@ module R2CORBA
           when ::Float
             return CORBA._tc_double
           when ::BigDecimal
-            integral = val.to_s('F').split('.', 2).first.sub(/\A[+-]/, '')
+            integral, fraction = val.to_s('F').split('.', 2)
+            integral = integral.sub(/\A[+-]/, '')
             integral_digits = integral.sub(/\A0+/, '').length
-            scale = [val.scale, 1].max
+            fraction = (fraction || '').sub(/0+\z/, '')
+            scale = [fraction.length, 1].max
             digits = [integral_digits + scale, scale, 1].max
+            if digits > 31
+              raise CORBA::DATA_CONVERSION.new(
+                'BigDecimal value exceeds CORBA fixed precision',
+                1,
+                CORBA::COMPLETED_NO)
+            end
             return CORBA::TypeCode::Fixed.new(digits, scale)
           when ::TrueClass, ::FalseClass
             return CORBA._tc_boolean
