@@ -14,6 +14,7 @@
 #include "exception.h"
 #include "object.h"
 #include "typecode.h"
+#include "fixed.h"
 #include "longdouble.h"
 #include "values.h"
 #include "tao/CDR.h"
@@ -2617,21 +2618,7 @@ VALUE r2tao_IStream_read_fixed (VALUE self, VALUE rtc)
   TAO_InputCDR &strm = *r2tao_InputStream_r2t(self);
   R2TAO_TRY {
     CORBA::TypeCode_ptr tc = r2corba_TypeCode_r2t (rtc);
-    ACE_CDR::Octet octets[16];
-    int count = 0;
-    bool found_sign = false;
-    while (count < 16 && !found_sign)
-    {
-      if (!strm.read_octet (octets[count]))
-        throw CORBA::MARSHAL ();
-      const unsigned int low = octets[count] & 0xf;
-      found_sign = low == ACE_CDR::Fixed::POSITIVE || low == ACE_CDR::Fixed::NEGATIVE;
-      ++count;
-    }
-    if (!found_sign)
-      throw CORBA::MARSHAL ();
-
-    ACE_CDR::Fixed fixed = ACE_CDR::Fixed::from_octets (octets, count, tc->fixed_scale ());
+    ACE_CDR::Fixed fixed = r2tao_read_fixed (strm, tc);
     if (fixed.fixed_digits () > tc->fixed_digits ())
       throw CORBA::MARSHAL ();
     char buffer[ACE_CDR::Fixed::MAX_STRING_SIZE];

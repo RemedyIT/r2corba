@@ -33,8 +33,17 @@ begin
   assert('fixed constant is incorrect', Test::Fixed_Constant == BigDecimal('1.234'))
   assert('fixed round trip failed', fixed_obj.echo_fixed(value) == value)
   assert('fixed Any round trip failed', fixed_obj.echo_any(value) == value)
+  odd_precision_value = BigDecimal('12.345')
+  assert('odd precision fixed Any round trip failed',
+         fixed_obj.echo_any(odd_precision_value) == odd_precision_value)
+  small_fraction_value = BigDecimal('1e-8')
+  assert('small fraction fixed Any round trip failed',
+         fixed_obj.echo_any(small_fraction_value) == small_fraction_value)
   integer_value = BigDecimal('123')
   assert('integer fixed Any round trip failed', fixed_obj.echo_any(integer_value) == integer_value)
+  max_precision_value = BigDecimal('123456789012345678901234567890')
+  assert('maximum precision fixed Any round trip failed',
+         fixed_obj.echo_any(max_precision_value) == max_precision_value)
   assert_except('fixed Any precision overflow was accepted', CORBA::DATA_CONVERSION) do
     fixed_obj.echo_any(BigDecimal('1234567890123456789012345678901'))
   end
