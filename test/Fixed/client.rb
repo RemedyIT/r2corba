@@ -44,6 +44,9 @@ begin
   max_precision_value = BigDecimal('123456789012345678901234567890')
   assert('maximum precision fixed Any round trip failed',
          fixed_obj.echo_any(max_precision_value) == max_precision_value)
+  max_whole_value = BigDecimal('9999999999999999999999999999999')
+  assert('maximum 31-digit whole fixed Any round trip failed',
+         fixed_obj.echo_any(max_whole_value) == max_whole_value)
   assert_except('fixed Any precision overflow was accepted', CORBA::DATA_CONVERSION) do
     fixed_obj.echo_any(BigDecimal('1234567890123456789012345678901'))
   end
