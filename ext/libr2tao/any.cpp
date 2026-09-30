@@ -14,6 +14,7 @@
 #include "exception.h"
 #include "object.h"
 #include "typecode.h"
+#include "fixed.h"
 #include "longdouble.h"
 #include "values.h"
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
@@ -35,6 +36,8 @@
 #include "tao/AnyTypeCode/LongLongSeqA.h"
 #include "tao/AnyTypeCode/ULongLongSeqA.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/BooleanSeqC.h"
 #include "tao/CharSeqC.h"
 #include "tao/DoubleSeqC.h"
@@ -55,6 +58,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
 #include <cstring>
+#include <string>
 
 #define RUBY_INVOKE_FUNC RUBY_ALLOC_FUNC
 
@@ -130,6 +134,76 @@ static DynamicAny::DynAny_ptr r2tao_CreateDynAny4tc (CORBA::TypeCode_ptr _tc)
       DYNANY_FACTORY->create_dyn_any_from_type_code (_tc);
 
   return da;
+}
+
+static ACE_CDR::Fixed r2tao_fixed_from_value (CORBA::TypeCode_ptr tc, VALUE rval)
+{
+  const CORBA::UShort digits = tc->fixed_digits ();
+  const CORBA::UShort scale = tc->fixed_scale ();
+  if (digits == 0 || digits > ACE_CDR::Fixed::MAX_DIGITS || scale > digits)
+    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+  VALUE fixed_string = rb_str_new_cstr ("0");
+  if (!NIL_P (rval))
+  {
+    fixed_string = rval;
+    if (!RB_TYPE_P (rval, T_STRING))
+      fixed_string = rb_funcall (rval, rb_intern ("to_s"), 1, rb_str_new_cstr ("F"));
+    StringValue (fixed_string);
+  }
+
+  std::string value (StringValueCStr (fixed_string));
+  bool negative = false;
+  if (!value.empty () && (value[0] == '-' || value[0] == '+'))
+  {
+    negative = value[0] == '-';
+    value.erase (0, 1);
+  }
+  if (value.empty () || value.find_first_of ("0123456789") == std::string::npos)
+    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+  const std::string::size_type point = value.find ('.');
+  if (point != std::string::npos && value.find ('.', point + 1) != std::string::npos)
+    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+  std::string integral = point == std::string::npos ? value : value.substr (0, point);
+  std::string fraction = point == std::string::npos ? std::string () : value.substr (point + 1);
+  if (integral.empty ())
+    integral = "0";
+  if (integral.find_first_not_of ("0123456789") != std::string::npos ||
+      fraction.find_first_not_of ("0123456789") != std::string::npos)
+    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+  if (fraction.size () > scale)
+  {
+    if (fraction.find_first_not_of ('0', scale) != std::string::npos)
+      throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+    fraction.resize (scale);
+  }
+  fraction.append (scale - fraction.size (), '0');
+
+  const CORBA::UShort integral_digits = digits - scale;
+  const std::string::size_type first_significant = integral.find_first_not_of ('0');
+  const std::string significant_integral = first_significant == std::string::npos ?
+      std::string () : integral.substr (first_significant);
+  if (significant_integral.size () > integral_digits)
+    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+  std::string cdr_value;
+  if (negative)
+    cdr_value.push_back ('-');
+  cdr_value.append (integral_digits - significant_integral.size (), '0');
+  cdr_value.append (significant_integral);
+  if (scale > 0)
+  {
+    cdr_value.push_back ('.');
+    cdr_value.append (fraction);
+  }
+
+  ACE_CDR::Fixed fixed = ACE_CDR::Fixed::from_string (cdr_value.c_str ());
+  if (fixed.fixed_digits () != digits || fixed.fixed_scale () != scale)
+    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+  return fixed;
 }
 
 /*===================================================================
@@ -507,6 +581,25 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
       CORBA::LongDouble val;
       ACE_CDR_LONG_DOUBLE_ASSIGNMENT (val, NIL_P (rval) ? 0.0 : RLD2CLD (rval));
       _any <<= val;
+      return;
+    }
+    case CORBA::tk_fixed:
+    {
+      ACE_CDR::Fixed fixed = r2tao_fixed_from_value (_tc, rval);
+      char fixed_string[ACE_CDR::Fixed::MAX_STRING_SIZE];
+      if (!fixed.to_string (fixed_string, sizeof (fixed_string)))
+        throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+      DynamicAny::DynAny_var da = r2tao_CreateDynAny4tc (_tc);
+      DynamicAny::DynFixed_var dyn_fixed = DynamicAny::DynFixed::_narrow (da.in ());
+      if (CORBA::is_nil (dyn_fixed.in ()))
+        throw CORBA::MARSHAL ();
+      if (!dyn_fixed->set_value (fixed_string))
+        throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+      CORBA::Any_var fixed_any = dyn_fixed->to_any ();
+      _any = fixed_any.in ();
+      da->destroy ();
       return;
     }
     case CORBA::tk_boolean:
@@ -1244,6 +1337,23 @@ R2TAO_EXPORT VALUE r2tao_Any2Ruby(const CORBA::Any& _any, CORBA::TypeCode_ptr _t
       CORBA::LongDouble val;
       _any >>= val;
       return CLD2RLD (val);
+    }
+    case CORBA::tk_fixed:
+    {
+      DynamicAny::DynAny_var da = r2tao_CreateDynAny (_any);
+      DynamicAny::DynFixed_var dyn_fixed = DynamicAny::DynFixed::_narrow (da.in ());
+      if (CORBA::is_nil (dyn_fixed.in ()))
+        throw CORBA::MARSHAL ();
+
+      CORBA::String_var fixed_string = dyn_fixed->get_value ();
+      std::string fixed_value (fixed_string.in ());
+      da->destroy ();
+
+      return rb_funcall (rb_mKernel,
+                         rb_intern ("BigDecimal"),
+                         1,
+                         rb_str_new (fixed_value.data (),
+                                     static_cast<long> (fixed_value.size ())));
     }
     case CORBA::tk_boolean:
     {

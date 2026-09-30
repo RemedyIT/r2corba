@@ -44,7 +44,7 @@ module R2CORBA
           when TK_LONGDOUBLE
             raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
-            read_fixed
+            read_fixed(tc)
           when TK_CHAR
             read_char
           when TK_STRING
@@ -100,7 +100,7 @@ module R2CORBA
           when TK_LONGDOUBLE
             raise CORBA::NO_IMPLEMENT.new('LongDouble not supported', 0, CORBA::COMPLETED_NO)
           when TK_FIXED
-            write_fixed(value)
+            write_fixed(tc.cdr_value(value), tc)
           when TK_CHAR
             write_char(value)
           when TK_STRING

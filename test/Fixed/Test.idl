@@ -1,0 +1,22 @@
+module Test
+{
+  typedef fixed<10,3> FixedValue;
+  typedef sequence<FixedValue> FixedSequence;
+  typedef FixedValue FixedArray[2];
+  struct FixedStruct
+  {
+    FixedValue value;
+    FixedSequence values;
+    FixedArray array;
+  };
+  const FixedValue Fixed_Constant = 1.234;
+
+  interface FixedValues
+  {
+    FixedValue echo_fixed(in FixedValue value);
+    FixedSequence echo_sequence(in FixedSequence value);
+    FixedArray echo_array(in FixedArray value);
+    any echo_any(in any value);
+    oneway void shutdown();
+  };
+};

@@ -1,7 +1,14 @@
 
-Current version: 1.5.1
+Current version: 1.7.3
+
+Changes since version 1.7.2:
+
+o   Reject non-finite BigDecimal values when inferring fixed TypeCodes for Any.
 
 Changes since version 1.4.1:
+
+o   Added IDL fixed-point support for generated Ruby stubs and servants,
+    including native TAO CDR marshalling.
 
 o   Added support for MRI Ruby 2.1.x & 2.2.x (32 & 64 bits)
 

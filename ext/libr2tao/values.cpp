@@ -14,6 +14,7 @@
 #include "exception.h"
 #include "object.h"
 #include "typecode.h"
+#include "fixed.h"
 #include "longdouble.h"
 #include "values.h"
 #include "tao/CDR.h"
@@ -65,7 +66,7 @@ VALUE r2tao_OStream_write_Object (VALUE self, VALUE rval);
 VALUE r2tao_OStream_write_Abstract (VALUE self, VALUE rval);
 VALUE r2tao_OStream_write_Value (VALUE self, VALUE rval);
 VALUE r2tao_OStream_write_TypeCode (VALUE self, VALUE rval);
-VALUE r2tao_OStream_write_fixed (VALUE self, VALUE rval);
+VALUE r2tao_OStream_write_fixed (VALUE self, VALUE rval, VALUE rtc);
 
 VALUE r2tao_OStream_write_string (VALUE self, VALUE rval);
 VALUE r2tao_OStream_write_wstring (VALUE self, VALUE rval);
@@ -106,7 +107,7 @@ VALUE r2tao_IStream_read_Object (VALUE self);
 VALUE r2tao_IStream_read_Abstract (VALUE self);
 VALUE r2tao_IStream_read_Value (VALUE self);
 VALUE r2tao_IStream_read_TypeCode (VALUE self);
-VALUE r2tao_IStream_read_fixed (VALUE self);
+VALUE r2tao_IStream_read_fixed (VALUE self, VALUE rtc);
 
 VALUE r2tao_IStream_read_string (VALUE self);
 VALUE r2tao_IStream_read_wstring (VALUE self);
@@ -171,7 +172,7 @@ void r2tao_init_Values()
   R2TAO_DEFMETHOD (Abstract);
   R2TAO_DEFMETHOD (Value);
   R2TAO_DEFMETHOD (TypeCode);
-  R2TAO_DEFMETHOD (fixed);
+  rb_define_method (r2tao_nsOutputStream, "write_fixed", RUBY_METHOD_FUNC (r2tao_OStream_write_fixed), 2);
   R2TAO_DEFMETHOD (string);
   R2TAO_DEFMETHOD (wstring);
 
@@ -228,7 +229,7 @@ void r2tao_init_Values()
   R2TAO_DEFMETHOD (Abstract);
   R2TAO_DEFMETHOD (Value);
   R2TAO_DEFMETHOD (TypeCode);
-  R2TAO_DEFMETHOD (fixed);
+  rb_define_method (r2tao_nsInputStream, "read_fixed", RUBY_METHOD_FUNC (r2tao_IStream_read_fixed), 1);
   R2TAO_DEFMETHOD (string);
   R2TAO_DEFMETHOD (wstring);
 
@@ -1725,9 +1726,21 @@ VALUE r2tao_OStream_write_TypeCode (VALUE self, VALUE rval)
   return Qnil;
 }
 
-VALUE r2tao_OStream_write_fixed (VALUE , VALUE )
+VALUE r2tao_OStream_write_fixed (VALUE self, VALUE rval, VALUE rtc)
 {
-  X_CORBA (NO_IMPLEMENT);
+  R2TAO_Value* vt = r2tao_OutputStream_r2t(self);
+  R2TAO_TRY {
+    CORBA::TypeCode_ptr tc = r2corba_TypeCode_r2t (rtc);
+    CORBA::Any* any = nullptr;
+    ACE_NEW_THROW_EX (any,
+                      CORBA::Any (),
+                      CORBA::NO_MEMORY());
+    CORBA::Any_var any_safe = any;
+    r2tao_Ruby2Any (*any, tc, rval);
+    if (!vt->add_chunk_element (any_safe))
+      throw CORBA::MARSHAL ();
+  } R2TAO_CATCH;
+  return Qnil;
 }
 
 VALUE r2tao_OStream_write_string (VALUE self, VALUE rval)
@@ -2599,9 +2612,24 @@ VALUE r2tao_IStream_read_TypeCode (VALUE self)
   return ret;
 }
 
-VALUE r2tao_IStream_read_fixed (VALUE)
+VALUE r2tao_IStream_read_fixed (VALUE self, VALUE rtc)
 {
-  X_CORBA (NO_IMPLEMENT);
+  VALUE ret = Qnil;
+  TAO_InputCDR &strm = *r2tao_InputStream_r2t(self);
+  R2TAO_TRY {
+    CORBA::TypeCode_ptr tc = r2corba_TypeCode_r2t (rtc);
+    ACE_CDR::Fixed fixed = r2tao_read_fixed (strm, tc);
+    if (fixed.fixed_digits () > tc->fixed_digits ())
+      throw CORBA::MARSHAL ();
+    char buffer[ACE_CDR::Fixed::MAX_STRING_SIZE];
+    if (!fixed.to_string (buffer, sizeof (buffer)))
+      throw CORBA::MARSHAL ();
+    ret = rb_funcall (rb_mKernel,
+                      rb_intern ("BigDecimal"),
+                      1,
+                      rb_str_new_cstr (buffer));
+  } R2TAO_CATCH;
+  return ret;
 }
 
 VALUE r2tao_IStream_read_string (VALUE self)

@@ -10,6 +10,7 @@
 # Copyright (c) Remedy IT Expertise BV
 #--------------------------------------------------------------------
 require 'monitor'
+require 'bigdecimal'
 
 module R2CORBA
   module CORBA
@@ -506,11 +507,35 @@ module R2CORBA
         end
 
         def validate(val)
-          return val if val.nil?
-
           super(val) unless ::BigDecimal === val || val.respond_to?(:to_str)
-          val = ::BigDecimal === val ? val : BigDecimal(val.to_str)
+          val = if val.nil?
+            BigDecimal('0')
+          elsif ::BigDecimal === val
+            val
+          else
+            BigDecimal(val.to_str)
+          end
+          integral, fraction = val.abs.to_s('F').split('.', 2)
+          fraction ||= ''
+          scale = self.fixed_scale
+          digits = self.fixed_digits
+          excess_fraction = fraction[scale..-1] || ''
+          integral_digits = integral.sub(/\A0+/, '').length
+          if excess_fraction =~ /[1-9]/ || integral_digits > digits - scale
+            raise CORBA::DATA_CONVERSION.new(
+              "value cannot be represented by fixed<#{digits},#{scale}>",
+              1,
+              CORBA::COMPLETED_NO)
+          end
           val
+        end
+
+        def cdr_value(val)
+          val = validate(val)
+          integral, fraction = val.to_s('F').split('.', 2)
+          fraction ||= ''
+          fraction = fraction[0, self.fixed_scale] || ''
+          "#{integral}.#{fraction.ljust(self.fixed_scale, '0')}"
         end
 
         def needs_conversion(val)

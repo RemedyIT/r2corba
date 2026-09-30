@@ -493,6 +493,18 @@ VALUE r2tao_TypeCode_create_tc(int _argc, VALUE *_argv0, VALUE /*klass*/)
       }
       break;
 
+      case CORBA::tk_fixed:
+      {
+        VALUE rdigits = rb_ary_shift (args);
+        VALUE rscale = rb_ary_shift (args);
+        CHECK_RTYPE(rdigits, T_FIXNUM);
+        CHECK_RTYPE(rscale, T_FIXNUM);
+        _tc = adapter->create_fixed_tc (
+            static_cast<CORBA::UShort> (NUM2INT (rdigits)),
+            static_cast<CORBA::UShort> (NUM2INT (rscale)));
+      }
+      break;
+
       case CORBA::tk_except:
       case CORBA::tk_struct:
       {
