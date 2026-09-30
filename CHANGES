@@ -1,5 +1,9 @@
 
-Current version: 1.5.1
+Current version: 1.7.3
+
+Changes since version 1.7.2:
+
+o   Reject non-finite BigDecimal values when inferring fixed TypeCodes for Any.
 
 Changes since version 1.4.1:
 
