@@ -3,6 +3,12 @@ module Test
   typedef fixed<10,3> FixedValue;
   typedef sequence<FixedValue> FixedSequence;
   typedef FixedValue FixedArray[2];
+  struct FixedStruct
+  {
+    FixedValue value;
+    FixedSequence values;
+    FixedArray array;
+  };
   const FixedValue Fixed_Constant = 1.234;
 
   interface FixedValues

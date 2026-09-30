@@ -70,6 +70,17 @@ begin
   returned_array = fixed_obj.echo_array(array)
   assert('fixed array round trip failed', returned_array == array)
 
+  nested = Test::FixedStruct.new(
+    BigDecimal('12.345'),
+    [BigDecimal('0.125'), BigDecimal('-9.876')],
+    [BigDecimal('1.200'), BigDecimal('-3.400')])
+  nested_any = CORBA::Any.to_any(nested, Test::FixedStruct._tc)
+  returned_nested = fixed_obj.echo_any(nested_any)
+  assert('nested fixed Any round trip failed',
+         returned_nested.value == nested.value &&
+         returned_nested.values == nested.values &&
+         returned_nested.array == nested.array)
+
   fixed_obj.shutdown
 ensure
   orb.destroy

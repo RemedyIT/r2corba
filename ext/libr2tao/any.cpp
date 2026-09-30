@@ -136,39 +136,6 @@ static DynamicAny::DynAny_ptr r2tao_CreateDynAny4tc (CORBA::TypeCode_ptr _tc)
   return da;
 }
 
-class R2TAO_Fixed_Any_Impl : public TAO::Any_Impl
-{
-public:
-  R2TAO_Fixed_Any_Impl (CORBA::TypeCode_ptr tc, const ACE_CDR::Fixed& value)
-    : TAO::Any_Impl (0, tc),
-      value_ (value)
-  {
-  }
-
-  CORBA::Boolean marshal_value (TAO_OutputCDR& cdr) override
-  {
-    return cdr << this->value_;
-  }
-
-  void _tao_decode (TAO_InputCDR& cdr) override
-  {
-    CORBA::TypeCode_var fixed_tc = CORBA::TypeCode::_duplicate (this->type_);
-    while (fixed_tc->kind () == CORBA::tk_alias)
-      fixed_tc = fixed_tc->content_type ();
-    if (fixed_tc->kind () != CORBA::tk_fixed)
-      throw CORBA::MARSHAL ();
-    this->value_ = r2tao_read_fixed (cdr, fixed_tc.in ());
-  }
-
-  const ACE_CDR::Fixed& value () const
-  {
-    return this->value_;
-  }
-
-private:
-  ACE_CDR::Fixed value_;
-};
-
 static ACE_CDR::Fixed r2tao_fixed_from_value (CORBA::TypeCode_ptr tc, VALUE rval)
 {
   const CORBA::UShort digits = tc->fixed_digits ();
@@ -618,13 +585,21 @@ R2TAO_EXPORT void r2tao_Ruby2Any(CORBA::Any& _any, CORBA::TypeCode_ptr _tc, VALU
     }
     case CORBA::tk_fixed:
     {
-      // TAO DynAny does not implement tk_fixed; retain it as native CDR fixed.
       ACE_CDR::Fixed fixed = r2tao_fixed_from_value (_tc, rval);
-      R2TAO_Fixed_Any_Impl* fixed_impl = nullptr;
-      ACE_NEW_THROW_EX (fixed_impl,
-                        R2TAO_Fixed_Any_Impl (_tc, fixed),
-                        CORBA::NO_MEMORY ());
-      _any.replace (fixed_impl);
+      char fixed_string[ACE_CDR::Fixed::MAX_STRING_SIZE];
+      if (!fixed.to_string (fixed_string, sizeof (fixed_string)))
+        throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+      DynamicAny::DynAny_var da = r2tao_CreateDynAny4tc (_tc);
+      DynamicAny::DynFixed_var dyn_fixed = DynamicAny::DynFixed::_narrow (da.in ());
+      if (CORBA::is_nil (dyn_fixed.in ()))
+        throw CORBA::MARSHAL ();
+      if (!dyn_fixed->set_value (fixed_string))
+        throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_NO);
+
+      CORBA::Any_var fixed_any = dyn_fixed->to_any ();
+      _any = fixed_any.in ();
+      da->destroy ();
       return;
     }
     case CORBA::tk_boolean:
@@ -1365,30 +1340,20 @@ R2TAO_EXPORT VALUE r2tao_Any2Ruby(const CORBA::Any& _any, CORBA::TypeCode_ptr _t
     }
     case CORBA::tk_fixed:
     {
-      ACE_CDR::Fixed fixed;
-      const TAO::Any_Impl* impl = _any.impl ();
-      const R2TAO_Fixed_Any_Impl* fixed_impl =
-          dynamic_cast<const R2TAO_Fixed_Any_Impl*> (impl);
-      if (fixed_impl)
-        fixed = fixed_impl->value ();
-      else
-      {
-        const TAO::Unknown_IDL_Type* unknown_impl =
-            dynamic_cast<const TAO::Unknown_IDL_Type*> (impl);
-        if (!unknown_impl)
-          throw CORBA::MARSHAL ();
-        TAO_InputCDR cdr (const_cast<TAO::Unknown_IDL_Type*> (unknown_impl)->_tao_get_cdr ());
-        fixed = r2tao_read_fixed (cdr, _tc);
-      }
-
-      char fixed_string[ACE_CDR::Fixed::MAX_STRING_SIZE];
-      if (!fixed.to_string (fixed_string, sizeof (fixed_string)))
+      DynamicAny::DynAny_var da = r2tao_CreateDynAny (_any);
+      DynamicAny::DynFixed_var dyn_fixed = DynamicAny::DynFixed::_narrow (da.in ());
+      if (CORBA::is_nil (dyn_fixed.in ()))
         throw CORBA::MARSHAL ();
-      VALUE value = rb_funcall (rb_mKernel,
-                                rb_intern ("BigDecimal"),
-                                1,
-                                rb_str_new_cstr (fixed_string));
-      return value;
+
+      CORBA::String_var fixed_string = dyn_fixed->get_value ();
+      std::string fixed_value (fixed_string.in ());
+      da->destroy ();
+
+      return rb_funcall (rb_mKernel,
+                         rb_intern ("BigDecimal"),
+                         1,
+                         rb_str_new (fixed_value.data (),
+                                     static_cast<long> (fixed_value.size ())));
     }
     case CORBA::tk_boolean:
     {
